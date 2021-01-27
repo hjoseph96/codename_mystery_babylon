@@ -1,9 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Animancer;
 
-public class MapEntity : MonoBehaviour
+using Animancer;
+using Sirenix.OdinInspector;
+
+public class MapEntity : SerializedMonoBehaviour
 {
     [SerializeField] private AnimancerComponent _Animancer;
     [SerializeField] private DirectionalAnimationSet _Idles;
@@ -11,9 +12,53 @@ public class MapEntity : MonoBehaviour
 
     [StringInList("UP", "DOWN", "LEFT", "RIGHT")] public string facingDirection;
 
-    public string entityType;
+
     public bool hasMoved;
-    public bool canFly;
+
+    [SerializeField]
+    protected bool _canFly;
+    public bool CanFly {
+        get { return _canFly; }
+    }
+    [SerializeField]
+    protected bool _canLead;
+    public bool CanLead {
+        get { return _canLead; }
+    }
+
+
+    public static List<string> BASE_STAT_NAMES = new List<string>{
+        "HEALTH",
+        "STRENGTH",
+        "SPEED",
+        "SKILL",
+        "MAGIC",
+        "LUCK",
+        "RESISTANCE",
+        "DEFENSE",
+        "CONSITITUTION",
+        "MOVE",
+        "BIORHYTHM"
+    };
+    public Dictionary<string, int> BASE_STAT_VALUES;
+    public Dictionary<string, int> DERIVED_STAT_VALUES;
+    
+
+    protected string _entityType;
+    public string EntityType {
+        get { return _entityType; }
+    }
+
+    protected Dictionary<string, Stat> _BASE_STATS = new Dictionary<string, Stat>();
+    public Dictionary<string, Stat> BASE_STATS {
+        get { return _BASE_STATS; }
+    }
+    
+    protected Dictionary<string, DependentStat> _DERIVED_STATS = new Dictionary<string, DependentStat>();
+    public Dictionary<string, DependentStat> DERIVED_STATS {
+        get { return _DERIVED_STATS; }
+    }
+
     private SpriteRenderer _renderer;
     public SpriteRenderer Renderer {
         get { return _renderer; }
@@ -36,7 +81,28 @@ public class MapEntity : MonoBehaviour
     
     protected void Awake() {
         Play(_Idles);
+
         _renderer = GetComponent<SpriteRenderer>();
+
+        if (BASE_STAT_VALUES.Count == 0)
+            BASE_STAT_VALUES = new Dictionary<string, int>{
+                {"HEALTH", 18},
+                {"STRENGTH", 9},
+                {"SPEED", 7},
+                {"SKILL", 7},
+                {"MAGIC", 4},
+                {"LUCK", 6},
+                {"RESISTANCE", 4},
+                {"DEFENSE", 8},
+                {"CONSITITUTION", 7},
+                {"MOVE", 6 },
+                {"BIORHYTHM", 10}
+            };
+        
+        ValidateBaseStatValues();
+
+        foreach (string statName in BASE_STAT_NAMES)
+            _BASE_STATS[statName] = new Stat(BASE_STAT_VALUES[statName]);
     }
 
     // Update is called once per frame
@@ -65,6 +131,18 @@ public class MapEntity : MonoBehaviour
 
         Debug.Log("Invalid facingDirection");
         return new Vector2(0,0);
+    }
+
+    private void ValidateBaseStatValues() {
+        List<string> missingStats = new List<string>();
+
+        foreach(string statName in BASE_STAT_NAMES) {
+            if (!BASE_STAT_VALUES.ContainsKey(statName)) missingStats.Add(statName);
+        }
+
+        if (missingStats.Count == 0) return;
+
+        throw new System.Exception($"Missing the follow Base Stats on Entity: {this.gameObject.name} \n\n\n {string.Join(", ", missingStats)}");
     }
 
 

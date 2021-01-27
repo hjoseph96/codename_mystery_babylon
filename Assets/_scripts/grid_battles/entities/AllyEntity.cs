@@ -7,7 +7,7 @@ public class AllyEntity : MapEntity
     new void Awake() {
         base.Awake();
 
-        entityType = "ally";
+        _entityType = "ally";
     }
     
     // Start is called before the first frame update
