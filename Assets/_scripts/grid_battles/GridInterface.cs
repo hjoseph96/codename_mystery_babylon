@@ -25,7 +25,7 @@ public class GridInterface : MonoBehaviour
 
     protected UnityEvent OnFirstScan = new UnityEvent();
 
-    protected static string[] PHASES = {"PLAYER", "ENEMY", "OTHER_ENEMY", "ALLY"};
+    protected static List<string> PHASES = new List<string>{"PLAYER", "ENEMY", "OTHER_ENEMY", "ALLY"};
     protected Dictionary<int, Bounds> _cellPositions = new Dictionary<int, Bounds>();
     protected List<PlayerEntity> _players = new List<PlayerEntity>();
     protected List<EnemyEntity> _enemies  = new List<EnemyEntity>();
@@ -47,23 +47,23 @@ public class GridInterface : MonoBehaviour
         _grid.gameObject.GetComponent<MeshRenderer>().material = clearMaterial;
         _grid.highlightMode = HIGHLIGHT_MODE.None;
 
-        CELL_MASKS["PLAYER"] = 0;
-        CELL_MASKS["ENEMY"] = 1;
-        CELL_MASKS["OTHER_ENEMY"] = 2;
-        CELL_MASKS["ALLY"] = 3;
-        CELL_MASKS["IMMOVABLE_ON_LAND"] = 4;
-        CELL_MASKS["IMMOVABLE_IN_AIR"] = 5;
+        CELL_MASKS["TRAVERSABLE_ON_LAND"] = 0;
+        CELL_MASKS["PLAYER"] = 1;
+        CELL_MASKS["ENEMY"] = 2;
+        CELL_MASKS["OTHER_ENEMY"] = 3;
+        CELL_MASKS["ALLY"] = 4;
+        CELL_MASKS["IMMOVABLE_ON_LAND"] = 5;
+        CELL_MASKS["IMMOVABLE_IN_AIR"] = 6;
     }
 
     // Update is called once per frame
     protected void Update()
     {
         if (!firstScan) {
+            firstScan = true;
             _cellPositions = CalculateCellBounds(_grid);
             
             OnFirstScan.Invoke();
-
-            firstScan = true;
         }
     }
 
@@ -191,8 +191,8 @@ public class GridInterface : MonoBehaviour
         _otherEnemies.Add(otherEnemy);
     }
 
-    protected void SetCellMaskForEntity(int cellIndex, string entityType) {
-        _grid.CellSetGroup(cellIndex, CELL_MASKS[entityType.ToUpper()]);
+    protected void SetCellMaskForEntity(int cellIndex, string EntityType) {
+        _grid.CellSetGroup(cellIndex, CELL_MASKS[EntityType.ToUpper()]);
     }
 
 
@@ -202,16 +202,11 @@ public class GridInterface : MonoBehaviour
         if (_players.Count == 0) return cellsWherePlayersAre;
 
         foreach(PlayerEntity player in _players) {
-            Bounds spriteBounds = player.Renderer.bounds; 
-            Vector3 centerBottom = new Vector3(
-                spriteBounds.center.x,
-                spriteBounds.center.y - spriteBounds.extents.y,
-                spriteBounds.center.z 
-            );
-            Cell cell = GetCellAtPosition(centerBottom);
+            Vector3 currentPosition = player.transform.position;
+            Cell cell = GetCellAtPosition(currentPosition);
             
             cellsWherePlayersAre.Add(player, cell);
-            SetCellMaskForEntity(cell.index, player.entityType);
+            SetCellMaskForEntity(cell.index, player.EntityType);
         }
 
         return cellsWherePlayersAre;
@@ -227,7 +222,7 @@ public class GridInterface : MonoBehaviour
             Cell cell = GetCellAtPosition(currentPosition);
             
             cellsWhereEnemiesAre.Add(enemy, cell);
-            SetCellMaskForEntity(cell.index, enemy.entityType);
+            SetCellMaskForEntity(cell.index, enemy.EntityType);
         }
 
         return cellsWhereEnemiesAre;
@@ -244,7 +239,7 @@ public class GridInterface : MonoBehaviour
             Cell cell = GetCellAtPosition(currentPosition);
             
             cellsWhereOtherEnemiesAre.Add(otherEnemy, cell);
-            SetCellMaskForEntity(cell.index, otherEnemy.entityType);
+            SetCellMaskForEntity(cell.index, otherEnemy.EntityType);
         }
 
         return cellsWhereOtherEnemiesAre;
@@ -261,7 +256,7 @@ public class GridInterface : MonoBehaviour
             Cell cell = GetCellAtPosition(currentPosition);
             
             cellsWhereAlliesAre.Add(ally, cell);
-            SetCellMaskForEntity(cell.index, ally.entityType);
+            SetCellMaskForEntity(cell.index, ally.EntityType);
         }
 
         return cellsWhereAlliesAre;

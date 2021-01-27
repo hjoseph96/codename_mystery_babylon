@@ -1,21 +1,18 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Grids2D;
 using Com.LuisPedroFonseca.ProCamera2D;
-using RotaryHeart.Lib.SerializableDictionary;
 
 public class GridBattleManager : GridInterface
 {
     public List<MapEntity> allEntities;
 
     public CellHighlightsDictionary cellHighlights;
-    [System.Serializable]
-    public class MyDictionary : SerializableDictionaryBase<string, float> { }
     public GameObject mapCursor;
 
    
-    public Camera gridCamera;
+    public ProCamera2D gridCamera;
 
     private Cell _selectedCell;
     public Cell SelectedCell {
@@ -29,7 +26,13 @@ public class GridBattleManager : GridInterface
     private string _currentPhase;
     private int _turnNumber;
     private Dictionary<(int, string), CellHighlighter> _activeHighLights = new Dictionary<(int, string), CellHighlighter>();
-
+    private GridSelect _selector;
+    private List<string> _SELECTION_STATES = new List<string>{ "FREE", "MOVING" };
+    private string _selectionState;
+    private PlayerEntity _currentlyMovingPlayer;
+    private int _movingFromCellIndex;
+    private List<int> _landObstacleCells = new List<int>();
+    private List<int> _airObstacleCells = new List<int>();
 
     // Start is called before the first frame update
     new void Start()
@@ -40,19 +43,29 @@ public class GridBattleManager : GridInterface
         _currentPhase = PHASES[0];
 
         mapCursor = Instantiate(mapCursor) as GameObject;
-        GridSelect selector = mapCursor.GetComponent<GridSelect>();
+        _selector = mapCursor.GetComponent<GridSelect>();
 
         mapCursor.SetActive(false);
 
+        
         OnFirstScan.AddListener(delegate{
             // maybe scan them every frame?
+            SetupEntityLists();
+            SetupCellLists();
             ScanCells();
 
-            selector.SetCursor(this, _cellPositions);
+            _selector.SetCursor(this, _cellPositions);
+
 
             // Set highlighted cell to first player
-            if (_currentPhase == "PLAYER")
+            if (_currentPhase == "PLAYER") {
+                _selectionState = "FREE";
                 SetSelectedCellOnPlayer();
+            }
+
+            gridCamera.RemoveAllCameraTargets();
+            gridCamera.AddCameraTarget(mapCursor.transform);
+            PositionEntities();
         });
     }
 
@@ -62,6 +75,8 @@ public class GridBattleManager : GridInterface
         base.Update();
 
         HighlightSelectedCell();
+
+        ProcessPhase();
     }
 
     // TESTING CELL BOUNDS
@@ -73,42 +88,7 @@ public class GridBattleManager : GridInterface
     //         Gizmos.DrawWireCube(_grid.CellGetPosition(entry.Key), new Vector3(0.32f, 0.32f, 100));
     //     }
     // }
-
-    void NextTurn() {
-        _turnNumber += 1;
-        _currentPhase = PHASES[0];
-
-        // TODO: GUI PHASE DISPLAY
-    }
-
-    void ProcessPhase() {
-        switch (_currentPhase)
-        {
-            case "PLAYER":
-                break;
-            case "ENEMY":
-                break;
-            case "OTHER_ENEMY":
-                break;
-            case "ALLY":
-                break;
-            default:
-                break;
-        }
-    }
-
-    void SetCellHighlight(string type, int cellIndex) {
-        if (!cellHighlights.Keys.Contains(type)) throw new System.Exception($"Cell Highlight type: '{type}' is invalid.");
-
-        Vector3 cellPosition = _cellPositions[cellIndex].center;
-        CellHighlighter highlightPrefab = cellHighlights[type];
-
-        GameObject highlightObj = Instantiate(highlightPrefab.gameObject, cellPosition, highlightPrefab.transform.rotation);
-        CellHighlighter highlight = highlightObj.GetComponent<CellHighlighter>();
-
-        _activeHighLights.Add((cellIndex, type), highlight);
-    }
-
+    
     void HighlightSelectedCell() {
         bool alreadySet = false;
         
@@ -128,6 +108,126 @@ public class GridBattleManager : GridInterface
 
         if (!alreadySet)
             SetCellHighlight("SELECTED", _selectedCell.index);
+    }
+
+
+
+
+    void NextTurn() {
+        _turnNumber += 1;
+        _currentPhase =  PHASES[0];
+
+        // TODO: GUI PHASE DISPLAY
+    }
+
+    void NextPhase() {
+        int phaseIndex = PHASES.IndexOf(_currentPhase);
+
+        if (phaseIndex == PHASES.Count - 1) _currentPhase = PHASES[0];
+
+        _currentPhase = PHASES[phaseIndex + 1];
+    }
+
+    void ProcessPhase() {
+        switch (_currentPhase)
+        {
+            case "PLAYER":
+                ProcessPlayerPhase();
+                break;
+            case "ENEMY":
+                break;
+            case "OTHER_ENEMY":
+                break;
+            case "ALLY":
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ProcessPlayerPhase() {
+        switch (_selectionState) {
+            case "FREE":
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Z)) {
+                    foreach(PlayerEntity player in _players) {
+                        bool isPlayerSelected = _selectedCell.index == _playerCells[player].index;
+
+                        if (isPlayerSelected && player.hasMoved == false) {
+                            _selectionState = "MOVING";
+                            _currentlyMovingPlayer = player;
+                            _movingFromCellIndex = _selectedCell.index;
+                        }
+                    }   
+                }
+                break;
+            case "MOVING":
+                int moveRadius = _currentlyMovingPlayer.BASE_STATS["MOVE"].CalculateValue();
+
+                List<int> movableCellIndices = MoveableCells(_movingFromCellIndex, moveRadius);
+                _selector.SetCellLimits(movableCellIndices);
+
+                foreach(int cellIndex in movableCellIndices) {
+                    if (IsEnemyWithinCell(cellIndex)) {
+                        SetCellHighlight("ATTACK", cellIndex);
+                    } else if (_grid.cells[cellIndex].canCross) {
+                        SetCellHighlight("MOVE", cellIndex);
+                    }
+                }
+
+                break;
+        }
+    }
+
+    List<int> MoveableCells(int cellIndex, int moveRadius) {
+        List<int> moveRange = _grid.CellGetNeighbours(cellIndex, moveRadius);
+
+        if (!_currentlyMovingPlayer.CanFly) moveRange = moveRange.Except(_landObstacleCells).ToList();
+        // if (_currentlyMovingPlayer.CanFly) moveRange = (List<int>)moveRange.Except(_airObstacleCells); TODO
+
+        moveRange.Add(cellIndex);
+        return moveRange;
+    }
+
+    bool IsEnemyWithinCell(int cellIndex) {
+        bool isEnemyInCell = false;
+
+        if (_enemies.Count > 0) {
+            foreach(EnemyEntity enemy in _enemies) {
+                int enemyCellIndex = _enemyCells[enemy].index;
+                Vector3 enemyPosition = _cellPositions[enemyCellIndex].center;;
+                
+                if (WithinCell(_cellPositions[cellIndex], enemyPosition)) {
+                    isEnemyInCell = true;
+                    break;
+                }
+            }
+        }
+
+        if (_otherEnemies.Count > 0) {
+            foreach(OtherEnemyEntity otherEnemy in _otherEnemies) {
+                Bounds otherEnemyPosition = _cellPositions[_otherEnemyCells[otherEnemy].index];
+                
+                if (WithinCellAsBounds(_cellPositions[cellIndex], otherEnemyPosition)) {
+                    isEnemyInCell = true;
+                    break;
+                }
+            }
+        }
+
+        return isEnemyInCell;
+    }
+
+    void SetCellHighlight(string type, int cellIndex) {
+        if (!cellHighlights.Keys.Contains(type)) throw new System.Exception($"Cell Highlight type: '{type}' is invalid.");
+        if (_activeHighLights.ContainsKey((cellIndex, type))) return;
+
+        Vector3 cellPosition = _cellPositions[cellIndex].center;
+        CellHighlighter highlightPrefab = cellHighlights[type];
+
+        GameObject highlightObj = Instantiate(highlightPrefab.gameObject, cellPosition, highlightPrefab.transform.rotation);
+        CellHighlighter highlight = highlightObj.GetComponent<CellHighlighter>();
+
+        _activeHighLights.Add((cellIndex, type), highlight);
     }
 
     void RemoveAllHighlights(bool untracked = false) {
@@ -211,10 +311,10 @@ public class GridBattleManager : GridInterface
 
     void SetupEntityLists() {
         foreach(MapEntity entity in allEntities) {
-            if (entity.entityType == "player") AddPlayer(entity);
-            if (entity.entityType == "ally")  AddAlly(entity);
-            if (entity.entityType == "enemy") AddEnemy(entity);
-            if (entity.entityType == "other_enemy") AddOtherEnemy(entity);
+            if (entity.EntityType == "player") AddPlayer(entity);
+            if (entity.EntityType == "ally")  AddAlly(entity);
+            if (entity.EntityType == "enemy") AddEnemy(entity);
+            if (entity.EntityType == "other_enemy") AddOtherEnemy(entity);
         }
     }
 
@@ -223,8 +323,23 @@ public class GridBattleManager : GridInterface
         _allyCells      = AllyInhabitingCells();
         _enemyCells     = EnemyInhabitingCells();
         _otherEnemyCells = OtherEnemyInhabitingCells();
+    
     }
 
+
+    void PositionEntities() {
+        foreach (KeyValuePair<PlayerEntity, Cell> entry in _playerCells) 
+            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
+
+        foreach (KeyValuePair<EnemyEntity, Cell> entry in _enemyCells) 
+            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
+
+        foreach (KeyValuePair<OtherEnemyEntity, Cell> entry in _otherEnemyCells) 
+            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
+
+        foreach (KeyValuePair<AllyEntity, Cell> entry in _allyCells) 
+            entry.Key.transform.position = _cellPositions[entry.Value.index].center; 
+    }
 
     void SetLandObstables(GameObject obstacle, int cellIndex, Bounds cellBounds) {
         List<Bounds> objBounds = new List<Bounds>();
@@ -235,22 +350,22 @@ public class GridBattleManager : GridInterface
 
         if (WithinCellAsColliders(cellBounds, objBounds)) {
             // _grids.cells[cellIndex].canCross = selectedPlayer.canFly;
+
+            _landObstacleCells.Add(cellIndex);
             
             _grid.CellSetGroup (cellIndex, CELL_MASKS["IMMOVABLE_ON_LAND"]);
+            _grid.CellSetTag(cellIndex, CELL_MASKS["IMMOVABLE_ON_LAND"]);
             
             // Assign a crossing cost to barrier for path-finding purposes
-            _grid.CellSetSideCrossCost (cellIndex, CELL_SIDE.Top, barrierCost);
-            _grid.CellSetSideCrossCost (cellIndex, CELL_SIDE.Left, barrierCost);
-            _grid.CellSetSideCrossCost (cellIndex, CELL_SIDE.Right, barrierCost);
-            _grid.CellSetSideCrossCost (cellIndex, CELL_SIDE.Bottom, barrierCost);
+            // _grid.CellSetSideCrossCost (cellIndex, CELL_SIDE.Top, barrierCost);
+            // _grid.CellSetSideCrossCost (cellIndex, CELL_SIDE.Left, barrierCost);
+            // _grid.CellSetSideCrossCost (cellIndex, CELL_SIDE.Right, barrierCost);
+            // _grid.CellSetSideCrossCost (cellIndex, CELL_SIDE.Bottom, barrierCost);
         }
     }
    
     void ScanCells()
     {
-        SetupEntityLists();
-        SetupCellLists();
-        
         GameObject[] landObstacles = GameObject.FindGameObjectsWithTag("Land Obstacle");
 
         for(int i = 0; i < _cellPositions.Count; i++) {

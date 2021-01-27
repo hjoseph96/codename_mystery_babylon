@@ -7,7 +7,7 @@ public class OtherEnemyEntity : MapEntity
     new void Awake() {
         base.Awake();
 
-        entityType = "other_enemy";
+        _entityType = "other_enemy";
     }
     // Start is called before the first frame update
     void Start()

@@ -7,7 +7,7 @@ public class PlayerEntity : MapEntity
     new void Awake() {
         base.Awake();
 
-        entityType = "player";
+        _entityType = "player";
     }
     // Start is called before the first frame update
     void Start()

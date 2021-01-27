@@ -9,12 +9,9 @@ public class GridSelect : MonoBehaviour
 
     GridBattleManager _gridInfo;
     Dictionary<int, Bounds> _cellPositions = new Dictionary<int, Bounds>();
+    List<int> _limitedToCells = new List<int>();
 
     // Start is called before the first frame update
-    public void SetCursor(GridBattleManager grid, Dictionary<int, Bounds> cellPositions) {
-        _gridInfo = grid;
-        _cellPositions = cellPositions;
-    }
     void Start()
     {
         
@@ -28,6 +25,14 @@ public class GridSelect : MonoBehaviour
         if (input.x != 0 || input.y!= 0) Move(input);
     }
 
+    public void SetCursor(GridBattleManager grid, Dictionary<int, Bounds> cellPositions) {
+        _gridInfo = grid;
+        _cellPositions = cellPositions;
+    }
+
+    public void SetCellLimits(List<int> moveableCells) {
+        _limitedToCells = moveableCells;
+    }
 
     void Move(Vector2 inputVector) {
         float horizontalInfluence = Mathf.Abs(inputVector.x);
@@ -58,6 +63,7 @@ public class GridSelect : MonoBehaviour
 
     Vector3 NextDestination(string axis, string lookDirection) {
         Vector3 destination;
+        int destinationIndex;
 
         int columnCount = _gridInfo.ColumnCount;
         int currentCellIndex = _gridInfo.SelectedCell.index;
@@ -65,20 +71,29 @@ public class GridSelect : MonoBehaviour
         // EDIT for all the way right, left, up and down.
         switch(lookDirection) {
             case "LEFT":
-                destination = _cellPositions[currentCellIndex - 1].center;
+                destinationIndex = currentCellIndex - 1;
+                destination = _cellPositions[destinationIndex].center;
                 break;
             case "RIGHT":
-                destination = _cellPositions[currentCellIndex + 1].center;
+                destinationIndex = currentCellIndex + 1;
+                destination = _cellPositions[destinationIndex].center;
                 break;
             case "UP":
-                destination = _cellPositions[currentCellIndex + columnCount].center;
+                destinationIndex = currentCellIndex + columnCount;
+                destination = _cellPositions[destinationIndex].center;
                 break;
             case "DOWN":
-                destination = _cellPositions[currentCellIndex - columnCount].center;
+                destinationIndex = currentCellIndex - columnCount;
+                destination = _cellPositions[destinationIndex].center;
                 break;
             default:
                 throw new System.Exception($"Look Direction: {lookDirection} is invalid.");
         }
+
+        // Disallow movement outside cells
+        if (_limitedToCells.Count > 0)
+            if (!_limitedToCells.Contains(destinationIndex)) 
+                return transform.position;
 
         return destination;
     }
