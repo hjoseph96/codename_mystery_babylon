@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1843570775
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 7535365054623197887, guid: 67b3202651162ac49be3145619bcf186,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -116,4 +116,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44bc216c1ca325c408ef91a2d7568495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   moveSpeed: 2

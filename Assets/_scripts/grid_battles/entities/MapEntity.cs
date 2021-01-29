@@ -76,6 +76,7 @@ public class MapEntity : SerializedMonoBehaviour
 
     protected static string[] FACING_DIRECTIONS = {"UP", "DOWN", "LEFT", "RIGHT"};
 
+    protected int cellIndex = 0;
     private bool _isMoving = false;
 
     
@@ -114,6 +115,48 @@ public class MapEntity : SerializedMonoBehaviour
             Play(_Idles);
         }
         
+    }
+
+    protected void TraverseCells() {
+        _isMoving = true;
+        
+        Vector3 cellCenter = _movePath[cellIndex];
+        // if (!rotationSet) {
+        //     Quaternion newRotation = Quaternion.Euler(transform.eulerAngles.x, directionToLook(cellCenter), transform.eulerAngles.z);
+        //     transform.rotation = newRotation;
+        //     rotationSet = true;
+        // }
+
+        // Vector3 currentPosition = this.transform.position;
+
+        // if(Vector3.Distance(currentPosition, cellCenter) > .1f) {
+        //     string direction = currentlyLooking();
+        //     float step =  moveSpeed * Time.deltaTime;
+
+        //     transform.position = Vector3.MoveTowards(transform.position, cellCenter, step);
+        // } else {
+        //     rotationSet = false;
+            
+        //     if (cellIndex < movePath.Count - 1) {
+        //         cellIndex += 1;
+        //     } else {
+        //         animator.Play("Idle");
+                
+        //         cellIndex = 0;
+        //         movePath = new List<Vector3>();
+        //         transform.position = Vector3.Lerp (transform.position, cellCenter, 0.5f);
+
+        //         Cell occupyingCell = TGSInterface.CellAtPosition(cellCenter);
+        //         currentCellIndex = occupyingCell.index;
+                
+        //         int mask = TGSInterface.CELL_MASKS[EntityType.ToUpper()];
+        //         tgs.CellSetGroup(occupyingCell.index, mask);
+
+        //         isMoving = false;
+        //         OnReachedDestination.Invoke();
+        //     }
+        // }
+
     }
 
     private void Play(DirectionalAnimationSet animations)

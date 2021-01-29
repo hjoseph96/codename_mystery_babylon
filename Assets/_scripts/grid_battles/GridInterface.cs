@@ -22,6 +22,9 @@ public class GridInterface : MonoBehaviour
 
     public static Dictionary<string, int> CELL_MASKS = new Dictionary<string, int>();
     protected Grid2D _grid;
+    public Grid2D Grid {
+        get { return _grid; }
+    }
 
     protected UnityEvent OnFirstScan = new UnityEvent();
 
@@ -144,6 +147,29 @@ public class GridInterface : MonoBehaviour
         return withinX && withinY;
     }
 
+    // TODO: MODIFY FOR EDGES
+    public List<int> GetHorizontalNeighbors(int cellIndex) {
+        List<int> horizontalNeighbors = new List<int>();
+
+        List<int> immediateNeighbors = _grid.CellGetNeighbours(cellIndex, 1);
+        immediateNeighbors.Remove(cellIndex + _grid.rowCount);
+        immediateNeighbors.Remove(cellIndex - _grid.rowCount);
+
+        return immediateNeighbors;
+    }
+
+    
+    // TODO: MODIFY FOR EDGES
+    public List<int> GetVerticalNeighbors(int cellIndex) {
+        List<int> horizontalNeighbors = new List<int>();
+
+        List<int> immediateNeighbors = _grid.CellGetNeighbours(cellIndex, 1);
+        immediateNeighbors.Remove(cellIndex + 1);
+        immediateNeighbors.Remove(cellIndex - 1);
+
+        return immediateNeighbors;
+    }
+
     protected bool WithinCellAsBounds(Bounds cellBounds, Bounds meshBounds) {
         return cellBounds.Intersects(meshBounds);
     }
@@ -170,7 +196,31 @@ public class GridInterface : MonoBehaviour
         return within;
     }
 
+    protected UnityEngine.Object LoadArrowSprite(string spriteName) {
+        string pathToSprite = $"Arrow/{spriteName}";
+        Debug.Log($"Trying to load Arrow sprite from file: Resources/{pathToSprite}");
 
+        UnityEngine.Object loadedSprite = Resources.Load($"Arrows/{spriteName}");
+        if (loadedSprite == null)
+            throw new System.IO.FileNotFoundException($"Arrow sprite cannot be found at: {pathToSprite}");
+
+        return loadedSprite;
+    }
+
+
+    protected void PositionEntities() {
+        foreach (KeyValuePair<PlayerEntity, Cell> entry in _playerCells) 
+            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
+
+        foreach (KeyValuePair<EnemyEntity, Cell> entry in _enemyCells) 
+            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
+
+        foreach (KeyValuePair<OtherEnemyEntity, Cell> entry in _otherEnemyCells) 
+            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
+
+        foreach (KeyValuePair<AllyEntity, Cell> entry in _allyCells) 
+            entry.Key.transform.position = _cellPositions[entry.Value.index].center; 
+    }
 
 
     protected void AddPlayer(MapEntity entity) {
