@@ -10,7 +10,14 @@ public class GridBattleManager : GridInterface
 
     public CellHighlightsDictionary cellHighlights;
     public GameObject mapCursor;
-
+    private Dictionary<string, UnityEngine.Object> _arrowPathSprites;
+    public Dictionary<string, UnityEngine.Object> ArrowPathSprites {
+        get { return _arrowPathSprites; }
+    }
+    private Dictionary<string, UnityEngine.Object> _arrowHeadSprites;
+    public Dictionary<string, UnityEngine.Object> ArrowHeadSprites {
+        get { return _arrowHeadSprites; }
+    }
    
     public ProCamera2D gridCamera;
 
@@ -31,6 +38,7 @@ public class GridBattleManager : GridInterface
     private string _selectionState;
     private PlayerEntity _currentlyMovingPlayer;
     private int _movingFromCellIndex;
+    private List<int> _moveableCellIndices= new List<int>();
     private List<int> _landObstacleCells = new List<int>();
     private List<int> _airObstacleCells = new List<int>();
 
@@ -44,6 +52,8 @@ public class GridBattleManager : GridInterface
 
         mapCursor = Instantiate(mapCursor) as GameObject;
         _selector = mapCursor.GetComponent<GridSelect>();
+        SetArrowPathSprites();
+        SetArrowHeadSprites();
 
         mapCursor.SetActive(false);
 
@@ -163,34 +173,42 @@ public class GridBattleManager : GridInterface
             case "MOVING":
                 int moveRadius = _currentlyMovingPlayer.BASE_STATS["MOVE"].CalculateValue();
 
-                List<int> movableCellIndices = MoveableCells(_movingFromCellIndex, moveRadius);
-                _selector.SetCellLimits(movableCellIndices);
+                SetMoveableCells(moveRadius);
 
-                foreach(int cellIndex in movableCellIndices) {
-                    if (IsEnemyWithinCell(cellIndex)) {
-                        SetCellHighlight("ATTACK", cellIndex);
-                    } else if (_grid.cells[cellIndex].canCross) {
+                _selector.SetMovingMode(_moveableCellIndices, _movingFromCellIndex, _currentlyMovingPlayer.facingDirection);
+                foreach(int cellIndex in _moveableCellIndices) {
+                    if (_grid.cells[cellIndex].canCross)
                         SetCellHighlight("MOVE", cellIndex);
-                    }
                 }
+                
 
                 break;
         }
     }
 
-    List<int> MoveableCells(int cellIndex, int moveRadius) {
-        List<int> moveRange = _grid.CellGetNeighbours(cellIndex, moveRadius);
 
-        if (!_currentlyMovingPlayer.CanFly) moveRange = moveRange.Except(_landObstacleCells).ToList();
-        // if (_currentlyMovingPlayer.CanFly) moveRange = (List<int>)moveRange.Except(_airObstacleCells); TODO
 
-        moveRange.Add(cellIndex);
-        return moveRange;
+    void SetMoveableCells(int moveRadius) {
+        if (_moveableCellIndices.Count == 0) {
+            _moveableCellIndices = _grid.CellGetNeighbours(_movingFromCellIndex, moveRadius);
+            _moveableCellIndices.Add(_movingFromCellIndex);
+        }
+
+        if (!_currentlyMovingPlayer.CanFly) _moveableCellIndices = _moveableCellIndices.Except(_landObstacleCells).ToList();
+        // if (_currentlyMovingPlayer.CanFly) _moveableCellIndices = _moveableCellIndices.Except(_airObstacleCells).ToList();
+
+        for(int i = 0; i < _moveableCellIndices.Count; i++) {
+            int cellIdx = _moveableCellIndices[i];
+            if (IsEnemyWithinCell(cellIdx)) {     // Set Attackable Highlight, but do not allow cursor to move on top (may change to show battle forecast)
+                SetCellHighlight("ATTACK", cellIdx);
+                _moveableCellIndices.Remove(cellIdx);
+            }
+        }
     }
 
     bool IsEnemyWithinCell(int cellIndex) {
         bool isEnemyInCell = false;
-
+        //  7166, 7165, 7265, 7266
         if (_enemies.Count > 0) {
             foreach(EnemyEntity enemy in _enemies) {
                 int enemyCellIndex = _enemyCells[enemy].index;
@@ -205,7 +223,8 @@ public class GridBattleManager : GridInterface
 
         if (_otherEnemies.Count > 0) {
             foreach(OtherEnemyEntity otherEnemy in _otherEnemies) {
-                Bounds otherEnemyPosition = _cellPositions[_otherEnemyCells[otherEnemy].index];
+                int otherEnemyCellIndex =_otherEnemyCells[otherEnemy].index;
+                Bounds otherEnemyPosition = _cellPositions[otherEnemyCellIndex];
                 
                 if (WithinCellAsBounds(_cellPositions[cellIndex], otherEnemyPosition)) {
                     isEnemyInCell = true;
@@ -326,19 +345,28 @@ public class GridBattleManager : GridInterface
     
     }
 
+    void SetArrowPathSprites() {
+        _arrowPathSprites = new Dictionary<string, Object>{
+            { "HORIZONTAL", LoadArrowSprite("Horizontal Arrow") },
+            { "VERTICAL", LoadArrowSprite("Vertical Arrow") },
+            { "HORIZONTAL - DOWN - FROM RIGHT", LoadArrowSprite("Horizontal Down From Right Arrow") },
+            { "HORIZONTAL - DOWN - FROM LEFT", LoadArrowSprite("Horizontal Down From Left Arrow") },
+            { "HORIZONTAL - UP - FROM LEFT", LoadArrowSprite("Vertical Left From Top Arrow") },
+            { "HORIZONTAL - UP - FROM RIGHT", LoadArrowSprite("Vertical Right From Top Arrow") },
+            { "VERTICAL - LEFT - FROM BOTTOM", LoadArrowSprite("Horizontal Down From Left Arrow") },
+            { "VERTICAL - LEFT - FROM TOP", LoadArrowSprite("Vertical Left From Top Arrow") },
+            { "VERTICAL - RIGHT - FROM BOTTOM", LoadArrowSprite("Horizontal Down From Right Arrow") },
+            { "VERTICAL - RIGHT - FROM TOP", LoadArrowSprite("Vertical Right From Top Arrow") },
+        };
+    }
 
-    void PositionEntities() {
-        foreach (KeyValuePair<PlayerEntity, Cell> entry in _playerCells) 
-            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
-
-        foreach (KeyValuePair<EnemyEntity, Cell> entry in _enemyCells) 
-            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
-
-        foreach (KeyValuePair<OtherEnemyEntity, Cell> entry in _otherEnemyCells) 
-            entry.Key.transform.position = _cellPositions[entry.Value.index].center;
-
-        foreach (KeyValuePair<AllyEntity, Cell> entry in _allyCells) 
-            entry.Key.transform.position = _cellPositions[entry.Value.index].center; 
+    void SetArrowHeadSprites() {
+        _arrowHeadSprites = new Dictionary<string, Object>{
+            { "HORIZONTAL - LEFT", LoadArrowSprite("Arrow Head Horizontal From Right") },
+            { "HORIZONTAL - RIGHT", LoadArrowSprite("Arrow Head Horizontal From Left") },
+            { "VERTICAL - UP", LoadArrowSprite("Arrow Head Vertical From Bottom") },
+            { "VERTICAL - DOWN", LoadArrowSprite("Arrow Head Vertical From Top") },
+        };
     }
 
     void SetLandObstables(GameObject obstacle, int cellIndex, Bounds cellBounds) {
