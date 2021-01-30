@@ -481,7 +481,7 @@ public class GridSelect : SerializedMonoBehaviour
     Vector3 NextDestination(string axis, string lookDirection) {
         Vector3 destination;
 
-        int columnCount = _gridInfo.ColumnCount;
+        int rowCount = _gridInfo.RowCount;
         int currentCellIndex = _gridInfo.SelectedCell.index;
 
         // EDIT for all the way right, left, up and down.
@@ -495,11 +495,11 @@ public class GridSelect : SerializedMonoBehaviour
                 destination = _cellPositions[_destinationCellIndex].center;
                 break;
             case "UP":
-                _destinationCellIndex = currentCellIndex + columnCount;
+                _destinationCellIndex = currentCellIndex + rowCount;
                 destination = _cellPositions[_destinationCellIndex].center;
                 break;
             case "DOWN":
-                _destinationCellIndex = currentCellIndex - columnCount;
+                _destinationCellIndex = currentCellIndex - rowCount;
                 destination = _cellPositions[_destinationCellIndex].center;
                 break;
             default:
