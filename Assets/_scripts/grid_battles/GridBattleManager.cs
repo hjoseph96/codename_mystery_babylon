@@ -180,6 +180,13 @@ public class GridBattleManager : GridInterface
                     if (_grid.cells[cellIndex].canCross)
                         SetCellHighlight("MOVE", cellIndex);
                 }
+
+                if (Input.GetKeyDown(KeyCode.X)) {
+                    _selectionState = "FREE";
+                    _currentlyMovingPlayer = default;
+                    _movingFromCellIndex = default;
+                    RemoveAllHighlights();
+                }
                 
 
                 break;
