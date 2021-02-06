@@ -52,8 +52,9 @@ public class GridBattleManager : GridInterface
 
         mapCursor = Instantiate(mapCursor) as GameObject;
         _selector = mapCursor.GetComponent<GridSelect>();
-        SetArrowPathSprites();
-        SetArrowHeadSprites();
+        
+        //SetArrowPathSprites();
+        //SetArrowHeadSprites();
 
         mapCursor.SetActive(false);
 
@@ -166,6 +167,7 @@ public class GridBattleManager : GridInterface
                             _selectionState = "MOVING";
                             _currentlyMovingPlayer = player;
                             _movingFromCellIndex = _selectedCell.index;
+                            _selector.StartPath(_movingFromCellIndex);
                         }
                     }   
                 }
@@ -186,6 +188,7 @@ public class GridBattleManager : GridInterface
                     _currentlyMovingPlayer = default;
                     _movingFromCellIndex = default;
                     RemoveAllHighlights();
+                    _selector.SetFreeMode();
                 }
                 
 
@@ -257,11 +260,13 @@ public class GridBattleManager : GridInterface
     }
 
     void RemoveAllHighlights(bool untracked = false) {
+        List<(int, string)> toBeDestroyed = new List<(int, string)>();
         foreach(KeyValuePair<(int, string), CellHighlighter> entry in _activeHighLights) {
             Destroy(entry.Value.gameObject);
 
-            _activeHighLights.Remove(entry.Key);
+            toBeDestroyed.Add(entry.Key);
         }
+        foreach((int, string) key in toBeDestroyed) _activeHighLights.Remove(key);
 
         if (untracked) {
             CellHighlighter[] highlights = GetComponents<CellHighlighter>();
@@ -352,29 +357,6 @@ public class GridBattleManager : GridInterface
     
     }
 
-    void SetArrowPathSprites() {
-        _arrowPathSprites = new Dictionary<string, Object>{
-            { "HORIZONTAL", LoadArrowSprite("Horizontal Arrow") },
-            { "VERTICAL", LoadArrowSprite("Vertical Arrow") },
-            { "HORIZONTAL - DOWN - FROM RIGHT", LoadArrowSprite("Horizontal Down From Right Arrow") },
-            { "HORIZONTAL - DOWN - FROM LEFT", LoadArrowSprite("Horizontal Down From Left Arrow") },
-            { "HORIZONTAL - UP - FROM LEFT", LoadArrowSprite("Vertical Left From Top Arrow") },
-            { "HORIZONTAL - UP - FROM RIGHT", LoadArrowSprite("Vertical Right From Top Arrow") },
-            { "VERTICAL - LEFT - FROM BOTTOM", LoadArrowSprite("Horizontal Down From Left Arrow") },
-            { "VERTICAL - LEFT - FROM TOP", LoadArrowSprite("Vertical Left From Top Arrow") },
-            { "VERTICAL - RIGHT - FROM BOTTOM", LoadArrowSprite("Horizontal Down From Right Arrow") },
-            { "VERTICAL - RIGHT - FROM TOP", LoadArrowSprite("Vertical Right From Top Arrow") },
-        };
-    }
-
-    void SetArrowHeadSprites() {
-        _arrowHeadSprites = new Dictionary<string, Object>{
-            { "HORIZONTAL - LEFT", LoadArrowSprite("Arrow Head Horizontal From Right") },
-            { "HORIZONTAL - RIGHT", LoadArrowSprite("Arrow Head Horizontal From Left") },
-            { "VERTICAL - UP", LoadArrowSprite("Arrow Head Vertical From Bottom") },
-            { "VERTICAL - DOWN", LoadArrowSprite("Arrow Head Vertical From Top") },
-        };
-    }
 
     void SetLandObstables(GameObject obstacle, int cellIndex, Bounds cellBounds) {
         List<Bounds> objBounds = new List<Bounds>();

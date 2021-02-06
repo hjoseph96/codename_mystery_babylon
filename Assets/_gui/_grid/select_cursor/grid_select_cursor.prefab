@@ -113,11 +113,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 760743984878154704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44bc216c1ca325c408ef91a2d7568495, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d1b4fd89aba9394ea66a597770fa757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -125,4 +125,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  moveSpeed: 2
+  moveSpeed: 1.86
+  _arrowPathPrefab: {fileID: 6217129466043737835, guid: bf2eea95bfd8f0e41a88b387b2cbbfc2,
+    type: 3}

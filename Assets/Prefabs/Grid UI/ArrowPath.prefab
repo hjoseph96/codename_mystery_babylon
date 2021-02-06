@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6217129466043737836
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6217129466043737834}
+  - component: {fileID: 6217129466043737835}
+  m_Layer: 0
+  m_Name: ArrowPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6217129466043737834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6217129466043737836}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6217129466043737835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6217129466043737836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50653da7d9eee4042b49e3ee5465f21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowHorizontal: {fileID: -7384637203335457906, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowVertical: {fileID: 8435471163354961809, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowLeftUp: {fileID: 4000737846610637207, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowRightUp: {fileID: -3584321490018097274, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowLeftDown: {fileID: -7721970667141598928, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowRightDown: {fileID: -122350712075675272, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowHeadLeft: {fileID: -4134992559255683415, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowHeadRight: {fileID: 4762311951474606395, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowHeadUp: {fileID: 7355705268164979159, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
+  _arrowHeadDown: {fileID: -4589984146147985048, guid: 3842b17576f95ee45a542bf941b03d56,
+    type: 3}
