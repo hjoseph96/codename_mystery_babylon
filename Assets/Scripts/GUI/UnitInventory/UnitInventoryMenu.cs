@@ -100,7 +100,7 @@ public class UnitInventoryMenu : MonoBehaviour
         var itemSlot = itemSlots[itemSlotIndex];
 
         Vector2 cursorDestination = new Vector2(
-            _pointer.transform.localPosition.x, itemSlot.transform.localPosition.y
+            _pointer.transform.localPosition.x, itemSlot.transform.localPosition.y - 10
         );
 
         _pointer.MoveTo(cursorDestination);
