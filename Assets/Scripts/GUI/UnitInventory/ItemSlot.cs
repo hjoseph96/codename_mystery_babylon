@@ -46,4 +46,8 @@ public class ItemSlot : MonoBehaviour
         _allInOneMat.DisableKeyword("GHOST_ON");
         _iconAllInOneMat.SetFloat("_OutlineAlpha", 0);
     }
+
+    public bool IsEmpty() {
+        return !itemIcon.IsActive();
+    }
 }

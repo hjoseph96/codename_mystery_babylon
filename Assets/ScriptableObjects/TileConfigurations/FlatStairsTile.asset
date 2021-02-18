@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 595bfd9e250ffb84db10e5f914c4da04, type: 3}
-  m_Name: StairsTile
+  m_Name: FlatStairsTile
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -126,6 +126,6 @@ MonoBehaviour:
       Entry: 8
       Data: 
   HasLineOfSight: 1
-  IsStairs: 1
+  IsStairs: 0
   StairsOrientation: 1
   UnitType: 1
