@@ -10,24 +10,17 @@ using UnityEngine.Tilemaps;
 [ExecuteAlways]
 public class WorldGridEditor : SerializedMonoBehaviour
 {
-    /*public enum DebuggingMode
-    {
-        Passability,
-        LineOfSight,
-        ExitAndEntrance
-    }*/
-
     [PropertyOrder(0)]
-    public bool EnableSelection;
+    public bool EnableSelection, AutoUpdate = true;
 
-    [FoldoutGroup("Settings"), ShowIf("EnableSelection"), PropertyOrder(1)]
+    [FoldoutGroup("Settings"), PropertyOrder(1)]
     public bool SingleTilemapMode = true;
 
-    [FoldoutGroup("Settings"), ShowIf("EnableSelection"), PropertyOrder(2), ShowIf("SingleTilemapMode")]
+    [FoldoutGroup("Settings"), PropertyOrder(2), ShowIf("SingleTilemapMode")]
     [ValueDropdown("GetTilemaps")]
     public Tilemap ActiveTilemap;
 
-    [FoldoutGroup("Settings"), ShowIf("EnableSelection"), PropertyOrder(3)]
+    [FoldoutGroup("Settings"), PropertyOrder(3)]
     public bool ShowConfigurationState;
 
     [FoldoutGroup("Debug"), PropertyOrder(10)]
@@ -41,16 +34,105 @@ public class WorldGridEditor : SerializedMonoBehaviour
     [FoldoutGroup("Debug"), PropertyOrder(13)]
     public bool DebugExitAndEntrance;
 
-    //public bool EnableDebugging;
+    [PropertyOrder(20)]
+    public TileConfiguration DefaultConfig;
 
-    //[FoldoutGroup("Debug"), ShowIf("EnableDebugging"), PropertyOrder(12)]
-    //public DebuggingMode DebugMode;
+    [SerializeField, HideInInspector] private TileConfigurationInfluenceZone[] _influenceZones;
 
     [HideInInspector] public Grid Grid;
     [HideInInspector] public List<Tilemap> Tilemaps = new List<Tilemap>();
 
     [HideInInspector] public Vector2Int Size, Origin;
 
+    private float _lastUpdateTime;
+    private const float UpdateInterval = 0.5f;
+
+    public WorldCell[,] WorldGrid
+    {
+        get
+        {
+            if (_worldGrid == null)
+            {
+                BakeWorldGridData();
+            }
+
+            return _worldGrid;
+        }
+    }
+
+    private WorldCell[,] _worldGrid;
+
+
+    [Button(ButtonSizes.Large), GUIColor(0, 1, 0), PropertyOrder(30)]
+    public void BakeWorldGridData()
+    {
+        if (!Application.isPlaying)
+        {
+            UpdateTilemaps();
+        }
+
+        var width = Size.x;
+        var height = Size.y;
+
+        _worldGrid = new WorldCell[width, height];
+
+        //var t = Time.realtimeSinceStartup;
+
+        var heightMapObject = transform.Find("Heightmap");
+        heightMapObject.gameObject.SetActive(false);
+        var heightMap = heightMapObject.GetComponent<Tilemap>();
+
+        foreach (var zone in _influenceZones)
+        {
+            var rect = zone.GetWorldRectInt();
+            foreach (var pos in rect.allPositionsWithin)
+            {
+                var gridPos = pos - Origin;
+                var tileHeight = 0;
+
+                if (heightMap != null && heightMap.HasTile((Vector3Int) pos))
+                {
+                    tileHeight = heightMap.GetTile<NavigationTile>((Vector3Int)pos).Height;
+                }
+
+                _worldGrid[gridPos.x, gridPos.y] = new WorldCell(gridPos, zone.Config, tileHeight, Vector3.one);
+            }
+
+            if (Application.isPlaying)
+                Destroy(zone.gameObject);
+        }
+
+        for (var j = 0; j < height; j++)
+        {
+            for (var i = 0; i < width; i++)
+            {
+                if (_worldGrid[i, j] != null)
+                    continue;
+
+                var pos = new Vector2Int(i, j) + Origin;
+                var config = DefaultConfig;
+                var tileHeight = 0;
+                var scale = Vector3.one;
+
+                var tile = Tilemaps.GetTileAtPosition(pos, out var tilemap);
+
+                if (tile != null)
+                {
+                    config = tile.Config;
+                    scale = tilemap.GetTransformMatrix((Vector3Int) pos).lossyScale;
+
+                    if (heightMap != null && heightMap.HasTile((Vector3Int) pos))
+                    {
+                        tileHeight = heightMap.GetTile<NavigationTile>((Vector3Int) pos).Height;
+                    }
+                }
+                
+                _worldGrid[i, j] = new WorldCell(new Vector2Int(i, j), config, tileHeight, scale);
+            }
+        }
+
+        //Debug.Log("Baking WorldGrid: " + (Time.realtimeSinceStartup - t) * 1000 + " ms");
+    }
 
     private void Awake()
     {
@@ -61,6 +143,19 @@ public class WorldGridEditor : SerializedMonoBehaviour
     {
         SceneView.duringSceneGui -= OnSceneGUI;
         SceneView.duringSceneGui += OnSceneGUI;
+    }
+
+    private void Update()
+    {
+        if (Application.isPlaying || !AutoUpdate)
+            return;
+
+        _influenceZones = GetComponentsInChildren<TileConfigurationInfluenceZone>();
+        if (Time.time - _lastUpdateTime < UpdateInterval)
+            return;
+
+        _lastUpdateTime = Time.time;
+        BakeWorldGridData();
     }
 
     private void OnDisable()
@@ -88,6 +183,7 @@ public class WorldGridEditor : SerializedMonoBehaviour
             min = new Vector2Int(Mathf.Min(min.x, cellMin.x), Mathf.Min(min.y, cellMin.y));
             max = new Vector2Int(Mathf.Max(max.x, cellMax.x), Mathf.Max(max.y, cellMax.y));
         }
+
         Size = max - min;
         Origin = min;
     }
@@ -112,6 +208,12 @@ public class WorldGridEditor : SerializedMonoBehaviour
             UpdateTilemaps();
         }
 
+        if (SingleTilemapMode)
+        {
+            Tilemaps.Clear();
+            Tilemaps.Add(ActiveTilemap);
+        }
+
         if (!EnableSelection)
         {
             return;
@@ -130,7 +232,6 @@ public class WorldGridEditor : SerializedMonoBehaviour
                 if (ev.button == 0)
                 {
                     var currentTile = Tilemaps.GetTileAtPosition((Vector2Int) tilemapPosition, false);
-
                     if (currentTile != null)
                     {
                         var config = currentTile.Config;
@@ -183,7 +284,7 @@ public class WorldGridEditor : SerializedMonoBehaviour
             camera.ScreenToWorldPoint(new Vector3(ev.mousePosition.x, camera.pixelHeight - ev.mousePosition.y, camera.nearClipPlane));
 
         // Draw Debug information
-        if (/*EnableDebugging &&*/ UnitType != UnitType.None)
+        if ((DebugPassability || DebugLineOfSight || DebugExitAndEntrance) && UnitType != UnitType.None)
         {
             var xMin = Mathf.Max(gridMinPos.x, Origin.x);
             var yMin = Mathf.Max(gridMinPos.y, Origin.y);
@@ -198,30 +299,30 @@ public class WorldGridEditor : SerializedMonoBehaviour
                 {
                     var pos = new Vector2Int(i, j) + (Application.isPlaying ? Origin : Vector2Int.zero);
                     var tile = Tilemaps.GetTileAtPosition(pos);
+
+                    var gridPos = pos - Origin;
+                    var cell = WorldGrid[gridPos.x, gridPos.y];
+
                     if (tile == null)
                     {
                         continue;
                     }
 
                     if (DebugPassability)
-                        //(DebugMode == DebuggingMode.Passability)
                     {
-                        var isPassable = tile.Config.TravelCost.TryGetValueExt(UnitType, out var cost) && cost >= 0;
+                        var isPassable = cell.IsPassable(UnitType);
                         var color = isPassable ? Color.green : Color.red;
                         color.a = isPassable ? 0.3f : 0.4f;
                         Handles.color = color;
                         var center = ActiveTilemap.GetCellCenterWorld((Vector3Int)pos);
-                        //Gizmos.color = color;
-                        //Gizmos.DrawCube(new Vector2(center.x - 0.5f, center.y - 0.5f), Vector2.one);
                         Handles.DrawSolidRectangleWithOutline(new Rect(center.x - 0.5f, center.y - 0.5f, 1f, 1f),
                             color, color);
                     }
 
                     if (DebugLineOfSight)
-                        //(DebugMode == DebuggingMode.LineOfSight)
                     {
-                        var color = tile.Config.HasLineOfSight ? Color.green : Color.red;
-                        color.a = tile.Config.HasLineOfSight ? 0.3f : 0.4f;
+                        var color = cell.HasLineOfSight ? Color.green : Color.red;
+                        color.a = cell.HasLineOfSight ? 0.3f : 0.4f;
                         Handles.color = color;
                         var center = ActiveTilemap.GetCellCenterWorld((Vector3Int)pos);
                         Handles.DrawSolidRectangleWithOutline(new Rect(center.x - 0.5f, center.y - 0.5f, 1f, 1f),
@@ -229,18 +330,15 @@ public class WorldGridEditor : SerializedMonoBehaviour
                     }
                     
                     if (DebugExitAndEntrance)
-                        //(DebugMode == DebuggingMode.ExitAndEntrance)
                     {
                         var color = Color.red;
                         var offset = 0.04f;
                         var width = 0.12f;
 
-                        var leftTile = Tilemaps.GetTileAtPosition(pos + Vector2Int.left);
-                        if (leftTile != null &&
-                            (tile.Config.BlockExit.TryGetValue(Direction.Left, out var type) &&
-                             (type & UnitType) == UnitType ||
-                             leftTile.Config.BlockEntrance.TryGetValue(Direction.Right, out type) &&
-                             (type & UnitType) == UnitType))
+                        var leftCell = gridPos.x > 0 ? WorldGrid[gridPos.x - 1, gridPos.y] : null;
+                        if (leftCell != null && 
+                            (!cell.CanExit(Direction.Left, UnitType) || 
+                             !leftCell.CanEnter(Direction.Right, UnitType)))
                         {
                             var cellPos = ActiveTilemap.CellToWorld((Vector3Int)pos);
                             Handles.color = color;
@@ -249,12 +347,10 @@ public class WorldGridEditor : SerializedMonoBehaviour
                                 color, color);
                         }
 
-                        var rightTile = Tilemaps.GetTileAtPosition(pos + Vector2Int.right);
-                        if (rightTile != null &&
-                            (tile.Config.BlockExit.TryGetValue(Direction.Right, out type) &&
-                             (type & UnitType) == UnitType ||
-                             rightTile.Config.BlockEntrance.TryGetValue(Direction.Left, out type) &&
-                             (type & UnitType) == UnitType))
+                        var rightCell = gridPos.x < Size.x - 1 ? WorldGrid[gridPos.x + 1, gridPos.y] : null;
+                        if (rightCell != null && 
+                            (!cell.CanExit(Direction.Right, UnitType) || 
+                             !rightCell.CanEnter(Direction.Left, UnitType)))
                         {
                             var cellPos = ActiveTilemap.CellToWorld((Vector3Int)pos);
                             Handles.color = color;
@@ -263,12 +359,10 @@ public class WorldGridEditor : SerializedMonoBehaviour
                                 color, color);
                         }
 
-                        var upTile = Tilemaps.GetTileAtPosition(pos + Vector2Int.up);
+                        var upTile = gridPos.y < Size.y - 1 ? WorldGrid[gridPos.x, gridPos.y + 1] : null;
                         if (upTile != null &&
-                            (tile.Config.BlockExit.TryGetValue(Direction.Up, out type) &&
-                             (type & UnitType) == UnitType ||
-                             upTile.Config.BlockEntrance.TryGetValue(Direction.Down, out type) &&
-                             (type & UnitType) == UnitType))
+                            (!cell.CanExit(Direction.Up, UnitType) || 
+                             !upTile.CanEnter(Direction.Down, UnitType)))
                         {
                             var cellPos = ActiveTilemap.CellToWorld((Vector3Int)pos);
                             Handles.color = color;
@@ -277,12 +371,10 @@ public class WorldGridEditor : SerializedMonoBehaviour
                                 color, color);
                         }
 
-                        var downTile = Tilemaps.GetTileAtPosition(pos + Vector2Int.down);
+                        var downTile = gridPos.y > 0 ? WorldGrid[gridPos.x, gridPos.y - 1] : null;
                         if (downTile != null &&
-                            (tile.Config.BlockExit.TryGetValue(Direction.Down, out type) &&
-                             (type & UnitType) == UnitType ||
-                             downTile.Config.BlockEntrance.TryGetValue(Direction.Up, out type) &&
-                             (type & UnitType) == UnitType))
+                            (!cell.CanExit(Direction.Down, UnitType) || 
+                             !downTile.CanEnter(Direction.Up, UnitType)))
                         {
                             var cellPos = ActiveTilemap.CellToWorld((Vector3Int)pos);
                             Handles.color = color;
@@ -332,9 +424,6 @@ public class WorldGridEditor : SerializedMonoBehaviour
             var tilemapPosition = ActiveTilemap.WorldToCell(mouseWorldPosition);
             Handles.color = Color.yellow;
             Handles.DrawWireCube(ActiveTilemap.GetCellCenterWorld(tilemapPosition), Vector3.one);
-            //var _pos = ActiveTilemap.GetCellCenterWorld(tilemapPosition);
-            //Handles.DrawSolidRectangleWithOutline(new Rect(_pos.x - 0.5f, _pos.y - 0.5f, 1f, 1f),
-            //    Color.yellow, Color.yellow);
         }
     }
 }

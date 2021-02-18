@@ -3,16 +3,16 @@ using Tazdraperm.Utility;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
 [RequireComponent(typeof(Grid))]
 [RequireComponent(typeof(WorldGridEditor))]
 public class WorldGrid : MonoBehaviour, IInitializable
 {
     public static WorldGrid Instance;
-
-    [SerializeField] private TileConfiguration _defaultConfig;
+    public const int CellSize = 16;
 
     [HideInInspector] public Grid Grid;
-    [HideInInspector] public Vector2Int Size; //, Origin;
+    [HideInInspector] public Vector2Int Size;
     public int Width => Size.x;
     public int Height => Size.y;
     public WorldCell this[int x, int y] => _worldGrid[x, y];
@@ -29,26 +29,8 @@ public class WorldGrid : MonoBehaviour, IInitializable
         _tilemaps.AddRange(GetComponentsInChildren<Tilemap>());
         _tilemaps.SortByRenderingOrder();
 
-        /*Vector2Int max;
-        var min = max = default;
-        foreach (var tilemap in _tilemaps)
-        {
-            tilemap.CompressBounds();
-
-            var localBounds = tilemap.localBounds;
-            var cellMin = Grid.WorldToCell(tilemap.transform.TransformPoint(localBounds.min));
-            var cellMax = Grid.WorldToCell(tilemap.transform.TransformPoint(localBounds.max));
-            min = new Vector2Int(Mathf.Min(min.x, cellMin.x), Mathf.Min(min.y, cellMin.y));
-            max = new Vector2Int(Mathf.Max(max.x, cellMax.x), Mathf.Max(max.y, cellMax.y));
-        }
-
-        Size = max - min;
-        Origin = min;*/
-
         var editor = GetComponent<WorldGridEditor>();
         Size = editor.Size;
-
-        _worldGrid = new WorldCell[Width, Height];
 
         // Translate such that (0, 0) cell will have (0, 0) world position
         var offset = Grid.CellToWorld((Vector3Int) editor.Origin);
@@ -58,24 +40,7 @@ public class WorldGrid : MonoBehaviour, IInitializable
             child.position -= offset;
         }
 
-        //Debug.Log(Origin + " _ " + Size);
-
-        for (var j = 0; j < Height; j++)
-        {
-            for (var i = 0; i < Width; i++)
-            {
-                var pos = new Vector2Int(i, j) + editor.Origin;
-                var config = _defaultConfig;
-                var tile = _tilemaps.GetTileAtPosition(pos);
-
-                if (tile != null)
-                {
-                    config = tile.Config;
-                }
-
-                _worldGrid[i, j] = new WorldCell(new Vector2Int(i, j), config);
-            }
-        }
+        _worldGrid = editor.WorldGrid;
     }
 
     public Vector2Int MouseToGrid()

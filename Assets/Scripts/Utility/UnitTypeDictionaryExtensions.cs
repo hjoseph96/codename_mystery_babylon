@@ -11,15 +11,27 @@ public static class UnitTypeDictionaryExtensions
             return false;
         }
 
-        var keys = dictionary.Keys.Where(type => (type & key) == key).ToArray();
-        if (keys.Length == 0)
+        var bestKey = UnitType.None;
+        var en = dictionary.GetEnumerator();
+        while (en.MoveNext())
+        {
+            var currentKey = en.Current.Key;
+            if ((currentKey & key) == key && (bestKey == UnitType.None || (int) currentKey < (int) bestKey))
+            {
+                bestKey = currentKey;
+            }
+        }
+        en.Dispose();
+
+        if (bestKey == UnitType.None)
         {
             result = default;
             return false;
         }
-
-        var bestKey = keys.OrderBy(type => (int) type).First();
-        result = dictionary[bestKey];
-        return true;
+        else
+        {
+            result = dictionary[bestKey];
+            return true;
+        }
     }
 }
