@@ -31,6 +31,37 @@ public class UnitInventoryMenu : MonoBehaviour
     void Update()
     {
         if (_open) {
+            if (!_pointer.IsMoving) {
+                var selectedIndex = itemSlots.IndexOf(_selectedSlot);
+                var lastOptionIndex = itemSlots.Count - 1;
+                var vertAxis = Input.GetAxisRaw("Vertical");
+
+                if (vertAxis < 0) {
+                    if (selectedIndex == lastOptionIndex) {
+                        selectedIndex = 0;
+                    } else {
+                        selectedIndex += 1;
+                    }
+                }
+
+                if (vertAxis > 0) {
+                    if (selectedIndex == 0) {
+                        selectedIndex = lastOptionIndex;
+                    } else {
+                        selectedIndex -= 1;
+                    }
+                }
+
+                if (vertAxis == 0) {
+                     if (Input.GetKeyDown(KeyCode.Z)) {
+                        // SelectAction(_selectedOption);
+                        return;
+                     }
+                }
+
+                MoveCursorTo(selectedIndex);
+            }
+
             if (Input.GetKeyDown(KeyCode.X))
                 CloseMenu();
         }
@@ -51,9 +82,7 @@ public class UnitInventoryMenu : MonoBehaviour
 
             itemSlot.Populate(inventoryItem);
         }
-        
         _selectedSlot = itemSlots[0];
-        _selectedSlot.SetSelected();
 
         this.SetActive(true);
         _open = true;
@@ -67,4 +96,15 @@ public class UnitInventoryMenu : MonoBehaviour
         OnMenuClose.Invoke();
     }
 
+    void MoveCursorTo(int itemSlotIndex) {
+        var itemSlot = itemSlots[itemSlotIndex];
+
+        Vector2 cursorDestination = new Vector2(
+            _pointer.transform.localPosition.x, itemSlot.transform.localPosition.y
+        );
+
+        _pointer.MoveTo(cursorDestination);
+        if (!_pointer.IsMoving)
+            _selectedSlot = itemSlot;
+    }
 }
