@@ -1,0 +1,68 @@
+Version 1.5.3
+- Support customize model rotate axis (Default rotate axis is Y. If it is X or Z, the shadow type will be changed to No Shadow automatically).
+- Added Setup Character tutorial pdf to this package.
+
+Version 1.5.2
+- Support Unity 5.6
+
+Version 1.5.1
+- Accept no-clip animation states (for generating building..).
+- Auto uncheck Apply-Root-Motion of the animator.
+- Fixed a bug when free memory.
+- Fixed some warnings related to the Unity 5.5's Particle System.
+
+Version 1.5.0
+- NEW FEATURE: Add 'Default Top-Down' to SS/TwoD/Camera Setting on menu!
+- NEW FEATURE: Add 'Generate Effect Sprites' feature!
+- NEW FEATURE: Add 'Image Generator' feature!
+- Fixed a bug which some errors occurred if the top line & the bot line are overlapping on the game view.
+
+Version 1.4.0:
+- NEW FEATURE: Auto play all generator scenes by one click!
+- NEW FEATURE: Generating multi characters in only one scene!
+
+Version 1.3.0:
+- NEW FEATURE: Render character sprites for 2 teams (2 different colors) with minimum resources.
+- Support Unity 5.1, Unity 5.2.
+
+Version 1.2.0:
+- Character object: now seperate body renderer & shadow renderer.
+- Add 'Direction Mask' to SpriteGenerator. Now you can select what directions you want to generate.
+- Add 'Shadow Type' to the Sprite Generator Window. You can select 'Real Shadow', 'Fake Shadow' or 'No Shadow'.
+- Add 'Camera Setting' to Menu > SS > TwoD, for 2.5d or 2d generating.
+- Add 'Sample2dInputController.cs' - a new demo script.
+- Fixed a rendering quality problem.
+
+Version 1.1.2:
+- Add 'speed' getter/setter to SpriteAnimator.
+- Add 'TextureScale' parameter to SpriteGeneratorManager.
+- Add 'DirectionTools' which helps to calculate direction of characters.
+- Add 'SampleCustomController' which presents how to make a custom controller.
+- Fixed SpriteAnimator bug when set the value of 'totalDuration'.
+- Fixed a rendering quality problem.
+- Fixed the shadow color bug.
+
+Version 1.1.1:
+- Better shadow quality.
+- Remove build warnings.
+
+Version 1.1.0:
+- Add the new feature: Generating Unity AnimationClip from generated 2d sprites!
+- Add 'Animation Duration' & 'Animation Framerate' to each Sprite Generator.
+- Add 'Max Direction' to the Sprite Generator Window.
+- Re-organize sprite folders: Golem/0/Attack/1.png -> Golem/Attack/0/1.png
+- Automatically delete old generated folders before a new generating.
+- Generating faster for long animations.
+- Fixed the bug when generating an very fast animation.
+
+Version 1.0.3:
+- Fixed the bug when you change the MaxDirection of SpriteGeneratorManager in the Hierarchy (default is 12).
+
+Version 1.0.2:
+- Fixed the bug which generating sprite with a background.
+
+Version 1.0.1:
+- Brush up output-image quality (fixed aliasing problem).
+
+Version 1.0.0:
+- First release.

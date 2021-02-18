@@ -19,7 +19,7 @@ public static class TilemapListExtensions
         });
     }
 
-    public static NavigationTile GetTileAtPosition(this List<Tilemap> list, Vector2Int position, bool withConfigOnly = true)
+    public static NavigationTile GetTileAtPosition(this List<Tilemap> list, Vector2Int position, out Tilemap foundFTilemap, bool withConfigOnly = true)
     {
         foreach (var tilemap in list)
         {
@@ -28,11 +28,18 @@ public static class TilemapListExtensions
                 var tile = tilemap.GetTile<NavigationTile>((Vector3Int) position);
                 if (tile != null && (!withConfigOnly || tile.Config != null))
                 {
+                    foundFTilemap = tilemap;
                     return tile;
                 }
             }
         }
 
+        foundFTilemap = null;
         return null;
+    }
+
+    public static NavigationTile GetTileAtPosition(this List<Tilemap> list, Vector2Int position, bool withConfigOnly = true)
+    {
+        return GetTileAtPosition(list, position, out _, withConfigOnly);
     }
 }

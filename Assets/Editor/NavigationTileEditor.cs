@@ -1,3 +1,4 @@
+using Animancer.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class NavigationTileEditor : Editor
     public override void OnInspectorGUI()
     {
         EditorGUI.BeginChangeCheck();
+
         EditorGUILayout.BeginHorizontal();
         _tile.sprite = (Sprite) EditorGUILayout.ObjectField("Sprite", _tile.sprite, typeof(Sprite), true);
         EditorGUILayout.EndHorizontal();
@@ -27,23 +29,23 @@ public class NavigationTileEditor : Editor
 
         if (_tile.Config == null && GUILayout.Button("Create New Tile Configuration"))
         {
-            string path =
-                UnityEditor.EditorUtility.SaveFilePanelInProject("Choose path", "NewTileConfiguration.asset",
+            var path = 
+                EditorUtility.SaveFilePanelInProject("Choose path", "NewTileConfiguration.asset",
                     "asset",
                     "Please enter a file name");
 
             if (path.Length != 0)
             {
-                TileConfiguration asset = CreateInstance<TileConfiguration>();
+                var asset = CreateInstance<TileConfiguration>();
                 AssetDatabase.CreateAsset(asset, path);
-                _tile.Config = asset;
-                Repaint();
+                _configProperty.SetValue(this, asset);
+                EditorUtility.SetDirty(_tile);
             }
         }
 
         if (EditorGUI.EndChangeCheck())
         {
-            UnityEditor.EditorUtility.SetDirty(_tile);
+            EditorUtility.SetDirty(_tile);
         }
 
         serializedObject.ApplyModifiedProperties();

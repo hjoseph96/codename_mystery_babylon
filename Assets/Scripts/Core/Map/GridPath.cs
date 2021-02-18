@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine;
 
 public class GridPath
