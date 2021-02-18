@@ -12,6 +12,7 @@ public class UnitInventoryMenu : MonoBehaviour
 
     private bool _open;
     private Unit _activePlayer;
+    private UICursor _pointer;
     private ItemSlot _selectedSlot;
 
     // Start is called before the first frame update
@@ -20,6 +21,8 @@ public class UnitInventoryMenu : MonoBehaviour
         if (itemSlots.Count > UnitInventory.MaxSize)
             throw new System.Exception("Given more item slots than allowed per user.");
         
+        _pointer = GetComponentInChildren<UICursor>();
+
         this.SetActive(false);
         _open = false;
     }
