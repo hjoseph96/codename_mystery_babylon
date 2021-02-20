@@ -10,6 +10,10 @@ public class ItemActionsMenuOption : MenuOption<ItemActionsMenu>
 
     protected Unit Unit;
     protected Item Item;
+    protected ItemSlot ItemSlot;
+    protected ItemActionsMenu ParentMenu;
+
+    protected int SelectedSlotIndex => ParentMenu.AllItemSlots.IndexOf(ItemSlot); 
 
     private TextMeshProUGUI _textMeshPro;
     private Image _backgroundImg;
@@ -25,10 +29,12 @@ public class ItemActionsMenuOption : MenuOption<ItemActionsMenu>
         _textMeshPro.text = Name;
     }
 
-    public void SetData(Unit unit, Item item) 
+    public void SetData(Unit unit, Item item, ItemSlot itemSlot, ItemActionsMenu parentMenu) 
     {
         Unit = unit;
         Item = item;
+        ItemSlot = itemSlot;
+        ParentMenu = parentMenu;
     }
 
     public override void SetSelected()
@@ -40,6 +46,14 @@ public class ItemActionsMenuOption : MenuOption<ItemActionsMenu>
     {
         _backgroundImg.color = _normalColor;
     }
+
+    public int EquippedWeaponSlotIndex() {
+        var playerItems = new List<Item>();
+        foreach(var item in Unit.Inventory.GetItems<Item>())
+            playerItems.Add(item);
+
+        return playerItems.IndexOf(Unit.EquippedWeapon);
+    }
 }
 
 
@@ -49,8 +63,13 @@ public class EquipOption : ItemActionsMenuOption
 
     public override void Execute()
     {
-        // TODO: Use Item.Equip, make overload for weapon and gear
+        // Remove Equipped Icon from currently Equipped ItemSlot
+        var currentlyEquippedSlot = ParentMenu.AllItemSlots[EquippedWeaponSlotIndex()];
+        currentlyEquippedSlot.HideEquippedIcon();
+        
         Unit.EquipWeapon(Item as Weapon);
+        ItemSlot.ShowEquippedIcon();
+
         Menu.Close();
     }
 }
@@ -61,8 +80,8 @@ public class UnequipOption : ItemActionsMenuOption
 
     public override void Execute()
     {
-        // TODO: Use Item.Equip, make overload for weapon and gear
         Unit.UnequipWeapon();
+        ItemSlot.HideEquippedIcon();
         Menu.Close();
     }
 }
@@ -84,8 +103,11 @@ public class DropOption : ItemActionsMenuOption
     public override void Execute()
     {
         Unit.Inventory.RemoveItem(Item);
+        
         var inventoryMenu = Menu.PreviousMenu as UnitInventoryMenu;
         inventoryMenu.RemoveSelected();
+        ItemSlot.HideEquippedIcon();
+
         Menu.Close();
     }
 }
@@ -100,6 +122,8 @@ public class ItemActionsMenu : Menu
 
     private Unit _selectedUnit;
     private Item _selectedItem;
+    private ItemSlot _selectedItemSlot;
+    public List<ItemSlot> AllItemSlots { get; private set; }
 
     private int _selectedOptionIndex;
 
@@ -107,14 +131,17 @@ public class ItemActionsMenu : Menu
     private float _lastInputTime;
     private readonly float _inputCooldown = 0.15f;
 
-    public void Show(Unit unit, Item item)
+    public void Show(Unit unit, Item item, ItemSlot itemSlot, List<ItemSlot> allItemSlots)
     {
         _selectedUnit = unit;
         _selectedItem = item;
+        _selectedItemSlot = itemSlot;
+        AllItemSlots = allItemSlots;
 
         foreach (var option in item.GetUIOptions())
             AddOption(option);
 
+        SetPositionUnderItemSlot(_selectedItemSlot.transform.localPosition);
         Activate();
         SelectOption(_options[0]);
 
@@ -156,7 +183,14 @@ public class ItemActionsMenu : Menu
     {
         var go = Instantiate(_optionPrefab, _optionsParent, false);
         var option = go.AddComponent(type) as ItemActionsMenuOption;
-        option.SetData(_selectedUnit, _selectedItem);
+        option.SetData(_selectedUnit, _selectedItem, _selectedItemSlot, this);
         _options.Add(option);
     }
+
+    private void SetPositionUnderItemSlot(Vector2 slotLocalPosition) {
+        var newPosition = new Vector2(
+            this.transform.localPosition.x, slotLocalPosition.y - 100
+        );
+        this.transform.localPosition = newPosition;
+    } 
 }

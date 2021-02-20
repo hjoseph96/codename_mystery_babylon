@@ -13,6 +13,8 @@ public class Item
     public virtual string Description { get; protected set; }
 
     public Unit Unit { get; set; }
+    public bool IsEquipped { get; set; }
+
 
     public Item(ScriptableItem source)
     {
