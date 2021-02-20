@@ -16,7 +16,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [DistinctUnitType]
     public UnitType UnitType;
 
-    [FoldoutGroup("Basic properties")] 
+    [FoldoutGroup("Basic properties")]
     [SerializeField] public string Name { get; private set; }
 
     [FoldoutGroup("Basic properties")] 
@@ -255,4 +255,105 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     }
 
     private static bool IsPlaying => Application.isPlaying;
+    
+    // ======================
+    // || Battle Formulas ||
+    // =====================
+
+    public int AttackDamage() {
+        int weaponDamage = EquippedWeapon.Stats[WeaponStat.Damage].ValueInt;
+        
+        if (EquippedWeapon.Type == WeaponType.Grimiore) { // MAGIC USER
+            int magicStat = Stats[UnitStat.Magic].ValueInt;
+            
+            return magicStat + weaponDamage;
+        } else {
+            int strengthStat = Stats[UnitStat.Strength].ValueInt;
+
+            return strengthStat + weaponDamage;
+        }
+    }
+
+    public int AttackSpeed() {
+        int weaponWeight = EquippedWeapon.Weight;
+        int constitutionStat = Stats[UnitStat.Constitution].ValueInt;
+        int burden = weaponWeight - constitutionStat;
+
+        if (burden < 0)
+            burden = 0;
+        
+        return Stats[UnitStat.Speed].ValueInt - burden;
+    }
+
+    public Dictionary<string, int> PreviewAttack(Unit defender) {
+        Dictionary<string, int> battleStats = new Dictionary<string, int>();
+
+        int atkDmg;
+        if (EquippedWeapon.Type == WeaponType.Grimiore) {
+            atkDmg = AttackDamage() - defender.Stats[UnitStat.Resistance].ValueInt;
+        } else {
+            atkDmg = AttackDamage() - defender.Stats[UnitStat.Defense].ValueInt;
+        }
+
+        battleStats["ATK_DMG"] = atkDmg;
+        battleStats["ACCURACY"] = Accuracy(defender);
+        battleStats["CRIT_RATE"] = CriticalHitRate(defender);
+
+        return battleStats;
+    }
+
+    public bool CanDoubleAttack(Unit target) {
+        int minDoubleAttackBuffer = 5;
+
+        if ((this.AttackSpeed() - target.AttackSpeed()) > minDoubleAttackBuffer)
+            return true;
+
+        return false;
+    }
+
+    public int CriticalHitRate(Unit target) {
+        int skill = Stats[UnitStat.Skill].ValueInt;
+        int weaponCritChance = EquippedWeapon.Stats[WeaponStat.CriticalHit].ValueInt;
+
+        int critRate = ((skill / 2) + weaponCritChance) - target.Stats[UnitStat.Luck].ValueInt;
+
+        // if (WEAPON_RANKS[EquippedWeapon.Type] == Weapon.RANKS["S"])
+        //     critRate += 5;
+
+        return critRate;
+    }
+
+    public int DodgeChance() {
+        int luckStat = Stats[UnitStat.Luck].ValueInt;
+
+        return (AttackSpeed() * 2) + luckStat;
+    }
+
+    public int HitRate(Vector2Int targetPosition) {
+        int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, targetPosition);
+        int luckStat = Stats[UnitStat.Luck].ValueInt;
+        int skillStat = Stats[UnitStat.Skill].ValueInt;
+        int weaponHitStat = EquippedWeapon.Stats[WeaponStat.Hit].ValueInt;
+
+        int hitRate = (skillStat * 2) + luckStat  + weaponHitStat;
+        if (boxDistance >= 2)
+            hitRate -= 15;
+        
+        return hitRate;
+    }
+
+    public int Accuracy(Unit target) {
+        int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, target.GridPosition);
+
+        if (EquippedWeapon.Type != WeaponType.Staff) {
+            // TODO: Add weapon W△ Weapon triangle effects
+            return HitRate(target.GridPosition) - target.DodgeChance();
+        } else {
+            int magicStat = Stats[UnitStat.Magic].ValueInt;
+            int resistanceStat = Stats[UnitStat.Resistance].ValueInt;
+            int skillStat = Stats[UnitStat.Skill].ValueInt;
+            
+            return (magicStat - resistanceStat) + skillStat + 30 - (boxDistance * 2);
+        }
+    }
 }
