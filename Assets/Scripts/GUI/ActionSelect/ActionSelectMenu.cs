@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class ActionMenuOption : MonoBehaviour
+public class ActionMenuOption : MenuOption<ActionSelectMenu>
 {
     public virtual string Name { get; } = "Error";
 
-    protected ActionSelectMenu Menu;
     private TextMeshProUGUI _textMeshPro;
 
     private void Awake()
@@ -18,9 +17,6 @@ public class ActionMenuOption : MonoBehaviour
         _textMeshPro = GetComponent<TextMeshProUGUI>();
         _textMeshPro.text = Name;
     }
-
-    public virtual void Execute()
-    { }
 }
 
 public class AttackOption : ActionMenuOption
@@ -59,11 +55,16 @@ public class WaitOption : ActionMenuOption
 
     public override void Execute()
     {
-        Menu.Close();
+        Menu.ResetAndHide();
+
+        GridCursor.Instance.SetFreeMode();
+        UserInput.Instance.InputTarget = GridCursor.Instance;
     }
 }
 
-public class ActionSelectMenu : MonoBehaviour, IInputTarget
+
+
+public class ActionSelectMenu : Menu
 {
     [SerializeField] private UnitInventoryMenu _inventoryMenu;
     [SerializeField] private UICursor _cursor;
@@ -71,82 +72,72 @@ public class ActionSelectMenu : MonoBehaviour, IInputTarget
     [SerializeField] private GameObject _optionPrefab;
     [SerializeField] private Transform _optionsParent;
 
-    public Action OnMenuClose;
-    public Unit SelectedUnit { get; private set; }
+    private Unit _selectedUnit;
 
-
-    private readonly List<ActionMenuOption> _options = new List<ActionMenuOption>();
+    private readonly List<MenuOption> _options = new List<MenuOption>();
     private int _selectedOptionIndex;
-
-    private ActionMenuOption SelectedOption => _options[_selectedOptionIndex];
-
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
 
     public void Show(Unit unit)
     {
-        UserInput.Instance.InputTarget = this;
-        SelectedUnit = unit;
+        _selectedUnit = unit;
 
         // Attack Option
-        if (SelectedUnit.CanAttack())
+        if (_selectedUnit.CanAttack())
             AddOption<AttackOption>();
 
         // Items Option
         AddOption<ItemsOption>();
 
         // Trade Option
-        if (SelectedUnit.CanTrade())
+        if (_selectedUnit.CanTrade())
             AddOption<TradeOption>();
 
         // Wait Option
         AddOption<WaitOption>();
 
-        _selectedOptionIndex = 0;
         MoveSelectionToOption(0, true);
+        SelectOption(_options[0]);
+        Activate();
 
-        gameObject.SetActive(true);
+        // This is used to rebuild VerticalLayoutGroup. Otherwise UI might not change size!
+        // TODO: Cache rect transform instead of using GetComponent
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponentInChildren<ContentSizeFitter>().transform as RectTransform);
     }
 
-    public void ProcessInput(InputData input)
+    public override MenuOption MoveSelection(Vector2Int input)
     {
         if (!_cursor.IsMoving)
-            MoveSelection(-input.Vertical);
+            MoveSelection(-input.y);
 
-        switch (input.KeyCode)
-        {
-            case KeyCode.Z:
-                SelectedOption.Execute();
-                break;
-
-            case KeyCode.X:
-                Close();
-                break;
-        }
+        return _options[_selectedOptionIndex];
     }
 
-    public void Close()
+    private void MoveSelection(int input)
     {
-        gameObject.SetActive(false);
+        if (input == 0)
+            return;
+
+        _selectedOptionIndex = Mathf.Clamp(_selectedOptionIndex + input, 0, _options.Count - 1);
+        MoveSelectionToOption(_selectedOptionIndex);
+    }
+
+    public override void ResetState()
+    {
+        _selectedOptionIndex = 0;
         _cursor.transform.parent = transform;
-
-        UserInput.Instance.InputTarget = null;
         ClearOptions();
+    }
 
-        OnMenuClose?.Invoke();
+    public override void OnClose()
+    {
+        GridCursor.Instance.SetRestrictedMode(_selectedUnit);
+        UserInput.Instance.InputTarget = GridCursor.Instance;
     }
 
     public void ShowInventory()
     {
-        _inventoryMenu.Show(SelectedUnit);
-        _inventoryMenu.OnMenuClose = () =>
-        {
-            UserInput.Instance.InputTarget = this;
-        };
-
-        //Close();
+        _inventoryMenu.Show(_selectedUnit);
+        _inventoryMenu.PreviousMenu = this;
     }
 
     private void ClearOptions()
@@ -158,21 +149,12 @@ public class ActionSelectMenu : MonoBehaviour, IInputTarget
     }
 
     private void AddOption<T>()
-        where T : ActionMenuOption
+        where T : MenuOption
     {
         var go = Instantiate(_optionPrefab, _optionsParent, false);
         var option = go.AddComponent<T>();
 
         _options.Add(option);
-    }
-
-    private void MoveSelection(int input)
-    {
-        if (input == 0)
-            return;
-
-        _selectedOptionIndex = Mathf.Clamp(_selectedOptionIndex + input, 0, _options.Count - 1);
-        MoveSelectionToOption(_selectedOptionIndex);
     }
 
     private void MoveSelectionToOption(int index, bool instant = false)

@@ -9,6 +9,7 @@ public class UnitInventory
     public Item this[int index] => _items[index];
 
     private readonly List<Item> _items = new List<Item>(MaxSize);
+    public readonly Unit Unit;
 
     public int Size => _items.Count;
     public bool IsFull => Size == MaxSize;
@@ -17,26 +18,24 @@ public class UnitInventory
 
     public T[] GetItems<T>() where T : Item => _items.FilterCast<T>().ToArray();
 
+    public UnitInventory(Unit unit)
+    {
+        Unit = unit;
+    }
+
     public bool AddItem(Item item)
     {
         if (IsFull)
             return false;
 
         _items.Add(item);
+        item.Unit = Unit;
         return true;
     }
 
     public bool RemoveItem(Item item)
     {
-        var index = _items.IndexOf(item);
-        if (index >= 0)
-        {
-            item.Drop();
-            _items[index] = null;
-            return true;
-        }
-
-        return false;
+        return RemoveItem(_items.IndexOf(item));
     }
 
     public bool RemoveItem(int index)
@@ -44,6 +43,7 @@ public class UnitInventory
         if (index < 0 || index >= Size)
             return false;
 
+        _items[index].Drop();
         _items.RemoveAt(index);
         return true;
     }

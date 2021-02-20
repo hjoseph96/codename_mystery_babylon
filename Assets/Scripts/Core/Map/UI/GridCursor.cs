@@ -159,7 +159,8 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             StartCoroutine(MoveSelectedUnitCoroutine(path));
     }
 
-    public void ClearAll() {
+    public void ClearAll()
+    {
         _arrowPath.Clear();
         _cellHighlighter.Clear();
     }
@@ -173,8 +174,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         _camera.SetSingleTarget(_selectedUnit.transform);
         _camera.SetCameraWindowMode(CameraWindowMode.Unit);
         // Clear arrow path and all highlightings
-        _arrowPath.Clear();
-        _cellHighlighter.Clear();
+        ClearAll();
 
         // Wait while camera moves to the new target
         while (!_camera.TargetInCameraWindow())
@@ -190,24 +190,23 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         // Unlock and show cursor
         Show();
 
+        // Move to selected unit's position and set camera target to self
+        MoveInstant(_selectedUnit.GridPosition);
+        _camera.SetSingleTarget(transform);
+        _camera.SetCameraWindowMode(CameraWindowMode.Cursor);
+
         // Temporary workaround, feel free to delete
-        actionSelectMenu.OnMenuClose = () =>
+        /*actionSelectMenu.OnMenuClose = () =>
         {
             // Clear arrow path and all highlightings
-            _arrowPath.Clear();
-            _cellHighlighter.Clear();
+            //_arrowPath.Clear();
+            //_cellHighlighter.Clear();
             SetRestrictedMode(_selectedUnit);
-            // Move to selected unit's position and set camera target to self
-            MoveInstant(_selectedUnit.GridPosition);
-            _camera.SetSingleTarget(transform);
-            _camera.SetCameraWindowMode(CameraWindowMode.Cursor);
             // Accept input
             UserInput.Instance.InputTarget = this;
-        };
+        };*/
 
         actionSelectMenu.Show(_selectedUnit);
-
-
     }
 
     private void Move()

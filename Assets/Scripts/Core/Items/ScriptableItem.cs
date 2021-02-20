@@ -5,11 +5,14 @@ using UnityEngine;
 
 public abstract class ScriptableItem : SerializedScriptableObject
 {
-    [PreviewField]
+    [FoldoutGroup("Basic Properties"), PreviewField]
     public Sprite Icon;
 
-    public string Name;
-    public ItemType ItemType;
+    [FoldoutGroup("Basic Properties")] public string Name;
+    [FoldoutGroup("Basic Properties")] public ItemType ItemType;
+
+    [FoldoutGroup("Descriptions"), MultiLineProperty(5)]
+    public string Description;
 
     public abstract Item GetItem();
 
