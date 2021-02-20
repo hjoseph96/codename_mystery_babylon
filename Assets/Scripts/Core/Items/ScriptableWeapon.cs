@@ -5,10 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon", order = 3)]
 public class ScriptableWeapon : ScriptableItem
 {
-    [PreviewField]
-    public Sprite Icon;
-
-    public string Name;
     public WeaponType Type;
 
     [FoldoutGroup("Descriptions"), MultiLineProperty(5)] public string Description, DescriptionBroken;

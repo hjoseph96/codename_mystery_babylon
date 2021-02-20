@@ -269,7 +269,7 @@ public static class GridUtility
         {
             var key = en.Current.Key;
             var currentUnit = WorldGrid.Instance[key].Unit;
-            if (currentUnit == null || currentUnit.IsAlly(unit))
+            if (currentUnit == null || currentUnit == unit)
                 result.Add(key);
         }
         en.Dispose();
@@ -288,20 +288,21 @@ public static class GridUtility
         return result;
     }
 
-    public static List<Vector2Int> GetAttackableCells(Unit unit, HashSet<Vector2Int> movementCost, int minAttackRange = 0, int maxAttackRange = 0)
+    public static List<Vector2Int> GetAttackableCells(Unit unit, HashSet<Vector2Int> movementCost, Weapon weapon = null)
     {
-        if (unit.HasWeapon)
+        if (weapon == null)
         {
-            if (minAttackRange == 0)
+            if (unit.HasWeapon)
+                weapon = unit.EquippedWeapon;
+            else
             {
-                minAttackRange = unit.EquippedWeapon.Stats[WeaponStat.MinRange].ValueInt;
-            }
-
-            if (maxAttackRange == 0)
-            {
-                maxAttackRange = unit.EquippedWeapon.Stats[WeaponStat.MaxRange].ValueInt;
+                return new List<Vector2Int>();
             }
         }
+
+
+        var minAttackRange = weapon.Stats[WeaponStat.MinRange].ValueInt;
+        var maxAttackRange = weapon.Stats[WeaponStat.MaxRange].ValueInt;
 
         var borderCells = new List<Vector2Int>();
         var en = movementCost.GetEnumerator();

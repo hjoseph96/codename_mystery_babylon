@@ -40,6 +40,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     public void Init()
     {
         Instance = this;
+
         _gridPosition = GridUtility.SnapToGrid(this);
         _arrowPath = Instantiate(_arrowPath);
 
@@ -190,8 +191,9 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         Show();
 
         // Temporary workaround, feel free to delete
-        actionSelectMenu.OnMenuClose.AddListener(delegate{
-               // Clear arrow path and all highlightings
+        actionSelectMenu.OnMenuClose = () =>
+        {
+            // Clear arrow path and all highlightings
             _arrowPath.Clear();
             _cellHighlighter.Clear();
             SetRestrictedMode(_selectedUnit);
@@ -199,8 +201,11 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             MoveInstant(_selectedUnit.GridPosition);
             _camera.SetSingleTarget(transform);
             _camera.SetCameraWindowMode(CameraWindowMode.Cursor);
-        });
-        actionSelectMenu.ShowMenu(_selectedUnit);
+            // Accept input
+            UserInput.Instance.InputTarget = this;
+        };
+
+        actionSelectMenu.Show(_selectedUnit);
 
 
     }
@@ -210,7 +215,6 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         // Our movement vector might appear to be diagonal, since we allow diagonal input
         // But since we can not move cursor diagonally, we calculate actual target position
         // E.g. if we move from (1,1) to (2,2), we will use destination position of (2,1) first
-
         var actualTargetGridPosition = _targetGridPosition;
 
         // If we have to move horizontally, ignore vertical movement to prevent diagonal movement
@@ -240,19 +244,17 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             // Check if we can end movement
             // Continuing example: we just moved from (1,1) to (2,1), but the real destination is (2,2), so we restart movement
             // Next time we will move from (2,1) to (2,2) and end the movement
-
             EndMovement();
 
             if (_gridPosition != _targetGridPosition)
             {
                 StartMovement(_targetGridPosition);
             }
-
-            // If we didn't reach threshold value yet, simply call Slerp
-            else
-            {
-                transform.position = Vector3.Slerp(transform.position, destination, t);
-            }
+        }
+        // If we didn't reach threshold value yet, simply call Slerp
+        else
+        {
+            transform.position = Vector3.Slerp(transform.position, destination, t);
         }
     }
 

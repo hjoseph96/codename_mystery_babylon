@@ -1,42 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UICursor : MonoBehaviour
 {
-    public float moveSpeed = 8f;
-    private bool _isMoving;
-    public  bool IsMoving { get { return _isMoving; } }
-    private Vector2 _destination;
+    [Header("Movement settings")]
+    [SerializeField] private float _totalMovementTime = 0.1f;
+    [SerializeField, Range(0, 1)]
+    private float _normalizedDistanceThreshold = 0.95f;
+
+    public bool IsMoving { get; private set; }
+
     private RectTransform _rectTransform;
+    private Vector3 _destination;
+    private float _movementStartTime;
 
-
-    void Start()
+    private void Awake()
     {
-        _isMoving = false;
-        _destination = Vector2.zero;
         _rectTransform = GetComponent<RectTransform>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (_destination != Vector2.zero)
+        if (IsMoving)
             Move();
     }
-    public void MoveTo(Vector2 localPosition) {
-        _destination = localPosition;
+
+    public void MoveTo(Vector2 destination, bool instant = false)
+    {
+        if (instant)
+        {
+            _rectTransform.localPosition = destination;
+            return;
+        }
+
+        IsMoving = true;
+        _destination = destination;
+        _movementStartTime = Time.time;
     }
 
-    void Move() {
-        if (Vector2.Distance(_rectTransform.localPosition, _destination) < 5) {
+    private void Move() {
+        var t = (Time.time - _movementStartTime) / _totalMovementTime;
+
+        // If t is greater than threshold value
+        if (t >= _normalizedDistanceThreshold || (_rectTransform.localPosition - _destination).magnitude <= 0.01f)
+        {
             _rectTransform.localPosition = _destination;
-            
-            _isMoving = false;
-            _destination = Vector2.zero;
-        } else {
-            _rectTransform.localPosition = Vector2.Lerp(_rectTransform.localPosition, _destination, moveSpeed * Time.smoothDeltaTime);
-            
-            _isMoving = true;
+            IsMoving = false;
+        }
+        // If we didn't reach threshold value yet, simply call Slerp
+        else
+        {
+            _rectTransform.localPosition = Vector3.Slerp(_rectTransform.localPosition, _destination, t);
         }
     }
 }
