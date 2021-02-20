@@ -4,22 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ItemActionsMenuOption : MonoBehaviour
+public class ItemActionsMenuOption : MenuOption<ItemActionsMenu>
 {
     public virtual string Name { get; } = "Error";
 
-
-    protected ItemActionsMenu Menu;
-    protected Unit playerUnit;
-    protected Weapon weapon;
-    // protected Consumable _consumable;
-    // protected TextGenerationSettings _gear;
-    // protected Valuable _valuable;
+    protected Unit Unit;
+    protected Item Item;
 
     private TextMeshProUGUI _textMeshPro;
     private Image _backgroundImg;
-    private Color32 _selectedColor = new Color32(241, 238, 238, 255);
-    private Color32 _normalColor = new Color32(255, 255, 255, 255);
+
+    private readonly Color32 _selectedColor = new Color32(241, 238, 238, 255);
+    private readonly Color32 _normalColor = new Color32(255, 255, 255, 255);
 
     private void Awake()
     {
@@ -29,20 +25,18 @@ public class ItemActionsMenuOption : MonoBehaviour
         _textMeshPro.text = Name;
     }
 
-    
-
-    public virtual void Execute() {}
-    
-    public void SetItem(Weapon givenWeapon) {
-        weapon = givenWeapon;
+    public void SetData(Unit unit, Item item) 
+    {
+        Unit = unit;
+        Item = item;
     }
 
-    public void SetSelected()
+    public override void SetSelected()
     {
         _backgroundImg.color = _selectedColor;
     }
 
-    public void ResetColor()
+    public override void SetDeselected()
     {
         _backgroundImg.color = _normalColor;
     }
@@ -55,14 +49,10 @@ public class EquipOption : ItemActionsMenuOption
 
     public override void Execute()
     {
-        playerUnit.EquipWeapon(weapon);
+        // TODO: Use Item.Equip, make overload for weapon and gear
+        Unit.EquipWeapon(Item as Weapon);
+        Menu.Close();
     }
-
-    
-    // public override void Execute()
-    // {
-    //     playerUnit.EquipGear(gear);
-    // }
 }
 
 public class UnequipOption : ItemActionsMenuOption
@@ -71,24 +61,20 @@ public class UnequipOption : ItemActionsMenuOption
 
     public override void Execute()
     {
-        playerUnit.UnequipWeapon();
+        // TODO: Use Item.Equip, make overload for weapon and gear
+        Unit.UnequipWeapon();
+        Menu.Close();
     }
-
-    
-    // public override void Execute()
-    // {
-    //     playerUnit.EquipGear(gear);
-    // }
 }
 
 public class UseOption : ItemActionsMenuOption
 {
     public override string Name { get; } = "Use";
 
-    // public override void Execute()
-    // {
-    //     // consumable.Use(playerUnit) TODO
-    // }
+     public override void Execute()
+     {
+         Item.UseItem();
+     }
 }
 
 public class DropOption : ItemActionsMenuOption
@@ -97,113 +83,80 @@ public class DropOption : ItemActionsMenuOption
 
     public override void Execute()
     {
-        playerUnit.Inventory.RemoveItem(weapon);
+        Unit.Inventory.RemoveItem(Item);
+        var inventoryMenu = Menu.PreviousMenu as UnitInventoryMenu;
+        inventoryMenu.RemoveSelected();
+        Menu.Close();
     }
 }
 
-public class ItemActionsMenu : MonoBehaviour, IInputTarget
+public class ItemActionsMenu : Menu
 {
     public Action OnMenuClose;
     [SerializeField] private GameObject _optionPrefab;
     [SerializeField] private Transform _optionsParent;
+
     private readonly List<ItemActionsMenuOption> _options = new List<ItemActionsMenuOption>();
-    public Unit SelectedUnit { get; private set; }
 
-    private UICursor _cursor;
+    private Unit _selectedUnit;
+    private Item _selectedItem;
+
     private int _selectedOptionIndex;
-    private ItemActionsMenuOption SelectedOption => _options[_selectedOptionIndex];
-    private Weapon _weapon;
-    // private Consumable _consumable;
-    // private TextGenerationSettings _gear;
-    // private Valuable _valuable;
 
-    
-    // TODO: Show() for every item type: Weapon, Gear, Consumable, Valuable
-    public void Show(Unit unit, Weapon weapon, UICursor cursor) {
-        UserInput.Instance.InputTarget = this;
-        SelectedUnit = unit;
-        _weapon = weapon;
-        _cursor = cursor;
+    // This is used to prevent instant scroll up/down when key is pressed
+    private float _lastInputTime;
+    private readonly float _inputCooldown = 0.15f;
 
-        // Attack Option
-        if (unit.EquippedWeapon == _weapon) {
-            AddOption<EquipOption>();
-        } else {
-            AddOption<UnequipOption>();
-        }
+    public void Show(Unit unit, Item item)
+    {
+        _selectedUnit = unit;
+        _selectedItem = item;
 
-        // TODO: If Weapon has Use Ability
-        // if (weapon.HasUseAbility())
-        //     AddOption<UseOption>();
+        foreach (var option in item.GetUIOptions())
+            AddOption(option);
 
-        // Items Option
-        AddOption<DropOption>();
+        Activate();
+        SelectOption(_options[0]);
 
+        // This is used to rebuild VerticalLayoutGroup. Otherwise UI might not change size!
+        // TODO: Cache rect transform instead of using GetComponent
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponentInChildren<ContentSizeFitter>().transform as RectTransform);
+    }
+
+    public override void ResetState()
+    {
         _selectedOptionIndex = 0;
-        MoveSelectionToOption();
-
-
-        gameObject.SetActive(true);
+        ClearOptions();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override MenuOption MoveSelection(Vector2Int input)
     {
-        
+        MoveSelection(-input.y);
+        return _options[_selectedOptionIndex];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void ProcessInput(InputData input)
-    {
-        if (!_cursor.IsMoving)
-            MoveSelection(-input.Vertical);
-
-        switch (input.KeyCode)
-        {
-            case KeyCode.Z:
-                SelectedOption.Execute();
-                break;
-
-            case KeyCode.X:
-                Close();
-                break;
-        }
-    }
-    
     private void MoveSelection(int input)
     {
-        if (input == 0)
+        if (input == 0 || Time.time - _lastInputTime < _inputCooldown)
             return;
 
-        SelectedOption.ResetColor();
+        _lastInputTime = Time.time;
         _selectedOptionIndex = Mathf.Clamp(_selectedOptionIndex + input, 0, _options.Count - 1);
-        MoveSelectionToOption();
     }
 
-    private void MoveSelectionToOption(bool instant = false)
+    private void ClearOptions()
     {
-        SelectedOption.SetSelected();
-        _cursor.transform.parent = SelectedOption.transform;
-        _cursor.MoveTo(Vector2.zero, instant);
+        foreach (var opt in _options)
+            Destroy(opt.gameObject);
+
+        _options.Clear();
     }
 
-    private void AddOption<T>()
-        where T : ItemActionsMenuOption
+    private void AddOption(Type type)
     {
         var go = Instantiate(_optionPrefab, _optionsParent, false);
-        var option = go.AddComponent<T>();
-        option.SetItem(_weapon);
-
+        var option = go.AddComponent(type) as ItemActionsMenuOption;
+        option.SetData(_selectedUnit, _selectedItem);
         _options.Add(option);
-    }
-
-    private void Close()
-    {
-
     }
 }

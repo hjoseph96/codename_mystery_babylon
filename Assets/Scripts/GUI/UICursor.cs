@@ -9,13 +9,13 @@ public class UICursor : MonoBehaviour
 
     public bool IsMoving { get; private set; }
 
-    private RectTransform _rectTransform;
+    private RectTransform RectTransform => transform as RectTransform;
     private Vector3 _destination;
     private float _movementStartTime;
 
-    private void Awake()
+    private void OnEnable()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        IsMoving = false;
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class UICursor : MonoBehaviour
     {
         if (instant)
         {
-            _rectTransform.localPosition = destination;
+            RectTransform.localPosition = destination;
             return;
         }
 
@@ -37,19 +37,20 @@ public class UICursor : MonoBehaviour
         _movementStartTime = Time.time;
     }
 
-    private void Move() {
+    private void Move()
+    {
         var t = (Time.time - _movementStartTime) / _totalMovementTime;
 
         // If t is greater than threshold value
-        if (t >= _normalizedDistanceThreshold || (_rectTransform.localPosition - _destination).magnitude <= 0.01f)
+        if (t >= _normalizedDistanceThreshold || (RectTransform.localPosition - _destination).magnitude <= 0.01f)
         {
-            _rectTransform.localPosition = _destination;
+            RectTransform.localPosition = _destination;
             IsMoving = false;
         }
         // If we didn't reach threshold value yet, simply call Slerp
         else
         {
-            _rectTransform.localPosition = Vector3.Slerp(_rectTransform.localPosition, _destination, t);
+            RectTransform.localPosition = Vector3.Slerp(RectTransform.localPosition, _destination, t);
         }
     }
 }

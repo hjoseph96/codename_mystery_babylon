@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,17 +7,25 @@ public class Weapon : Item
     public readonly Dictionary<WeaponStat, Stat> Stats = new Dictionary<WeaponStat, Stat>();
     private readonly Dictionary<WeaponStat, EditorWeaponStat> _brokenStats = new Dictionary<WeaponStat, EditorWeaponStat>();
 
+    public int Weight { get; protected set; }
+    public int MaxDurability { get; protected set; }
+    public int CurrentDurability { get; protected set; }
+
     public bool IsBroken => CurrentDurability == 0;
 
-    public override string Description => IsBroken ? DescriptionNormal : DescriptionBroken;
+    public override string Description => !IsBroken ? DescriptionNormal : DescriptionBroken;
     public readonly string DescriptionNormal, DescriptionBroken; 
 
     public readonly WeaponRank RequiredRank;
     public readonly WeaponType Type;
 
-    private ScriptableWeapon _source;
+    public readonly bool IsUsable;
 
-    public Weapon(ScriptableWeapon source)
+    public bool IsEquipped { get; set; }
+
+    private readonly ScriptableWeapon _source;
+
+    public Weapon(ScriptableWeapon source) : base(source)
     {
         _source = source;
 
@@ -40,11 +49,10 @@ public class Weapon : Item
         
         Type = source.Type;
         RequiredRank = source.RequiredRank;
+
+        IsUsable = source.IsUsable;
     }
 
-    // TODO: This has to do with a weapon being used in battle. Typically, the use only counts if the hit lands
-    // Unless it is a ranged weapon like bows, throwable lances/axes, and magic
-    // TODO: Some Weapons have a Use option like consumables. So maybe a UseAbility() function or something.
     public void Use(int times = 1)
     {
         CurrentDurability = Mathf.Max(CurrentDurability - times, 0);
@@ -72,5 +80,32 @@ public class Weapon : Item
         {
             Stats[key].RawValue = _brokenStats[key].BaseValue;
         }
+    }
+
+    public override IEnumerable<Type> GetUIOptions()
+    {
+        var options = new List<Type>
+        {
+            IsEquipped ? typeof(UnequipOption) : typeof(EquipOption)
+        };
+
+        if (IsUsable)
+            options.Add(typeof(UseOption));
+
+        options.Add(typeof(DropOption));
+
+        return options;
+    }
+
+    public override void Drop()
+    {
+        if (IsEquipped)
+            Unit.UnequipWeapon();
+    }
+
+    public override void UseItem()
+    {
+        if (IsUsable)
+            _source.Action.Use(Unit);
     }
 }

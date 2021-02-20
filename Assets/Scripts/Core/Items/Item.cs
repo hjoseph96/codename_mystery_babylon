@@ -1,9 +1,10 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Item
 {
-    // TODO: I wonder if we should user an interface? IEquippable, IUseable?
-    // TODO: Create Gear, Consumable, and Valuable
+    // TODO: Create Gear
     public readonly ItemType ItemType;
 
     public string Name { get; protected set; }
@@ -11,13 +12,27 @@ public class Item
 
     public virtual string Description { get; protected set; }
 
-    public int Weight { get; protected set; }
-    public int MaxDurability { get; protected set; }
-    public int CurrentDurability { get; protected set; }
+    public Unit Unit { get; set; }
+
+    public Item(ScriptableItem source)
+    {
+        Name = source.Name;
+        Icon = source.Icon;
+        Description = source.Description;
+
+    }
+
+    public virtual void UseItem()
+    { }
 
     public virtual void Equip()
     { }
 
     public virtual void Drop()
     { }
+
+    public virtual IEnumerable<Type> GetUIOptions()
+    {
+        throw new NotImplementedException();
+    }
 }

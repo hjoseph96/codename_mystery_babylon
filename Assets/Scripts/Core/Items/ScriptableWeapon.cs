@@ -7,7 +7,8 @@ public class ScriptableWeapon : ScriptableItem
 {
     public WeaponType Type;
 
-    [FoldoutGroup("Descriptions"), MultiLineProperty(5)] public string Description, DescriptionBroken;
+    [FoldoutGroup("Descriptions"), MultiLineProperty(5)] 
+    public string DescriptionBroken;
 
     [FoldoutGroup("Stats"), WeaponStats]
     public Dictionary<WeaponStat, EditorWeaponStat> WeaponStats = new Dictionary<WeaponStat, EditorWeaponStat>();
@@ -20,6 +21,12 @@ public class ScriptableWeapon : ScriptableItem
 
     [FoldoutGroup("Stats")]
     public int Weight, MaxDurability;
+
+    [FoldoutGroup("Active Ability")]
+    public bool IsUsable;
+
+    [FoldoutGroup("Active Ability"), ShowIf("IsUsable")]
+    public ScriptableAction Action;
 
     public override Item GetItem()
     {

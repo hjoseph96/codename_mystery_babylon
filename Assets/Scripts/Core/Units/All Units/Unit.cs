@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,9 +51,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public Weapon EquippedWeapon { get; private set; }   // TODO: Implement Equipment Items. EquippedEquipment? or Just EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
 
-    [HideInInspector] public Vector2Int GridPosition;
-
-    [HideInInspector] public int CurrentMovementPoints;
+    public Vector2Int GridPosition { get; set; }
+    public int CurrentMovementPoints { get; set; }
 
     private Color HealthColor = new Color(0.25f, 1.0f, 0.35f);
     private Color BackgroundColor = Color.black;
@@ -79,7 +79,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         Rotate(Direction.Down);
         PlayAnimation(_idleAnimation);
 
-        Inventory = new UnitInventory();
+        Inventory = new UnitInventory(this);
         foreach (var item in _startingItems)
             Inventory.AddItem(item.GetItem());
 
@@ -110,11 +110,16 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public void EquipWeapon(Weapon weapon)
     {
+        UnequipWeapon();
         EquippedWeapon = weapon;
+        weapon.IsEquipped = true;
     }
 
     public void UnequipWeapon()
     {
+        if (EquippedWeapon != null)
+            EquippedWeapon.IsEquipped = false;
+
         EquippedWeapon = null;
     }
 
