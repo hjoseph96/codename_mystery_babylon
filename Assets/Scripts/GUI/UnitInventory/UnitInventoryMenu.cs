@@ -69,7 +69,8 @@ public class UnitInventoryMenu : Menu
 
     public void SelectItemSlot()
     {
-        _itemActionMenu.Show(_selectedUnit, _selectedUnit.Inventory[_selectedSlotIndex]);
+        var selectedSlot = _itemSlots[_selectedSlotIndex];
+        _itemActionMenu.Show(_selectedUnit, _selectedUnit.Inventory[_selectedSlotIndex], selectedSlot, _itemSlots);
         _itemActionMenu.PreviousMenu = this;
     }
 

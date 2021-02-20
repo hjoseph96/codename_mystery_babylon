@@ -7,6 +7,8 @@ public class ItemSlot : MenuOption<UnitInventoryMenu>
 {
     [SerializeField] private Image _icon;
     [SerializeField] private TextMeshProUGUI _title, _durability;
+    [SerializeField] private GameObject _equippedIcon;
+
 
     public bool IsEmpty => Item == null;
     public Item Item { get; private set; }
@@ -47,6 +49,9 @@ public class ItemSlot : MenuOption<UnitInventoryMenu>
             else
                 _durability.SetText("{0}/{1}", weapon.CurrentDurability, weapon.MaxDurability);
         }
+
+        if (item.IsEquipped)
+            ShowEquippedIcon();
     }
 
     public void Clear()
@@ -63,21 +68,7 @@ public class ItemSlot : MenuOption<UnitInventoryMenu>
     public override void Execute()
     {
         if (!IsEmpty)
-        {
-            Menu.SelectItemSlot(); //this);
-
-            // TODO: Get Item Derived Class from Base?
-            //var weapon = _selectedUnit.Inventory.GetItems<Weapon>()[_selectedSlotIndex];
-            //_itemActionMenu.Show(_selectedUnit, weapon, _cursor);
-        }
-
-        // TODO: Further logic here
-        // Active ItemOptionsMenu(SelectedSlot);
-        // Upon open, this menu should read all required data from SelectedSlot.Item and populate UI objects with this data
-        // Upon close, this menu should call SelectedSlot.SetDeselected(); to remove outline/highlighting
-        // ItemOptionsMenu should implement IInputTarget and process all input inside ProcessInput(InputData);
-        // Upon open, should execute UserInput.Instance.InputTarget = this
-        // Upon close, should reset InputTarget back to UnitInventoryMenu object
+            Menu.SelectItemSlot();
     }
 
     public override void SetSelected()
@@ -93,5 +84,16 @@ public class ItemSlot : MenuOption<UnitInventoryMenu>
     {
         _allInOneMat.DisableKeyword("GHOST_ON");
         _iconAllInOneMat.SetFloat(OutlineAlpha, 0);
+    }
+
+    public void HideEquippedIcon() {
+        if (_equippedIcon.activeSelf)
+            _equippedIcon.SetActive(false);
+    }
+
+    
+    public void ShowEquippedIcon() {
+        if (!_equippedIcon.activeSelf)
+            _equippedIcon.SetActive(true);
     }
 }

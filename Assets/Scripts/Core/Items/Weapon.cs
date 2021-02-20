@@ -20,9 +20,6 @@ public class Weapon : Item
     public readonly WeaponType Type;
 
     public readonly bool IsUsable;
-
-    public bool IsEquipped { get; set; }
-
     private readonly ScriptableWeapon _source;
 
     public Weapon(ScriptableWeapon source) : base(source)
