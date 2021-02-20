@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Animancer;
 using Sirenix.OdinInspector;
@@ -14,6 +15,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Basic properties")]
     [DistinctUnitType]
     public UnitType UnitType;
+
+    [FoldoutGroup("Basic properties")] 
+    [SerializeField] public string Name { get; private set; }
 
     [FoldoutGroup("Basic properties")] 
     [SerializeField] private float _moveSpeed = 4f;
@@ -31,6 +35,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Stats"), ShowIf("IsPlaying"), PropertyOrder(1)]
     [UnitStats]
     public Dictionary<UnitStat, Stat> Stats;
+    public int Level { get; private set; }
+
 
     [FoldoutGroup("Animations")] 
     [SerializeField] private DirectionalAnimationSet _idleAnimation;
@@ -41,7 +47,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private ScriptableItem[] _startingItems;
 
     public UnitInventory Inventory { get; private set; }
-    public Weapon EquippedWeapon { get; private set; }
+    public Weapon EquippedWeapon { get; private set; }   // TODO: Implement Equipment Items. EquippedEquipment? or Just EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
 
     [HideInInspector] public Vector2Int GridPosition;
@@ -107,18 +113,26 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         EquippedWeapon = weapon;
     }
 
-    public void UnequippedWeapon()
+    public void UnequipWeapon()
     {
         EquippedWeapon = null;
     }
 
-    public bool CanAttack() {
+    public bool CanAttack()
+    {
+        var weapons = Inventory.GetItems<Weapon>();
+
         var immediatePositions = GridUtility.GetReachableCells(this, 0);
-        var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions);
-        if (attackableCells.Count > 0)
-            return true;
-        
-        return false;
+        return weapons.Any(w => GridUtility.GetAttackableCells(this, immediatePositions, w).Count > 0);
+    }
+
+    public bool CanTrade()
+    {
+        return GridUtility.DefaultNeighboursOffsets.Any(offset =>
+        {
+            var unit = WorldGrid.Instance[GridPosition + offset].Unit;
+            return unit != null && unit.IsLocalPlayerUnit;
+        });
     }
 
     public bool Trade(Unit otherUnit, Item ourItem)
@@ -220,6 +234,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return speed;
     }
 
+    // TODO: Serialize
     private void InitStats()
     {
         Stats = new Dictionary<UnitStat, Stat>();

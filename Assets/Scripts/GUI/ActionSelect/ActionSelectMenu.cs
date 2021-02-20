@@ -1,179 +1,183 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class ActionSelectMenu : MonoBehaviour
+
+[RequireComponent(typeof(TextMeshProUGUI))]
+public class ActionMenuOption : MonoBehaviour
 {
-    public Transform pointer;
-    public Transform selectedHighlight;
-    public List<RectTransform> menuOptions;
-    public UnitInventoryMenu inventoryMenu;
+    public virtual string Name { get; } = "Error";
 
-    public UnityEvent OnMenuClose;
-    private Unit _selectedUnit;
-    private UICursor _pointer;
-    private List<RectTransform> activeOptions = new List<RectTransform>();
-    private RectTransform _selectedOption;
-    private Vector2 _firstOptPos, _secondOptPos, _thirdOptPos, _fourthOptPos;
-    private bool _open;
+    protected ActionSelectMenu Menu;
+    private TextMeshProUGUI _textMeshPro;
 
-     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        _firstOptPos     = menuOptions[0].localPosition;
-        _secondOptPos    = menuOptions[1].localPosition;
-        _thirdOptPos     = menuOptions[2].localPosition;
-        _fourthOptPos    = menuOptions[3].localPosition;
-        
-        this.SetActive(false);
-        _open = false;
-        _pointer = GetComponentInChildren<UICursor>();
+        Menu = GetComponentInParent<ActionSelectMenu>();
+        _textMeshPro = GetComponent<TextMeshProUGUI>();
+        _textMeshPro.text = Name;
     }
 
-    public void ShowMenu(Unit unit) 
+    public virtual void Execute()
+    { }
+}
+
+public class AttackOption : ActionMenuOption
+{
+    public override string Name { get; } = "Attack";
+
+    public override void Execute()
     {
-        _selectedUnit = unit;
-
-        var attackOption    = menuOptions[0];
-
-        if (!_selectedUnit.CanAttack()) {   // TODO:Trying to Move the options up, if attack isn't an option. Also, resize the background.
-
-            attackOption.gameObject.SetActive(false);
-
-            var itemsOption = menuOptions[1];
-            itemsOption.localPosition = _firstOptPos;
-            _selectedOption = itemsOption;
-            activeOptions.Add(itemsOption);
-
-            var tradeOption = menuOptions[2];
-            tradeOption.localPosition = _secondOptPos;
-            activeOptions.Add(tradeOption);
-
-            var waitOption = menuOptions[3];
-            waitOption.localPosition = _thirdOptPos;
-            activeOptions.Add(waitOption);
-        }
-
-        // TODO: Add CanTrade to Unit, is friendly Unit in an immediate neighbor cell?
-        // TODO: If Unit Cannot Trade, remove Trade Option, move Wait option up in it's place
-
-        // TODO: Resize Height of window based on # of active options. Get Smaller if not all options are in use.
-        
-        this.SetActive(true);
-        _open = true;
+        Debug.Log("Attack");
     }
-    
-   
+}
 
-    // Update is called once per frame
-    void Update()
+public class ItemsOption : ActionMenuOption
+{
+    public override string Name { get; } = "Items";
+
+    public override void Execute()
     {
-        if (_open) {
-            // Feel free to refactor.
-            var selectedIndex = activeOptions.IndexOf(_selectedOption);
-            var lastOptionIndex = activeOptions.Count - 1;
-            var vertAxis = Input.GetAxisRaw("Vertical");
+        Menu.ShowInventory();
+    }
+}
 
-            if (!_pointer.IsMoving) {
+public class TradeOption : ActionMenuOption
+{
+    public override string Name { get; } = "Trade";
 
-                if (vertAxis < 0) {
-                    if (selectedIndex == lastOptionIndex) {
-                        selectedIndex = 0;
-                    } else {
-                        selectedIndex += 1;
-                    }
-                }
+    public override void Execute()
+    {
+        Debug.Log("Trade");
+    }
+}
 
-                if (vertAxis > 0) {
-                    if (selectedIndex == 0) {
-                        selectedIndex = lastOptionIndex;
-                    } else {
-                        selectedIndex -= 1;
-                    }
-                }
+public class WaitOption : ActionMenuOption
+{
+    public override string Name { get; } = "Wait";
 
-                if (vertAxis == 0) {
-                     if (Input.GetKeyDown(KeyCode.Z)) {
-                        SelectAction(_selectedOption);
-                        return;
-                     }
-                }
+    public override void Execute()
+    {
+        Menu.Close();
+    }
+}
 
-            }
+public class ActionSelectMenu : MonoBehaviour, IInputTarget
+{
+    [SerializeField] private UnitInventoryMenu _inventoryMenu;
+    [SerializeField] private UICursor _cursor;
 
-            SetSelectedOption(selectedIndex);
-            // TODO: Lerp alpha of selectedHighlight min: 103 max: 172 over a seconds duration.
+    [SerializeField] private GameObject _optionPrefab;
+    [SerializeField] private Transform _optionsParent;
 
-            if (Input.GetKeyDown(KeyCode.X)) {
-                CloseMenu();
-                OnMenuClose.Invoke();
-            }
+    public Action OnMenuClose;
+    public Unit SelectedUnit { get; private set; }
+
+
+    private readonly List<ActionMenuOption> _options = new List<ActionMenuOption>();
+    private int _selectedOptionIndex;
+
+    private ActionMenuOption SelectedOption => _options[_selectedOptionIndex];
+
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void Show(Unit unit)
+    {
+        UserInput.Instance.InputTarget = this;
+        SelectedUnit = unit;
+
+        // Attack Option
+        if (SelectedUnit.CanAttack())
+            AddOption<AttackOption>();
+
+        // Items Option
+        AddOption<ItemsOption>();
+
+        // Trade Option
+        if (SelectedUnit.CanTrade())
+            AddOption<TradeOption>();
+
+        // Wait Option
+        AddOption<WaitOption>();
+
+        _selectedOptionIndex = 0;
+        MoveSelectionToOption(0, true);
+
+        gameObject.SetActive(true);
+    }
+
+    public void ProcessInput(InputData input)
+    {
+        if (!_cursor.IsMoving)
+            MoveSelection(-input.Vertical);
+
+        switch (input.KeyCode)
+        {
+            case KeyCode.Z:
+                SelectedOption.Execute();
+                break;
+
+            case KeyCode.X:
+                Close();
+                break;
         }
     }
 
-    private void SelectAction(RectTransform selectedOption) {
-        var option = selectedOption.name;
+    public void Close()
+    {
+        gameObject.SetActive(false);
+        _cursor.transform.parent = transform;
 
-        switch (option) {
-            case "Attack Option":
-                break;
-            case "Items Option":
-                CloseMenu();
-                inventoryMenu.ShowMenu(_selectedUnit);
-                break;
-            case "Trade Option":
-                break;
-            case "Wait Option":
-                break;
-        }
+        UserInput.Instance.InputTarget = null;
+        ClearOptions();
+
+        OnMenuClose?.Invoke();
     }
 
-    private void SetSelectedOption(int targetOptionIndex) {
-        RectTransform targetOption = activeOptions[targetOptionIndex];
+    public void ShowInventory()
+    {
+        _inventoryMenu.Show(SelectedUnit);
+        _inventoryMenu.OnMenuClose = () =>
+        {
+            UserInput.Instance.InputTarget = this;
+        };
 
-        // Move Pointer
-        var newPointerLocation = new Vector2(pointer.localPosition.x, targetOption.localPosition.y - 10);
-        _pointer.MoveTo(newPointerLocation);
-       
-        
-        // Move Selected Highlight
-        var newSelectedLocation = new Vector2(selectedHighlight.localPosition.x, targetOption.localPosition.y - 5);
-        if (!_pointer.IsMoving) {
-            selectedHighlight.localPosition = newSelectedLocation;
-        } else {
-            selectedHighlight.localPosition = Vector2.Lerp(
-                selectedHighlight.localPosition, 
-                newSelectedLocation,
-                _pointer.moveSpeed - 1 * Time.smoothDeltaTime
-            );
-        }
-
-        _selectedOption = targetOption;
+        //Close();
     }
 
-    private void ResetOptionPositions() {
-        var attackOption = menuOptions[0];
-        attackOption.localPosition = _firstOptPos;
+    private void ClearOptions()
+    {
+        foreach (var opt in _options)
+            Destroy(opt.gameObject);
 
-        var itemsOption = menuOptions[1];
-        itemsOption.localPosition = _secondOptPos;
-
-        var tradeOption = menuOptions[2];
-        tradeOption.localPosition = _thirdOptPos;
-
-        var waitOption = menuOptions[3];
-        waitOption.localPosition = _fourthOptPos;
+        _options.Clear();
     }
 
-    private void CloseMenu() {
-        _open = false;
+    private void AddOption<T>()
+        where T : ActionMenuOption
+    {
+        var go = Instantiate(_optionPrefab, _optionsParent, false);
+        var option = go.AddComponent<T>();
 
-        this.SetActive(false);
-        
-        ResetOptionPositions();
-        activeOptions.Clear();
+        _options.Add(option);
     }
-    
+
+    private void MoveSelection(int input)
+    {
+        if (input == 0)
+            return;
+
+        _selectedOptionIndex = Mathf.Clamp(_selectedOptionIndex + input, 0, _options.Count - 1);
+        MoveSelectionToOption(_selectedOptionIndex);
+    }
+
+    private void MoveSelectionToOption(int index, bool instant = false)
+    {
+        _cursor.transform.parent = _options[index].transform;
+        _cursor.MoveTo(Vector2.zero, instant);
+    }
 }

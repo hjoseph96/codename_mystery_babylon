@@ -1,110 +1,119 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 
-public class UnitInventoryMenu : MonoBehaviour
+public class UnitInventoryMenu : MonoBehaviour, IInputTarget
 {
-    public RectTransform pointer;
-    public List<ItemSlot> itemSlots;
-    public UnityEvent OnMenuClose;
+    [SerializeField] private UICursor _cursor;
+    [SerializeField] private ItemActionsMenu _itemActionMenu;
 
-    private bool _open;
-    private Unit _activePlayer;
-    private UICursor _pointer;
-    private ItemSlot _selectedSlot;
+    public Action OnMenuClose;
+    private ItemSlot[] _itemSlots;
 
-    // Start is called before the first frame update
-    void Start()
+    private Unit _selectedUnit;
+    private int _selectedSlotIndex;
+
+    private ItemSlot SelectedSlot => _itemSlots[_selectedSlotIndex];
+
+    private ItemSlot ActiveSlot; // The slot that is has SelectItemSlot called on it. 1 Selected slot at a time.
+
+    private void Awake()
     {
-        if (itemSlots.Count > UnitInventory.MaxSize)
-            throw new System.Exception("Given more item slots than allowed per user.");
-        
-        _pointer = GetComponentInChildren<UICursor>();
-
-        this.SetActive(false);
-        _open = false;
+        _itemSlots = GetComponentsInChildren<ItemSlot>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        if (_open) {
-            if (!_pointer.IsMoving) {
-                var selectedIndex = itemSlots.IndexOf(_selectedSlot);
-                var lastOptionIndex = itemSlots.Count - 1;
-                var vertAxis = Input.GetAxisRaw("Vertical");
+        if (_itemSlots.Length > UnitInventory.MaxSize)
+            throw new IndexOutOfRangeException("Given more item slots than allowed per user.");
 
-                if (vertAxis < 0) {
-                    if (selectedIndex == lastOptionIndex) {
-                        selectedIndex = 0;
-                    } else {
-                        selectedIndex += 1;
-                    }
+        gameObject.SetActive(false);
+    }
+
+    public void ProcessInput(InputData input)
+    {
+        if (!_cursor.IsMoving)
+            MoveSelection(-input.Vertical);
+
+        switch (input.KeyCode)
+        {
+            case KeyCode.Z:
+                if (!SelectedSlot.IsEmpty)
+                {
+                    SelectItemSlot(SelectedSlot);
+
+                    // TODO: Get Item Derived Class from Base?
+                    var weapon = _selectedUnit.Inventory.GetItems<Weapon>()[_selectedSlotIndex];
+                    _itemActionMenu.Show(_selectedUnit, weapon, _cursor);
                 }
+                // TODO: Further logic here
+                // Active ItemOptionsMenu(SelectedSlot);
+                // Upon open, this menu should read all required data from SelectedSlot.Item and populate UI objects with this data
+                // Upon close, this menu should call SelectedSlot.SetDeselected(); to remove outline/highlighting
+                // ItemOptionsMenu should implement IInputTarget and process all input inside ProcessInput(InputData);
+                // Upon open, should execute UserInput.Instance.InputTarget = this
+                // Upon close, should reset InputTarget back to UnitInventoryMenu object
+                break;
 
-                if (vertAxis > 0) {
-                    if (selectedIndex == 0) {
-                        selectedIndex = lastOptionIndex;
-                    } else {
-                        selectedIndex -= 1;
-                    }
-                }
+            case KeyCode.X:
+                if (ActiveSlot != null) {
+                    ActiveSlot = null;
 
-                if (vertAxis == 0) {
-                     if (Input.GetKeyDown(KeyCode.Z)) {
-                        // SelectAction(_selectedOption);
-                        return;
-                     }
-                }
-
-                MoveCursorTo(selectedIndex);
-            }
-
-            if (Input.GetKeyDown(KeyCode.X))
-                CloseMenu();
+                } 
+                Close();
+                break;
         }
     }
 
-    public void ShowMenu(Unit player) {
+    private void MoveSelection(int input)
+    {
+        _selectedSlotIndex = Mathf.Clamp(_selectedSlotIndex + input, 0, _itemSlots.Length - 1);
+        MoveSelectionToOption(_selectedSlotIndex);
+    }
+
+    private void MoveSelectionToOption(int index, bool instant = false)
+    {
+        _cursor.transform.parent = _itemSlots[index].transform;
+        _cursor.MoveTo(new Vector2(-300, -15), instant);
+    }
+
+    public void Show(Unit unit)
+    {
         GridCursor.Instance.ClearAll();
         GridCursor.Instance.SetLockedMode();
 
-        _activePlayer = player;
+        UserInput.Instance.InputTarget = this;
+
+        _selectedUnit = unit;
         
-        Item[] items = player.Inventory.GetItems<Item>();
-
-
-        for(int i = 0; i < items.Length; i++) {
-            var itemSlot = itemSlots[i];
+        var items = unit.Inventory.GetItems<Item>();
+        for (var i = 0; i < items.Length; i++)
+        {
+            var itemSlot = _itemSlots[i];
             var inventoryItem = items[i];
 
             itemSlot.Populate(inventoryItem);
         }
-        _selectedSlot = itemSlots[0];
 
-        this.SetActive(true);
-        _open = true;
+        _selectedSlotIndex = 0;
+        MoveSelectionToOption(0, true);
+
+        gameObject.SetActive(true);
     }
 
-    void CloseMenu() {
-        this.SetActive(false);
-        _open = false;
+    private void Close() {
+        gameObject.SetActive(false);
+        _cursor.transform.parent = transform;
 
         GridCursor.Instance.SetFreeMode();
         OnMenuClose.Invoke();
     }
 
-    void MoveCursorTo(int itemSlotIndex) {
-        var itemSlot = itemSlots[itemSlotIndex];
-
-        Vector2 cursorDestination = new Vector2(
-            _pointer.transform.localPosition.x, itemSlot.transform.localPosition.y - 10
-        );
-
-        _pointer.MoveTo(cursorDestination);
-        if (!_pointer.IsMoving)
-            _selectedSlot = itemSlot;
+    private void SelectItemSlot(ItemSlot selectedSlot)
+    {
+        // TODO: Implement ItemOptionsMenu, append to selectedSlot and display relevant options
+        selectedSlot.SetSelected();
+        ActiveSlot = selectedSlot;
+        // TODO: here we should set ItemOptionMenu as InputTarget for UserInput
     }
 }
