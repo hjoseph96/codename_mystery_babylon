@@ -4,11 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerForecast : MonoBehaviour
-{
-    // Temporary: Eventually move to an Input Horizontal Axis selection os AttackableWeapons
-    [SerializeField] private TextMeshProUGUI _weaponName;
-    [SerializeField] private Image _weaponIcon;
-    
+{   
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private TextMeshProUGUI _health;
     [SerializeField] private TextMeshProUGUI _damage;
@@ -19,9 +15,6 @@ public class PlayerForecast : MonoBehaviour
     {
         _name.SetText(unit.Name);
 
-        _weaponName.SetText(unit.EquippedWeapon.Name);
-        _weaponIcon.sprite = unit.EquippedWeapon.Icon;
-        
         Dictionary<string, int> preview = unit.PreviewAttack(enemyUnit);
         _health.SetText($"{unit.CurrentHealth}");
         _damage.SetText($"{preview["ATK_DMG"]}");
