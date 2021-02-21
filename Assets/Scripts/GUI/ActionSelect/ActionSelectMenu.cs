@@ -25,7 +25,7 @@ public class AttackOption : ActionMenuOption
 
     public override void Execute()
     {
-        Debug.Log("Attack");
+        Menu.ShowAttackForecast();
     }
 }
 
@@ -67,6 +67,7 @@ public class WaitOption : ActionMenuOption
 public class ActionSelectMenu : Menu
 {
     [SerializeField] private UnitInventoryMenu _inventoryMenu;
+    [SerializeField] private AttackForecastMenu _attackForecastMenu;
     [SerializeField] private UICursor _cursor;
 
     [SerializeField] private GameObject _optionPrefab;
@@ -138,6 +139,12 @@ public class ActionSelectMenu : Menu
     {
         _inventoryMenu.Show(_selectedUnit);
         _inventoryMenu.PreviousMenu = this;
+    }
+
+    public void ShowAttackForecast() {
+        _attackForecastMenu.Show(_selectedUnit);
+        _attackForecastMenu.PreviousMenu = this;
+        ResetAndHide();
     }
 
     private void ClearOptions()

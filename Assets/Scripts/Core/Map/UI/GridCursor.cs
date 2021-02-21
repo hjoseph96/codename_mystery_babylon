@@ -21,9 +21,10 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     public static GridCursor Instance;
 
     public ActionSelectMenu actionSelectMenu;
+    public Vector2Int GridPosition { get; private set; }
 
     private CursorMode _mode = CursorMode.Free;
-    private Vector2Int _gridPosition, _targetGridPosition;
+    private Vector2Int _targetGridPosition;
     private HashSet<Vector2Int> _allowedPositions;
     private WorldGrid _worldGrid;
     private UserInput _userInput;
@@ -41,7 +42,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     {
         Instance = this;
 
-        _gridPosition = GridUtility.SnapToGrid(this);
+        GridPosition = GridUtility.SnapToGrid(this);
         _arrowPath = Instantiate(_arrowPath);
 
         _worldGrid = WorldGrid.Instance;
@@ -64,7 +65,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     public void ProcessInput(InputData inputData) {
         if (_mode != CursorMode.Locked && inputData.MovementVector != Vector2Int.zero)
         {
-            var newPosition = _gridPosition + inputData.MovementVector;
+            var newPosition = GridPosition + inputData.MovementVector;
             if (_worldGrid.PointInGrid(newPosition))
                 StartMovement(newPosition);
         }
@@ -73,7 +74,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             case CursorMode.Free:
                 if (inputData.KeyCode == KeyCode.Z) 
                 {
-                    var unit  = _worldGrid[_gridPosition].Unit;
+                    var unit  = _worldGrid[GridPosition].Unit;
                     if (unit != null && unit.IsLocalPlayerUnit)
                         SetRestrictedMode(unit);
                 }
@@ -84,7 +85,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                 switch (inputData.KeyCode)
                 {
                     case KeyCode.Z:
-                        if (_allowedPositions.Contains(_gridPosition))
+                        if (_allowedPositions.Contains(GridPosition))
                             MoveSelectedUnit();
                         break;
 
@@ -111,7 +112,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         _cellHighlighter.ResetSelectionHighlightingSprite();
     }
 
-    public void SetRestrictedMode(Unit unit)
+    public void SetRestrictedMode(Unit unit, bool attackOnly = false)
     {
         _selectedUnit = unit;
         _mode = CursorMode.Restricted;
@@ -119,13 +120,18 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         //var t = Time.realtimeSinceStartup;
 
         _allowedPositions = GridUtility.GetReachableCells(unit);
+
         var attackPositions = GridUtility.GetAttackableCells(unit, _allowedPositions);
+        if (attackOnly) {
+            _allowedPositions = new HashSet<Vector2Int>();
+            attackPositions = unit.AllAttackableCells();
+        }
         
         _cellHighlighter.HighLight(_allowedPositions, attackPositions, _selectedUnit);
 
         //Debug.Log("Highlighting: " + (Time.realtimeSinceStartup - t));
 
-        _cellHighlighter.UpdateSelectionHighlightingSprite(_gridPosition);
+        _cellHighlighter.UpdateSelectionHighlightingSprite(GridPosition);
         _arrowPath.Init(unit);
     }
 
@@ -148,8 +154,8 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
     public void MoveInstant(Vector2Int destination)
     {
-        _gridPosition = destination;
-        transform.position = _worldGrid.Grid.GetCellCenterWorld((Vector3Int)_gridPosition);
+        GridPosition = destination;
+        transform.position = _worldGrid.Grid.GetCellCenterWorld((Vector3Int)GridPosition);
     }
 
     public void MoveSelectedUnit()
@@ -218,8 +224,8 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
         // If we have to move horizontally, ignore vertical movement to prevent diagonal movement
         // Continuing example: we replace (2,2) destination with (2,1) here
-        if (_targetGridPosition.x != _gridPosition.x)
-            actualTargetGridPosition.y = _gridPosition.y;
+        if (_targetGridPosition.x != GridPosition.x)
+            actualTargetGridPosition.y = GridPosition.y;
 
         // Calculate world position
         var destination = _worldGrid.Grid.GetCellCenterWorld((Vector3Int) actualTargetGridPosition);
@@ -231,13 +237,13 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         if (t >= _normalizedDistanceThreshold)
         {
             // Move to the destination position
-            _gridPosition = actualTargetGridPosition;
+            GridPosition = actualTargetGridPosition;
             transform.position = destination;
 
             // If we can lengthen the arrow path, do it
-            if (_mode == CursorMode.Restricted && _allowedPositions.Contains(_gridPosition))
+            if (_mode == CursorMode.Restricted && _allowedPositions.Contains(GridPosition))
             {
-                _arrowPath.Move(_gridPosition);
+                _arrowPath.Move(GridPosition);
             }
 
             // Check if we can end movement
@@ -245,7 +251,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             // Next time we will move from (2,1) to (2,2) and end the movement
             EndMovement();
 
-            if (_gridPosition != _targetGridPosition)
+            if (GridPosition != _targetGridPosition)
             {
                 StartMovement(_targetGridPosition);
             }
@@ -270,7 +276,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     {
         if (_mode == CursorMode.Restricted)
         {
-           _cellHighlighter.UpdateSelectionHighlightingSprite(_gridPosition);
+           _cellHighlighter.UpdateSelectionHighlightingSprite(GridPosition);
         }
 
         _isMoving = false;
