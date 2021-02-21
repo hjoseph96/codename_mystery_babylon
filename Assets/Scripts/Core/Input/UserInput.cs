@@ -7,6 +7,8 @@ public class UserInput : MonoBehaviour, IInitializable
     {
         KeyCode.X,
         KeyCode.Z,
+        KeyCode.Q,
+        KeyCode.E,
         KeyCode.Escape,
         KeyCode.Space
     };

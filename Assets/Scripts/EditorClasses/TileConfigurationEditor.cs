@@ -12,30 +12,33 @@ public class TileConfigurationEditor : OdinEditor
         var config = target as TileConfiguration;
         DrawDefaultInspector();
 
-        var rect = EditorGUILayout.GetControlRect();
         var size = 120f;
         var borderSize = 12;
         var offset = 20;
-        rect.x = rect.width / 2 - size / 2;
+
+        var rect = EditorGUILayout.GetControlRect(false, size + offset + borderSize * 4);
+        rect.x = (rect.x + rect.width - size) / 2;
         rect.y += offset + borderSize * 2;
         rect.width = size;
         rect.height = size;
-
-        SirenixEditorGUI.DrawSolidRect(rect.Expand(borderSize * 2), new Color(1.0f, 1.0f, 1.0f, 0.5f));
-        SirenixEditorGUI.DrawSolidRect(rect.Expand(borderSize), new Color(0.3f, 1.0f, 0.55f));
-
-        var style = new GUIStyle();
-        style.fontSize = 52;
-        style.normal.textColor = Color.black;
-        style.alignment = TextAnchor.MiddleCenter;
-
-        config.TravelCost.TryGetValueExt(config.UnitType, out var cost);
-        GUI.Label(rect, cost.ToString(), style);
 
         if (config.UnitType == UnitType.None)
         {
             return;
         }
+
+        SirenixEditorGUI.DrawSolidRect(rect.Expand(borderSize * 2), new Color(1.0f, 1.0f, 1.0f, 0.5f));
+        SirenixEditorGUI.DrawSolidRect(rect.Expand(borderSize), new Color(0.3f, 1.0f, 0.55f));
+
+        var style = new GUIStyle
+        {
+            fontSize = 52, 
+            normal = {textColor = Color.black}, 
+            alignment = TextAnchor.MiddleCenter
+        };
+
+        config.TravelCost.TryGetValueExt(config.UnitType, out var cost);
+        GUI.Label(rect, cost.ToString(), style);
 
         var blockExitColor = Color.blue;
         if (config.BlockExit.TryGetValue(Direction.Left, out var value) && (value & config.UnitType) == config.UnitType)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Com.LuisPedroFonseca.ProCamera2D;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 [SelectionBase]
@@ -22,10 +23,12 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
     public ActionSelectMenu actionSelectMenu;
     public Vector2Int GridPosition { get; private set; }
+    public UnityEvent<Unit> AttackTargetChanged;
 
     private CursorMode _mode = CursorMode.Free;
     private Vector2Int _targetGridPosition;
     private HashSet<Vector2Int> _allowedPositions;
+    private List<Vector2Int> _attackPositions;
     private WorldGrid _worldGrid;
     private UserInput _userInput;
 
@@ -57,17 +60,37 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
     private void Update()
     {
+        // Even if not the UserInput.InputTarget, track input in Attack Mode
+        var movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        if (_mode == CursorMode.Attack && movementVector != Vector2.zero) {
+            var input = Mathf.RoundToInt(Mathf.Clamp(movementVector.x + movementVector.y, -1 , 1));
+            
+            var currentCellIndex = _attackPositions.IndexOf(GridPosition);
+            var nextAttackTargetIndex = currentCellIndex + input;
+            
+            if (nextAttackTargetIndex < 0) nextAttackTargetIndex = _allowedPositions.Count - 1;
+            if (nextAttackTargetIndex > _allowedPositions.Count - 1) nextAttackTargetIndex = 0;
+            
+            var newPosition = _attackPositions[nextAttackTargetIndex];
+            
+            if (_worldGrid.PointInGrid(newPosition))
+                StartMovement(newPosition);
+        }
+
         // Move the cursor
         if (_isMoving)
             Move();
     }
 
     public void ProcessInput(InputData inputData) {
-        if (_mode != CursorMode.Locked && inputData.MovementVector != Vector2Int.zero)
-        {
-            var newPosition = GridPosition + inputData.MovementVector;
-            if (_worldGrid.PointInGrid(newPosition))
-                StartMovement(newPosition);
+        if (inputData.MovementVector != Vector2Int.zero) {
+            if (_mode != CursorMode.Locked && _mode != CursorMode.Attack)
+            {
+                var newPosition = GridPosition + inputData.MovementVector;
+                if (_worldGrid.PointInGrid(newPosition))
+                    StartMovement(newPosition);
+            }
         }
         
         switch(_mode) {
@@ -98,6 +121,10 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
                 break;
 
+                
+            case CursorMode.Attack:
+                break;
+
             case CursorMode.Locked:
                 break;
 
@@ -117,19 +144,28 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         _selectedUnit = unit;
         _mode = CursorMode.Restricted;
 
-        //var t = Time.realtimeSinceStartup;
-
         _allowedPositions = GridUtility.GetReachableCells(unit);
 
         var attackPositions = GridUtility.GetAttackableCells(unit, _allowedPositions);
-        if (attackOnly) {
-            _allowedPositions = new HashSet<Vector2Int>();
-            attackPositions = unit.AllAttackableCells();
-        }
         
         _cellHighlighter.HighLight(_allowedPositions, attackPositions, _selectedUnit);
+        _cellHighlighter.UpdateSelectionHighlightingSprite(GridPosition);
+        _arrowPath.Init(unit);
+    }
 
-        //Debug.Log("Highlighting: " + (Time.realtimeSinceStartup - t));
+
+    public void SetAttackMode(Unit unit)
+    {
+        _selectedUnit = unit;
+        _mode = CursorMode.Attack;
+
+        _allowedPositions = new HashSet<Vector2Int>();
+        _attackPositions = unit.AllAttackableCells();
+        
+        _cellHighlighter.HighLight(_allowedPositions, _attackPositions, _selectedUnit);
+
+        foreach(Vector2Int pos in _attackPositions)
+            _allowedPositions.Add(pos);
 
         _cellHighlighter.UpdateSelectionHighlightingSprite(GridPosition);
         _arrowPath.Init(unit);
@@ -201,17 +237,6 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         _camera.SetSingleTarget(transform);
         _camera.SetCameraWindowMode(CameraWindowMode.Cursor);
 
-        // Temporary workaround, feel free to delete
-        /*actionSelectMenu.OnMenuClose = () =>
-        {
-            // Clear arrow path and all highlightings
-            //_arrowPath.Clear();
-            //_cellHighlighter.Clear();
-            SetRestrictedMode(_selectedUnit);
-            // Accept input
-            UserInput.Instance.InputTarget = this;
-        };*/
-
         actionSelectMenu.Show(_selectedUnit);
     }
 
@@ -239,6 +264,16 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             // Move to the destination position
             GridPosition = actualTargetGridPosition;
             transform.position = destination;
+
+            
+            if (_mode == CursorMode.Attack) {
+                var targetedUnit = _worldGrid[GridPosition].Unit;
+
+                if (targetedUnit.IsEnemy(_selectedUnit))
+                    AttackTargetChanged.Invoke(targetedUnit);
+                else
+                    throw new Exception($"Targeted a non-enemy Unit: {targetedUnit.Name}");
+            }
 
             // If we can lengthen the arrow path, do it
             if (_mode == CursorMode.Restricted && _allowedPositions.Contains(GridPosition))

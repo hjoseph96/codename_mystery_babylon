@@ -23,28 +23,32 @@ public class AttackForecastMenu : Menu
         _attackableWeaponsByPosition = _attackingUnit.AttackableWeapons();
 
         _selectedWeapon = _attackableWeaponsByPosition.Keys.First<Weapon>();
-
         
         var attackableCell = _attackableWeaponsByPosition.Values.First<List<Vector2Int>>()[0];
         _defendingUnit = WorldGrid.Instance[attackableCell].Unit;
 
-
-        _playerForecast.Populate(unit, _defendingUnit);
-        _enemyForecast.Populate(_defendingUnit, unit);
+        PopulateForecasts();
         
         _worldGrid = WorldGrid.Instance;
         _gridCursor = GridCursor.Instance;
 
-        _gridCursor.SetRestrictedMode(_attackingUnit, true);
+        _gridCursor.SetAttackMode(_attackingUnit);
         _gridCursor.transform.position = _worldGrid.Grid.GetCellCenterWorld((Vector3Int) attackableCell);
+        _gridCursor.AttackTargetChanged.AddListener(delegate(Unit targetUnit) {
+            _defendingUnit = targetUnit;
+            PopulateForecasts();
+        });
 
         this.SetActive(true);
     }
 
     public override void ProcessInput(InputData input)
     {
-        if (input.MovementVector != Vector2Int.zero)
-            SelectOption(MoveSelection(input.MovementVector));
+        if (input.MovementVector.x != 0)
+        {
+            
+        }
+            
 
         switch (input.KeyCode)
         {
@@ -68,5 +72,11 @@ public class AttackForecastMenu : Menu
     public override void OnClose()
     {
         GridCursor.Instance.SetFreeMode();
+    }
+
+    private void PopulateForecasts()
+    {
+        _playerForecast.Populate(_attackingUnit, _defendingUnit);
+        _enemyForecast.Populate(_defendingUnit, _attackingUnit);
     }
 }
