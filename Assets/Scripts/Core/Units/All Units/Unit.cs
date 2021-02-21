@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Animancer;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -47,11 +45,14 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Items")]
     [SerializeField] private ScriptableItem[] _startingItems;
 
+    // TODO: Implement WeaponRanks (equippable weapons and rank with each)
     public UnitInventory Inventory { get; private set; }
-    public Weapon EquippedWeapon { get; private set; }   // TODO: Implement Equipment Items. EquippedEquipment? or Just EquippedGear. one 1 Gear equipped per unit (ie. shield)
+    public Weapon EquippedWeapon { get; private set; }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
 
     public Vector2Int GridPosition { get; set; }
+    public Vector2Int InitialGridPosition { get; set; }  // Where Unit began the turn.
+    public bool HasMoved { get; set; }                  // Has the unit moved this turn?
     public int CurrentMovementPoints { get; set; }
 
     private Color HealthColor = new Color(0.25f, 1.0f, 0.35f);
@@ -123,12 +124,41 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         EquippedWeapon = null;
     }
 
-    public bool CanAttack()
-    {
-        var weapons = Inventory.GetItems<Weapon>();
+    public Dictionary<Weapon, List<Vector2Int>> AttackableWeapons() {
+        var attackableWeapons = new Dictionary<Weapon, List<Vector2Int>>();
 
         var immediatePositions = GridUtility.GetReachableCells(this, 0);
-        return weapons.Any(w => GridUtility.GetAttackableCells(this, immediatePositions, w).Count > 0);
+
+        foreach(var weapon in Inventory.GetItems<Weapon>()) {
+            var maxRange = weapon.Stats[WeaponStat.MaxRange].ValueInt;
+            var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions, weapon);
+            if (attackableCells.Count > 0)
+                attackableWeapons[weapon] = attackableCells;
+        }
+
+        return attackableWeapons;
+    }
+
+    public List<Vector2Int> AllAttackableCells() {
+        var allAttackableCells = new List<Vector2Int>();
+
+        var immediatePositions = GridUtility.GetReachableCells(this, 0);
+
+        foreach(var weapon in Inventory.GetItems<Weapon>()) {
+            var maxRange = weapon.Stats[WeaponStat.MaxRange].ValueInt;
+            var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions, weapon);
+            if (attackableCells.Count > 0)
+                foreach(Vector2Int pos in attackableCells)
+                    allAttackableCells.Add(pos);
+
+        }
+
+        return allAttackableCells;
+    }
+
+    public bool CanAttack()
+    {
+        return AttackableWeapons().Count > 0;
     }
 
     public bool CanTrade()
@@ -321,7 +351,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         int weaponCritChance = EquippedWeapon.Stats[WeaponStat.CriticalHit].ValueInt;
 
         int critRate = ((skill / 2) + weaponCritChance) - target.Stats[UnitStat.Luck].ValueInt;
-
+        if (critRate < 0)
+            critRate = 0;
+        
         // if (WEAPON_RANKS[EquippedWeapon.Type] == Weapon.RANKS["S"])
         //     critRate += 5;
 
