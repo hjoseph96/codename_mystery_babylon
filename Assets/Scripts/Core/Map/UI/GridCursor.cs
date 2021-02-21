@@ -23,6 +23,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
     public ActionSelectMenu actionSelectMenu;
     public Vector2Int GridPosition { get; private set; }
+    public bool IsMoving { get; private set; }
     public UnityEvent<Unit> AttackTargetChanged;
 
     private CursorMode _mode = CursorMode.Free;
@@ -32,7 +33,6 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     private WorldGrid _worldGrid;
     private UserInput _userInput;
 
-    private bool _isMoving;
     private float _movementStartTime;
 
     private Unit _selectedUnit;
@@ -79,7 +79,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         }
 
         // Move the cursor
-        if (_isMoving)
+        if (IsMoving)
             Move();
     }
 
@@ -265,7 +265,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             GridPosition = actualTargetGridPosition;
             transform.position = destination;
 
-            
+
             if (_mode == CursorMode.Attack) {
                 var targetedUnit = _worldGrid[GridPosition].Unit;
 
@@ -300,7 +300,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
     private void StartMovement(Vector2Int destination)
     {
-        _isMoving = true;
+        IsMoving = true;
         _targetGridPosition = destination;
         _movementStartTime = Time.time;
 
@@ -314,7 +314,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
            _cellHighlighter.UpdateSelectionHighlightingSprite(GridPosition);
         }
 
-        _isMoving = false;
+        IsMoving = false;
         _userInput.InputTarget = this;
     }
 }
