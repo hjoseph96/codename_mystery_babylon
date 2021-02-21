@@ -46,11 +46,11 @@ public class ItemDetailsView : MonoBehaviour
                 
                 break;
             case "HIT":
-                statDisplay.SetStat($"{weapon.Stats[WeaponStat.Hit].ValueInt}");
+                statDisplay.SetStat($"{weapon.Stats[WeaponStat.Hit].ValueInt}%");
                 
                 break;
             case "CRIT":
-                statDisplay.SetStat($"{weapon.Stats[WeaponStat.CriticalHit].ValueInt}");
+                statDisplay.SetStat($"{weapon.Stats[WeaponStat.CriticalHit].ValueInt}%");
                 
                 break;
             case "RNG":

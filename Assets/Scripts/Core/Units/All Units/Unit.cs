@@ -297,10 +297,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     // || Battle Formulas ||
     // =====================
 
-    public int AttackDamage() {
-        int weaponDamage = EquippedWeapon.Stats[WeaponStat.Damage].ValueInt;
+    public int AttackDamage(Weapon weapon) {
+        int weaponDamage = weapon.Stats[WeaponStat.Damage].ValueInt;
         
-        if (EquippedWeapon.Type == WeaponType.Grimiore) { // MAGIC USER
+        if (weapon.Type == WeaponType.Grimiore) { // MAGIC USER
             int magicStat = Stats[UnitStat.Magic].ValueInt;
             
             return magicStat + weaponDamage;
@@ -311,8 +311,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
     }
 
-    public int AttackSpeed() {
-        int weaponWeight = EquippedWeapon.Weight;
+    public int AttackSpeed(Weapon weapon) {
+        int weaponWeight = weapon.Weight;
         int constitutionStat = Stats[UnitStat.Constitution].ValueInt;
         int burden = weaponWeight - constitutionStat;
 
@@ -322,35 +322,35 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return Stats[UnitStat.Speed].ValueInt - burden;
     }
 
-    public Dictionary<string, int> PreviewAttack(Unit defender) {
+    public Dictionary<string, int> PreviewAttack(Unit defender, Weapon weapon) {
         Dictionary<string, int> battleStats = new Dictionary<string, int>();
 
         int atkDmg;
-        if (EquippedWeapon.Type == WeaponType.Grimiore) {
-            atkDmg = AttackDamage() - defender.Stats[UnitStat.Resistance].ValueInt;
+        if (weapon.Type == WeaponType.Grimiore) {
+            atkDmg = AttackDamage(weapon) - defender.Stats[UnitStat.Resistance].ValueInt;
         } else {
-            atkDmg = AttackDamage() - defender.Stats[UnitStat.Defense].ValueInt;
+            atkDmg = AttackDamage(weapon) - defender.Stats[UnitStat.Defense].ValueInt;
         }
 
         battleStats["ATK_DMG"] = atkDmg;
-        battleStats["ACCURACY"] = Accuracy(defender);
-        battleStats["CRIT_RATE"] = CriticalHitRate(defender);
+        battleStats["ACCURACY"] = Accuracy(defender, weapon);
+        battleStats["CRIT_RATE"] = CriticalHitRate(defender, weapon);
 
         return battleStats;
     }
 
-    public bool CanDoubleAttack(Unit target) {
+    public bool CanDoubleAttack(Unit target, Weapon weapon) {
         int minDoubleAttackBuffer = 5;
 
-        if ((this.AttackSpeed() - target.AttackSpeed()) > minDoubleAttackBuffer)
+        if ((this.AttackSpeed(weapon) - target.AttackSpeed(weapon)) > minDoubleAttackBuffer)
             return true;
 
         return false;
     }
 
-    public int CriticalHitRate(Unit target) {
+    public int CriticalHitRate(Unit target, Weapon weapon) {
         int skill = Stats[UnitStat.Skill].ValueInt;
-        int weaponCritChance = EquippedWeapon.Stats[WeaponStat.CriticalHit].ValueInt;
+        int weaponCritChance = weapon.Stats[WeaponStat.CriticalHit].ValueInt;
 
         int critRate = ((skill / 2) + weaponCritChance) - target.Stats[UnitStat.Luck].ValueInt;
         if (critRate < 0)
@@ -362,37 +362,43 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return critRate;
     }
 
-    public int DodgeChance() {
+    public int DodgeChance(Weapon weapon) {
         int luckStat = Stats[UnitStat.Luck].ValueInt;
 
-        return (AttackSpeed() * 2) + luckStat;
+        return (AttackSpeed(weapon) * 2) + luckStat;
     }
 
-    public int HitRate(Vector2Int targetPosition) {
+    public int HitRate(Vector2Int targetPosition, Weapon weapon) {
         int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, targetPosition);
         int luckStat = Stats[UnitStat.Luck].ValueInt;
         int skillStat = Stats[UnitStat.Skill].ValueInt;
-        int weaponHitStat = EquippedWeapon.Stats[WeaponStat.Hit].ValueInt;
+        int weaponHitStat = weapon.Stats[WeaponStat.Hit].ValueInt;
 
         int hitRate = (skillStat * 2) + luckStat  + weaponHitStat;
         if (boxDistance >= 2)
             hitRate -= 15;
         
+        if (hitRate < 0)
+            hitRate = 0;
+
         return hitRate;
     }
 
-    public int Accuracy(Unit target) {
+    public int Accuracy(Unit target, Weapon weapon) {
         int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, target.GridPosition);
 
-        if (EquippedWeapon.Type != WeaponType.Staff) {
+        if (weapon.Type != WeaponType.Staff) {
             // TODO: Add weapon W△ Weapon triangle effects
-            return HitRate(target.GridPosition) - target.DodgeChance();
+            return HitRate(target.GridPosition, weapon) - target.DodgeChance(weapon);
         } else {
             int magicStat = Stats[UnitStat.Magic].ValueInt;
             int resistanceStat = Stats[UnitStat.Resistance].ValueInt;
             int skillStat = Stats[UnitStat.Skill].ValueInt;
             
-            return (magicStat - resistanceStat) + skillStat + 30 - (boxDistance * 2);
+            var accuracy = (magicStat - resistanceStat) + skillStat + 30 - (boxDistance * 2);
+            if (accuracy < 0) accuracy = 0;
+
+            return accuracy;
         }
     }
 }
