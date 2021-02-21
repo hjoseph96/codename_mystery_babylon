@@ -7,11 +7,14 @@ public class UnitInventoryMenu : Menu
 {
     [SerializeField] private UICursor _cursor;
     [SerializeField] private ItemActionsMenu _itemActionMenu;
+    [SerializeField] private ItemDetailsView _itemDetailsView;
 
     private List<ItemSlot> _itemSlots;
 
     private Unit _selectedUnit;
     private int _selectedSlotIndex;
+    private ItemSlot SelectedItemSlot => _itemSlots[_selectedSlotIndex];
+
 
     private void Awake()
     {
@@ -54,7 +57,42 @@ public class UnitInventoryMenu : Menu
         MoveSelectionToOption(0, true);
         Activate();
         SelectOption(_itemSlots[0]);
+
+        OnSelectionChange.AddListener(delegate () {
+            if (_itemDetailsView.IsActive())
+                if (SelectedItemSlot.IsEmpty)
+                    _itemDetailsView.Close();
+                else
+                    _itemDetailsView.Show(SelectedItemSlot.Item, SelectedItemSlot.transform.localPosition);
+            }
+        );
     }
+
+    public override void ProcessInput(InputData input)
+    {
+        if (input.MovementVector != Vector2Int.zero)
+            SelectOption(MoveSelection(input.MovementVector));
+
+        switch (input.KeyCode)
+        {
+            case KeyCode.Z:
+                SelectedOption.Execute();
+                break;
+
+            case KeyCode.X:
+                Close();
+                break;
+            
+            case KeyCode.Space:
+                if (_itemDetailsView.IsActive())
+                    _itemDetailsView.Close();
+                else
+                    _itemDetailsView.Show(SelectedItemSlot.Item, SelectedItemSlot.transform.localPosition);
+                
+                break;
+        }
+    }
+
 
     public override void ResetState()
     {

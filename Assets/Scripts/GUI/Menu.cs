@@ -1,11 +1,15 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public abstract class Menu : MonoBehaviour, IInputTarget
 {
     public Menu PreviousMenu { get; set; }
 
     public MenuOption SelectedOption { get; private set; }
+
+    public UnityEvent OnSelectionChange;
 
     private void Start()
     {
@@ -32,17 +36,6 @@ public abstract class Menu : MonoBehaviour, IInputTarget
         Deactivate();
     }
 
-    // Selects specific option
-    public void SelectOption(MenuOption option)
-    {
-        if ((SelectedOption as object) != null)
-            SelectedOption.SetDeselected();
-
-        SelectedOption = option;
-
-        if ((SelectedOption as object) != null)
-            SelectedOption.SetSelected();
-    }
 
     protected void Activate()
     {
@@ -55,8 +48,21 @@ public abstract class Menu : MonoBehaviour, IInputTarget
         gameObject.SetActive(false);
         UserInput.Instance.InputTarget = null;
     }
+    
+    // Selects specific option
+    public void SelectOption(MenuOption option)
+    {
+        if ((SelectedOption as object) != null)
+            SelectedOption.SetDeselected();
 
-    public void ProcessInput(InputData input)
+        SelectedOption = option;
+        OnSelectionChange.Invoke();
+
+        if ((SelectedOption as object) != null)
+            SelectedOption.SetSelected();
+    }
+
+    public virtual void ProcessInput(InputData input)
     {
         if (input.MovementVector != Vector2Int.zero)
             SelectOption(MoveSelection(input.MovementVector));
