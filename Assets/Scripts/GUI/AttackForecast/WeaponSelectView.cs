@@ -18,7 +18,6 @@ public class WeaponSelectView : MonoBehaviour
         _weaponIcon.sprite = selectedWeapon.Icon;
 
         var textLocalPosition = _weaponName.textInfo.characterInfo[0].bottomLeft;
-        Debug.Log("FIRST LETER: " + _weaponName.textInfo.characterInfo[0].character);
         _weaponIcon.transform.localPosition =  new Vector2(
             textLocalPosition.x - 60, _weaponIcon.transform.localPosition.y
         );
