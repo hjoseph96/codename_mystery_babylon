@@ -31,9 +31,6 @@ public class AttackForecastMenu : Menu
         var attackableCell = _attackableWeaponsByPosition.Values.First<List<Vector2Int>>()[0];
         _defendingUnit = WorldGrid.Instance[attackableCell].Unit;
 
-        PopulateForecasts();
-        _weaponSelect.Populate(_selectedWeapon);
-        
         _worldGrid = WorldGrid.Instance;
         _gridCursor = GridCursor.Instance;
 
@@ -56,6 +53,7 @@ public class AttackForecastMenu : Menu
     private void Update() 
     {
         _weaponSelect.Populate(_selectedWeapon);
+        PopulateForecasts();
 
         if (CanSwitchWeapon()) {
             _weaponSelect.ShowArrows();
@@ -104,7 +102,7 @@ public class AttackForecastMenu : Menu
 
     private void PopulateForecasts()
     {
-        _playerForecast.Populate(_attackingUnit, _defendingUnit);
+        _playerForecast.Populate(_attackingUnit, _defendingUnit, _selectedWeapon);
         _enemyForecast.Populate(_defendingUnit, _attackingUnit);
     }
 
@@ -130,7 +128,6 @@ public class AttackForecastMenu : Menu
 
         int nextWeaponIndex = selectableWeapons.IndexOf(_selectedWeapon);
 
-        _weaponSelect.Populate(_selectedWeapon);
 
         yield return new WaitForSeconds(0.3f); // 1 second between weapon changes
 
@@ -153,5 +150,6 @@ public class AttackForecastMenu : Menu
         }
         
         _selectedWeapon = selectableWeapons[nextWeaponIndex];
+        _weaponSelect.Populate(_selectedWeapon);
     }
 }
