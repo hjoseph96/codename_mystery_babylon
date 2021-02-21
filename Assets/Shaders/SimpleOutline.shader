@@ -52,6 +52,9 @@ Shader "Hidden/NewImageEffectShader"
             fixed4 _Color;
             int _OutlineSize;
 
+            // Simple outline shader
+            // Check neighbour pixels if at least one is fully transparent, draw outline using OutlineColor
+            // Otherwise draw mainTexture tinted with Color
             fixed4 frag (v2f IN) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, IN.uv);

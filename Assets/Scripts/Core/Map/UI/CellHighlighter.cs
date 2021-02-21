@@ -58,18 +58,35 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
         _worldGrid = WorldGrid.Instance;
     }
 
+    /// <summary>
+    /// Highlights movePositions and attackPositions centered around unit
+    /// </summary>
+    /// <param name="movePositions"></param>
+    /// <param name="attackPositions"></param>
+    /// <param name="unit"></param>
     public void HighLight(IReadOnlyCollection<Vector2Int> movePositions, IReadOnlyCollection<Vector2Int> attackPositions, Unit unit)
     {
         Highlight(movePositions, unit, HighlightingMode.Movement);
         Highlight(attackPositions, unit, HighlightingMode.Attack);
     }
 
+    /// <summary>
+    /// Highlights movePositions and attackPositions centered around center
+    /// </summary>
+    /// <param name="movePositions"></param>
+    /// <param name="attackPositions"></param>
+    /// <param name="center"></param>
+    /// <param name="range">Max distance from any highlighted position to center</param>
     public void HighLight(IReadOnlyCollection<Vector2Int> movePositions, IReadOnlyCollection<Vector2Int> attackPositions, Vector2Int center, int range)
     {
         Highlight(movePositions, center, range, HighlightingMode.Movement);
         Highlight(attackPositions, center, range, HighlightingMode.Attack);
     }
 
+    /// <summary>
+    /// Updates selection highlighting sprite. Uses triangle sprite on stairs and square sprite for usual tiles
+    /// </summary>
+    /// <param name="position"></param>
     public void UpdateSelectionHighlightingSprite(Vector2Int position)
     {
         if (_movementHighlightingMask == null || !_worldGrid[position].IsStairs)
@@ -114,6 +131,9 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
         }
     }
 
+    /// <summary>
+    /// Resets selection highlighting sprite back to normal (square)
+    /// </summary>
     public void ResetSelectionHighlightingSprite()
     {
         _selectionHighlighting.sprite = _selectionSquare;
@@ -155,6 +175,9 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
         SpawnHighlightingObject(finalTexture, mode == HighlightingMode.Movement ? _moveHighlightingPrefab : _attackHighlightingPrefab);
     }
 
+    /// <summary>
+    /// Clears all highlighting
+    /// </summary>
     public void Clear()
     {
         foreach (var rawImage in _highlightings)
@@ -169,10 +192,12 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
 
     private Texture GetMainTexture()
     {
+        // We create a texture2D that is a bit larger than highlighting range (1px border)
         var tex = new Texture2D(_size, _size, TextureFormat.ARGB32, false) { filterMode = FilterMode.Point };
         var pixels = new Color32[_size * _size];
 
         var topLeft = _center - Vector2Int.one * (_range + 1);
+        // For each highlighted cell we draw white pixel onto texture2D
         foreach (var pos in _positions)
         {
             var relativePos = pos - topLeft;
@@ -187,8 +212,25 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
 
     private Texture GetMaskTexture(HighlightingMode mode)
     {
+        // We create a texture2D that is a bit larger than highlighting range (1px border)
         var mask = new Texture2D(_size, _size, TextureFormat.ARGB32, false) { filterMode = FilterMode.Point };
         var maskPixels = new Color32[_size * _size];
+
+        /*
+         Mask texture is used to remove/add some triangles from square highlighting to match stairs shape. It is passed to the shader
+         First index in ColorMasks array is used to determine, whether mask should REMOVE (0) or ADD (1) triangle to the highlighting
+         Second index determines position of the right angle of the triangle that we a going to remove/add
+            [0] = TOP-RIGHT
+            [1] = TOP-LEFT
+            [2] = BOTTOM-LEFT
+            [3] = BOTTOM-RIGHT
+
+        We usually REMOVE triangles when this method is called with mode set to HighlightingMode.Movement
+        We usually ADD triangles when this method is called with mode set to HighlightingMode.Attack
+
+        We use some complex conditions to determine whether triangle should be removed (added) or not
+        For example, if tile IS NOT stairs tile and the tile on top of us IS STAIRS tile with LeftToRight orientation then we should cut bottom-right triangle
+        */
 
         var topLeft = _center - Vector2Int.one * (_range + 1);
         foreach (var pos in _positions)
@@ -345,6 +387,8 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
 
     private Texture GetFinalTexture(Texture mainTexture, Texture maskTexture)
     {
+        // To get final texture, we upscale main texture to match pixel-per-cell value
+        // Then we apply shader to the upscaled texture to get the final texture
         var cellSize = WorldGrid.CellSize;
         var rt = new RenderTexture(_size * cellSize, _size * cellSize, 32, RenderTextureFormat.ARGB32) { filterMode = FilterMode.Point };
         var temp = RenderTexture.GetTemporary(_size * cellSize, _size * cellSize, 32, RenderTextureFormat.ARGB32);

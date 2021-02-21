@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class GridUtility
 {
-    public const int MaxAttackRange = 4;
+    public const int MaxAttackRange = 6;
     public static readonly Vector2Int[][] AttackPositions;
 
     #region Neighbours Vectors
@@ -122,9 +122,24 @@ public static class GridUtility
         }
     }
 
-    // TODO: Use flags
+    // TODO: Use flags, because using roundToCardinal and allowDiagonalOutput does not make sense
+    /// <summary>
+    /// Returns direction between two points
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <param name="roundToCardinal">If set, returned direction will be rounded to cardinal</param>
+    /// <param name="allowDiagonalOutput">If set, returned direction can be diagonal</param>
+    /// <returns>Direction</returns>
     public static Direction GetDirection(Vector2Int from, Vector2Int to, bool roundToCardinal = false, bool allowDiagonalOutput = false)
     {
+        /*
+         Example: from (0, 0), to (1, 1) => Direction.None
+         Example: from (0, 0), to (1, 1), roundToCardinal = true => Direction.Right
+         Example: from (0, 0), to (-5, 1), roundToCardinal = true => Direction.Left
+         Example: from (0, 0), to (1, 1), allowDiagonalOutput = true => Direction.RightUp
+         */
+
         var offset = to - from;
         if (roundToCardinal)
         {
@@ -141,6 +156,13 @@ public static class GridUtility
         return DirectionExtensions.FromVector(offset, allowDiagonalOutput);
     }
 
+    /// <summary>
+    /// Used to get an array of neighbour offsets for a specific point in grid with respect of stairs<br/>
+    /// For non-stairs tile with non-stairs neighbours result is an array of fours cardinal directions<br/>
+    /// Mostly used for pathfinding
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
     public static Vector2Int[] GetNeighboursOffsets(Vector2Int position)
     {
         var grid = WorldGrid.Instance;
@@ -153,7 +175,7 @@ public static class GridUtility
             case StairsOrientation.LeftToRight:
                 return LeftToRightStairsNeighboursOffsets;
 
-            // TODO: Safety checks
+            // TODO: Warning! No safety (PointInGrid) checks! This is done to increase performance slightly
             case StairsOrientation.None:
                 if (grid[position + new Vector2Int(-1, 1)].StairsOrientation == StairsOrientation.RightToLeft)
                     return LeftHalfRightToLeftStairsNeighboursOffsets;
@@ -174,6 +196,11 @@ public static class GridUtility
         return Mathf.Max(Mathf.Abs(from.x - to.x), Mathf.Abs(from.y - to.y));
     }
 
+    /// <summary>
+    /// Snaps MonoBehavior's GameObject to WorldGrid
+    /// </summary>
+    /// <param name="monoBehaviour"></param>
+    /// <returns>Resulting grid position</returns>
     public static Vector2Int SnapToGrid(MonoBehaviour monoBehaviour)
     {
         var cell = WorldGrid.Instance.Grid.WorldToCell(monoBehaviour.transform.position);
@@ -181,6 +208,12 @@ public static class GridUtility
         return (Vector2Int) cell;
     }
 
+    /// <summary>
+    /// Finds all grid cells than can be reached by unit
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <param name="movePoints">Available movement points. If to -1, unit's current movement points value will be used</param>
+    /// <returns></returns>
     public static HashSet<Vector2Int> GetReachableCells(Unit unit, int movePoints = -1)
     {
         if (movePoints == -1)
@@ -198,6 +231,8 @@ public static class GridUtility
         queue.Enqueue(start);
         movementCost[start] = 0;
 
+        // TODO: Warning! No safety (PointInGrid) checks! This is done to increase performance slightly
+        // We use breadth-first search to find all reachable cells
         while (queue.Count > 0)
         {
             var currentPosition = queue.Dequeue();
@@ -236,6 +271,7 @@ public static class GridUtility
                     continue;
                 }
 
+                // We maintain a list of potentially isolated cells. Isolated cell is a such cell than can only be reached diagonally
                 var alreadyVisited = movementCost.TryGetValue(neighbourPosition, out var oldCost);
                 if (!GetDirection(currentPosition, neighbourPosition, false, true).IsCardinal())
                 {
@@ -263,6 +299,7 @@ public static class GridUtility
             }
         }
 
+        // Access enumerator manually for performance reasons
         var result = new HashSet<Vector2Int>();
         var en = movementCost.GetEnumerator();
         while (en.MoveNext())
@@ -274,6 +311,7 @@ public static class GridUtility
         }
         en.Dispose();
 
+        // Exclude isolated cells
         foreach (var cell in isolatedCells)
         {
             if (!result.Contains(cell + Vector2Int.left) &&
@@ -288,7 +326,14 @@ public static class GridUtility
         return result;
     }
 
-    public static List<Vector2Int> GetAttackableCells(Unit unit, HashSet<Vector2Int> movementCost, Weapon weapon = null)
+    /// <summary>
+    /// Finds all grid cells than can be attacked by unit
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <param name="reachableCells">Reachable cells, usually just use value returned by GetReachableCells here</param>
+    /// <param name="weapon">Weapon, which attack range should be taken into account. If set to null, unit's Equipped weapon will be used</param>
+    /// <returns></returns>
+    public static List<Vector2Int> GetAttackableCells(Unit unit, HashSet<Vector2Int> reachableCells, Weapon weapon = null)
     {
         if (weapon == null)
         {
@@ -300,25 +345,35 @@ public static class GridUtility
             }
         }
 
-
         var minAttackRange = weapon.Stats[WeaponStat.MinRange].ValueInt;
         var maxAttackRange = weapon.Stats[WeaponStat.MaxRange].ValueInt;
 
+        // First we determine border cells. Border cell is a such cell that is NOT surrounded from all four sides
         var borderCells = new List<Vector2Int>();
-        var en = movementCost.GetEnumerator();
+        var en = reachableCells.GetEnumerator();
         while (en.MoveNext())
         {
             var key = en.Current;
-            if (!movementCost.Contains(key + Vector2Int.left) ||
-                !movementCost.Contains(key + Vector2Int.right) ||
-                !movementCost.Contains(key + Vector2Int.up) ||
-                !movementCost.Contains(key + Vector2Int.down))
+            if (!reachableCells.Contains(key + Vector2Int.left) ||
+                !reachableCells.Contains(key + Vector2Int.right) ||
+                !reachableCells.Contains(key + Vector2Int.up) ||
+                !reachableCells.Contains(key + Vector2Int.down))
             {
                 borderCells.Add(key);
             }
         }
         en.Dispose();
 
+        /*
+         Then for each border cell we check all cells in range of maxAttackRange from it
+         We use pre-calculated AttackPositions
+         Cell is valid if:
+         1. Not in result
+         2. Not in reachable cells (if we can move to it then there's no enemy)
+         3. Is inside grid
+         4. Contains enemy
+         5. We CanAttack it
+        */
         var result = new List<Vector2Int>();
         foreach (var cell in borderCells)
         {
@@ -328,7 +383,7 @@ public static class GridUtility
                 {
                     var position = cell + offset;
                     if (!result.Contains(position) &&
-                        !movementCost.Contains(position) &&
+                        !reachableCells.Contains(position) &&
                         WorldGrid.Instance.PointInGrid(position) &&
                         WorldGrid.Instance[position].Unit != null && WorldGrid.Instance[position].Unit.IsEnemy(unit) &&
                         CanAttack(position))
@@ -338,6 +393,7 @@ public static class GridUtility
             }
         }
 
+        // We CanAttack cell if we have a position around it that is between minAttackRange and maxAttackRange from it and we have LOS from this position to cell
         bool CanAttack(Vector2Int cell)
         {
             for (var i = minAttackRange; i <= maxAttackRange; i++)
@@ -345,7 +401,7 @@ public static class GridUtility
                 foreach (var offset in AttackPositions[i])
                 {
                     var position = cell + offset;
-                    if (movementCost.Contains(position) &&
+                    if (reachableCells.Contains(position) &&
                         (WorldGrid.Instance[position].Unit == null || WorldGrid.Instance[position].Unit == unit) 
                         && HasLineOfSight(position, cell))
                         return true;
@@ -358,6 +414,14 @@ public static class GridUtility
         return result;
     }
 
+    /// <summary>
+    /// Finds path for unit between 2 points using A*
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <param name="start"></param>
+    /// <param name="goal"></param>
+    /// <param name="maxCost">Optional max pathfinding depth</param>
+    /// <returns></returns>
     public static GridPath FindPath(Unit unit, Vector2Int start, Vector2Int goal, int maxCost = int.MaxValue)
     {
         var unitType = unit.UnitType;
@@ -375,6 +439,8 @@ public static class GridUtility
         frontier.Enqueue(start, 0f);
         runningCost[start] = 0f;
 
+        // TODO: Warning! No safety (PointInGrid) checks! This is done to increase performance slightly
+        // We use classic A*
         while (frontier.Length > 0)
         {
             var currentPosition = frontier.Dequeue();
@@ -441,19 +507,30 @@ public static class GridUtility
         return null;
     }
 
+    /// <summary>
+    /// Finds path for unit from its current position to goal
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <param name="goal"></param>
+    /// <param name="maxCost">Optional max pathfinding depth</param>
+    /// <returns></returns>
     public static GridPath FindPath(Unit unit, Vector2Int goal, int maxCost = int.MaxValue)
     {
         return FindPath(unit, unit.GridPosition, goal, maxCost);
     }
 
-    public static bool HasLineOfSight(Vector2Int start, Vector2Int end, Func<Vector2Int, bool> validator, out GridLine gridLine)
+    /// <summary>
+    /// Checks if there's a line of sight between two points
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <param name="validator">Function used to determine whether specific cell blocks LOS from start position</param>
+    /// <param name="gridLine">Equivalent of line between start and end points on grid </param>
+    /// <returns></returns>
+    public static bool HasLineOfSight(Vector2Int start, Vector2Int end, Func<Vector2Int, Vector2Int, bool> validator, out GridLine gridLine)
     {
+        // We use modification of the Bresenham's line drawing algorithm
         gridLine = new GridLine(start, end);
-
-        if (!validator(end))
-        {
-            return false;
-        }
 
         // Nearest cells always visible
         if ((end - start).sqrMagnitude == 1)
@@ -461,7 +538,16 @@ public static class GridUtility
             return true;
         }
 
+        // Return false if we have no LOS for end position
+        if (!validator(start, end))
+        {
+            return false;
+        }
+
+        // Last point with LOS
         Vector2Int? prevPoint = null;
+
+        // We check every point on gridLine
         foreach (var point in gridLine)
         {
             // Check distance from last point with LOS to current point
@@ -472,27 +558,34 @@ public static class GridUtility
             }
 
             // Skip point with out LOS
-            if (!validator(point))
+            if (!validator(start, point))
             {
                 continue;
             }
 
             // Do additional checks for diagonals
             if (prevPoint != null && prevPoint.Value.x != point.x && prevPoint.Value.y != point.y && // If direction from previous is diagonal
-                !validator(new Vector2Int(point.x, prevPoint.Value.y)) && !validator(new Vector2Int(prevPoint.Value.x, point.y))) // If diagonal movement is blocked
+                !validator(start, new Vector2Int(point.x, prevPoint.Value.y)) && !validator(start, new Vector2Int(prevPoint.Value.x, point.y))) // If diagonal movement is blocked
             {
                 return false;
             }
 
+            // We have LOS of point, so set prevPoint to be equal to point
             prevPoint = point;
         }
 
         return true;
     }
 
+    /// <summary>
+    /// Checks if there's a line of sight between two points. Takes tiles LOS and Height properties into account
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <returns></returns>
     public static bool HasLineOfSight(Vector2Int start, Vector2Int end)
     {
-        return HasLineOfSight(start, end, DefaultCellLOSValidator, out _);
+        return HasLineOfSight(start, end, CellLOSValidatorWithHeight, out _);
     }
 
     public static float ManhattanHeuristic(Vector2Int from, Vector2Int to)
@@ -515,8 +608,24 @@ public static class GridUtility
         return (from - to).magnitude;
     }
 
-    public static bool DefaultCellLOSValidator(Vector2Int cell) => WorldGrid.Instance[cell].HasLineOfSight;
+    public static bool DefaultCellLOSValidator(Vector2Int start, Vector2Int cell)
+    {
+        return WorldGrid.Instance[cell].HasLineOfSight;
+    }
 
+    public static bool CellLOSValidatorWithHeight(Vector2Int start, Vector2Int cell)
+    {
+        var diff = WorldGrid.Instance[start].Height - WorldGrid.Instance[cell].Height;
+        if (diff > 2)
+            return true;
+
+        if (diff < -2)
+            return false;
+
+        return WorldGrid.Instance[cell].HasLineOfSight;
+    }
+
+    // Internal method used to restore A* path
     private static List<Vector2Int> RestorePath(Vector2Int start, Vector2Int goal, Dictionary<Vector2Int, Vector2Int> cameFrom)
     {
         var result = new List<Vector2Int>();

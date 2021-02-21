@@ -147,9 +147,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         foreach(var weapon in Inventory.GetItems<Weapon>()) {
             var maxRange = weapon.Stats[WeaponStat.MaxRange].ValueInt;
             var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions, weapon);
+            
             if (attackableCells.Count > 0)
                 foreach(Vector2Int pos in attackableCells)
-                    allAttackableCells.Add(pos);
+                    if (!allAttackableCells.Contains(pos))
+                        allAttackableCells.Add(pos);
 
         }
 
