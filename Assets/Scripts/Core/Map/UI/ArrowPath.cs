@@ -32,32 +32,6 @@ public class ArrowPath : SerializedMonoBehaviour
 
     #endregion
 
-    public void CheckLOSTest(Vector2Int position, int range)
-    {
-        var minX = Mathf.Max(0, position.x - range);
-        var maxX = Mathf.Min(_worldGrid.Width - 1, position.x + range);
-        var minY = Mathf.Max(0, position.y - range);
-        var maxY = Mathf.Min(_worldGrid.Height - 1, position.y + range);
-        var rangeSq = range * range;
-
-        for (var i = minX; i <= maxX; i++)
-        {
-            for (var j = minY; j <= maxY; j++)
-            {
-                var currentPosition = new Vector2Int(i, j);
-                if ((currentPosition - position).sqrMagnitude <= rangeSq)
-                {
-                    // Do whatever we want
-                    if (GridUtility.HasLineOfSight(position, currentPosition))
-                    {
-                        Debug.DrawLine(_worldGrid.Grid.GetCellCenterWorld((Vector3Int) position),
-                                         _worldGrid.Grid.GetCellCenterWorld((Vector3Int) currentPosition), Color.yellow, 5f);
-                    }
-                }
-            }
-        }
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))

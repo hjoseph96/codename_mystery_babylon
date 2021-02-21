@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Tazdraperm.Utility;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 
 [RequireComponent(typeof(Grid))]
@@ -9,7 +7,11 @@ using UnityEngine.Tilemaps;
 public class WorldGrid : MonoBehaviour, IInitializable
 {
     public static WorldGrid Instance;
+
+    // Pixels per cell/unit
     public const int CellSize = 16;
+
+    public float ExtraVisionRangePerHeightUnit = 1;
 
     [HideInInspector] public Grid Grid;
     [HideInInspector] public Vector2Int Size;
@@ -18,16 +20,24 @@ public class WorldGrid : MonoBehaviour, IInitializable
     public WorldCell this[int x, int y] => _worldGrid[x, y];
     public WorldCell this[Vector2Int pos] => _worldGrid[pos.x, pos.y];
 
+    /// <summary>
+    /// Represents game grid
+    /// </summary>
     private WorldCell[,] _worldGrid;
-    private readonly List<Tilemap> _tilemaps = new List<Tilemap>();
 
+    /*
+     Instead of Awake, we use custom initialization 
+     Every MonoBehaviour that want to initialize something and depends on other classes should implement IInitializable interface and use Init instead of Awake
+     Initialization order is specified in EntryPoint GameObject     
+     */
     public void Init()
     {
         Instance = this;
 
         Grid = GetComponent<Grid>();
-        _tilemaps.AddRange(GetComponentsInChildren<Tilemap>());
-        _tilemaps.SortByRenderingOrder();
+
+        //var tilemaps = GetComponentsInChildren<Tilemap>().ToList();
+        //tilemaps.SortByRenderingOrder();
 
         var editor = GetComponent<WorldGridEditor>();
         Size = editor.Size;
@@ -43,12 +53,21 @@ public class WorldGrid : MonoBehaviour, IInitializable
         _worldGrid = editor.WorldGrid;
     }
 
+    /// <summary>
+    /// Converts mouse position to grid position
+    /// </summary>
+    /// <returns></returns>
     public Vector2Int MouseToGrid()
     {
         var pos = CameraUtility.MouseToWorldPosition();
         return (Vector2Int) Grid.WorldToCell(pos);
     }
 
+    /// <summary>
+    /// Check if point is inside the grid
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
     public bool PointInGrid(Vector2Int point)
     {
         return point.x >= 0 &&
