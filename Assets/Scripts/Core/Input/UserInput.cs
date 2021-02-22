@@ -14,7 +14,9 @@ public class UserInput : MonoBehaviour, IInitializable
     };
 
     public static UserInput Instance;
-    public IInputTarget InputTarget;
+
+
+    [SerializeField] public IInputTarget InputTarget;
 
     private readonly InputData _inputData = new InputData();
 
