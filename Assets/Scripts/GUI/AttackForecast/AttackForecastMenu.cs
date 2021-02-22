@@ -11,7 +11,6 @@ public class AttackForecastMenu : Menu
 
     Unit _attackingUnit;
     Unit _defendingUnit;
-    WorldGrid _worldGrid;
     GridCursor _gridCursor;
     Weapon _selectedWeapon;
     List<Weapon> _allAttackableWeapons = new List<Weapon>();
@@ -24,18 +23,15 @@ public class AttackForecastMenu : Menu
         _attackingUnit = unit;
         _allAttackableCells = _attackingUnit.AllAttackableCells();
         _attackableWeaponsByPosition = _attackingUnit.AttackableWeapons();
-
-        _selectedWeapon = _attackableWeaponsByPosition.Keys.First<Weapon>();
         _allAttackableWeapons = new List<Weapon>(_attackableWeaponsByPosition.Keys);
-        
+
         var attackableCell = _attackableWeaponsByPosition.Values.First<List<Vector2Int>>()[0];
         _defendingUnit = WorldGrid.Instance[attackableCell].Unit;
 
-        _worldGrid = WorldGrid.Instance;
         _gridCursor = GridCursor.Instance;
-
         _gridCursor.SetAttackMode(_attackingUnit);
         _gridCursor.MoveInstant(attackableCell);
+        // When Selected Attack Target Changes, execute:
         _gridCursor.AttackTargetChanged.AddListener(delegate(Unit targetUnit) {
             _defendingUnit = targetUnit;
             
@@ -46,11 +42,18 @@ public class AttackForecastMenu : Menu
             PopulateForecasts();
         });
 
+        _selectedWeapon = _attackableWeaponsByPosition.Keys.First<Weapon>();
+        if (WeaponsThatCanReachTarget(attackableCell).Contains(unit.EquippedWeapon))
+            _selectedWeapon = unit.EquippedWeapon;
+        
+        PopulateForecasts();
+        _weaponSelect.Populate(_selectedWeapon);
+
         Activate();
     }
 
     // Weapon Cycling Selection
-    private void Update() 
+    private void Update()
     {
         _weaponSelect.Populate(_selectedWeapon);
         PopulateForecasts();
@@ -74,7 +77,7 @@ public class AttackForecastMenu : Menu
             _weaponSelect.HideArrows();
     }
 
-    public override void ProcessInput(InputData input)
+     public override void ProcessInput(InputData input)
     {
         switch (input.KeyCode)
         {
@@ -87,6 +90,7 @@ public class AttackForecastMenu : Menu
                 break;
         }
     }
+
 
 
     public override void ResetState()
@@ -118,6 +122,17 @@ public class AttackForecastMenu : Menu
 
         foreach(KeyValuePair<Weapon, List<Vector2Int>> entry in _attackableWeaponsByPosition)
             if (entry.Value.Contains(_gridCursor.GridPosition))
+                weaponsThatCanReachTarget.Add(entry.Key);
+        
+        return weaponsThatCanReachTarget;
+    }
+
+    
+    private List<Weapon> WeaponsThatCanReachTarget(Vector2Int cellPosition) {
+        var weaponsThatCanReachTarget = new List<Weapon>();
+
+        foreach(KeyValuePair<Weapon, List<Vector2Int>> entry in _attackableWeaponsByPosition)
+            if (entry.Value.Contains(cellPosition))
                 weaponsThatCanReachTarget.Add(entry.Key);
         
         return weaponsThatCanReachTarget;

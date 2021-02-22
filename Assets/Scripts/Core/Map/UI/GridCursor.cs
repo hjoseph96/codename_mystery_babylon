@@ -263,17 +263,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         {
             // Move to the destination position
             GridPosition = actualTargetGridPosition;
-            transform.position = destination;
-
-
-            if (_mode == CursorMode.Attack) {
-                var targetedUnit = _worldGrid[GridPosition].Unit;
-
-                if (targetedUnit.IsEnemy(_selectedUnit))
-                    AttackTargetChanged.Invoke(targetedUnit);
-                else
-                    throw new Exception($"Targeted a non-enemy Unit: {targetedUnit.Name}");
-            }
+            transform.position = destination;            
 
             // If we can lengthen the arrow path, do it
             if (_mode == CursorMode.Restricted && _allowedPositions.Contains(GridPosition))
@@ -289,6 +279,13 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             if (GridPosition != _targetGridPosition)
             {
                 StartMovement(_targetGridPosition);
+            } else if (_mode == CursorMode.Attack) {
+                var targetedUnit = _worldGrid[GridPosition].Unit;
+
+                if (targetedUnit.IsEnemy(_selectedUnit))
+                    AttackTargetChanged.Invoke(targetedUnit);
+                else
+                    throw new Exception($"Targeted a non-enemy Unit: {targetedUnit.Name}");
             }
         }
         // If we didn't reach threshold value yet, simply call Slerp
@@ -304,17 +301,18 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         _targetGridPosition = destination;
         _movementStartTime = Time.time;
 
-        _userInput.InputTarget = null;
+        if (_mode != CursorMode.Attack)
+            _userInput.InputTarget = null;
     }
 
     private void EndMovement()
     {
         if (_mode == CursorMode.Restricted)
-        {
            _cellHighlighter.UpdateSelectionHighlightingSprite(GridPosition);
-        }
 
         IsMoving = false;
-        _userInput.InputTarget = this;
+
+        if (_mode != CursorMode.Attack)
+            _userInput.InputTarget = this;
     }
 }

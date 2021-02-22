@@ -11,18 +11,24 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Unit : SerializedMonoBehaviour, IInitializable
 {
+
+    [FoldoutGroup("Basic properties")]
+    [SerializeField] private string _name;
+    public string Name { get { return _name; } }
+    
     [FoldoutGroup("Basic properties")]
     [DistinctUnitType]
     public UnitType UnitType;
-
-    [FoldoutGroup("Basic properties")]
-    [SerializeField] public string Name { get; private set; }
 
     [FoldoutGroup("Basic properties")] 
     [SerializeField] private float _moveSpeed = 4f;
     [FoldoutGroup("Basic properties")] 
     [SerializeField] private float _moveAnimationSpeed = 1.75f;
-
+    
+    [FoldoutGroup("Base Stats")]
+    [SerializeField] private int _level; 
+    public int Level { get { return _level; } }
+    
     [FoldoutGroup("Base Stats")]
     [UnitStats, OdinSerialize, HideIf("IsPlaying")]
     private Dictionary<UnitStat, EditorStat> _statsDictionary = new Dictionary<UnitStat, EditorStat>();
@@ -34,7 +40,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Stats"), ShowIf("IsPlaying"), PropertyOrder(1)]
     [UnitStats]
     public Dictionary<UnitStat, Stat> Stats;
-    public int Level { get; private set; }
+    
 
 
     [FoldoutGroup("Animations")] 
@@ -342,7 +348,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public bool CanDoubleAttack(Unit target, Weapon weapon) {
         int minDoubleAttackBuffer = 5;
 
-        if ((this.AttackSpeed(weapon) - target.AttackSpeed(weapon)) > minDoubleAttackBuffer)
+        if ((this.AttackSpeed(weapon) - target.AttackSpeed(target.EquippedWeapon)) > minDoubleAttackBuffer)
             return true;
 
         return false;
