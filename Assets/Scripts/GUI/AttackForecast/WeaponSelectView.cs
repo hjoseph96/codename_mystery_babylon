@@ -10,7 +10,7 @@ public class WeaponSelectView : MonoBehaviour
     [SerializeField] private Sprite _activatedArrow;
     [SerializeField] private Image _weaponIcon;
     [SerializeField] private TextMeshProUGUI _weaponName;
-    bool _arrowsShown = true;
+    bool _arrowsShown = false;
 
     public void Populate(Weapon selectedWeapon)
     {

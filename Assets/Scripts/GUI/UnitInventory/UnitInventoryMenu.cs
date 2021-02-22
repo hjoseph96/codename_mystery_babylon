@@ -8,6 +8,7 @@ public class UnitInventoryMenu : Menu
     [SerializeField] private UICursor _cursor;
     [SerializeField] private ItemActionsMenu _itemActionMenu;
     [SerializeField] private ItemDetailsView _itemDetailsView;
+    [SerializeField] private HeaderDetailsView _header;
 
     private List<ItemSlot> _itemSlots;
 
@@ -54,6 +55,7 @@ public class UnitInventoryMenu : Menu
             itemSlot.Clear();
         }
 
+        _header.Populate(_selectedUnit);
         MoveSelectionToOption(0, true);
         Activate();
         SelectOption(_itemSlots[0]);

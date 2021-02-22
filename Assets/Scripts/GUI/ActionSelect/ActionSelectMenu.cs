@@ -144,7 +144,6 @@ public class ActionSelectMenu : Menu
     public void ShowAttackForecast() {
         _attackForecastMenu.Show(_selectedUnit);
         _attackForecastMenu.PreviousMenu = this;
-        ResetAndHide();
     }
 
     private void ClearOptions()
