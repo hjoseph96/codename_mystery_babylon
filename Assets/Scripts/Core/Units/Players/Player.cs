@@ -11,7 +11,7 @@ public class Player
     public static Player Ally = new Player("Ally", Team.LocalPlayerTeamId);
     public static Player Enemy = new Player("Enemy", Team.EnemyTeamId);
     public static Player OtherEnemy = new Player("Other Enemy", Team.OtherEnemyTeamId);
-    public static Player Other = new Player("Other", Team.OtherTeamId);
+    public static Player Neutral = new Player("Neutral", Team.NeutralTeamId);
 
     private readonly List<Unit> _units = new List<Unit>();
 
