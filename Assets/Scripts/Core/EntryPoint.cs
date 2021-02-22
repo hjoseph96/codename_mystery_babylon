@@ -12,8 +12,6 @@ public class EntryPoint : SerializedMonoBehaviour
     private void Awake()
     {
         foreach (var initializable in ToInit)
-        {
             initializable.Init();
-        }
     }
 }

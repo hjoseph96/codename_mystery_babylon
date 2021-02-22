@@ -8,10 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Head1
-  m_Shader: {fileID: 4800000, guid: d12428961551799408aa97256fd770c3, type: 3}
-  m_ShaderKeywords: N_F_O_ON N_F_RELGI_ON N_F_SS_ON _METALLICGLOSSMAP _NORMALMAP
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: N_F_O_ON N_F_RELGI_ON N_F_SS_ON _EMISSION _METALLICGLOSSMAP _NORMALMAP
     _PARALLAXMAP
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -108,6 +108,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaBaseCutout: 1
     - _BumpScale: 1
@@ -129,7 +133,7 @@ Material:
     - _GIShadeThreshold: 0
     - _GlossColorPower: 10
     - _GlossIntensity: 1
-    - _GlossMapScale: 0.886
+    - _GlossMapScale: 0.538
     - _GlossSoftness: 0
     - _GlossTextureFollowLight: 0
     - _GlossTextureFollowObjectRotation: 0
@@ -183,7 +187,7 @@ Material:
     - _OverallShadowColorPower: 1
     - _PSGLOTEX: 0
     - _PTexturePower: 1
-    - _Parallax: 0.0536
+    - _Parallax: 0.048
     - _PointLightSVD: 0
     - _PointSpotlightIntensity: 0.45
     - _RELG: 1
@@ -236,7 +240,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CustomLightDirection: {r: 0, g: 0, b: 10, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.03773582, g: 0.03542183, b: 0.03542183, a: 1}
     - _GlossColor: {r: 1, g: 1, b: 1, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
@@ -247,5 +251,6 @@ Material:
     - _SelfLitColor: {r: 1, g: 1, b: 1, a: 1}
     - _SelfShadowRealTimeShadowColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowTColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _XYZPosition: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
