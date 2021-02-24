@@ -50,9 +50,9 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
         _worldGrid = WorldGrid.Instance;
         _userInput = UserInput.Instance;
+        _camera    = CampaignManager.Instance.GridCamera;
         _userInput.InputTarget = this;
 
-        _camera = ProCamera2D.Instance;
         _renderers = GetComponentsInChildren<Renderer>();
         _cellHighlighter = GetComponent<CellHighlighter>();
         _cellHighlighter.Init();
