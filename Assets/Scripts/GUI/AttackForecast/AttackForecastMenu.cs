@@ -82,6 +82,15 @@ public class AttackForecastMenu : Menu
         switch (input.KeyCode)
         {
             case KeyCode.Z:
+                _attackingUnit.EquipWeapon(_selectedWeapon);
+                CampaignManager.Instance.StartBattle(_attackingUnit, _defendingUnit);
+                
+                _attackingUnit.TookAction();
+                
+                var prevMenu = PreviousMenu;
+                Close();
+                prevMenu.ResetAndHide();
+
                 // Initiate Attack with Selected Weapon, change selected weapon to equipped
                 break;
 
