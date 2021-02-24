@@ -24,6 +24,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private float _moveSpeed = 4f;
     [FoldoutGroup("Basic properties")] 
     [SerializeField] private float _moveAnimationSpeed = 1.75f;
+    [FoldoutGroup("Basic properties")] 
+    public GameObject BattlerPrefab;
+
     
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _level; 
@@ -53,13 +56,28 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     // TODO: Implement WeaponRanks (equippable weapons and rank with each)
     public UnitInventory Inventory { get; private set; }
-    public Weapon EquippedWeapon { get; private set; }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
+
+    [FoldoutGroup("Game Status")]
+    private Weapon _equippedWeapon;
+    [FoldoutGroup("Game Status")]
+    [ShowInInspector] public Weapon EquippedWeapon { get { return _equippedWeapon; } }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
 
-    public Vector2Int GridPosition { get; set; }
-    public Vector2Int InitialGridPosition { get; set; }  // Where Unit began the turn.
-    public bool HasMoved { get; set; }                  // Has the unit moved this turn?
-    public int CurrentMovementPoints { get; set; }
+
+    private Vector2Int _gridPosition;
+    [FoldoutGroup("Game Status")]
+    [ShowInInspector] public Vector2Int GridPosition { get { return _gridPosition; } }
+
+    private Vector2Int _initialGridPosition;
+    public Vector2Int InitialGridPosition { get { return _initialGridPosition; } }  // Where Unit began the turn.
+
+    private bool _hasTakenAction;
+    [FoldoutGroup("Game Status")]
+    [ShowInInspector] public bool HasTakenAction { get { return _hasTakenAction; } }  // Has the unit moved this turn?
+    
+    private int _currentMovementPoints;
+    [FoldoutGroup("Game Status")]
+    [ShowInInspector] public int CurrentMovementPoints { get { return _currentMovementPoints; } }
 
     private Color HealthColor = new Color(0.25f, 1.0f, 0.35f);
     private Color BackgroundColor = Color.black;
@@ -69,13 +87,14 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public bool IsLocalPlayerUnit => Player == Player.LocalPlayer;
 
     protected virtual Player Player { get; }
+    protected Battler Battler;
 
     private AnimancerComponent _animancer;
     private Vector2 _lookDirection;
 
     public void Init()
     {
-        GridPosition = GridUtility.SnapToGrid(this);
+        _gridPosition = GridUtility.SnapToGrid(this);
         WorldGrid.Instance[GridPosition].Unit = this;
 
         Player.AddUnit(this);
@@ -115,11 +134,22 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _animancer.Play(clip).Speed = speed;
     }
 
+    public void TookAction() => _hasTakenAction = true;
+    public void AllowAction() => _hasTakenAction = false;
+
     public void EquipWeapon(Weapon weapon)
     {
-        UnequipWeapon();
-        EquippedWeapon = weapon;
-        weapon.IsEquipped = true;
+        var availableWeapons = new List<Weapon>();
+        foreach(Weapon inventoryWeapon in Inventory.GetItems<Weapon>())
+            availableWeapons.Add(inventoryWeapon);
+
+        if (availableWeapons.Contains(weapon))
+        {
+            UnequipWeapon();
+            _equippedWeapon = weapon;
+            weapon.IsEquipped = true;
+        } else 
+            throw new System.Exception($"Provided Weapon: {weapon.Name} is not in Unit#{Name}'s Inventory...");
     }
 
     public void UnequipWeapon()
@@ -127,10 +157,25 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         if (EquippedWeapon != null)
             EquippedWeapon.IsEquipped = false;
 
-        EquippedWeapon = null;
+        _equippedWeapon = null;
     }
 
-    public Dictionary<Weapon, List<Vector2Int>> AttackableWeapons() {
+    public bool CanDefend(Vector2Int attackerPosition)
+    {
+        bool canAttack = false;
+
+        var attackPosition = new HashSet<Vector2Int> { attackerPosition };
+
+        var maxRange = EquippedWeapon.Stats[WeaponStat.MaxRange].ValueInt;
+        var attackableCells = GridUtility.GetAttackableCells(this, attackPosition, EquippedWeapon);
+        if (attackableCells.Count > 0)
+            canAttack = true;
+        
+        return canAttack;
+    }
+
+    public Dictionary<Weapon, List<Vector2Int>> AttackableWeapons() 
+    {
         var attackableWeapons = new Dictionary<Weapon, List<Vector2Int>>();
 
         var immediatePositions = GridUtility.GetReachableCells(this, 0);
@@ -145,7 +190,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return attackableWeapons;
     }
 
-    public List<Vector2Int> AllAttackableCells() {
+    public List<Vector2Int> AllAttackableCells() 
+    {
         var allAttackableCells = new List<Vector2Int>();
 
         var immediatePositions = GridUtility.GetReachableCells(this, 0);
@@ -249,7 +295,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         PlayAnimation(_idleAnimation);
 
-        GridPosition = goal;
+        _gridPosition = goal;
         WorldGrid.Instance[GridPosition].Unit = this;
     }
 
@@ -293,17 +339,18 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             //    Stats[stat].AddEffect(new DependOnOtherStatEffect(Stats[UnitStat.MaxHealth], 0.1f));
         }
 
-        CurrentMovementPoints = Stats[UnitStat.Movement].ValueInt;
+        _currentMovementPoints = Stats[UnitStat.Movement].ValueInt;
         CurrentHealth = Stats[UnitStat.MaxHealth].ValueInt;
     }
 
     private static bool IsPlaying => Application.isPlaying;
     
-    // ======================
+    // =====================
     // || Battle Formulas ||
     // =====================
 
-    public int AttackDamage(Weapon weapon) {
+    public int AttackDamage(Weapon weapon)
+    {
         int weaponDamage = weapon.Stats[WeaponStat.Damage].ValueInt;
         
         if (weapon.Type == WeaponType.Grimiore) { // MAGIC USER
@@ -317,7 +364,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
     }
 
-    public int AttackSpeed(Weapon weapon) {
+    public int AttackSpeed(Weapon weapon)
+    {
         int weaponWeight = weapon.Weight;
         int constitutionStat = Stats[UnitStat.Constitution].ValueInt;
         int burden = weaponWeight - constitutionStat;
@@ -328,7 +376,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return Stats[UnitStat.Speed].ValueInt - burden;
     }
 
-    public Dictionary<string, int> PreviewAttack(Unit defender, Weapon weapon) {
+    public Dictionary<string, int> PreviewAttack(Unit defender, Weapon weapon)
+    {
         Dictionary<string, int> battleStats = new Dictionary<string, int>();
 
         int atkDmg;
@@ -345,7 +394,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return battleStats;
     }
 
-    public bool CanDoubleAttack(Unit target, Weapon weapon) {
+    public bool CanDoubleAttack(Unit target, Weapon weapon)
+    {
         int minDoubleAttackBuffer = 5;
 
         if ((this.AttackSpeed(weapon) - target.AttackSpeed(target.EquippedWeapon)) > minDoubleAttackBuffer)
@@ -354,7 +404,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return false;
     }
 
-    public int CriticalHitRate(Unit target, Weapon weapon) {
+    public int CriticalHitRate(Unit target, Weapon weapon)
+    {
         int skill = Stats[UnitStat.Skill].ValueInt;
         int weaponCritChance = weapon.Stats[WeaponStat.CriticalHit].ValueInt;
 
@@ -368,13 +419,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return critRate;
     }
 
-    public int DodgeChance(Weapon weapon) {
+    public int DodgeChance(Weapon weapon)
+    {
         int luckStat = Stats[UnitStat.Luck].ValueInt;
 
         return (AttackSpeed(weapon) * 2) + luckStat;
     }
 
-    public int HitRate(Vector2Int targetPosition, Weapon weapon) {
+    public int HitRate(Vector2Int targetPosition, Weapon weapon)
+    {
         int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, targetPosition);
         int luckStat = Stats[UnitStat.Luck].ValueInt;
         int skillStat = Stats[UnitStat.Skill].ValueInt;
@@ -390,7 +443,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return hitRate;
     }
 
-    public int Accuracy(Unit target, Weapon weapon) {
+    public int Accuracy(Unit target, Weapon weapon)
+    {
         int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, target.GridPosition);
 
         if (weapon.Type != WeaponType.Staff) {

@@ -8,7 +8,7 @@ public class Player
     public IEnumerable<Unit> Units => _units;
 
     public static Player LocalPlayer = new Player("Player", Team.LocalPlayerTeamId);
-    public static Player Ally = new Player("Ally", Team.LocalPlayerTeamId);
+    public static Player Ally = new Player("Ally", Team.AllyTeamId);
     public static Player Enemy = new Player("Enemy", Team.EnemyTeamId);
     public static Player OtherEnemy = new Player("Other Enemy", Team.OtherEnemyTeamId);
     public static Player Neutral = new Player("Neutral", Team.NeutralTeamId);
