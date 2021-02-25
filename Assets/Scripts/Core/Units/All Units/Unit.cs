@@ -164,10 +164,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         bool canAttack = false;
 
-        var attackPosition = new HashSet<Vector2Int> { attackerPosition };
+        var immediatePositions = GridUtility.GetReachableCells(this, 0);
 
-        var maxRange = EquippedWeapon.Stats[WeaponStat.MaxRange].ValueInt;
-        var attackableCells = GridUtility.GetAttackableCells(this, attackPosition, EquippedWeapon);
+        var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions, EquippedWeapon);
         if (attackableCells.Count > 0)
             canAttack = true;
         
@@ -181,7 +180,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var immediatePositions = GridUtility.GetReachableCells(this, 0);
 
         foreach(var weapon in Inventory.GetItems<Weapon>()) {
-            var maxRange = weapon.Stats[WeaponStat.MaxRange].ValueInt;
             var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions, weapon);
             if (attackableCells.Count > 0)
                 attackableWeapons[weapon] = attackableCells;
@@ -364,9 +362,37 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
     }
 
+    public int AttackDamage()
+    {
+        int weaponDamage = EquippedWeapon.Stats[WeaponStat.Damage].ValueInt;
+        
+        if (EquippedWeapon.Type == WeaponType.Grimiore) { // MAGIC USER
+            int magicStat = Stats[UnitStat.Magic].ValueInt;
+            
+            return magicStat + weaponDamage;
+        } else {
+            int strengthStat = Stats[UnitStat.Strength].ValueInt;
+
+            return strengthStat + weaponDamage;
+        }
+    }
+
     public int AttackSpeed(Weapon weapon)
     {
         int weaponWeight = weapon.Weight;
+        int constitutionStat = Stats[UnitStat.Constitution].ValueInt;
+        int burden = weaponWeight - constitutionStat;
+
+        if (burden < 0)
+            burden = 0;
+        
+        return Stats[UnitStat.Speed].ValueInt - burden;
+    }
+
+    
+    public int AttackSpeed()
+    {
+        int weaponWeight = EquippedWeapon.Weight;
         int constitutionStat = Stats[UnitStat.Constitution].ValueInt;
         int burden = weaponWeight - constitutionStat;
 
