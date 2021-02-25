@@ -11,6 +11,10 @@ using UnityEngine.Events;
 [RequireComponent(typeof(CellHighlighter))]
 public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 {
+    [Header("Cursor State")]
+    [SerializeField] private CursorMode _mode = CursorMode.Free;
+
+
     [Header("Movement settings")]
     [SerializeField] private float _totalMovementTime = 0.1f;
     [SerializeField, Range(0, 1)]
@@ -26,7 +30,6 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     public bool IsMoving { get; private set; }
     public UnityEvent<Unit> AttackTargetChanged;
 
-    private CursorMode _mode = CursorMode.Free;
     private Vector2Int _targetGridPosition;
     private HashSet<Vector2Int> _allowedPositions;
     private List<Vector2Int> _attackPositions;
