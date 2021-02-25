@@ -37,10 +37,16 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private float _transitionSpeed = 0.5f;
     private ProCamera2DTransitionsFX _battleTransitionFX;
 
-    private bool _startTransition = false;
+    [FoldoutGroup("Battle Status")]
+    private CombatPhase _phase = CombatPhase.NotInCombat;
+    [ShowInInspector] public CombatPhase Phase { get { return _phase; } }
+
     private PostEffectMask _pixelateEffectMask;
 
     private Vector3 _platformOriginalPosition;
+
+    private Battler _attackingBattler;
+    private Battler _defendingBattler;
 
 
     public async void Load(Unit attacker, Unit defender)
@@ -57,43 +63,67 @@ public class CombatManager : MonoBehaviour
 
         _battleTransitionFX = _battleCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
         _battleTransitionFX.OnTransitionEnterStarted += delegate () {
+            _phase = CombatPhase.Transition;
+            
             _platformOriginalPosition = _playerForeground.transform.position;
 
             SetToTransitionPosition(_friendlyBattler.transform);
             SetToTransitionPosition(_playerForeground.transform);
             SetToTransitionPosition(_hostileBattler.transform, 4f);
-
-            _startTransition = true; 
         };
         
         _battleTransitionFX.TransitionEnter();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_startTransition)
-        {
-            bool friendlyReached = ReachedPosition(_friendlyBattler.transform, _playerBattlerSpawnPoint.position);
-            bool enemyReached = ReachedPosition(_hostileBattler.transform, _enemyBattlerSpawnPoint.position);
-            bool platformReached = ReachedPosition(_playerForeground.transform, _platformOriginalPosition);  
-            
-            if (friendlyReached && enemyReached && platformReached)
-                _startTransition = false;
+        switch (_phase) {
+            case CombatPhase.NotInCombat:
+                break;
+            case CombatPhase.Transition:
+                ProcessTransitionPhase();
+                break;
+            case CombatPhase.Attacking:
+                ProcessAttackingPhase();
+                break;
         }
+    }
+
+    private void ProcessTransitionPhase()
+    {
+        bool friendlyReached = ReachedPosition(_friendlyBattler.transform, _playerBattlerSpawnPoint.position);
+        bool enemyReached = ReachedPosition(_hostileBattler.transform, _enemyBattlerSpawnPoint.position);
+        bool platformReached = ReachedPosition(_playerForeground.transform, _platformOriginalPosition);  
+        
+        bool bothFightersReady = _friendlyBattler.IsReadyToFight && _hostileBattler.IsReadyToFight;
+        if (friendlyReached && enemyReached && platformReached && bothFightersReady)
+            _phase = CombatPhase.Attacking;
+    }
+
+    private void ProcessAttackingPhase()
+    {
+        _attackingBattler.OnAttackComplete += delegate() {
+            _defendingBattler.OnAttackComplete += delegate() {
+                _phase = CombatPhase.GainExperience;
+            };
+            
+            _defendingBattler.Attack(_attackingBattler);
+        };
+
+        _attackingBattler.Attack(_defendingBattler);
     }
     
     async Task<bool> SetupBattlers(Unit attacker, Unit defender)
     {
-        await AssignBattlerByTeam(attacker, defender);
-        await AssignBattlerByTeam(defender, attacker);
+        _attackingBattler = await AssignBattlerByTeam(attacker, defender);
+        _defendingBattler = await AssignBattlerByTeam(defender, attacker);
 
         return true;
     }
 
 
-    async Task<bool> AssignBattlerByTeam(Unit unit, Unit opposingUnit)
+    async Task<Battler> AssignBattlerByTeam(Unit unit, Unit opposingUnit)
     {
         Battler newBattler;
 
@@ -124,7 +154,7 @@ public class CombatManager : MonoBehaviour
             _hostileBattler = newBattler;
         }
 
-        return true;
+        return newBattler;
     }
 
     private async Task<Dictionary<string, bool>> BattleResults(Unit attacker, Unit defender)
@@ -137,7 +167,10 @@ public class CombatManager : MonoBehaviour
 
 
         var hitResults = await HitResults(attacker, defender);
+        Debug.Log($"Hit Results: {hitResults}");
         var critResults = await CriticalHitResults(attacker, defender);
+        Debug.Log($"Crit Results: {critResults}");
+
 
         // Merge the dictionaries
         return hitResults.Concat(critResults)
@@ -231,15 +264,7 @@ public class CombatManager : MonoBehaviour
             objTransform.position.x + amount, objTransform.position.y, objTransform.transform.position.z
         );
         
-        Debug.Log($"{objTransform.name} Transition Start: {transitionStartPos}");
-        Debug.Log($"{objTransform.name} ORIGINAL Start: {objTransform.position}");
-        
         objTransform.position = transitionStartPos;
-
-    }
-
-    private void MoveToOriginalPosition(Transform objTransform)
-    {
     }
 
     private bool ReachedPosition(Transform objTransform, Vector3 originalPosition)
