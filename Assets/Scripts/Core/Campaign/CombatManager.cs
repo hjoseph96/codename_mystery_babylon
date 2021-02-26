@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections;
 using System.Collections.Generic;
 
 using Sirenix.OdinInspector;
@@ -13,10 +14,6 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private Battler _friendlyBattler;
     [FoldoutGroup("Battle Scene")]
     [ReadOnly] private Battler _hostileBattler;
-    [FoldoutGroup("Battle Scene")]
-    [SerializeField] private BattleHUD _enemyHUD;
-    [FoldoutGroup("Battle Scene")]
-    [SerializeField] private BattleHUD _playerHUD;
     
     [FoldoutGroup("Battle Scene")]
     [SerializeField] private GameObject _playerForeground;
@@ -26,6 +23,12 @@ public class CombatManager : MonoBehaviour
     [FoldoutGroup("Battle Scene")]
     [SerializeField] private Transform _playerBattlerSpawnPoint;
 
+    [FoldoutGroup("User Interface")]
+    [SerializeField] private BattleHUD _enemyHUD;
+    [FoldoutGroup("User Interface")]
+    [SerializeField] private BattleHUD _playerHUD;
+    [FoldoutGroup("User Interface")]
+    [SerializeField] private ExperienceBar _expBarUI;
 
     [FoldoutGroup("Cameras")]
     [SerializeField] private Camera _battleCamera;
@@ -47,6 +50,9 @@ public class CombatManager : MonoBehaviour
 
     private Battler _attackingBattler;
     private Battler _defendingBattler;
+
+    private bool _beganAttacks = false;
+    private bool _transitionedOut = false;
 
 
     public async void Load(Unit attacker, Unit defender)
@@ -87,6 +93,12 @@ public class CombatManager : MonoBehaviour
             case CombatPhase.Attacking:
                 ProcessAttackingPhase();
                 break;
+            case CombatPhase.GainExperience:
+                ProcessGainExperiencePhase();
+                break;
+            case CombatPhase.Complete:
+                StartCoroutine(BackToMap());
+                break;
         }
     }
 
@@ -102,16 +114,92 @@ public class CombatManager : MonoBehaviour
     }
 
     private void ProcessAttackingPhase()
+    {   
+        if (!_beganAttacks)
+        {
+            _attackingBattler.OnAttackComplete.AddListener(delegate() {
+                _defendingBattler.OnAttackComplete.AddListener(delegate() {
+                    _phase = CombatPhase.GainExperience;
+                });
+                
+                _defendingBattler.Attack(_attackingBattler);
+
+            });
+
+            _attackingBattler.Attack(_defendingBattler);
+            _beganAttacks = true;
+        }
+
+        if (_attackingBattler.HasAttacked && _defendingBattler.HasAttacked)
+            _phase = CombatPhase.GainExperience;
+    }
+
+    private void ProcessGainExperiencePhase()
     {
-        _attackingBattler.OnAttackComplete += delegate() {
-            _defendingBattler.OnAttackComplete += delegate() {
-                _phase = CombatPhase.GainExperience;
-            };
+        var friendlyUnit = _friendlyBattler.Unit;
+        var hostileUnit = _hostileBattler.Unit;
+
+        if (friendlyUnit.TeamId == Player.LocalPlayer.TeamId)
+        {
+            _expBarUI.Show(friendlyUnit.Experience);
+
+            var damageDealt = _friendlyBattler.DamageDealt();
+            var newExpAmount = friendlyUnit.Experience + damageDealt;
+
+            // TODO: Implement when classes are done, for now just add damage dealt
+            // (31 + Enemy's level + Enemy promoted bonus - Player's level - Player promoted bonus) / Player's Class relative power
+            if (damageDealt == 0)
+                newExpAmount += 1;
+
+            if (newExpAmount > 100)
+                newExpAmount = 100;
+
+            // TODO: Implement when classes are done
+            // [EXP from doing damage] + [Silencer factor] × [Enemy's level × Enemy Class relative power + Enemy class bonus - 
+            // ([Player's level × Player Class relative power + Player class bonus] / Mode divisor) + 20 + Thief bonus + Boss bonus + Entombed bonus
+            if (_hostileBattler.Unit.CurrentHealth == 0)
+                newExpAmount += ((hostileUnit.Level - friendlyUnit.Level) / 2) + 20;
+
+            _expBarUI.OnBarFilled.AddListener(delegate() {
+                friendlyUnit.SetExperience(newExpAmount);
+
+                // TODO: Logic for level up display
+                _phase = CombatPhase.Complete;
+            });
+
+            _expBarUI.StartFilling(newExpAmount);
+        }
+    }
+
+    private IEnumerator BackToMap()
+    {
+        yield return new WaitForSeconds(1f);
+
+        _battleTransitionFX.OnTransitionExitEnded += delegate() {
+            var attackingUnit = _attackingBattler.Unit;
+            var defendingUnit = _defendingBattler.Unit;
             
-            _defendingBattler.Attack(_attackingBattler);
+            Destroy(_friendlyBattler.gameObject);
+            Destroy(_hostileBattler.gameObject);
+
+            _friendlyBattler = null;
+            _hostileBattler = null;
+
+            _enemyHUD.Reset();
+            _playerHUD.Reset();
+
+            _expBarUI.Deactivate();
+
+            CampaignManager.Instance.SwitchToMap(attackingUnit, defendingUnit);
+
+            _phase = CombatPhase.NotInCombat;
         };
 
-        _attackingBattler.Attack(_defendingBattler);
+        if (!_transitionedOut)
+        {
+            _battleTransitionFX.TransitionExit();
+            _transitionedOut = true;
+        }
     }
     
     async Task<bool> SetupBattlers(Unit attacker, Unit defender)

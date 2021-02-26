@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -22,18 +23,67 @@ public class BattleHUD : MonoBehaviour
 
         CreateHPBar();
         _unitName.SetText(_unit.Name);
-        _hpRemaining.SetText($"{unit.CurrentHealth}/{unit.Stats[UnitStat.MaxHealth].ValueInt}");
+        _hpRemaining.SetText($"{_unit.CurrentHealth}/{_unit.Stats[UnitStat.MaxHealth].ValueInt}");
     }
 
     public void DecreaseHealth(int amount)
     {
+        StartCoroutine(DecrementBars(amount));
+    }
 
+    private IEnumerator DecrementBars(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            int lastFilledBarIndex = _filledHPBars.Count - 1;
+
+            var targetHPPiece = _filledHPBars[lastFilledBarIndex];
+
+            var currentWidth = targetHPPiece.rectTransform.sizeDelta.x;
+            var currentHeight = targetHPPiece.rectTransform.sizeDelta.y;
+            var position = targetHPPiece.rectTransform.localPosition;
+
+            targetHPPiece.rectTransform.sizeDelta = new Vector2(currentWidth + 2, currentHeight + 8);
+            targetHPPiece.rectTransform.localPosition = new Vector2(position.x, position.y - 4);
+
+            yield return new WaitForSeconds(0.03f);
+
+            targetHPPiece.rectTransform.sizeDelta = new Vector2(currentWidth, currentHeight);
+            targetHPPiece.rectTransform.localPosition = position;
+            targetHPPiece.sprite = _clearHPBarPiece.sprite;
+
+            _hpRemaining.SetText($"{_unit.CurrentHealth - (i + 1)}/{_unit.Stats[UnitStat.MaxHealth].ValueInt}");
+            
+
+            _filledHPBars.Remove(targetHPPiece);
+
+            var insertPoint = _unfilledHPBars.Count - 1;
+            if (insertPoint < 0) insertPoint = 0;
+            _unfilledHPBars.Insert(insertPoint, targetHPPiece);
+        }
+
+        _unit.CurrentHealth -= amount;
     }
 
 
     public void IncreaseHealth(int amount)
     {
 
+    }
+
+    public void Reset()
+    {
+        _unitName.SetText("");
+        _hpRemaining.SetText("");
+
+        foreach (Image image in _filledHPBars)
+            Destroy(image);
+        
+        foreach(Image image in _unfilledHPBars)
+            Destroy(image);
+        
+        _filledHPBars.Clear();
+        _unfilledHPBars.Clear();
     }
 
 

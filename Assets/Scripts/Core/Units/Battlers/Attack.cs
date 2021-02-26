@@ -11,17 +11,37 @@ public enum AttackType
 
 public class Attack
 {
-    public int Damage { get; private set; }
     public bool Landed { get; private set; }
     public bool IsCritical { get; private set; }
 
-    public Attack(int attackDamage, bool landed, bool isCritical)
+    private int _baseAtkDamage;
+    private Weapon _attackingWithWeapon;
+
+
+    public Attack(Unit attacker, bool landed, bool isCritical)
     {
         Landed = landed;
         IsCritical = isCritical;
-        Damage = attackDamage;
+
+        _baseAtkDamage = attacker.AttackDamage();
+        _attackingWithWeapon = attacker.EquippedWeapon;
+    }
+
+    public int Damage(Unit targetUnit)
+    {
+        int damageDealt = _baseAtkDamage;
 
         if (IsCritical)
-            Damage *= 3;
+            damageDealt *= 3;
+
+        var defenseBuffer = targetUnit.Stats[UnitStat.Defense].ValueInt;
+        if (_attackingWithWeapon.Type == WeaponType.Grimiore)
+            defenseBuffer = targetUnit.Stats[UnitStat.Resistance].ValueInt;
+        
+        damageDealt -= defenseBuffer;
+        if (damageDealt < 0)
+            damageDealt = 0;
+        
+        return damageDealt;
     }
 }

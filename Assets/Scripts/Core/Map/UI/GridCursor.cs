@@ -140,10 +140,13 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     {
         _mode = CursorMode.Free;
         _cellHighlighter.ResetSelectionHighlightingSprite();
+        _userInput.InputTarget = this;
     }
 
     public void SetRestrictedMode(Unit unit, bool attackOnly = false)
     {
+        _userInput.InputTarget = this;
+
         _selectedUnit = unit;
         _mode = CursorMode.Restricted;
 
