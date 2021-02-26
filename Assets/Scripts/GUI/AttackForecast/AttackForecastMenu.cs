@@ -39,6 +39,10 @@ public class AttackForecastMenu : Menu
             if (!availableWeapons.Contains(_selectedWeapon))
                 _selectedWeapon = availableWeapons[0];
             
+            // Turn attacking unit to face current target
+            Vector2 defenderPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int) _defendingUnit.GridPosition);
+            _attackingUnit.LookAt(defenderPosition);
+            
             PopulateForecasts();
         });
 
@@ -83,6 +87,11 @@ public class AttackForecastMenu : Menu
         {
             case KeyCode.Z:
                 _attackingUnit.EquipWeapon(_selectedWeapon);
+                
+                // Defender turns to face attacker
+                Vector2 attackerPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int) _attackingUnit.GridPosition);
+                _defendingUnit.LookAt(attackerPosition);
+                
                 CampaignManager.Instance.StartBattle(_attackingUnit, _defendingUnit);
                 
                 _attackingUnit.TookAction();

@@ -29,8 +29,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     
     [FoldoutGroup("Base Stats")]
-    [SerializeField] private int _level; 
+    [SerializeField] private int _level;
     public int Level { get { return _level; } }
+    
+    [FoldoutGroup("Base Stats")]
+    [SerializeField] private int _experience;
+    public int Experience { get { return _experience; } }
     
     [FoldoutGroup("Base Stats")]
     [UnitStats, OdinSerialize, HideIf("IsPlaying")]
@@ -128,7 +132,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         LookAt((Vector2) transform.position + direction.ToVector());
     }
 
-    public void PlayAnimation(DirectionalAnimationSet animations, float speed = 1f)
+    public void SetIdle() => PlayAnimation(_idleAnimation);
+
+    private void PlayAnimation(DirectionalAnimationSet animations, float speed = 1f)
     {
         var clip = animations.GetClip(_lookDirection);
         _animancer.Play(clip).Speed = speed;
@@ -206,6 +212,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
 
         return allAttackableCells;
+    }
+
+    public void SetExperience(int newExperienceAmount)
+    {
+        _experience = newExperienceAmount;
     }
 
     public bool CanAttack()
