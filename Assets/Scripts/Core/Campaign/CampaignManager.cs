@@ -36,6 +36,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     
 
     private CombatManager _combatManager;
+    private WorldGrid _worldGrid;
 
 
     public void Init()
@@ -44,6 +45,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
         _turn = 0;
         _phase = TurnPhase.Player;
+        _worldGrid = WorldGrid.Instance;
         _combatManager = GetComponent<CombatManager>();
 
         foreach(Unit unit in GetComponents<Unit>())
@@ -74,6 +76,25 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             _combatManager.Load(attacker, defender);
         };
         _gridTransitionFX.TransitionExit();
+    }
+
+    public void SwitchToMap(Unit attacker, Unit defender)
+    {
+        _gridTransitionFX.OnTransitionExitEnded = null;
+
+        _battleScene.SetActive(false);
+        _gridScene.SetActive(true);
+
+        attacker.SetIdle();
+        defender.SetIdle();
+        
+        GridCursor.Instance.MoveInstant(attacker.GridPosition);
+        GridCursor.Instance.SetFreeMode();
+
+        _gridUICamera.enabled = false;
+        _gridUICamera.enabled = true;
+
+        _gridTransitionFX.TransitionEnter();
     }
 
 }

@@ -2,11 +2,12 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using UnityEngine;
 
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEditor.Animations;
 
+using Sirenix.OdinInspector;
 
 public class Battler : SerializedMonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Battler : SerializedMonoBehaviour
     [SerializeField] protected BattleHUD HUD;
 
     public Unit Unit { get; private set; }
-    [HideInInspector] public Action OnAttackComplete;
+    [HideInInspector] public UnityEvent OnAttackComplete;
 
     protected Dictionary<string, bool> BattleResults = new Dictionary<string, bool>();
 
@@ -42,8 +43,9 @@ public class Battler : SerializedMonoBehaviour
 
 
     private bool _readyToFight;
+    private BattlerState _state;
     [FoldoutGroup("Battler State")]
-    [ReadOnly] private BattlerState _state;
+    [ShowInInspector] public BattlerState State { get { return _state; } }
     [FoldoutGroup("Battler State")]
     [ShowInInspector] public bool IsReadyToFight { get { return _readyToFight; } }
     [FoldoutGroup("Battler State")]
@@ -60,6 +62,7 @@ public class Battler : SerializedMonoBehaviour
     private Attack CurrentAttack => _attacks[_currentAttackIndex];
 
     private bool _currentlyAttacking = false;
+    public bool HasAttacked { get; private set; }
     private string _previousAnim;
 
 
@@ -91,10 +94,24 @@ public class Battler : SerializedMonoBehaviour
         _state = BattlerState.Attacking;
     }
 
+    public int DamageDealt()
+    {
+        int damageDealt = 0;
+        
+        foreach(Attack attack in _attacks)
+            if (attack.Landed)
+                damageDealt += attack.Damage(_targetBattler.Unit);
+        
+        return damageDealt;
+    }
+
 
     // Update is called once per frame
     void Update()
     {
+        if (Animator == null)
+            return;
+         
         switch(_state)
         {
             case BattlerState.Idle:
@@ -102,7 +119,9 @@ public class Battler : SerializedMonoBehaviour
                 
                 break;
             case BattlerState.Attacking:
-                ProcessAttackingPhase();
+                // Only attack from Idle Animation
+                if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !HasAttacked)
+                    ProcessAttackingPhase();
                 
                 break;
             case BattlerState.Casting:
@@ -180,7 +199,7 @@ public class Battler : SerializedMonoBehaviour
         Vector3 newRotation = new Vector3(
             transform.rotation.x, yRotation, transform.rotation.z
         );
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotation), 12f * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotation), 25f * Time.smoothDeltaTime);
     }
 
     private bool IsMultiAttacking()
@@ -197,14 +216,12 @@ public class Battler : SerializedMonoBehaviour
         if (BattleResults.Count == 0)   // Cannot Attack.
             return;
         
-        var attackDamage = Unit.AttackDamage();
-
-        var firstAttack = new Attack(attackDamage, BattleResults["HIT"], BattleResults["CRITICAL"]);
+        var firstAttack = new Attack(Unit, BattleResults["HIT"], BattleResults["CRITICAL"]);
         _attacks.Add(firstAttack);
         
         if (BattleResults["DOUBLE_ATTACK"])
         {
-            var secondAttack = new Attack(attackDamage, BattleResults["SECOND_HIT"], BattleResults["CRIT_SECOND_HIT"]);
+            var secondAttack = new Attack(Unit, BattleResults["SECOND_HIT"], BattleResults["CRIT_SECOND_HIT"]);
             _attacks.Add(secondAttack);
         }
     }
@@ -259,18 +276,28 @@ public class Battler : SerializedMonoBehaviour
     {
         if (_currentAttackIndex != _attacks.Count - 1)
             _currentAttackIndex += 1;
-        else 
+        else
+        {
             _state = BattlerState.Idle;
+            
+            if (_targetBattler.State == BattlerState.Blocking)
+                _targetBattler.BackToIdle();
+
+            HasAttacked = true;
+            OnAttackComplete.Invoke();
+        }
         
         _currentlyAttacking = false;
     }
 
     private void ProcessAttack()
     {
+        var attackDamage = CurrentAttack.Damage(_targetBattler.Unit);
+
         if (CurrentAttack.Landed)
         {
-            if (CurrentAttack.Damage > 0)
-                _targetBattler.ReceiveDamage(CurrentAttack.Damage);
+            if (attackDamage > 0)
+                _targetBattler.ReceiveDamage(attackDamage);
             else
                 _targetBattler.BlockImpact();
         }
@@ -282,7 +309,9 @@ public class Battler : SerializedMonoBehaviour
     {
         _currentlyAttacking = true;
 
-        if (CurrentAttack.Damage == 0)
+        var attackDamage = CurrentAttack.Damage(_targetBattler.Unit);
+
+        if (attackDamage == 0)
             _targetBattler.StartBlocking();
     }
 
