@@ -101,6 +101,9 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                 if (inputData.KeyCode == KeyCode.Z) 
                 {
                     var unit  = _worldGrid[GridPosition].Unit;
+
+                    // TODO: Add !unit.HasTakenAction, after implementing multiple player units.
+                    // Don't allow Units to move twice per turn.
                     if (unit != null && unit.IsLocalPlayerUnit)
                         SetRestrictedMode(unit);
                 }
@@ -116,8 +119,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                         break;
 
                     case KeyCode.X: case KeyCode.Escape:
-                        _arrowPath.Clear();
-                        _cellHighlighter.Clear();
+                        ClearAll();
                         SetFreeMode();
                         break;
                 }

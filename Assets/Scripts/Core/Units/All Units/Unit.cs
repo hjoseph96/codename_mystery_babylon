@@ -5,6 +5,7 @@ using Animancer;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -12,19 +13,22 @@ using UnityEngine;
 public class Unit : SerializedMonoBehaviour, IInitializable
 {
 
-    [FoldoutGroup("Basic properties")]
+    [FoldoutGroup("Basic Properties")]
     [SerializeField] private string _name;
     public string Name { get { return _name; } }
     
-    [FoldoutGroup("Basic properties")]
+    [FoldoutGroup("Basic Properties")]
     [DistinctUnitType]
     public UnitType UnitType;
 
-    [FoldoutGroup("Basic properties")] 
+    [FoldoutGroup("Basic Properties")] 
     [SerializeField] private float _moveSpeed = 4f;
-    [FoldoutGroup("Basic properties")] 
+    
+    
+    [FoldoutGroup("Basic Properties")] 
     [SerializeField] private float _moveAnimationSpeed = 1.75f;
-    [FoldoutGroup("Basic properties")] 
+    
+    [FoldoutGroup("Basic Properties")] 
     public GameObject BattlerPrefab;
 
     
@@ -35,6 +39,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _experience;
     public int Experience { get { return _experience; } }
+    public static int MAX_EXP_AMOUNT = 100;
     
     [FoldoutGroup("Base Stats")]
     [UnitStats, OdinSerialize, HideIf("IsPlaying")]
@@ -42,7 +47,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     [FoldoutGroup("Stats"), ShowIf("IsPlaying"), PropertyOrder(0)]
     [ProgressBar(0, "MaxHealth", ColorGetter = "HealthColor", BackgroundColorGetter = "BackgroundColor", Height = 20)]
-    public int CurrentHealth;
+    [SerializeField] private int _currentHealth;
+    public bool IsAlive => CurrentHealth > 0;
+    public int CurrentHealth {
+        get { return _currentHealth; }
+    }
+    public int MaxHealth => Stats[UnitStat.MaxHealth].ValueInt;
 
     [FoldoutGroup("Stats"), ShowIf("IsPlaying"), PropertyOrder(1)]
     [UnitStats]
@@ -52,21 +62,28 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     [FoldoutGroup("Animations")] 
     [SerializeField] private DirectionalAnimationSet _idleAnimation;
+    
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _walkAnimation;
 
+    
+    
     [FoldoutGroup("Items")]
     [SerializeField] private ScriptableItem[] _startingItems;
 
     // TODO: Implement WeaponRanks (equippable weapons and rank with each)
     public UnitInventory Inventory { get; private set; }
 
+    
+    [FoldoutGroup("Game Status")]
+    public int TeamId => Player.TeamId;
+
     [FoldoutGroup("Game Status")]
     private Weapon _equippedWeapon;
+    
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public Weapon EquippedWeapon { get { return _equippedWeapon; } }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
-
 
     private Vector2Int _gridPosition;
     [FoldoutGroup("Game Status")]
@@ -83,11 +100,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public int CurrentMovementPoints { get { return _currentMovementPoints; } }
 
-    private Color HealthColor = new Color(0.25f, 1.0f, 0.35f);
-    private Color BackgroundColor = Color.black;
-    private int MaxHealth => Stats[UnitStat.MaxHealth].ValueInt;
 
-    public int TeamId => Player.TeamId;
+
+    [FoldoutGroup("Events")]
+    public UnityEvent UponDeath;
+
+    [FoldoutGroup("Events")]
+    public UnityEvent UponLevelUp;
+
+
     public bool IsLocalPlayerUnit => Player == Player.LocalPlayer;
 
     protected virtual Player Player { get; }
@@ -166,6 +187,46 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _equippedWeapon = null;
     }
 
+
+    public void DecreaseHealth(int amount)
+    {
+        int damageTaken = amount;
+        bool isDead = false;
+        if (damageTaken >= CurrentHealth)
+        {
+            damageTaken = CurrentHealth;
+            isDead = true;
+        }
+        
+        _currentHealth -= damageTaken;
+
+        if (isDead)
+            UponDeath.Invoke();
+    }
+
+    public void IncreaseHealth(int amount)
+    {
+        int currentHealthAmount = CurrentHealth + amount;
+        if (currentHealthAmount > MaxHealth)
+            currentHealthAmount = MaxHealth;
+        
+        _currentHealth = currentHealthAmount;
+    }
+
+
+    public void GainExperience(int amount)
+    {
+        int currentExpAmount = _experience + amount;
+        
+        if (currentExpAmount > MAX_EXP_AMOUNT)
+        {
+            currentExpAmount -= MAX_EXP_AMOUNT;
+            UponLevelUp.Invoke();
+        }
+        
+        _experience = currentExpAmount;
+    }
+
     public bool CanDefend(Vector2Int attackerPosition)
     {
         bool canAttack = false;
@@ -214,15 +275,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return allAttackableCells;
     }
 
-    public void SetExperience(int newExperienceAmount)
-    {
-        _experience = newExperienceAmount;
-    }
 
-    public bool CanAttack()
-    {
-        return AttackableWeapons().Count > 0;
-    }
+    public bool CanAttack() => AttackableWeapons().Count > 0;
+    
 
     public bool CanTrade()
     {
@@ -349,11 +404,13 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
 
         _currentMovementPoints = Stats[UnitStat.Movement].ValueInt;
-        CurrentHealth = Stats[UnitStat.MaxHealth].ValueInt;
+        _currentHealth = MaxHealth;
     }
 
     private static bool IsPlaying => Application.isPlaying;
     
+
+    // TODO: Maybe move these elsewhere.
     // =====================
     // || Battle Formulas ||
     // =====================

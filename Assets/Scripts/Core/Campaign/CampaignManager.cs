@@ -55,19 +55,8 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         
         _battleScene.SetActive(false);
         
-        _gridUICamera.enabled = false;
-        _gridUICamera.enabled = true;
+        ToggleCamera(_gridUICamera);
     }
-
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void StartBattle(Unit attacker, Unit defender)
     {
         _gridTransitionFX.OnTransitionExitEnded += delegate () {
@@ -87,14 +76,29 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
         attacker.SetIdle();
         defender.SetIdle();
-        
+
+        GridCursor.Instance.ClearAll();
         GridCursor.Instance.MoveInstant(attacker.GridPosition);
         GridCursor.Instance.SetFreeMode();
 
-        _gridUICamera.enabled = false;
-        _gridUICamera.enabled = true;
+        ToggleCamera(_gridUICamera);
 
         _gridTransitionFX.TransitionEnter();
     }
 
+    void Start()
+    {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+
+    private void ToggleCamera(Camera camera)
+    {
+        camera.enabled = false;
+        camera.enabled = true;
+    }
 }
