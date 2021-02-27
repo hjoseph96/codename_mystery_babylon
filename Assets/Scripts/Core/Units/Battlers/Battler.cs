@@ -8,7 +8,7 @@ using UnityEngine.Events;
 using UnityEditor.Animations;
 
 using Sirenix.OdinInspector;
-
+using com.spacepuppy.Tween;
 public class Battler : SerializedMonoBehaviour
 {
     [ReadOnly] protected string Name;
@@ -16,7 +16,7 @@ public class Battler : SerializedMonoBehaviour
     [SerializeField] protected BattleHUD HUD;
 
     public Unit Unit { get; private set; }
-    [HideInInspector] public UnityEvent OnAttackComplete;
+    [HideInInspector] public Action OnAttackComplete;
 
     protected Dictionary<string, bool> BattleResults = new Dictionary<string, bool>();
 
@@ -62,12 +62,18 @@ public class Battler : SerializedMonoBehaviour
     private Attack CurrentAttack => _attacks[_currentAttackIndex];
 
     private bool _currentlyAttacking = false;
-    public bool HasAttacked { get; private set; }
+    public bool IsFinished { get; private set; }
     private string _previousAnim;
+
+    private List<Renderer> _renderers;
+    private bool _isDead = false;
+    private bool _startedDissolving = false;
+    private float _dissolveStartTime;
+    [SerializeField] private float _dissolveSpeed = 1.57f;
 
 
     private void Awake() {
-        Debug.Log(AnimationsAsHashes);    
+        _renderers = new List<Renderer>(GetComponentsInChildren<Renderer>());
     }
 
     public void Setup(Unit unit, BattleHUD hud, Dictionary<string, bool> battleResults, PostEffectMask pixelShaderMask)
@@ -86,18 +92,27 @@ public class Battler : SerializedMonoBehaviour
         SetupAttacks();
 
         HUD.Populate(Unit);
+
+        Unit.UponDeath.AddListener(delegate() {
+            _state = BattlerState.Dead;
+        });
     }
 
-    public void Attack(Battler target)
+    public bool Attack(Battler target)
     {
+        if (_state == BattlerState.Dead)
+            return false;
+        
         _targetBattler = target;
         _state = BattlerState.Attacking;
+
+        return true;
     }
 
     public int DamageDealt()
     {
         int damageDealt = 0;
-        
+
         foreach(Attack attack in _attacks)
             if (attack.Landed)
                 damageDealt += attack.Damage(_targetBattler.Unit);
@@ -120,8 +135,8 @@ public class Battler : SerializedMonoBehaviour
                 break;
             case BattlerState.Attacking:
                 // Only attack from Idle Animation
-                if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !HasAttacked)
-                    ProcessAttackingPhase();
+                if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !IsFinished)
+                    ProcessAttackingState();
                 
                 break;
             case BattlerState.Casting:
@@ -132,12 +147,15 @@ public class Battler : SerializedMonoBehaviour
                 break;
             case BattlerState.Dodging:
                 break;
+            case BattlerState.Dead:
+                ProcessDeadState();
+                break;
             default:
                 throw new System.Exception("Unsupported BattlerState: " + _state);
         }
     }
 
-    protected virtual void ProcessAttackingPhase()
+    protected virtual void ProcessAttackingState()
     {
         if (!_currentlyAttacking)
         {
@@ -168,6 +186,36 @@ public class Battler : SerializedMonoBehaviour
 
                     break;
             }
+        }
+    }
+
+    private void ProcessDeadState()
+    {
+        if (!_isDead)
+        {
+            PlayAnimation("Death");
+            _isDead = true;
+            IsFinished = false;
+        }
+
+        if (_startedDissolving)
+        {
+            float dissolveEnd = 0.57f;
+            foreach(Renderer renderer in _renderers)
+            {
+                float dissolveAmount = AnimationCurve.Linear(_dissolveStartTime, 0f, _dissolveStartTime + _dissolveSpeed, dissolveEnd + 0.01f).Evaluate(Time.time);
+
+                renderer.material.SetFloat("_DissolveCutoff", dissolveAmount);
+
+                if (dissolveAmount >= dissolveEnd)
+                    renderer.enabled = false;
+            }
+        }
+
+        if (_renderers.All(renderer => !renderer.enabled ))
+        {
+            _startedDissolving = false;
+            IsFinished = true;
         }
     }
 
@@ -261,14 +309,20 @@ public class Battler : SerializedMonoBehaviour
 
     private void BlockImpact() => PlayAnimation("Block Impact");
 
+    private void StartDissolving()
+    {
+        _startedDissolving = true;
+        _dissolveStartTime = Time.time;
+    }
+
     private void ReadyToFight() => _readyToFight = true;
 
     private void ReceiveDamage(int damageAmount)
     {
-        HitReaction();
-
         _damageReceived += damageAmount;
         HUD.DecreaseHealth(damageAmount);
+
+        HitReaction();
     }
 
 
@@ -283,7 +337,7 @@ public class Battler : SerializedMonoBehaviour
             if (_targetBattler.State == BattlerState.Blocking)
                 _targetBattler.BackToIdle();
 
-            HasAttacked = true;
+            IsFinished = true;
             OnAttackComplete.Invoke();
         }
         

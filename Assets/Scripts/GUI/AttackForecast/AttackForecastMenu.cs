@@ -31,6 +31,9 @@ public class AttackForecastMenu : Menu
         _gridCursor = GridCursor.Instance;
         _gridCursor.SetAttackMode(_attackingUnit);
         _gridCursor.MoveInstant(attackableCell);
+
+        MakeAttackingUnitFaceTarget();
+        
         // When Selected Attack Target Changes, execute:
         _gridCursor.AttackTargetChanged.AddListener(delegate(Unit targetUnit) {
             _defendingUnit = targetUnit;
@@ -39,9 +42,7 @@ public class AttackForecastMenu : Menu
             if (!availableWeapons.Contains(_selectedWeapon))
                 _selectedWeapon = availableWeapons[0];
             
-            // Turn attacking unit to face current target
-            Vector2 defenderPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int) _defendingUnit.GridPosition);
-            _attackingUnit.LookAt(defenderPosition);
+            MakeAttackingUnitFaceTarget();
             
             PopulateForecasts();
         });
@@ -91,6 +92,7 @@ public class AttackForecastMenu : Menu
                 // Defender turns to face attacker
                 Vector2 attackerPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int) _attackingUnit.GridPosition);
                 _defendingUnit.LookAt(attackerPosition);
+                _defendingUnit.SetIdle();
                 
                 CampaignManager.Instance.StartBattle(_attackingUnit, _defendingUnit);
                 
@@ -120,6 +122,14 @@ public class AttackForecastMenu : Menu
     public override void OnClose()
     {
         GridCursor.Instance.SetFreeMode();
+    }
+
+    private void MakeAttackingUnitFaceTarget()
+    {
+        Vector2 defenderPosition = WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int) _defendingUnit.GridPosition);
+            
+        _attackingUnit.LookAt(defenderPosition);
+        _attackingUnit.SetIdle();
     }
 
     private void PopulateForecasts()

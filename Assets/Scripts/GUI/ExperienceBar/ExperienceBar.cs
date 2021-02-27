@@ -1,22 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 using Sirenix.OdinInspector;
 using TMPro;
 
+
+// TODO: Implement logic for when EXP percent goes > 100, and there is a remainder of exp left to gain.
 public class ExperienceBar : MonoBehaviour
 {
     [SerializeField] private Transform _fillSpawnPoint;
-    [SerializeField] private Image _barFill;
-    [SerializeField] private float _fillDuration = 5f;
+
+    [SerializeField] private GameObject _barFillPrefab;
+    private Image _barFill;
+    [SerializeField] private float _fillDuration = 0.67f;
     [SerializeField] private float _fillMax = -641.87f;
-    [SerializeField] private float _fillMin = -2.5f;
+    [SerializeField] private float _fillMin = -3.9f;
 
 
-    [HideInInspector] public UnityEvent OnBarFilled;
+    [HideInInspector] public Action OnBarFilled;
 
     private TextMeshProUGUI _expAmount;
 
@@ -25,11 +27,11 @@ public class ExperienceBar : MonoBehaviour
 
     private int _displayPercentage;
     private float _fillPerPercent;
-    private bool _isFilling = false;
-    private bool _barSpawned = false;
-    
     private float _startTime;
     private bool _timeSet = false;
+    public bool IsFilling = false;
+    private bool _barSpawned = false;
+    
 
     public void Show(int unitExperience)
     {
@@ -40,25 +42,34 @@ public class ExperienceBar : MonoBehaviour
         _fillPerPercent = _fillMax / 100;
         _expAmount.SetText($"{_displayPercentage}/100");
 
+
         if (Percentage > 0)
         {
             SpawnBar();
-            StartFilling(Percentage);
+
+            _barFill.rectTransform.offsetMax = new Vector2(-(_fillPerPercent * unitExperience), _barFill.rectTransform.offsetMax.y);            
         }
 
         this.SetActive(true);
     }
 
-    public void Deactivate()
+    public void Reset()
     {
         this.SetActive(false);
+
+        _timeSet = false;
+        IsFilling = false;
+        OnBarFilled = null;
+
+        _barFillPrefab.transform.parent = null;
+        Destroy(_barFill.gameObject);
     }
 
 
     public void StartFilling(int percentage)
     {
         _percentage = percentage;
-        _isFilling = true;
+        IsFilling = true;
 
         if (!_timeSet)
         {
@@ -69,8 +80,14 @@ public class ExperienceBar : MonoBehaviour
 
     void Update() 
     {
-        if (_isFilling)
+        if (IsFilling)
             Fill();
+    }
+
+    private void ToggleChildren(bool enabled)
+    {
+        for (var i = 0; i < this.transform.childCount; i++)
+            this.transform.GetChild(i).gameObject.SetActive(enabled);
     }
 
     private void Fill()
@@ -80,17 +97,27 @@ public class ExperienceBar : MonoBehaviour
 
         
         float t = (Time.time - _startTime) / _fillDuration;
+        var currentFill = -_barFill.rectTransform.offsetMax.x;
 
-        var fillAmount = Mathf.SmoothStep(_barFill.rectTransform.offsetMax.x, _fillPerPercent * Percentage, t);
+        var fillAmount = AnimationCurve.Linear(_startTime, currentFill, _startTime + _fillDuration, _fillPerPercent * Percentage).Evaluate(Time.time);
 
+
+        _barFill.rectTransform.offsetMax = new Vector2(-fillAmount, _barFill.rectTransform.offsetMax.y);
+        
         _displayPercentage = IncreaseDisplayPercentage();
         _expAmount.SetText($"{_displayPercentage}/100");
 
-        _barFill.rectTransform.offsetMax = new Vector2(-fillAmount, _barFill.rectTransform.offsetMax.y);
+        if (Mathf.Abs(_barFill.rectTransform.offsetMax.x) >= Mathf.Abs(_fillMax))   /// 100 exp filled.
+        {
+            // TODO Level UP display.
+            _percentage -= 100;
+            _displayPercentage = 0;
+            _barFill.rectTransform.offsetMax = new Vector2(0, _barFill.rectTransform.offsetMax.y);
+        }
 
         if (Mathf.Abs(_barFill.rectTransform.offsetMax.x) >= Mathf.Abs(_fillPerPercent * Percentage) - 0.001f)
         {
-            _isFilling = false;
+            IsFilling = false;
             _displayPercentage = Percentage;
             _expAmount.SetText($"{_displayPercentage}/100");
 
@@ -100,17 +127,17 @@ public class ExperienceBar : MonoBehaviour
 
     private int IncreaseDisplayPercentage()
     {
-        float displayPercentage = (float)_displayPercentage;
-        float percentage = (float)Percentage;
+        int newPercentage = (int)Mathf.Abs(Mathf.Round(_barFill.rectTransform.offsetMax.x / _fillPerPercent));
 
-        float slerpedPercentage =  Mathf.SmoothStep(displayPercentage, percentage, _fillDuration * Time.deltaTime);
-
-        return (int)Mathf.Round(slerpedPercentage);
+        if (newPercentage >  100) newPercentage -= 100;
+        
+        return newPercentage;
     }
 
     private void SpawnBar()
     {
-        _barFill = Instantiate(_barFill, _fillSpawnPoint.position, _barFill.rectTransform.rotation, _fillSpawnPoint);
+        _barFill = _barFillPrefab.GetComponent<Image>();
+        _barFill = Instantiate(_barFillPrefab, _fillSpawnPoint.position, _barFill.rectTransform.rotation, _fillSpawnPoint).GetComponent<Image>();
         _barSpawned = true;
     }
 }
