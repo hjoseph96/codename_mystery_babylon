@@ -8,13 +8,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: knight
-  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _METALLICSPECGLOSSMAP _NORMALMAP _SPECGLOSSMAP _SPECULAR_SETUP
-  m_LightmapFlags: 2
+  m_Shader: {fileID: 4800000, guid: d9f081e7b97927d4b848a322747a5819, type: 3}
+  m_ShaderKeywords: _DISSOLVEALPHASOURCE_TWO_CUSTOM_MAPS _DISSOLVEALPHATEXTUREBLEND_ADD
+    _DISSOLVECUTOFFMETHOD_DEFAULT _DISSOLVEEDGETEXTUREISDYNAMIC_ON _DISSOLVEEDGETEXTURESOURCE_GRADIENT
+    _DISSOLVEMASKMETHOD_NONE _DISSOLVEMASK_NONE _DISSOLVENOISESOURCE_THREE_CUSTOM_MAPS
+    _DISSOLVENOISETEXTUREBLEND_ADD _NORMALMAP _SPECGLOSSMAP
+  m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: AdvancedDissolveCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -25,6 +29,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: 73e177b2a321c804c81395ce7cedac92, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -39,7 +47,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DissolveEdgeTexture:
+        m_Texture: {fileID: 2800000, guid: 2e995b62ba6233b498fa3389fbfb9103, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveMap1:
+        m_Texture: {fileID: 2800000, guid: 5c0c5358f2ee6434ca0bd35c8a66049c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveMap2:
+        m_Texture: {fileID: 2800000, guid: f4a7e7699981b2848956ec162fbe8c60, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveMap3:
+        m_Texture: {fileID: 2800000, guid: c1bb91de79e1d6647a47e6c5de27c6a7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LODTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MKGlowTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -47,8 +79,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: 7c5692d8fba117648b64785dc3f6a9be, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MetalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 2800000, guid: 6dc5aac69602ea848bae74c3b4e2fea5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -61,6 +101,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 2800000, guid: 6dc5aac69602ea848bae74c3b4e2fea5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -78,35 +122,93 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
+    - _BlendOp: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 2
-    - _Cutoff: 0.5
+    - _Cul: 0
+    - _Cull: 0
+    - _Cutoff: 0
+    - _CutoutThreshold: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DiffModel: 0
+    - _DissolveAlphaSource: 2
+    - _DissolveAlphaSourceTexturesUVSet: 0
+    - _DissolveCutoff: 0
+    - _DissolveEdgeColorIntensity: 1
+    - _DissolveEdgeDistortionSource: 0
+    - _DissolveEdgeDistortionStrength: 0
+    - _DissolveEdgeShape: 0
+    - _DissolveEdgeTextureAlphaOffset: 0
+    - _DissolveEdgeTextureIsDynamic: 1
+    - _DissolveEdgeTextureMipmap: 1
+    - _DissolveEdgeTexturePhaseOffset: 0
+    - _DissolveEdgeTextureReverse: 0
+    - _DissolveEdgeTextureSource: 1
+    - _DissolveEdgeWidth: 0.2
+    - _DissolveGIMultiplier: 0.7
+    - _DissolveGlobalControl: 0
+    - _DissolveMainMapTiling: 1
+    - _DissolveMap1Channel: 3
+    - _DissolveMap1Intensity: 1
+    - _DissolveMap2Channel: 3
+    - _DissolveMap2Intensity: 1
+    - _DissolveMap3Channel: 3
+    - _DissolveMap3Intensity: 1
+    - _DissolveMappingType: 0
+    - _DissolveMask: 0
+    - _DissolveMaskAxis: 2
+    - _DissolveMaskCount: 0
+    - _DissolveMaskInvert: 1
+    - _DissolveMaskOffset: 0.97
+    - _DissolveMaskRadius: 1
+    - _DissolveMaskSpace: 1
+    - _DissolveNoiseStrength: 0.1
+    - _DissolveSourceAlphaTexturesBlend: 0
+    - _DissolveTriplanarMappingSpace: 0
+    - _DrawDist: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _GlossMapScale: 0.121
-    - _Glossiness: 0
+    - _GlossMapScale: 0.293
+    - _Glossiness: 0.7
     - _GlossyReflections: 1
+    - _LODAmt: 0
+    - _MKGlowPower: 0.67
+    - _MKGlowTexStrength: 1
     - _Metallic: 0
     - _Mode: 0
+    - _NormalMapDepth: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _RenderMode: 0
     - _Smoothness: 0.398
     - _SmoothnessTextureChannel: 0
+    - _SpecModel: 0
+    - _Specular: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _UVSec: 0
+    - _Unlit: 0
+    - _VertexInaccuracy: -1
     - _WorkflowMode: 0
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.5849056, g: 0.45382637, b: 0.30072978, a: 1}
-    - _EmissionColor: {r: 0.03773582, g: 0.029725859, b: 0.031910393, a: 1}
+    - _Color: {r: 0.9433962, g: 0.62661856, b: 0.33374867, a: 1}
+    - _DissolveEdgeColor: {r: 0.6415094, g: 0.11801354, b: 0.11801354, a: 0.5803922}
+    - _DissolveMap1_Scroll: {r: 0, g: 0, b: 0, a: 0}
+    - _DissolveMap2_Scroll: {r: 0, g: -0.5, b: 0, a: 0}
+    - _DissolveMap3_Scroll: {r: 0, g: -0.3, b: 0, a: 0}
+    - _DissolveMaskNormal: {r: 1, g: 0, b: 0, a: 0}
+    - _DissolveMaskPosition: {r: 0, g: 0, b: 0, a: 0}
+    - _Dissolve_ObjectWorldPos: {r: 2.9, g: 0.6, b: 1.31, a: 0}
+    - _Emission: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MKGlowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MKGlowTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []

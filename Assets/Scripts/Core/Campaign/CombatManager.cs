@@ -52,6 +52,7 @@ public class CombatManager : MonoBehaviour
     private Battler _defendingBattler;
 
     private bool _beganAttacks = false;
+    private bool _gainedExp = false;
     private bool _transitionedOut = false;
 
 
@@ -67,12 +68,16 @@ public class CombatManager : MonoBehaviour
 
         await SetupBattlers(attacker, defender);
 
+        // State Boolean Flags
+        _beganAttacks = false;
+        _gainedExp = false;
+        _transitionedOut = false;
+
+        _platformOriginalPosition = _playerForeground.transform.position;
         _battleTransitionFX = _battleCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
         _battleTransitionFX.OnTransitionEnterStarted += delegate () {
             _phase = CombatPhase.Transition;
             
-            _platformOriginalPosition = _playerForeground.transform.position;
-
             SetToTransitionPosition(_friendlyBattler.transform);
             SetToTransitionPosition(_playerForeground.transform);
             SetToTransitionPosition(_hostileBattler.transform, 4f);
@@ -94,7 +99,7 @@ public class CombatManager : MonoBehaviour
                 ProcessAttackingPhase();
                 break;
             case CombatPhase.GainExperience:
-                ProcessGainExperiencePhase();
+                StartCoroutine(ProcessGainExperiencePhase());
                 break;
             case CombatPhase.Complete:
                 StartCoroutine(BackToMap());
@@ -117,57 +122,67 @@ public class CombatManager : MonoBehaviour
     {   
         if (!_beganAttacks)
         {
-            _attackingBattler.OnAttackComplete.AddListener(delegate() {
-                _defendingBattler.OnAttackComplete.AddListener(delegate() {
+            _attackingBattler.OnAttackComplete += delegate() {
+                _defendingBattler.OnAttackComplete += delegate() {
                     _phase = CombatPhase.GainExperience;
-                });
+                };
                 
                 _defendingBattler.Attack(_attackingBattler);
-
-            });
+            };
 
             _attackingBattler.Attack(_defendingBattler);
             _beganAttacks = true;
         }
 
-        if (_attackingBattler.HasAttacked && _defendingBattler.HasAttacked)
+        if (_attackingBattler.IsFinished && _defendingBattler.IsFinished)
             _phase = CombatPhase.GainExperience;
     }
 
-    private void ProcessGainExperiencePhase()
+    private IEnumerator ProcessGainExperiencePhase()
     {
         var friendlyUnit = _friendlyBattler.Unit;
         var hostileUnit = _hostileBattler.Unit;
 
-        if (friendlyUnit.TeamId == Player.LocalPlayer.TeamId)
+
+
+        if (friendlyUnit.TeamId == Player.LocalPlayer.TeamId && !_gainedExp)
         {
+            _gainedExp = true;
+            
             _expBarUI.Show(friendlyUnit.Experience);
 
             var damageDealt = _friendlyBattler.DamageDealt();
-            var newExpAmount = friendlyUnit.Experience + damageDealt;
+            var expGained = damageDealt;
 
             // TODO: Implement when classes are done, for now just add damage dealt
             // (31 + Enemy's level + Enemy promoted bonus - Player's level - Player promoted bonus) / Player's Class relative power
             if (damageDealt == 0)
-                newExpAmount += 1;
+                expGained += 1;
 
-            if (newExpAmount > 100)
-                newExpAmount = 100;
 
             // TODO: Implement when classes are done
             // [EXP from doing damage] + [Silencer factor] × [Enemy's level × Enemy Class relative power + Enemy class bonus - 
             // ([Player's level × Player Class relative power + Player class bonus] / Mode divisor) + 20 + Thief bonus + Boss bonus + Entombed bonus
             if (_hostileBattler.Unit.CurrentHealth == 0)
-                newExpAmount += ((hostileUnit.Level - friendlyUnit.Level) / 2) + 20;
+                expGained += ((hostileUnit.Level - friendlyUnit.Level) / 2) + 20;
 
-            _expBarUI.OnBarFilled.AddListener(delegate() {
-                friendlyUnit.SetExperience(newExpAmount);
+            // if (expGained > 100)
+            //     expGained = 100;
+            
+            _expBarUI.OnBarFilled  += delegate() {
+                if (!_expBarUI.IsFilling)
+                    friendlyUnit.GainExperience(expGained);
 
+                
                 // TODO: Logic for level up display
                 _phase = CombatPhase.Complete;
-            });
+            };
 
-            _expBarUI.StartFilling(newExpAmount);
+            yield return new WaitForSeconds(2f);
+
+            _expBarUI.StartFilling(friendlyUnit.Experience + expGained);
+
+
         }
     }
 
@@ -178,8 +193,12 @@ public class CombatManager : MonoBehaviour
         _battleTransitionFX.OnTransitionExitEnded += delegate() {
             var attackingUnit = _attackingBattler.Unit;
             var defendingUnit = _defendingBattler.Unit;
+
+            _attackingBattler.OnAttackComplete = null;
+            _defendingBattler.OnAttackComplete = null;
+            _battleTransitionFX.OnTransitionEnterStarted = null;
             
-            Destroy(_friendlyBattler.gameObject);
+            Destroy(_friendlyBattler.gameObject);        
             Destroy(_hostileBattler.gameObject);
 
             _friendlyBattler = null;
@@ -187,18 +206,18 @@ public class CombatManager : MonoBehaviour
 
             _enemyHUD.Reset();
             _playerHUD.Reset();
-
-            _expBarUI.Deactivate();
+            _expBarUI.Reset();
 
             CampaignManager.Instance.SwitchToMap(attackingUnit, defendingUnit);
+            _playerForeground.transform.position = _platformOriginalPosition;
 
-            _phase = CombatPhase.NotInCombat;
+            _phase = CombatPhase.NotInCombat;            
         };
 
         if (!_transitionedOut)
         {
-            _battleTransitionFX.TransitionExit();
             _transitionedOut = true;
+            _battleTransitionFX.TransitionExit();
         }
     }
     
@@ -253,12 +272,8 @@ public class CombatManager : MonoBehaviour
         if (!attacker.CanDefend(defender.GridPosition))
             return battleResults;
 
-
         var hitResults = await HitResults(attacker, defender);
-        Debug.Log($"Hit Results: {hitResults}");
         var critResults = await CriticalHitResults(attacker, defender);
-        Debug.Log($"Crit Results: {critResults}");
-
 
         // Merge the dictionaries
         return hitResults.Concat(critResults)
@@ -357,7 +372,7 @@ public class CombatManager : MonoBehaviour
 
     private bool ReachedPosition(Transform objTransform, Vector3 originalPosition)
     {
-        objTransform.position = Vector3.Slerp(objTransform.transform.position, originalPosition, (_transitionSpeed * Time.smoothDeltaTime) / 2.2f);
+        objTransform.position = Vector3.Slerp(objTransform.transform.position, originalPosition, (_transitionSpeed * Time.deltaTime));
 
         if (Vector3.Distance(objTransform.position, originalPosition) < .03f)
         {

@@ -115,9 +115,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: OnAttackComplete
-      Entry: 6
-      Data: 
     - Name: AnimationsAsHashes
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int32,
@@ -435,6 +432,10 @@ MonoBehaviour:
       Entry: 8
       Data: 
   HUD: {fileID: 0}
+  OnAttackComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  _dissolveSpeed: 1.57
 --- !u!114 &7289232505883402677
 MonoBehaviour:
   m_ObjectHideFlags: 0
