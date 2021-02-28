@@ -9,10 +9,30 @@ public enum StairsOrientation
     RightToLeft
 }
 
+public enum SurfaceType
+{
+    None,
+    Dirt,
+    Grass,
+    Rock,
+    Gravel,
+    Concrete,
+    Carpet,
+    Metal,
+    Wood,
+    Water,
+    Snow,
+    Glass
+}
+
+
 [CreateAssetMenu(fileName = "NewTileConfiguration", menuName = "ScriptableObjects/TileConfiguration", order = 1)]
 public class TileConfiguration : SerializedScriptableObject
 {
     [Header("Properties")]
+    public string TerrainName;
+
+    public SurfaceType SurfaceType;
     [DictionaryDrawerSettings(KeyLabel = "Unit Type", ValueLabel = "Travel Cost")]
     public Dictionary<UnitType, int> TravelCost = new Dictionary<UnitType, int>();
 

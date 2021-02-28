@@ -93,9 +93,9 @@ public class Battler : SerializedMonoBehaviour
 
         HUD.Populate(Unit);
 
-        Unit.UponDeath.AddListener(delegate() {
+        Unit.UponDeath  += delegate(Unit unit) {
             _state = BattlerState.Dead;
-        });
+        };
     }
 
     public bool Attack(Battler target)

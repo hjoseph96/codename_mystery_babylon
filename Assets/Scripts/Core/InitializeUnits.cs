@@ -7,6 +7,7 @@ public class InitializeUnits : MonoBehaviour, IInitializable
         foreach (var unit in FindObjectsOfType<Unit>())
         {
             unit.Init();
+            CampaignManager.Instance.AddUnit(unit);
         }
     }
 }

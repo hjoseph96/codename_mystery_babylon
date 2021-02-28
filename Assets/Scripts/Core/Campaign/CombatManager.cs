@@ -86,6 +86,23 @@ public class CombatManager : MonoBehaviour
         _battleTransitionFX.TransitionEnter();
     }
 
+    public async Task<Dictionary<string, bool>> BattleResults(Unit attacker, Unit defender)
+    {
+        Dictionary<string, bool> battleResults = new Dictionary<string, bool>();
+        
+        // If the attacking cannot defend himself, return empty
+        if (!attacker.CanDefend(defender.GridPosition))
+            return battleResults;
+
+        var hitResults = await HitResults(attacker, defender);
+        var critResults = await CriticalHitResults(attacker, defender);
+
+        // Merge the dictionaries
+        return hitResults.Concat(critResults)
+            .ToLookup(x => x.Key, x => x.Value)
+            .ToDictionary(x => x.Key, g => g.First());        
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -115,7 +132,12 @@ public class CombatManager : MonoBehaviour
         
         bool bothFightersReady = _friendlyBattler.IsReadyToFight && _hostileBattler.IsReadyToFight;
         if (friendlyReached && enemyReached && platformReached && bothFightersReady)
+        {
+            _friendlyBattler.Unit.UponDeath += HandleUnitDeath;
+            _hostileBattler.Unit.UponDeath += HandleUnitDeath;
+
             _phase = CombatPhase.Attacking;
+        }
     }
 
     private void ProcessAttackingPhase()
@@ -148,7 +170,7 @@ public class CombatManager : MonoBehaviour
         if (friendlyUnit.TeamId == Player.LocalPlayer.TeamId && !_gainedExp)
         {
             _gainedExp = true;
-            
+
             _expBarUI.Show(friendlyUnit.Experience);
 
             var damageDealt = _friendlyBattler.DamageDealt();
@@ -193,6 +215,8 @@ public class CombatManager : MonoBehaviour
         _battleTransitionFX.OnTransitionExitEnded += delegate() {
             var attackingUnit = _attackingBattler.Unit;
             var defendingUnit = _defendingBattler.Unit;
+            attackingUnit.UponDeath = null;
+            defendingUnit.UponDeath = null;
 
             _attackingBattler.OnAttackComplete = null;
             _defendingBattler.OnAttackComplete = null;
@@ -218,6 +242,16 @@ public class CombatManager : MonoBehaviour
         {
             _transitionedOut = true;
             _battleTransitionFX.TransitionExit();
+        }
+    }
+
+    private void HandleUnitDeath(Unit deadUnit)
+    {
+        var unitClass = deadUnit.GetType();
+        if (unitClass.IsSubclassOf(typeof(AIUnit)))
+        {
+            // TODO: Check for any special dialogue or events to happen upon specific unit's death
+            CampaignManager.Instance.RemoveUnit(deadUnit);
         }
     }
     
@@ -262,23 +296,6 @@ public class CombatManager : MonoBehaviour
         }
 
         return newBattler;
-    }
-
-    private async Task<Dictionary<string, bool>> BattleResults(Unit attacker, Unit defender)
-    {
-        Dictionary<string, bool> battleResults = new Dictionary<string, bool>();
-        
-        // If the attacking cannot defend himself, return empty
-        if (!attacker.CanDefend(defender.GridPosition))
-            return battleResults;
-
-        var hitResults = await HitResults(attacker, defender);
-        var critResults = await CriticalHitResults(attacker, defender);
-
-        // Merge the dictionaries
-        return hitResults.Concat(critResults)
-            .ToLookup(x => x.Key, x => x.Value)
-            .ToDictionary(x => x.Key, g => g.First());        
     }
 
     private async Task<Dictionary<string, bool>> HitResults(Unit attacker, Unit defender)

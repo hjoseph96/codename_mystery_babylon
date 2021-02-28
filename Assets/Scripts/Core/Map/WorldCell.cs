@@ -5,6 +5,8 @@ using UnityEngine;
 [Serializable]
 public class WorldCell
 {
+    public string TerrainName;
+    public SurfaceType SurfaceType;
     public Vector2Int Position { get; }
     public bool HasLineOfSight { get; }
     public StairsOrientation StairsOrientation { get; }
@@ -23,10 +25,12 @@ public class WorldCell
         Position = position;
         if (config != null)
         {
+            TerrainName = config.TerrainName;
+            SurfaceType = config.SurfaceType;
             HasLineOfSight = config.HasLineOfSight;
             StairsOrientation = config.IsStairs ? config.StairsOrientation : StairsOrientation.None;
-            Height = height;
             _travelCost = config.TravelCost;
+            Height = height;
 
             var isFlippedX = scale.x < 0;
             var isFlippedY = scale.y < 0;

@@ -115,6 +115,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: OnAttackComplete
+      Entry: 6
+      Data: 
     - Name: AnimationsAsHashes
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int32,
@@ -432,9 +435,6 @@ MonoBehaviour:
       Entry: 8
       Data: 
   HUD: {fileID: 0}
-  OnAttackComplete:
-    m_PersistentCalls:
-      m_Calls: []
   _dissolveSpeed: 1.57
 --- !u!114 &7289232505883402677
 MonoBehaviour:
@@ -1197,9 +1197,9 @@ MonoBehaviour:
   PointStart: {fileID: 1162494311520552182}
   PointEnd: {fileID: 5602658647684996397}
   MaxFrame: 12
-  Granularity: 121
-  Fps: 79.41
-  MyColor: {r: 1, g: 1, b: 1, a: 0.03529412}
+  Granularity: 78
+  Fps: 70.53
+  MyColor: {r: 0.80397826, g: 0.8396226, b: 0.83850706, a: 0.03529412}
   MyMaterial: {fileID: 2100000, guid: 75f756109f216ad409ff1a5ea7dd7b2c, type: 2}
 --- !u!114 &5977137740135647414
 MonoBehaviour:
