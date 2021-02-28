@@ -602,6 +602,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   HUD: {fileID: 0}
+  _dissolveSpeed: 1.57
 --- !u!1 &2424102588727692501
 GameObject:
   m_ObjectHideFlags: 0
@@ -8635,15 +8636,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
       propertyPath: Fps
-      value: 79.41
+      value: 73.31
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
       propertyPath: MyColor.a
-      value: 0.03529412
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
+      propertyPath: MyColor.b
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
+      propertyPath: MyColor.g
+      value: 0.9335952
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
+      propertyPath: MyColor.r
+      value: 0.9295568
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
       propertyPath: Granularity
-      value: 70
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}

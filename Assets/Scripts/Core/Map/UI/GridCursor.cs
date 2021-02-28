@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Com.LuisPedroFonseca.ProCamera2D;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
+using Sirenix.OdinInspector;
+using DarkTonic.MasterAudio;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 [SelectionBase]
 [RequireComponent(typeof(CellHighlighter))]
@@ -13,6 +14,11 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 {
     [Header("Cursor State")]
     [SerializeField] private CursorMode _mode = CursorMode.Free;
+
+    [Header("Audio")]
+    [SoundGroupAttribute] public string selectedUnitSound;
+    [SoundGroupAttribute] public string deselectedUnitSound;
+
 
 
     [Header("Movement settings")]
@@ -105,7 +111,10 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                     // TODO: Add !unit.HasTakenAction, after implementing multiple player units.
                     // Don't allow Units to move twice per turn.
                     if (unit != null && unit.IsLocalPlayerUnit)
+                    {
+                        MasterAudio.PlaySound3DFollowTransform(selectedUnitSound, CampaignManager.Instance.GridCamera.transform);
                         SetRestrictedMode(unit);
+                    }
                 }
                 
                 break;
@@ -119,6 +128,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                         break;
 
                     case KeyCode.X: case KeyCode.Escape:
+                        MasterAudio.PlaySound3DFollowTransform(deselectedUnitSound, CampaignManager.Instance.GridCamera.transform);
                         ClearAll();
                         SetFreeMode();
                         break;

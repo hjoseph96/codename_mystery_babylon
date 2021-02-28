@@ -7,6 +7,7 @@ using UnityEngine;
 public class CampaignManager : SerializedMonoBehaviour, IInitializable
 {
     public static CampaignManager Instance;
+    public static Vector3 AudioListenerPosition => Instance.GridCamera.transform.position;
 
 
     private int _turn;
@@ -47,9 +48,6 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         _phase = TurnPhase.Player;
         _worldGrid = WorldGrid.Instance;
         _combatManager = GetComponent<CombatManager>();
-
-        foreach(Unit unit in GetComponents<Unit>())
-            _allUnits.Add(unit);
         
         _gridTransitionFX = GridCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
         
@@ -57,6 +55,21 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         
         ToggleCamera(_gridUICamera);
     }
+
+    public void AddUnit(Unit unit)
+    {
+        _allUnits.Add(unit);
+    }
+
+    public void RemoveUnit(Unit unit)
+    {
+        if (!_allUnits.Contains(unit))
+            throw new System.Exception($"There is no unit: {unit.Name} on the map that's currently tracked...");
+
+        Destroy(unit.gameObject);
+        _allUnits.Remove(unit);
+    }
+
     public void StartBattle(Unit attacker, Unit defender)
     {
         _gridTransitionFX.OnTransitionExitEnded += delegate () {
@@ -74,8 +87,10 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         _battleScene.SetActive(false);
         _gridScene.SetActive(true);
 
-        attacker.SetIdle();
-        defender.SetIdle();
+        if (attacker)
+            attacker.SetIdle();
+        if (defender)
+            defender.SetIdle();
 
         GridCursor.Instance.ClearAll();
         GridCursor.Instance.MoveInstant(attacker.GridPosition);
