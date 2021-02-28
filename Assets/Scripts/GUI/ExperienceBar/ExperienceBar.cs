@@ -15,8 +15,6 @@ public class ExperienceBar : MonoBehaviour
     private Image _barFill;
     [SerializeField] private float _fillDuration = 0.67f;
     [SerializeField] private float _fillMax = -641.87f;
-    [SerializeField] private float _fillMin = -3.9f;
-
 
     [HideInInspector] public Action OnBarFilled;
 

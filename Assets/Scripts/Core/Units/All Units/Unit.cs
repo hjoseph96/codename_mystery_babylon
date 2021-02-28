@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+
 using Animancer;
+using DarkTonic.MasterAudio;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEngine;
-using UnityEngine.Events;
-
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
@@ -30,6 +31,21 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     
     [FoldoutGroup("Basic Properties")] 
     public GameObject BattlerPrefab;
+
+
+    [FoldoutGroup("Audio")]
+    [SoundGroupAttribute] public string dirtFootsteps;
+    [SoundGroupAttribute] public string grassFootsteps;
+
+
+
+
+    [FoldoutGroup("Animations")] 
+    [SerializeField] private DirectionalAnimationSet _idleAnimation;
+    
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _walkAnimation;
+
 
     
     [FoldoutGroup("Base Stats")]
@@ -60,11 +76,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     
 
 
-    [FoldoutGroup("Animations")] 
-    [SerializeField] private DirectionalAnimationSet _idleAnimation;
-    
-    [FoldoutGroup("Animations")]
-    [SerializeField] private DirectionalAnimationSet _walkAnimation;
 
     
     
@@ -103,10 +114,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
 
     [FoldoutGroup("Events")]
-    public UnityEvent UponDeath;
+    public Action<Unit> UponDeath;
 
     [FoldoutGroup("Events")]
-    public UnityEvent UponLevelUp;
+    public Action<Unit> UponLevelUp;
 
 
     public bool IsLocalPlayerUnit => Player == Player.LocalPlayer;
@@ -116,11 +127,16 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     private AnimancerComponent _animancer;
     private Vector2 _lookDirection;
+    private Dictionary<SurfaceType, string> _footsteps = new Dictionary<SurfaceType, string>();
 
     public void Init()
     {
         _gridPosition = GridUtility.SnapToGrid(this);
         WorldGrid.Instance[GridPosition].Unit = this;
+
+        _initialGridPosition = GridPosition;
+
+        SetupFootstepSounds();
 
         Player.AddUnit(this);
 
@@ -137,6 +153,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var weapons = Inventory.GetItems<Weapon>();
         if (weapons.Length > 0)
             EquipWeapon(weapons[0]);
+    }
+
+    private void SetupFootstepSounds()
+    {
+        _footsteps[SurfaceType.Grass] = grassFootsteps;
+        _footsteps[SurfaceType.Dirt] = dirtFootsteps;
     }
 
     public bool IsAlly(Unit unit) => Player.IsAlly(unit.Player);
@@ -191,17 +213,14 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public void DecreaseHealth(int amount)
     {
         int damageTaken = amount;
-        bool isDead = false;
+
         if (damageTaken >= CurrentHealth)
         {
             damageTaken = CurrentHealth;
-            isDead = true;
+            UponDeath.Invoke(this);
         }
         
         _currentHealth -= damageTaken;
-
-        if (isDead)
-            UponDeath.Invoke();
     }
 
     public void IncreaseHealth(int amount)
@@ -221,7 +240,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         if (currentExpAmount > MAX_EXP_AMOUNT)
         {
             currentExpAmount -= MAX_EXP_AMOUNT;
-            UponLevelUp.Invoke();
+            UponLevelUp.Invoke(this);
         }
         
         _experience = currentExpAmount;
@@ -338,6 +357,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
                         // Get new destination position and direction
                         var newGridPosition = path.Pop();
                         var direction = GridUtility.GetDirection(nextPathGridPosition, newGridPosition, true);
+
+                        var footstepSound = _footsteps[WorldGrid.Instance[newGridPosition].SurfaceType];
+                        MasterAudio.PlaySound3DFollowTransform(footstepSound, CampaignManager.Instance.GridCamera.transform);
+
+
 
                         nextPathPosition = WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)newGridPosition);
                         nextPathGridPosition = newGridPosition;
