@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DarkTonic.MasterAudio;
+
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class ActionMenuOption : MenuOption<ActionSelectMenu>
@@ -169,5 +171,6 @@ public class ActionSelectMenu : Menu
     {
         _cursor.transform.parent = _options[index].transform;
         _cursor.MoveTo(Vector2.zero, instant);
+        MasterAudio.PlaySound3DFollowTransform(SelectedSound, CampaignManager.AudioListenerTransform);
     }
 }

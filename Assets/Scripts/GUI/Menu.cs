@@ -1,15 +1,22 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
+using Sirenix.OdinInspector;
+using DarkTonic.MasterAudio;
 
-public abstract class Menu : MonoBehaviour, IInputTarget
+public abstract class Menu : SerializedMonoBehaviour, IInputTarget
 {
+    
     public Menu PreviousMenu { get; set; }
 
     public MenuOption SelectedOption { get; private set; }
 
-    public UnityEvent OnSelectionChange;
+    [HideInInspector] public Action OnSelectionChange;
+    
+    [Header("Audio")]
+    [SoundGroupAttribute] public string SelectedSound;
+    [SoundGroupAttribute] public string ConfirmSound;
+    [SoundGroupAttribute] public string BackSound;
 
     private void Start()
     {
@@ -23,9 +30,7 @@ public abstract class Menu : MonoBehaviour, IInputTarget
         OnClose();
 
         if ((PreviousMenu as object) != null)
-        {
             PreviousMenu.Activate();
-        }
     }
 
     // Reset menu state and hide it. Does NOT call OnClose
@@ -56,7 +61,7 @@ public abstract class Menu : MonoBehaviour, IInputTarget
             SelectedOption.SetDeselected();
 
         SelectedOption = option;
-        OnSelectionChange.Invoke();
+        OnSelectionChange?.Invoke();
 
         if ((SelectedOption as object) != null)
             SelectedOption.SetSelected();
@@ -71,9 +76,12 @@ public abstract class Menu : MonoBehaviour, IInputTarget
         {
             case KeyCode.Z:
                 SelectedOption.Execute();
+                MasterAudio.PlaySound3DFollowTransform(ConfirmSound, CampaignManager.AudioListenerTransform);
+
                 break;
 
             case KeyCode.X:
+                MasterAudio.PlaySound3DFollowTransform(BackSound, CampaignManager.AudioListenerTransform);
                 Close();
                 break;
         }

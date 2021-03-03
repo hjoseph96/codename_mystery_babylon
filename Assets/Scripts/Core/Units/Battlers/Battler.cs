@@ -4,11 +4,11 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEditor.Animations;
 
 using Sirenix.OdinInspector;
-using com.spacepuppy.Tween;
+using DarkTonic.MasterAudio;
+
 public class Battler : SerializedMonoBehaviour
 {
     [ReadOnly] protected string Name;
@@ -42,6 +42,10 @@ public class Battler : SerializedMonoBehaviour
     private float _defaultRotation;
 
 
+    [FoldoutGroup("Audio")]
+    [SoundGroupAttribute] public string hitImpactSound; 
+
+
     private bool _readyToFight;
     private BattlerState _state;
     [FoldoutGroup("Battler State")]
@@ -52,6 +56,8 @@ public class Battler : SerializedMonoBehaviour
     [ReadOnly] private Battler _targetBattler;
     [FoldoutGroup("Battler State")]
     [ReadOnly] private int _timesHit = 0;
+    [FoldoutGroup("Battler State")]
+    [ReadOnly] public int DamageDealt;
     [FoldoutGroup("Battler State")]
     [ReadOnly] private int _damageReceived;
     [FoldoutGroup("Battler State")]
@@ -88,6 +94,7 @@ public class Battler : SerializedMonoBehaviour
         Animator = GetComponent<Animator>();
         _currentAttackIndex = 0;
 
+        _state = BattlerState.Idle;
 
         SetupAttacks();
 
@@ -108,18 +115,6 @@ public class Battler : SerializedMonoBehaviour
 
         return true;
     }
-
-    public int DamageDealt()
-    {
-        int damageDealt = 0;
-
-        foreach(Attack attack in _attacks)
-            if (attack.Landed)
-                damageDealt += attack.Damage(_targetBattler.Unit);
-        
-        return damageDealt;
-    }
-
 
     // Update is called once per frame
     void Update()
@@ -289,6 +284,9 @@ public class Battler : SerializedMonoBehaviour
     {
         var chosenAnimation = GetAnimVariation(HitReactionAnims());
         PlayAnimation(chosenAnimation);
+        
+        MasterAudio.PlaySound3DAtTransform(hitImpactSound, CampaignManager.AudioListenerTransform);
+
         _state = BattlerState.HitReaction;
         _timesHit += 1;
     }
@@ -308,6 +306,11 @@ public class Battler : SerializedMonoBehaviour
     }
 
     private void BlockImpact() => PlayAnimation("Block Impact");
+
+    private void WeaponMeleeSound()
+    {
+        MasterAudio.PlaySound3DFollowTransform(Unit.EquippedWeapon.MeleeSound, CampaignManager.AudioListenerTransform);
+    }
 
     private void StartDissolving()
     {
@@ -351,7 +354,14 @@ public class Battler : SerializedMonoBehaviour
         if (CurrentAttack.Landed)
         {
             if (attackDamage > 0)
+            {
+                if (attackDamage <= _targetBattler.Unit.CurrentHealth)
+                    DamageDealt += attackDamage;
+                else
+                    DamageDealt += _targetBattler.Unit.CurrentHealth;
+                    
                 _targetBattler.ReceiveDamage(attackDamage);
+            }   
             else
                 _targetBattler.BlockImpact();
         }

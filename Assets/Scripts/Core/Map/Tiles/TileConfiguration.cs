@@ -56,9 +56,7 @@ public class TileConfiguration : SerializedScriptableObject
     {
         BlockExit.Clear();
         foreach (var keyValuePair in BlockEntrance)
-        {
             BlockExit.Add(keyValuePair.Key, keyValuePair.Value);
-        }
     }
 
     [Button("Sync")]
@@ -67,8 +65,9 @@ public class TileConfiguration : SerializedScriptableObject
     {
         BlockEntrance.Clear();
         foreach (var keyValuePair in BlockExit)
-        {
             BlockEntrance.Add(keyValuePair.Key, keyValuePair.Value);
-        }
     }
+
+    [Button("Save As JSON")]
+    private void WriteToJSON() => TileConfigurationRepository.Write(this);
 }

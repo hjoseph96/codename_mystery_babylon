@@ -35,6 +35,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     [FoldoutGroup("Audio")]
     [SoundGroupAttribute] public string dirtFootsteps;
+    [FoldoutGroup("Audio")]    
     [SoundGroupAttribute] public string grassFootsteps;
 
 
@@ -359,7 +360,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
                         var direction = GridUtility.GetDirection(nextPathGridPosition, newGridPosition, true);
 
                         var footstepSound = _footsteps[WorldGrid.Instance[newGridPosition].SurfaceType];
-                        MasterAudio.PlaySound3DFollowTransform(footstepSound, CampaignManager.Instance.GridCamera.transform);
+                        MasterAudio.PlaySound3DFollowTransform(footstepSound, CampaignManager.AudioListenerTransform);
 
 
 

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using DarkTonic.MasterAudio;
+
 public class AttackForecastMenu : Menu
 {
     [SerializeField] WeaponSelectView _weaponSelect;
@@ -16,6 +18,8 @@ public class AttackForecastMenu : Menu
     List<Weapon> _allAttackableWeapons = new List<Weapon>();
     Dictionary<Weapon, List<Vector2Int>> _attackableWeaponsByPosition = new Dictionary<Weapon, List<Vector2Int>>();
     List<Vector2Int> _allAttackableCells = new List<Vector2Int>();
+
+    PlaySoundResult _attackSound = new PlaySoundResult();
     
 
     public void Show(Unit unit)
@@ -33,7 +37,7 @@ public class AttackForecastMenu : Menu
         _gridCursor.MoveInstant(attackableCell);
 
         MakeAttackingUnitFaceTarget();
-        
+
         // When Selected Attack Target Changes, execute:
         _gridCursor.AttackTargetChanged.AddListener(delegate(Unit targetUnit) {
             _defendingUnit = targetUnit;
@@ -82,36 +86,40 @@ public class AttackForecastMenu : Menu
             _weaponSelect.HideArrows();
     }
 
+
      public override void ProcessInput(InputData input)
     {
         switch (input.KeyCode)
         {
             case KeyCode.Z:
-                _attackingUnit.EquipWeapon(_selectedWeapon);
-                
-                // Defender turns to face attacker
-                Vector2 attackerPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int) _attackingUnit.GridPosition);
-                _defendingUnit.LookAt(attackerPosition);
-                _defendingUnit.SetIdle();
-                
-                CampaignManager.Instance.StartBattle(_attackingUnit, _defendingUnit);
-                
-                _attackingUnit.TookAction();
-                
-                var prevMenu = PreviousMenu;
-                Close();
-                prevMenu.ResetAndHide();
+                BeginBattle();
 
-                // Initiate Attack with Selected Weapon, change selected weapon to equipped
                 break;
 
             case KeyCode.X:
+                MasterAudio.PlaySound3DFollowTransform(BackSound, CampaignManager.AudioListenerTransform);
                 Close();
                 break;
         }
     }
+    private void BeginBattle()
+    {
+        _attackingUnit.EquipWeapon(_selectedWeapon);
+                
+        // Defender turns to face attacker
+        Vector2 attackerPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int) _attackingUnit.GridPosition);
+        _defendingUnit.LookAt(attackerPosition);
+        _defendingUnit.SetIdle();
+        
+        CampaignManager.Instance.StartBattle(_attackingUnit, _defendingUnit, ConfirmSound);
+        
+        _attackingUnit.TookAction();
+        
+        var prevMenu = PreviousMenu;
+        Close();
 
-
+        prevMenu.ResetAndHide();
+    }
 
     public override void ResetState()
     {
@@ -194,5 +202,6 @@ public class AttackForecastMenu : Menu
         
         _selectedWeapon = selectableWeapons[nextWeaponIndex];
         _weaponSelect.Populate(_selectedWeapon);
+        MasterAudio.PlaySound3DFollowTransform(SelectedSound, CampaignManager.AudioListenerTransform);
     }
 }

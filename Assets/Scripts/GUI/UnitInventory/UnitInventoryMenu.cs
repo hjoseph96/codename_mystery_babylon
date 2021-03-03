@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using DarkTonic.MasterAudio;
+
 public class UnitInventoryMenu : Menu
 {
     [SerializeField] private UICursor _cursor;
@@ -60,14 +62,13 @@ public class UnitInventoryMenu : Menu
         Activate();
         SelectOption(_itemSlots[0]);
 
-        OnSelectionChange.AddListener(delegate () {
+        OnSelectionChange += delegate () {
             if (_itemDetailsView.IsActive())
                 if (SelectedItemSlot.IsEmpty)
                     _itemDetailsView.Close();
                 else
                     _itemDetailsView.Show(SelectedItemSlot.Item, SelectedItemSlot.transform.localPosition);
-            }
-        );
+        };
     }
 
     public override void ProcessInput(InputData input)
@@ -79,9 +80,11 @@ public class UnitInventoryMenu : Menu
         {
             case KeyCode.Z:
                 SelectedOption.Execute();
+                MasterAudio.PlaySound3DFollowTransform(ConfirmSound, CampaignManager.AudioListenerTransform);
                 break;
 
             case KeyCode.X:
+                MasterAudio.PlaySound3DFollowTransform(BackSound, CampaignManager.AudioListenerTransform);
                 Close();
                 break;
             
@@ -131,8 +134,13 @@ public class UnitInventoryMenu : Menu
 
     private void MoveSelection(int input)
     {
-        _selectedSlotIndex = Mathf.Clamp(_selectedSlotIndex + input, 0, _itemSlots.Count - 1);
-        MoveSelectionToOption(_selectedSlotIndex);
+        int newIndex =  Mathf.Clamp(_selectedSlotIndex + input, 0, _itemSlots.Count - 1);;
+        
+        if (_selectedSlotIndex != newIndex)
+            MasterAudio.PlaySound3DFollowTransform(SelectedSound, CampaignManager.AudioListenerTransform);
+        
+        _selectedSlotIndex = newIndex;
+        MoveSelectionToOption(_selectedSlotIndex);    
     }
 
     private void MoveSelectionToOption(int index, bool instant = false)

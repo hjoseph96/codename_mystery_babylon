@@ -1,13 +1,21 @@
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
-
-using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine;
+
+using Sirenix.OdinInspector;
+using DarkTonic.MasterAudio;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class CampaignManager : SerializedMonoBehaviour, IInitializable
 {
     public static CampaignManager Instance;
-    public static Vector3 AudioListenerPosition => Instance.GridCamera.transform.position;
+    public static Transform AudioListenerTransform {
+        get {
+            if (Instance.BattleScene.activeSelf)
+                return Instance.CombatManager.BattleCamera.transform;
+            else
+                return Instance.GridCamera.transform;
+        }
+    }
 
 
     private int _turn;
@@ -31,12 +39,12 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     private ProCamera2DTransitionsFX _gridTransitionFX;
 
     [FoldoutGroup("Scenes")]
-    [SerializeField] private GameObject _gridScene;
+    public GameObject GridScene;
     [FoldoutGroup("Scenes")]
-    [SerializeField] private GameObject _battleScene;
+    public GameObject BattleScene;
     
 
-    private CombatManager _combatManager;
+    [HideInInspector] public CombatManager CombatManager;
     private WorldGrid _worldGrid;
 
 
@@ -47,11 +55,11 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         _turn = 0;
         _phase = TurnPhase.Player;
         _worldGrid = WorldGrid.Instance;
-        _combatManager = GetComponent<CombatManager>();
+        CombatManager = GetComponent<CombatManager>();
         
         _gridTransitionFX = GridCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
         
-        _battleScene.SetActive(false);
+        BattleScene.SetActive(false);
         
         ToggleCamera(_gridUICamera);
     }
@@ -70,22 +78,26 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         _allUnits.Remove(unit);
     }
 
-    public void StartBattle(Unit attacker, Unit defender)
+    public void StartBattle(Unit attacker, Unit defender, string attackSound)
     {
-        _gridTransitionFX.OnTransitionExitEnded += delegate () {
-            _gridScene.SetActive(false);
-            _battleScene.SetActive(true);
-            _combatManager.Load(attacker, defender);
+        _gridTransitionFX.OnTransitionExitEnded += async delegate () {
+            await new WaitForSeconds(1.6f);
+
+            GridScene.SetActive(false);
+            BattleScene.SetActive(true);
+            CombatManager.Load(attacker, defender);
         };
+
         _gridTransitionFX.TransitionExit();
+        MasterAudio.PlaySound3DFollowTransform(attackSound, CampaignManager.AudioListenerTransform);
     }
 
     public void SwitchToMap(Unit attacker, Unit defender)
     {
         _gridTransitionFX.OnTransitionExitEnded = null;
 
-        _battleScene.SetActive(false);
-        _gridScene.SetActive(true);
+        BattleScene.SetActive(false);
+        GridScene.SetActive(true);
 
         if (attacker)
             attacker.SetIdle();
