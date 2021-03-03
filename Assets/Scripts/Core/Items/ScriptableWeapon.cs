@@ -1,6 +1,9 @@
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
+
+using Sirenix.OdinInspector;
+using DarkTonic.MasterAudio;
+
 
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon", order = 3)]
 public class ScriptableWeapon : ScriptableItem
@@ -9,6 +12,9 @@ public class ScriptableWeapon : ScriptableItem
 
     [FoldoutGroup("Descriptions"), MultiLineProperty(5)] 
     public string DescriptionBroken;
+
+    [FoldoutGroup("Audio")] 
+    [SoundGroupAttribute] public string meleeSound;
 
     [FoldoutGroup("Stats"), WeaponStats]
     public Dictionary<WeaponStat, EditorWeaponStat> WeaponStats = new Dictionary<WeaponStat, EditorWeaponStat>();

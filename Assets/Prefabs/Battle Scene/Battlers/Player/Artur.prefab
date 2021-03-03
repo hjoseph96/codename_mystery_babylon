@@ -226,9 +226,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2424102588716194450}
   - component: {fileID: 2424102588716194462}
+  - component: {fileID: 2424102588716194451}
   - component: {fileID: 2424102588716194461}
   - component: {fileID: 2424102588716194460}
-  - component: {fileID: 2424102588716194451}
   m_Layer: 0
   m_Name: Artur
   m_TagString: Untagged
@@ -274,41 +274,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2424102588716194461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2424102588716194449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d287a757b512b004e928059da2a30510, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_mask: {fileID: 0}
-  mode: 1
-  m_includeChildren: 1
-  customMesh: {fileID: 0}
-  overrideGlobalOptions: 1
-  opacity: 1
-  scale: {x: 1, y: 1, z: 1}
-  extrude: 0
-  texture: {fileID: 0}
---- !u!114 &2424102588716194460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2424102588716194449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Animator: {fileID: 2424102588716194462}
-  _ActionOnDisable: 0
 --- !u!114 &2424102588716194451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,7 +567,44 @@ MonoBehaviour:
       Entry: 8
       Data: 
   HUD: {fileID: 0}
+  hitImpactSound: Anime_Hit_Sound
+  DamageDealt: 0
   _dissolveSpeed: 1.57
+--- !u!114 &2424102588716194461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2424102588716194449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d287a757b512b004e928059da2a30510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_mask: {fileID: 0}
+  mode: 1
+  m_includeChildren: 1
+  customMesh: {fileID: 0}
+  overrideGlobalOptions: 1
+  opacity: 1
+  scale: {x: 1, y: 1, z: 1}
+  extrude: 0
+  texture: {fileID: 0}
+--- !u!114 &2424102588716194460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2424102588716194449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 2424102588716194462}
+  _ActionOnDisable: 0
 --- !u!1 &2424102588727692501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,7 +1079,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2424102588822273270
 Transform:
@@ -4529,7 +4531,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2424102589695915228
 Transform:
@@ -8640,7 +8642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
       propertyPath: MyColor.a
-      value: 0.08627451
+      value: 0.0627451
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
       propertyPath: MyColor.b
@@ -8656,7 +8658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}
       propertyPath: Granularity
-      value: 18
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70c99346c06c202419e2c12fac666c2f, type: 3}

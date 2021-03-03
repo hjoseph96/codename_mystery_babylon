@@ -2,8 +2,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Weapon : Item
 {
+    public override string Description => !IsBroken ? DescriptionNormal : DescriptionBroken;
+    public readonly string DescriptionNormal, DescriptionBroken; 
+
+    public string MeleeSound;
+
+    public readonly WeaponRank RequiredRank;
+    public readonly WeaponType Type;
     public readonly Dictionary<WeaponStat, Stat> Stats = new Dictionary<WeaponStat, Stat>();
     private readonly Dictionary<WeaponStat, EditorWeaponStat> _brokenStats = new Dictionary<WeaponStat, EditorWeaponStat>();
 
@@ -13,11 +21,6 @@ public class Weapon : Item
 
     public bool IsBroken => CurrentDurability == 0;
 
-    public override string Description => !IsBroken ? DescriptionNormal : DescriptionBroken;
-    public readonly string DescriptionNormal, DescriptionBroken; 
-
-    public readonly WeaponRank RequiredRank;
-    public readonly WeaponType Type;
 
     public readonly bool IsUsable;
     private readonly ScriptableWeapon _source;
@@ -32,6 +35,7 @@ public class Weapon : Item
             _brokenStats[key] = source.WeaponStats[key];
         }
 
+        MeleeSound = source.meleeSound;
         DescriptionNormal = source.Description;
         DescriptionBroken = source.DescriptionBroken;
 

@@ -18,6 +18,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     [Header("Audio")]
     [SoundGroupAttribute] public string selectedUnitSound;
     [SoundGroupAttribute] public string deselectedUnitSound;
+    [SoundGroupAttribute] public string cursorMoveSound;
 
 
 
@@ -112,7 +113,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                     // Don't allow Units to move twice per turn.
                     if (unit != null && unit.IsLocalPlayerUnit)
                     {
-                        MasterAudio.PlaySound3DFollowTransform(selectedUnitSound, CampaignManager.Instance.GridCamera.transform);
+                        MasterAudio.PlaySound3DFollowTransform(selectedUnitSound, CampaignManager.AudioListenerTransform);
                         SetRestrictedMode(unit);
                     }
                 }
@@ -128,7 +129,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                         break;
 
                     case KeyCode.X: case KeyCode.Escape:
-                        MasterAudio.PlaySound3DFollowTransform(deselectedUnitSound, CampaignManager.Instance.GridCamera.transform);
+                        MasterAudio.PlaySound3DFollowTransform(deselectedUnitSound, CampaignManager.AudioListenerTransform);
                         ClearAll();
                         SetFreeMode();
                         break;
@@ -281,7 +282,9 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         {
             // Move to the destination position
             GridPosition = actualTargetGridPosition;
-            transform.position = destination;            
+            transform.position = destination;
+            MasterAudio.PlaySound3DFollowTransform(cursorMoveSound, CampaignManager.AudioListenerTransform);
+
 
             // If we can lengthen the arrow path, do it
             if (_mode == CursorMode.Restricted && _allowedPositions.Contains(GridPosition))
