@@ -31,7 +31,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private ExperienceBar _expBarUI;
 
     [FoldoutGroup("Cameras")]
-    [SerializeField] private Camera _battleCamera;
+    [SerializeField] public Camera BattleCamera;
     [FoldoutGroup("Cameras")]
     [SerializeField] private Camera _battleUICamera;
      [FoldoutGroup("Cameras")]
@@ -74,7 +74,7 @@ public class CombatManager : MonoBehaviour
         _transitionedOut = false;
 
         _platformOriginalPosition = _playerForeground.transform.position;
-        _battleTransitionFX = _battleCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
+        _battleTransitionFX = BattleCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
         _battleTransitionFX.OnTransitionEnterStarted += delegate () {
             _phase = CombatPhase.Transition;
             
@@ -173,7 +173,7 @@ public class CombatManager : MonoBehaviour
 
             _expBarUI.Show(friendlyUnit.Experience);
 
-            var damageDealt = _friendlyBattler.DamageDealt();
+            var damageDealt = _friendlyBattler.DamageDealt;
             var expGained = damageDealt;
 
             // TODO: Implement when classes are done, for now just add damage dealt
@@ -222,8 +222,10 @@ public class CombatManager : MonoBehaviour
             _defendingBattler.OnAttackComplete = null;
             _battleTransitionFX.OnTransitionEnterStarted = null;
             
-            Destroy(_friendlyBattler.gameObject);        
-            Destroy(_hostileBattler.gameObject);
+            if (_friendlyBattler)
+                Destroy(_friendlyBattler.gameObject);
+            if (_hostileBattler)        
+                Destroy(_hostileBattler.gameObject);
 
             _friendlyBattler = null;
             _hostileBattler = null;
