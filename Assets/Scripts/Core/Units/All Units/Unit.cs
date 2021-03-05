@@ -84,6 +84,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private ScriptableItem[] _startingItems;
 
     // TODO: Implement WeaponRanks (equippable weapons and rank with each)
+    // TODO: Create custom odin drawer to assign weapons wieldable to unit
+    // And only allow selection of ScriptableWeapons created from JSON
+    
     public UnitInventory Inventory { get; private set; }
 
     
@@ -303,6 +306,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         return GridUtility.DefaultNeighboursOffsets.Any(offset =>
         {
+            if (!WorldGrid.Instance.PointInGrid(GridPosition + offset))
+                return false;
+
             var unit = WorldGrid.Instance[GridPosition + offset].Unit;
             return unit != null && unit.IsLocalPlayerUnit;
         });
@@ -576,6 +582,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             
             var accuracy = (magicStat - resistanceStat) + skillStat + 30 - (boxDistance * 2);
             if (accuracy < 0) accuracy = 0;
+            if (accuracy > 100) accuracy = 100;
 
             return accuracy;
         }
