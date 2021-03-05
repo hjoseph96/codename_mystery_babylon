@@ -1,0 +1,34 @@
+{
+  "WeaponType": "Lance",
+  "DescriptionBroken": "A broken lance in need of a blacksmith.",
+  "MeleeSound": "swosh-27",
+  "RequiredRank": "D",
+  "AttackRange": {
+    "Minimum": 1,
+    "Maximum": 1
+  },
+  "Stats": {
+    "Damage": 10,
+    "Hit": 70,
+    "CriticalHit": 5
+  },
+  "BrokenStats": {
+    "Damage": 0,
+    "Hit": 40,
+    "CriticalHit": 5
+  },
+  "Weight": 8,
+  "MaxDurability": 35,
+  "Filename": "Steel Lance",
+  "ItemName": "Steel Lance",
+  "ItemType": "Weapon",
+  "Description": "A sturdy steel lance.",
+  "Pricing": {
+    "Cost": 0,
+    "SaleValue": 0
+  },
+  "Icon": {
+    "AtlasPath": "Assets/Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+    "SpriteName": "heartamulet_20"
+  }
+}

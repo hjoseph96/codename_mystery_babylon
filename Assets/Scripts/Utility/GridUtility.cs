@@ -175,16 +175,24 @@ public static class GridUtility
             case StairsOrientation.LeftToRight:
                 return LeftToRightStairsNeighboursOffsets;
 
-            // TODO: Warning! No safety (PointInGrid) checks! This is done to increase performance slightly
             case StairsOrientation.None:
-                if (grid[position + new Vector2Int(-1, 1)].StairsOrientation == StairsOrientation.RightToLeft)
+                var leftHalfRightToLeftOffset = position + new Vector2Int(-1, 1);
+                
+                if (grid.PointInGrid(leftHalfRightToLeftOffset) && grid[leftHalfRightToLeftOffset].StairsOrientation == StairsOrientation.RightToLeft)
                     return LeftHalfRightToLeftStairsNeighboursOffsets;
-                if (grid[position + new Vector2Int(1, -1)].StairsOrientation == StairsOrientation.RightToLeft)
+                
+                var rightHalfRightToLeftOffset = position + new Vector2Int(1, -1);
+                if (grid.PointInGrid(rightHalfRightToLeftOffset) && grid[rightHalfRightToLeftOffset].StairsOrientation == StairsOrientation.RightToLeft)
                     return RightHalfRightToLeftStairsNeighboursOffsets;
-                if (grid[position + new Vector2Int(1, 1)].StairsOrientation == StairsOrientation.LeftToRight)
+                
+                var rightHalfLeftToRightOffset = position + new Vector2Int(1, 1); 
+                if (grid.PointInGrid(rightHalfLeftToRightOffset) && grid[rightHalfLeftToRightOffset].StairsOrientation == StairsOrientation.LeftToRight)
                     return RightHalfLeftToRightStairsNeighboursOffsets;
-                if (grid[position + new Vector2Int(-1, -1)].StairsOrientation == StairsOrientation.LeftToRight)
+                
+                var leftHalfLeftToRightOffset = position + new Vector2Int(-1, -1);
+                if (grid.PointInGrid(leftHalfLeftToRightOffset) && grid[leftHalfLeftToRightOffset].StairsOrientation == StairsOrientation.LeftToRight)
                     return LeftHalfLeftToRightStairsNeighboursOffsets;
+
                 break;
         }
 
@@ -231,6 +239,8 @@ public static class GridUtility
         queue.Enqueue(start);
         movementCost[start] = 0;
 
+        var _worldGrid = WorldGrid.Instance;
+
         // TODO: Warning! No safety (PointInGrid) checks! This is done to increase performance slightly
         // We use breadth-first search to find all reachable cells
         while (queue.Count > 0)
@@ -244,32 +254,29 @@ public static class GridUtility
                 var neighbourPosition = currentPosition + offset;
 
                 // Skip out of bounds cells
-                //if (!WorldGrid.Instance.PointInGrid(neighbourPosition))
-                //{
-                //    continue;
-                //}
+                var currentPositionIsInGrid = _worldGrid.PointInGrid(currentPosition);
+                var neighborIsInGrid = _worldGrid.PointInGrid(neighbourPosition);
+                if (!currentPositionIsInGrid || !neighborIsInGrid)
+                   continue;
+
 
                 // Check if can move
-                if (!WorldGrid.Instance[currentPosition].CanMove(neighbourPosition, unitType))
-                {
+                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unitType))
                     continue;
-                }
 
                 // We can not pass through enemy units
-                var otherUnit = WorldGrid.Instance[neighbourPosition].Unit;
+                var otherUnit = _worldGrid[neighbourPosition].Unit;
                 if (otherUnit != null && otherUnit.IsEnemy(unit))
                 {
                     continue;
                 }
 
-                var neighbourCost = WorldGrid.Instance[currentPosition].GetTravelCost(neighbourPosition, unitType);
+                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unitType);
                 var newCost = movementCost[currentPosition] + neighbourCost;
 
                 // If new cost if more than we can move
                 if (newCost > movePoints)
-                {
                     continue;
-                }
 
                 // We maintain a list of potentially isolated cells. Isolated cell is a such cell than can only be reached diagonally
                 var alreadyVisited = movementCost.TryGetValue(neighbourPosition, out var oldCost);
@@ -285,17 +292,13 @@ public static class GridUtility
 
                 // If new cost is more than old cost
                 if (alreadyVisited && newCost >= oldCost)
-                {
                     continue;
-                }
 
                 movementCost[neighbourPosition] = newCost;
 
                 // Add cell to queue
                 if (!queue.Contains(neighbourPosition))
-                {
                     queue.Enqueue(neighbourPosition);
-                }
             }
         }
 

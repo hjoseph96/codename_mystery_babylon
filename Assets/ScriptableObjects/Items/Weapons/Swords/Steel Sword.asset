@@ -94,10 +94,10 @@ MonoBehaviour:
       Data: EditorWeaponStat, Assembly-CSharp
     - Name: BaseValue
       Entry: 3
-      Data: 7
+      Data: 9
     - Name: BrokenValue
       Entry: 3
-      Data: 7
+      Data: 9
     - Name: 
       Entry: 8
       Data: 
@@ -114,6 +114,8 @@ MonoBehaviour:
   Name: Steel Sword
   ItemType: 0
   Description: A durable steel sword.
+  Cost: 1000
+  SaleValue: 600
   Type: 0
   DescriptionBroken: A broken steel sword, nearly useless in battle. A blacksmith
     can repair it.
