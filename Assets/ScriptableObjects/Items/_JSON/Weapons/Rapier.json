@@ -1,0 +1,34 @@
+{
+  "WeaponType": "Sword",
+  "DescriptionBroken": "A broken fencing sword with no utility. Worthless in combat, must be taken to a blacksmith for repair.",
+  "MeleeSound": "swosh-11",
+  "RequiredRank": "D",
+  "AttackRange": {
+    "Minimum": 1,
+    "Maximum": 1
+  },
+  "Stats": {
+    "Damage": 8,
+    "Hit": 75,
+    "CriticalHit": 8
+  },
+  "BrokenStats": {
+    "Damage": 0,
+    "Hit": 60,
+    "CriticalHit": 8
+  },
+  "Weight": 3,
+  "MaxDurability": 25,
+  "Filename": "Rapier",
+  "ItemName": "Rapier",
+  "ItemType": "Weapon",
+  "Description": "A slim, agile fencing sword oft used by court knights in duels.",
+  "Pricing": {
+    "Cost": 0,
+    "SaleValue": 0
+  },
+  "Icon": {
+    "AtlasPath": "Assets/Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+    "SpriteName": "heartamulet_11"
+  }
+}

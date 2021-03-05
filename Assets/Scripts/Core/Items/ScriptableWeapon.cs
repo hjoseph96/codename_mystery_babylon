@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using DarkTonic.MasterAudio;
 
 
+
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon", order = 3)]
 public class ScriptableWeapon : ScriptableItem
 {
@@ -33,6 +34,13 @@ public class ScriptableWeapon : ScriptableItem
 
     [FoldoutGroup("Active Ability"), ShowIf("IsUsable")]
     public ScriptableAction Action;
+
+    [Button("Save As JSON")]
+    private void WriteToJSON() => WeaponRepository.Write(this);
+
+    [Button("Create From JSON")]
+    private void CreateFromJSON() => WeaponRepository.FromJSON(name);
+
 
     public override Item GetItem()
     {

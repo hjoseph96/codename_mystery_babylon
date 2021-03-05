@@ -239,27 +239,32 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
             var index = relativePos.x + relativePos.y * _size;
 
             var cut = 0;
+            var downPosition = pos + Vector2Int.down; 
+            var upPosition = pos + Vector2Int.up; 
             switch (_worldGrid[pos].StairsOrientation)
             {
                 case StairsOrientation.None:
                     if (_worldGrid[pos].IsStairs)
                         break;
 
-                    if (_worldGrid[pos + Vector2Int.down].StairsOrientation == StairsOrientation.LeftToRight)
-                        maskPixels[index] = ColorMasks[0, 3];
-                    else if (_worldGrid[pos + Vector2Int.down].StairsOrientation == StairsOrientation.RightToLeft)
-                        maskPixels[index] = ColorMasks[0, 2];
+                    if (_worldGrid.PointInGrid(downPosition))
+                    {
+                        if (_worldGrid[downPosition].StairsOrientation == StairsOrientation.LeftToRight)
+                            maskPixels[index] = ColorMasks[0, 3];
+                        else if (_worldGrid[downPosition].StairsOrientation == StairsOrientation.RightToLeft)
+                            maskPixels[index] = ColorMasks[0, 2];
+                    }
                     break;
 
                 case StairsOrientation.RightToLeft:
-                    if (!_worldGrid[pos + Vector2Int.up].IsStairs)
+                    if (_worldGrid.PointInGrid(upPosition) && !_worldGrid[upPosition].IsStairs)
                     {
                         maskPixels[index] = ColorMasks[0, 0];
                         if (mode == HighlightingMode.Movement)
                             break;
                     }
 
-                    if (!_worldGrid[pos + Vector2Int.down].IsStairs)
+                    if (_worldGrid.PointInGrid(downPosition) && !_worldGrid[downPosition].IsStairs)
                     {
                         maskPixels[index] = ColorMasks[0, 2];
                         if (mode == HighlightingMode.Movement)
@@ -268,7 +273,7 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
 
                     if (mode == HighlightingMode.Attack)
                     {
-                        if (_worldGrid[pos + Vector2Int.up].IsStairs && 
+                        if (_worldGrid.PointInGrid(upPosition) && _worldGrid[upPosition].IsStairs && 
                             (_movementHighlightingMask[index + _size].EqualsTo(ColorMasks[0, 2]) ||
                              !_worldGrid[pos + 2 * Vector2Int.up].IsStairs &&
                              _movementHighlightingMask[index + _size].EqualsTo(Color.clear)))
@@ -276,7 +281,7 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
                             maskPixels[index + _size] = ColorMasks[1, 2];
                         }
 
-                        if (_worldGrid[pos + Vector2Int.down].IsStairs && 
+                        if (_worldGrid.PointInGrid(downPosition) && _worldGrid[downPosition].IsStairs && 
                             (_movementHighlightingMask[index - _size].EqualsTo(ColorMasks[0, 0]) ||
                              !_worldGrid[pos + 2 * Vector2Int.down].IsStairs &&
                              _movementHighlightingMask[index - _size].EqualsTo(Color.clear)))
@@ -313,14 +318,14 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
                     break;
 
                 case StairsOrientation.LeftToRight:
-                    if (!_worldGrid[pos + Vector2Int.up].IsStairs)
+                    if (_worldGrid.PointInGrid(upPosition) && !_worldGrid[upPosition].IsStairs)
                     {
                         maskPixels[index] = ColorMasks[0, 1];
                         if (mode == HighlightingMode.Movement)
                             break;
                     }
 
-                    if (!_worldGrid[pos + Vector2Int.down].IsStairs)
+                    if (_worldGrid.PointInGrid(downPosition) && !_worldGrid[downPosition].IsStairs)
                     {
                         maskPixels[index] = ColorMasks[0, 3];
                         if (mode == HighlightingMode.Movement)
@@ -329,7 +334,7 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
 
                     if (mode == HighlightingMode.Attack)
                     {
-                        if (_worldGrid[pos + Vector2Int.up].IsStairs &&
+                        if (_worldGrid.PointInGrid(upPosition) && _worldGrid[upPosition].IsStairs &&
                             (_movementHighlightingMask[index + _size].EqualsTo(ColorMasks[0, 3]) ||
                             !_worldGrid[pos + 2 * Vector2Int.up].IsStairs &&
                             _movementHighlightingMask[index + _size].EqualsTo(Color.clear)))
@@ -337,7 +342,7 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
                             maskPixels[index + _size] = ColorMasks[1, 3];
                         }
 
-                        if (_worldGrid[pos + Vector2Int.down].IsStairs && 
+                        if (_worldGrid.PointInGrid(downPosition) && _worldGrid[pos + Vector2Int.down].IsStairs && 
                             (_movementHighlightingMask[index - _size].EqualsTo(ColorMasks[0, 1]) ||
                             !_worldGrid[pos + 2 * Vector2Int.down].IsStairs &&
                             _movementHighlightingMask[index - _size].EqualsTo(Color.clear)))
@@ -415,5 +420,8 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
         _highlightings.Add(rawImage);
     }
 
-    private bool IsNotHighlightedStairsTile(Vector2Int position) => !_worldGrid[position].IsStairs || !_positions.Contains(position);
+    private bool IsNotHighlightedStairsTile(Vector2Int position)
+    {
+        return _worldGrid.PointInGrid(position) && (!_worldGrid[position].IsStairs || !_positions.Contains(position));
+    }
 }
