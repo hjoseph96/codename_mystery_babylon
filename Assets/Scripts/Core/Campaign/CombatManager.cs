@@ -22,6 +22,8 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Transform _enemyBattlerSpawnPoint;
     [FoldoutGroup("Battle Scene")]
     [SerializeField] private Transform _playerBattlerSpawnPoint;
+    [FoldoutGroup("Battle Scene")]
+    [SerializeField] private Transform _playerMagicCircleSpawnPoint;
 
     [FoldoutGroup("User Interface")]
     [SerializeField] private BattleHUD _enemyHUD;
@@ -289,11 +291,18 @@ public class CombatManager : MonoBehaviour
         {
             newBattler.Setup(unit, _playerHUD, battleResults, _pixelateEffectMask);
             _friendlyBattler = newBattler;
+
+            if (newBattler is Magician)
+            {
+                var magician = newBattler as Magician;
+                magician.SetMagicCircleSpawnPoint(_playerMagicCircleSpawnPoint);
+            }
         }
         else {
             newBattler.Setup(unit, _enemyHUD, battleResults, _pixelateEffectMask);
             _hostileBattler = newBattler;
         }
+
 
         return newBattler;
     }
