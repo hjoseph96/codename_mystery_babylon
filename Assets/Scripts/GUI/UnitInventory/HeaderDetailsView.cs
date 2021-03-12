@@ -16,7 +16,7 @@ public class HeaderDetailsView : MonoBehaviour
         _unitName.SetText(unit.Name);
         _unitLevel.SetText($"{unit.Level}");
         _unitHealth.SetText($"{unit.CurrentHealth}/{unit.MaxHealth}");
-        // _unitClass.SetText($"{unit.Class.Name}");
+        _unitClass.SetText($"{unit.Class.Title}");
         // _unitPortrait.sprite = unit.Portrait;
     }
 }
