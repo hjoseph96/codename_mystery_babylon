@@ -15,6 +15,11 @@ public class Weapon : Item
     public readonly Dictionary<WeaponStat, Stat> Stats = new Dictionary<WeaponStat, Stat>();
     private readonly Dictionary<WeaponStat, EditorWeaponStat> _brokenStats = new Dictionary<WeaponStat, EditorWeaponStat>();
 
+    public readonly bool IsUsable;
+    private readonly ScriptableWeapon _source;
+
+    public readonly GameObject magicCirclePrefab;
+    public readonly GameObject magicEffectPrefab;
     public int Weight { get; protected set; }
     public int MaxDurability { get; protected set; }
     public int CurrentDurability { get; protected set; }
@@ -22,8 +27,6 @@ public class Weapon : Item
     public bool IsBroken => CurrentDurability == 0;
 
 
-    public readonly bool IsUsable;
-    private readonly ScriptableWeapon _source;
 
     public Weapon(ScriptableWeapon source) : base(source)
     {
@@ -64,9 +67,7 @@ public class Weapon : Item
     public void Break()
     {
         foreach (var key in _brokenStats.Keys)
-        {
             Stats[key].RawValue = _brokenStats[key].BrokenValue;
-        }
     }
 
     public void Repair(int times = -1)
@@ -78,9 +79,7 @@ public class Weapon : Item
         CurrentDurability = Mathf.Min(CurrentDurability + times, MaxDurability);
 
         foreach (var key in _brokenStats.Keys)
-        {
             Stats[key].RawValue = _brokenStats[key].BaseValue;
-        }
     }
 
     public override IEnumerable<Type> GetUIOptions()

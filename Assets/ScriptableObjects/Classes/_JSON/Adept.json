@@ -1,0 +1,90 @@
+{
+  "Filename": "Adept",
+  "Title": "Adept",
+  "RelativePower": 2,
+  "BaseStats": {
+    "Movement": {
+      "Base": 10,
+      "Growth Rate": 0
+    },
+    "MaxHealth": {
+      "Base": 13,
+      "Growth Rate": 40
+    },
+    "Strength": {
+      "Base": 4,
+      "Growth Rate": 15
+    },
+    "Speed": {
+      "Base": 8,
+      "Growth Rate": 60
+    },
+    "Skill": {
+      "Base": 8,
+      "Growth Rate": 70
+    },
+    "Magic": {
+      "Base": 12,
+      "Growth Rate": 70
+    },
+    "Luck": {
+      "Base": 8,
+      "Growth Rate": 50
+    },
+    "Resistance": {
+      "Base": 10,
+      "Growth Rate": 70
+    },
+    "Defense": {
+      "Base": 4,
+      "Growth Rate": 30
+    },
+    "Weight": {
+      "Base": 11,
+      "Growth Rate": 0
+    },
+    "Constitution": {
+      "Base": 8,
+      "Growth Rate": 0
+    }
+  },
+  "MaxStats": {
+    "Movement": 14,
+    "MaxHealth": 50,
+    "Strength": 16,
+    "Speed": 20,
+    "Skill": 25,
+    "Magic": 25,
+    "Luck": 20,
+    "Resistance": 25,
+    "Defense": 15,
+    "Weight": 11,
+    "Constitution": 10
+  },
+  "PromotedBonus": 1,
+  "PromotionGains": {
+    "Movement": 0,
+    "MaxHealth": 2,
+    "Strength": 0,
+    "Speed": 1,
+    "Skill": 2,
+    "Magic": 3,
+    "Luck": 0,
+    "Resistance": 3,
+    "Defense": 0,
+    "Weight": 0,
+    "Constitution": 0
+  },
+  "PromotionOptions": [
+    "Invoker",
+    "Sorcerer",
+    "Angel Mage"
+  ],
+  "UsableWeapons": [],
+  "UsableMagic": [
+    "Elemental",
+    "Divination",
+    "Ceremonial",
+    "Hedge"
+  ]
+}

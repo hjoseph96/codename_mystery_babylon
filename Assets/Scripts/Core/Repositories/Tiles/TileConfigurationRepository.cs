@@ -64,7 +64,10 @@ public class TileConfigurationRepository
                 if (data.IsSyncedWith(existingtileConfig))
                     return existingtileConfig;
                 else
+                {
+                    existingtileConfig = new TileConfiguration();
                     tileConfig = existingtileConfig;
+                }
             }
             else
                 AssetDatabase.CreateAsset(tileConfig, assetPath);
@@ -129,7 +132,6 @@ public class TileConfigurationData
 
         string targetJson = JsonConvert.SerializeObject(targetData, Formatting.Indented);
         string currentJson = JsonConvert.SerializeObject(this, Formatting.Indented);
-
 
         return targetJson == currentJson;
     }

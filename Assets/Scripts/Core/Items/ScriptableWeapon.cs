@@ -35,11 +35,19 @@ public class ScriptableWeapon : ScriptableItem
     [FoldoutGroup("Active Ability"), ShowIf("IsUsable")]
     public ScriptableAction Action;
 
+    [FoldoutGroup("Magic Effects"), ShowIf("Type", WeaponType.Grimiore)]
+    public GameObject magicCirclePrefab;
+    [FoldoutGroup("Magic Effects"), ShowIf("Type", WeaponType.Grimiore)]
+    public GameObject magicEffectPrefab;
+
+
     [Button("Save As JSON")]
     private void WriteToJSON() => WeaponRepository.Write(this);
 
     [Button("Create From JSON")]
     private void CreateFromJSON() => WeaponRepository.FromJSON(name);
+
+    
 
 
     public override Item GetItem()
