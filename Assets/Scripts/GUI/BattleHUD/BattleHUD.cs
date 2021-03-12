@@ -26,14 +26,12 @@ public class BattleHUD : MonoBehaviour
         _hpRemaining.SetText($"{_unit.CurrentHealth}/{_unit.MaxHealth}");
     }
 
-    public void DecreaseHealth(int amount)
-    {
-        StartCoroutine(DecrementBars(amount));
-    }
+    public void DecreaseHealth(int amount) => StartCoroutine(DecrementBars(amount));
+
 
     private IEnumerator DecrementBars(int amount)
     {
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i <= amount; i++)
         {
             int lastFilledBarIndex = _filledHPBars.Count - 1;
 
@@ -46,7 +44,7 @@ public class BattleHUD : MonoBehaviour
             var currentHeight   = targetHPPiece.rectTransform.sizeDelta.y;
             var position        = targetHPPiece.rectTransform.localPosition;
 
-            // Make HP Bar Piece bigger reposition it.
+            // Make HP Bar Piece bigger & reposition it.
             targetHPPiece.rectTransform.sizeDelta       = new Vector2(currentWidth + 2, currentHeight + 8);
             targetHPPiece.rectTransform.localPosition   = new Vector2(position.x, position.y - 4);
 

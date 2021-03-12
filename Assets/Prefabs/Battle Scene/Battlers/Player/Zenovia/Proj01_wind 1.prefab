@@ -4802,6 +4802,7 @@ GameObject:
   - component: {fileID: 19800002}
   - component: {fileID: 19900002}
   - component: {fileID: 8402771338152548091}
+  - component: {fileID: 136201163838201724}
   m_Layer: 0
   m_Name: Proj01_wind 1
   m_TagString: Untagged
@@ -9575,7 +9576,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 26
   m_RenderMode: 5
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -9616,6 +9617,21 @@ MonoBehaviour:
   EffectType: 0
   moveSpeed: 5
   hitEffect: {fileID: 100004, guid: 8ca718bfa1a52c144bf06e85c5501637, type: 3}
+  movingSound: Neutral_Medium_Whoosh_02
+  hitSound: Medium_Neutral_Impact_1_02
+--- !u!135 &136201163838201724
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.47
+  m_Center: {x: 0.05, y: -0.016566515, z: -0.01}
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0

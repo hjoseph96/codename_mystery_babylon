@@ -328,7 +328,16 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
 
     public bool CanAttack() => AttackableWeapons().Count > 0;
-    
+
+    public bool CanAttack(Unit targetUnit) 
+    {
+        var weaponsThatCanHit = AttackableWeapons();
+
+        if (weaponsThatCanHit.Count == 0 || !weaponsThatCanHit.Keys.Contains<Weapon>(EquippedWeapon))
+            return false;
+
+        return weaponsThatCanHit[EquippedWeapon].Contains(targetUnit.GridPosition);
+    }
 
     public bool CanTrade()
     {
@@ -511,6 +520,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public Dictionary<string, int> PreviewAttack(Unit defender, Weapon weapon)
     {
         Dictionary<string, int> battleStats = new Dictionary<string, int>();
+
+        if (!CanAttack(defender))
+        {   // -1 == Cannot Attack
+            battleStats["ATK_DMG"] = -1;
+            battleStats["ACCURACY"] = -1;
+            battleStats["CRIT_RATE"] = -1;
+
+            return battleStats;
+        }
 
         int atkDmg;
         if (weapon.Type == WeaponType.Grimiore)

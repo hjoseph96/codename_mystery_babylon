@@ -99,10 +99,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         BattleScene.SetActive(false);
         GridScene.SetActive(true);
 
-        if (attacker)
-            attacker.SetIdle();
-        if (defender)
-            defender.SetIdle();
+        SetAllUnitsIdle();
 
         GridCursor.Instance.ClearAll();
         GridCursor.Instance.MoveInstant(attacker.GridPosition);
@@ -111,6 +108,12 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         ToggleCamera(_gridUICamera);
 
         _gridTransitionFX.TransitionEnter();
+    }
+
+    void SetAllUnitsIdle()
+    {
+        foreach(Unit unit in _allUnits)
+            unit.SetIdle();
     }
 
     void Start()

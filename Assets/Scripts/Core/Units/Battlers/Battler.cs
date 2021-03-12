@@ -30,6 +30,8 @@ public class Battler : SerializedMonoBehaviour
     [Button(ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
     private void SetAnimationStateNames()   // Get State Names from Animator in Editor, turn to hashes
     {
+        AnimationsAsHashes = new Dictionary<string, int>();
+
         AnimatorController ac = GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
         AnimatorStateMachine sm = ac.layers[0].stateMachine;
         ChildAnimatorState[] states = sm.states;
@@ -61,11 +63,11 @@ public class Battler : SerializedMonoBehaviour
     [FoldoutGroup("Battler State")]
     [ReadOnly] private int _damageReceived;
     [FoldoutGroup("Battler State")]
-    [ReadOnly] protected int _currentAttackIndex;
+    [ReadOnly] protected int currentAttackIndex;
     [FoldoutGroup("Battler State")]
     [ReadOnly] private List<Attack> _attacks = new List<Attack>();
 
-    protected Attack CurrentAttack => _attacks[_currentAttackIndex];
+    protected Attack CurrentAttack => _attacks[currentAttackIndex];
 
     protected bool currentlyAttacking = false;
     public bool IsFinished { get; private set; }
@@ -92,7 +94,7 @@ public class Battler : SerializedMonoBehaviour
         _pixelateShaderRenderer.mask = pixelShaderMask;
         _defaultRotation = transform.eulerAngles.y;
         Animator = GetComponent<Animator>();
-        _currentAttackIndex = 0;
+        currentAttackIndex = 0;
 
         _state = BattlerState.Idle;
 
@@ -107,13 +109,23 @@ public class Battler : SerializedMonoBehaviour
 
     public bool Attack(Battler target)
     {
-        if (_state == BattlerState.Dead)
-            return false;
-        
         targetBattler = target;
-        _state = BattlerState.Attacking;
+        
+        if (Unit.CanAttack(target.Unit))
+        {
+            if (_state == BattlerState.Dead)
+                return false;
+            
+            _state = BattlerState.Attacking;
 
-        return true;
+            return true;
+        } 
+        else {
+            if (State != BattlerState.Dead)
+                FinishFighting();
+            
+            return false;
+        }
     }
 
     // Update is called once per frame
@@ -329,25 +341,28 @@ public class Battler : SerializedMonoBehaviour
     }
 
 
-    private void NextAttack()
+    protected virtual void NextAttack()
     {
-        if (_currentAttackIndex != _attacks.Count - 1)
-            _currentAttackIndex += 1;
+        if (currentAttackIndex != _attacks.Count - 1)
+            currentAttackIndex += 1;
         else
-        {
-            _state = BattlerState.Idle;
-            
-            if (targetBattler.State == BattlerState.Blocking)
-                targetBattler.BackToIdle();
-
-            IsFinished = true;
-            OnAttackComplete.Invoke();
-        }
+            FinishFighting();
         
         currentlyAttacking = false;
     }
 
-    private void ProcessAttack()
+    private void FinishFighting()
+    {
+        _state = BattlerState.Idle;
+            
+        if (targetBattler.State == BattlerState.Blocking)
+            targetBattler.BackToIdle();
+
+        IsFinished = true;
+        OnAttackComplete.Invoke();
+    }
+
+    protected void ProcessAttack()
     {
         var attackDamage = CurrentAttack.Damage(targetBattler.Unit);
 

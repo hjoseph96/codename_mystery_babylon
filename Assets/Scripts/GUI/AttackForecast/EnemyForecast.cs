@@ -22,12 +22,29 @@ public class EnemyForecast : MonoBehaviour
 
         Dictionary<string, int> preview = unit.PreviewAttack(playerUnit, unit.EquippedWeapon);
         _health.SetText($"{unit.CurrentHealth}");
-        _damage.SetText($"{preview["ATK_DMG"]}");
-        _hitChance.SetText($"{preview["ACCURACY"]}%");
-        _critChance.SetText($"{preview["CRIT_RATE"]}%");
+        
+        _damage.SetText(PreviewValue(preview["ATK_DMG"]));
+        _hitChance.SetText(PreviewValue(preview["ACCURACY"], true));
+        _critChance.SetText(PreviewValue(preview["CRIT_RATE"], true));
 
         bool showDoubleAttack = unit.CanDoubleAttack(playerUnit, unit.EquippedWeapon);
         _multiAttack.SetActive(showDoubleAttack);
+    }
+
+    private string PreviewValue(int value, bool percentage = false)
+    {
+        string displayString;
+
+        if (value >= 0)
+        {
+            displayString = $"{value}";
+            if (percentage) displayString += "%";
+            return displayString;
+        } else {
+            displayString = "---";
+        }
+
+        return displayString;
     }
 
     private void ShowDoubleAttack()

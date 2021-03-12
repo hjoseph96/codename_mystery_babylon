@@ -18,30 +18,32 @@ public class Weapon : Item
     public readonly bool IsUsable;
     private readonly ScriptableWeapon _source;
 
-    public readonly GameObject magicCirclePrefab;
-    public readonly MagicEffect magicEffect;
+
+
     public int Weight { get; protected set; }
     public int MaxDurability { get; protected set; }
     public int CurrentDurability { get; protected set; }
 
     public bool IsBroken => CurrentDurability == 0;
-
+    public readonly GameObject magicCirclePrefab;
+    public readonly MagicEffect magicEffect;
+    public readonly string castingSound; 
 
 
     public Weapon(ScriptableWeapon source) : base(source)
     {
         _source = source;
 
-        foreach (var key in source.WeaponStats.Keys)
-        {
-            Stats[key] = new Stat(key.ToString(), source.WeaponStats[key].BaseValue);
-            _brokenStats[key] = source.WeaponStats[key];
-        }
 
         MeleeSound = source.meleeSound;
         DescriptionNormal = source.Description;
         DescriptionBroken = source.DescriptionBroken;
 
+        foreach (var key in source.WeaponStats.Keys)
+        {
+            Stats[key] = new Stat(key.ToString(), source.WeaponStats[key].BaseValue);
+            _brokenStats[key] = source.WeaponStats[key];
+        }
         Stats[WeaponStat.MinRange] = new Stat(WeaponStat.MinRange.ToString(), source.AttackRange.x);
         Stats[WeaponStat.MaxRange] = new Stat(WeaponStat.MinRange.ToString(), source.AttackRange.y);
 
@@ -55,6 +57,13 @@ public class Weapon : Item
         RequiredRank = source.RequiredRank;
 
         IsUsable = source.IsUsable;
+
+        if (Type == WeaponType.Grimiore)
+        {
+            castingSound = source.castingSound;
+            magicEffect = source.magicEffect;
+            magicCirclePrefab = source.magicCirclePrefab;
+        }
     }
 
     public void Use(int times = 1)
