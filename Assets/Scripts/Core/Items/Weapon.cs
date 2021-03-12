@@ -19,7 +19,7 @@ public class Weapon : Item
     private readonly ScriptableWeapon _source;
 
     public readonly GameObject magicCirclePrefab;
-    public readonly GameObject magicEffectPrefab;
+    public readonly MagicEffect magicEffect;
     public int Weight { get; protected set; }
     public int MaxDurability { get; protected set; }
     public int CurrentDurability { get; protected set; }

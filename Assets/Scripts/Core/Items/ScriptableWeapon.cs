@@ -11,11 +11,25 @@ public class ScriptableWeapon : ScriptableItem
 {
     public WeaponType Type;
 
+    // Grimiore Specific Fields
+    [ShowIf("Type", WeaponType.Grimiore)] public MagicType MagicType;
+
+    [FoldoutGroup("Magic Effects"), ShowIf("Type", WeaponType.Grimiore)]
+    public GameObject magicCirclePrefab;
+    [FoldoutGroup("Magic Effects"), ShowIf("Type", WeaponType.Grimiore)]
+    public MagicEffect magicEffect;
+
+
     [FoldoutGroup("Descriptions"), MultiLineProperty(5)] 
     public string DescriptionBroken;
 
     [FoldoutGroup("Audio")] 
-    [SoundGroupAttribute] public string meleeSound;
+    [SoundGroupAttribute, ShowIf("Type", WeaponType.Sword), ShowIf("Type", WeaponType.Lance), ShowIf("Type", WeaponType.Axe)]
+    public string meleeSound;
+
+    [FoldoutGroup("Audio")] 
+    [SoundGroupAttribute, ShowIf("Type", WeaponType.Grimiore)]
+    public string castingSound;
 
     [FoldoutGroup("Stats"), WeaponStats]
     public Dictionary<WeaponStat, EditorWeaponStat> WeaponStats = new Dictionary<WeaponStat, EditorWeaponStat>();
@@ -34,11 +48,6 @@ public class ScriptableWeapon : ScriptableItem
 
     [FoldoutGroup("Active Ability"), ShowIf("IsUsable")]
     public ScriptableAction Action;
-
-    [FoldoutGroup("Magic Effects"), ShowIf("Type", WeaponType.Grimiore)]
-    public GameObject magicCirclePrefab;
-    [FoldoutGroup("Magic Effects"), ShowIf("Type", WeaponType.Grimiore)]
-    public GameObject magicEffectPrefab;
 
 
     [Button("Save As JSON")]
