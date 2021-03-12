@@ -1,0 +1,1833 @@
+Using pre-set license
+Built from '2020.2/release' branch; Version is '2020.2.1f1 (270dd8c3da1c) revision 2559448'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.0) 64bit' Language: 'en' Physical Memory: 32658 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.2.1f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/godkingherb/Divinity Soul
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+50336
+Successfully changed project path to: C:/Users/godkingherb/Divinity Soul
+C:/Users/godkingherb/Divinity Soul
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 143.53 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.1f1 (270dd8c3da1c)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/godkingherb/Divinity Soul/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Radeon RX 580 Series (ID=0x67df)
+    Vendor:   
+    VRAM:     8171 MB
+    Driver:   27.20.14501.18003
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56672
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
+Registered in 0.004079 seconds.
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 136.37 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.935 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.011326 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 140.05 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.031 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.75 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4966 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 265.8 MB.
+System memory in use after: 263.4 MB.
+
+Unloading 59 unused Assets to reduce memory usage. Loaded Objects now: 5479.
+Total: 17.361400 ms (FindLiveObjects: 0.515400 ms CreateObjectMapping: 0.364600 ms MarkObjects: 14.607900 ms  DeleteObjects: 1.872500 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/_sprite_bakers/_models/heavy-armored-knight
+  artifactKey: Guid(f6db1788fa2003a4c91e375f3efbf5d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_sprite_bakers/_models/heavy-armored-knight using Guid(f6db1788fa2003a4c91e375f3efbf5d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9712d287fa461a3c02874e9d7272bd85') in 0.010868 seconds
+  Import took 0.018075 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000896 seconds.
+  path: Assets/_sprite_bakers/_models/heavy-armored-knight
+  artifactKey: Guid(f6db1788fa2003a4c91e375f3efbf5d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_sprite_bakers/_models/heavy-armored-knight using Guid(f6db1788fa2003a4c91e375f3efbf5d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9712d287fa461a3c02874e9d7272bd85') in 0.002225 seconds
+  Import took 0.008584 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 344.110395 seconds.
+  path: Assets/_sprite_bakers/_models/heavy-armored-knight/source
+  artifactKey: Guid(917109652fbf50a42a849177c6b486b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_sprite_bakers/_models/heavy-armored-knight/source using Guid(917109652fbf50a42a849177c6b486b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '10d376d0135554ed655a1eb323cb31d0') in 0.004062 seconds
+  Import took 0.011744 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.256213 seconds.
+  path: Assets/_sprite_bakers/_models/heavy-armored-knight/source/Knight.fbx
+  artifactKey: Guid(bceb53284cb35984195e8edc35623e91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_sprite_bakers/_models/heavy-armored-knight/source/Knight.fbx using Guid(bceb53284cb35984195e8edc35623e91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90b09bb3a0b69abc01ae28844590e45a') in 0.171019 seconds
+  Import took 0.178086 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.203953 seconds.
+  path: Assets/_sprite_bakers/_models/heavy-armored-knight/source/Knight.fbx
+  artifactKey: Guid(bceb53284cb35984195e8edc35623e91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_sprite_bakers/_models/heavy-armored-knight/source/Knight.fbx using Guid(bceb53284cb35984195e8edc35623e91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69a3124ef57b051f0f3eeed6e86bc0a4') in 0.042654 seconds
+  Import took 0.049573 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 17.225985 seconds.
+  path: Assets/_sprite_bakers/_models/heavy-armored-knight/source/Knight.fbx
+  artifactKey: Guid(bceb53284cb35984195e8edc35623e91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_sprite_bakers/_models/heavy-armored-knight/source/Knight.fbx using Guid(bceb53284cb35984195e8edc35623e91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39007badbed809e85084cf308ed797ab') in 0.037946 seconds
+  Import took 0.045231 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 190.032873 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs
+  artifactKey: Guid(70fc72bee9c4e1e43a558b771038f6c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs using Guid(70fc72bee9c4e1e43a558b771038f6c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a2916de5a3673c1ac12f1454ca63bba7') in 0.004452 seconds
+  Import took 0.011838 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.931219 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider
+  artifactKey: Guid(f341ad4fa9a54b94aa9040d40947bf28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider using Guid(f341ad4fa9a54b94aa9040d40947bf28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '726b6cb33bc9b01ed36f5acad1ffa3b6') in 0.010747 seconds
+  Import took 0.017502 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.255031 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider/Rider AC Riding Only.prefab
+  artifactKey: Guid(85619393e2ae68643983e6a096c811b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider/Rider AC Riding Only.prefab using Guid(85619393e2ae68643983e6a096c811b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '444f658cda042581ef0b424c543e21e6') in 0.670753 seconds
+  Import took 0.687986 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.377836 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider/Rider AC Riding Only.prefab
+  artifactKey: Guid(85619393e2ae68643983e6a096c811b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider/Rider AC Riding Only.prefab using Guid(85619393e2ae68643983e6a096c811b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '444f658cda042581ef0b424c543e21e6') in 0.437070 seconds
+  Import took 0.454605 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.729647 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider/Human Rider Base.prefab
+  artifactKey: Guid(0580b7605afecd446ad04336b26b5228) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider/Human Rider Base.prefab using Guid(0580b7605afecd446ad04336b26b5228) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae856ea1afb9ee85df59c3d2b8f53d41') in 0.020410 seconds
+  Import took 0.027564 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.154110 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider/Human Rider Base.prefab
+  artifactKey: Guid(0580b7605afecd446ad04336b26b5228) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Rider/Human Rider Base.prefab using Guid(0580b7605afecd446ad04336b26b5228) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae856ea1afb9ee85df59c3d2b8f53d41') in 0.017437 seconds
+  Import took 0.024397 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 63.667610 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Common/Human Anims/AC Human.controller
+  artifactKey: Guid(a312cd1b91cd8c04d8f3d9245a877406) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Common/Human Anims/AC Human.controller using Guid(a312cd1b91cd8c04d8f3d9245a877406) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3517ea8f6fbd2b0e56a824cd890a751f') in 0.281858 seconds
+  Import took 0.291303 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.543655 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Common/Human Anims/Locomotion/S_Idle.fbx
+  artifactKey: Guid(adba5936348c1e1459e4a28103f7b697) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Common/Human Anims/Locomotion/S_Idle.fbx using Guid(adba5936348c1e1459e4a28103f7b697) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71ef59884da94b3bb52626012fc52959') in 0.005631 seconds
+  Import took 0.012235 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 453.793727 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Base.prefab
+  artifactKey: Guid(048c7ab51fa1d6a46976c7edfb52b928) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Base.prefab using Guid(048c7ab51fa1d6a46976c7edfb52b928) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc296f213cd826a0989a89dde8b2731c') in 0.048981 seconds
+  Import took 0.057620 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.261526 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Base.prefab
+  artifactKey: Guid(048c7ab51fa1d6a46976c7edfb52b928) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Base.prefab using Guid(048c7ab51fa1d6a46976c7edfb52b928) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc296f213cd826a0989a89dde8b2731c') in 0.021453 seconds
+  Import took 0.028784 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.450379 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Realistic Pegasus.prefab
+  artifactKey: Guid(47d20c194f5aa554596cb4628d0394ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Realistic Pegasus.prefab using Guid(47d20c194f5aa554596cb4628d0394ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a52eede49dd1976a2540ca6bb9b41a1d') in 0.751707 seconds
+  Import took 0.771446 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.197702 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Mine Craft.prefab
+  artifactKey: Guid(75f6ba18c605cab4499ba0c363adcd77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Mine Craft.prefab using Guid(75f6ba18c605cab4499ba0c363adcd77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c71c476ea315b291dcd26be315cf2d0d') in 0.343097 seconds
+  Import took 0.354854 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.823492 seconds.
+  path: Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Realistic.prefab
+  artifactKey: Guid(d3aa6de16e8fb9a4ca8d48506859e701) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AssetStoreTools/Malbers Animations/Horse AnimSet Pro/4 - Prefabs/Horses/Horse Realistic.prefab using Guid(d3aa6de16e8fb9a4ca8d48506859e701) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c018038587d6fa233835eb90e3f0d57f') in 0.162214 seconds
+  Import took 0.177431 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010983 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.65 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.420 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.65 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.6 MB.
+System memory in use after: 229.2 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5527.
+Total: 18.754400 ms (FindLiveObjects: 0.454800 ms CreateObjectMapping: 0.267000 ms MarkObjects: 15.957100 ms  DeleteObjects: 2.074500 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010972 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.70 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.452 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.70 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.6 MB.
+System memory in use after: 229.2 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5531.
+Total: 19.357100 ms (FindLiveObjects: 0.445900 ms CreateObjectMapping: 0.268900 ms MarkObjects: 16.358000 ms  DeleteObjects: 2.282300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.011059 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.66 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.389 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.65 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.7 MB.
+System memory in use after: 229.3 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5535.
+Total: 18.954600 ms (FindLiveObjects: 0.438600 ms CreateObjectMapping: 0.270100 ms MarkObjects: 15.968100 ms  DeleteObjects: 2.276500 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010881 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.98 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.452 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.69 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.7 MB.
+System memory in use after: 229.3 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5539.
+Total: 18.553800 ms (FindLiveObjects: 0.482000 ms CreateObjectMapping: 0.264700 ms MarkObjects: 15.458500 ms  DeleteObjects: 2.347400 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010874 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.70 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.409 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.67 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.6 MB.
+System memory in use after: 229.2 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5543.
+Total: 19.072300 ms (FindLiveObjects: 0.464900 ms CreateObjectMapping: 0.282400 ms MarkObjects: 15.939400 ms  DeleteObjects: 2.384600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.011027 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.61 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.418 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.65 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.7 MB.
+System memory in use after: 229.3 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5547.
+Total: 19.571900 ms (FindLiveObjects: 0.462500 ms CreateObjectMapping: 0.267700 ms MarkObjects: 16.400000 ms  DeleteObjects: 2.440500 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010883 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.65 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.422 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.73 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.8 MB.
+System memory in use after: 229.4 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5551.
+Total: 19.116400 ms (FindLiveObjects: 0.493400 ms CreateObjectMapping: 0.274700 ms MarkObjects: 15.848400 ms  DeleteObjects: 2.498600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.011108 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.69 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.439 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.69 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.8 MB.
+System memory in use after: 229.4 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5555.
+Total: 19.259500 ms (FindLiveObjects: 0.506400 ms CreateObjectMapping: 0.273200 ms MarkObjects: 15.563700 ms  DeleteObjects: 2.915000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.013438 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.66 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.438 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.72 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.8 MB.
+System memory in use after: 229.4 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5559.
+Total: 19.339600 ms (FindLiveObjects: 0.481900 ms CreateObjectMapping: 0.264400 ms MarkObjects: 16.136300 ms  DeleteObjects: 2.455500 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.011114 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.70 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.418 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.67 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.6 MB.
+System memory in use after: 229.2 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5563.
+Total: 19.514900 ms (FindLiveObjects: 0.462100 ms CreateObjectMapping: 0.256500 ms MarkObjects: 16.345800 ms  DeleteObjects: 2.449300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010946 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.74 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.463 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.67 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.8 MB.
+System memory in use after: 229.4 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5567.
+Total: 19.219200 ms (FindLiveObjects: 0.480500 ms CreateObjectMapping: 0.235800 ms MarkObjects: 16.073200 ms  DeleteObjects: 2.428200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010943 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.72 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.427 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.67 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.8 MB.
+System memory in use after: 229.4 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5571.
+Total: 19.557400 ms (FindLiveObjects: 0.458300 ms CreateObjectMapping: 0.260900 ms MarkObjects: 16.330700 ms  DeleteObjects: 2.506400 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010949 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.64 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.415 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.68 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.9 MB.
+System memory in use after: 229.5 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5575.
+Total: 18.751400 ms (FindLiveObjects: 0.467100 ms CreateObjectMapping: 0.245600 ms MarkObjects: 15.623300 ms  DeleteObjects: 2.414700 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010994 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.68 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.470 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.67 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.9 MB.
+System memory in use after: 229.5 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5579.
+Total: 19.503600 ms (FindLiveObjects: 0.467400 ms CreateObjectMapping: 0.257300 ms MarkObjects: 16.274300 ms  DeleteObjects: 2.503200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.011053 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.67 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Setting up layers.  Layer [20] is now called [Animal]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:14)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [23] is now called [Enemy]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:15)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Setting up layers.  Layer [30] is now called [Item]
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateLayer (string,int) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:40)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:16)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 40)
+
+Tag: <B>Fly</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:17)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Climb</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:18)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Tag: <B>Stair</B> Added
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MalbersAnimations.MalbersSettings:CreateTag (string) (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:66)
+MalbersAnimations.MalbersSettings:.cctor () (at Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs:19)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/AssetStoreTools/Malbers Animations/Common/Scripts/Editor/MalbersSettings.cs Line: 66)
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.447 seconds
+Platform modules already initialized, skipping
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 1.66 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4453 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.7 MB.
+System memory in use after: 229.3 MB.
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 5583.
+Total: 18.652300 ms (FindLiveObjects: 0.491000 ms CreateObjectMapping: 0.250900 ms MarkObjects: 15.428600 ms  DeleteObjects: 2.480600 ms)
+

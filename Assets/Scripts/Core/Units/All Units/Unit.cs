@@ -48,10 +48,17 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private DirectionalAnimationSet _walkAnimation;
 
 
-    
+    public static int MAX_LEVEL = 40;
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _level;
     public int Level { get { return _level; } }
+    
+    [FoldoutGroup("Base Stats")]
+    public ScriptableUnitClass UnitClass;
+
+    private UnitClass _unitClass;
+    [FoldoutGroup("Base Stats")]
+    public UnitClass Class { get { return _unitClass; } }
     
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _experience;
@@ -86,7 +93,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     // TODO: Implement WeaponRanks (equippable weapons and rank with each)
     // TODO: Create custom odin drawer to assign weapons wieldable to unit
     // And only allow selection of ScriptableWeapons created from JSON
-    
+
     public UnitInventory Inventory { get; private set; }
 
     
@@ -144,6 +151,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         Player.AddUnit(this);
 
+        _unitClass = UnitClass.GetUnitClass();
         InitStats();
 
         _animancer = GetComponent<AnimancerComponent>();
@@ -158,6 +166,26 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         if (weapons.Length > 0)
             EquipWeapon(weapons[0]);
     }
+
+    private void InitStats()
+    {
+        Stats = new Dictionary<UnitStat, Stat>();
+
+        // Copy base stats
+        foreach (var stat in _statsDictionary.Keys)
+        {
+            var value = _statsDictionary[stat];
+            Stats[stat] = new Stat(stat.ToString(), value.Value, value.GrowthRate);
+            //Stats[stat].AddEffect(new FlatBonusEffect(10));
+            //Stats[stat].AddEffect(new PercentageBonusEffect(0.2f));
+            //if (stat != UnitStat.MaxHealth)
+            //    Stats[stat].AddEffect(new DependOnOtherStatEffect(Stats[UnitStat.MaxHealth], 0.1f));
+        }
+
+        _currentMovementPoints = Stats[UnitStat.Movement].ValueInt;
+        _currentHealth = MaxHealth;
+    }
+
 
     private void SetupFootstepSounds()
     {
@@ -418,30 +446,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return speed;
     }
 
-    // TODO: Serialize
-    private void InitStats()
-    {
-        Stats = new Dictionary<UnitStat, Stat>();
-
-        // Copy base stats
-        foreach (var stat in _statsDictionary.Keys)
-        {
-            var value = _statsDictionary[stat];
-            Stats[stat] = new Stat(stat.ToString(), value.Value, value.GrowthRate);
-            //Stats[stat].AddEffect(new FlatBonusEffect(10));
-            //Stats[stat].AddEffect(new PercentageBonusEffect(0.2f));
-            //if (stat != UnitStat.MaxHealth)
-            //    Stats[stat].AddEffect(new DependOnOtherStatEffect(Stats[UnitStat.MaxHealth], 0.1f));
-        }
-
-        _currentMovementPoints = Stats[UnitStat.Movement].ValueInt;
-        _currentHealth = MaxHealth;
-    }
-
     private static bool IsPlaying => Application.isPlaying;
     
 
-    // TODO: Maybe move these elsewhere.
     // =====================
     // || Battle Formulas ||
     // =====================
@@ -506,11 +513,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         Dictionary<string, int> battleStats = new Dictionary<string, int>();
 
         int atkDmg;
-        if (weapon.Type == WeaponType.Grimiore) {
+        if (weapon.Type == WeaponType.Grimiore)
             atkDmg = AttackDamage(weapon) - defender.Stats[UnitStat.Resistance].ValueInt;
-        } else {
+        else
             atkDmg = AttackDamage(weapon) - defender.Stats[UnitStat.Defense].ValueInt;
-        }
 
         battleStats["ATK_DMG"] = atkDmg;
         battleStats["ACCURACY"] = Accuracy(defender, weapon);
@@ -562,8 +568,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         if (boxDistance >= 2)
             hitRate -= 15;
         
-        if (hitRate < 0)
-            hitRate = 0;
+        hitRate = Mathf.Clamp(hitRate, 0, 100);
 
         return hitRate;
     }
@@ -581,8 +586,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             int skillStat = Stats[UnitStat.Skill].ValueInt;
             
             var accuracy = (magicStat - resistanceStat) + skillStat + 30 - (boxDistance * 2);
-            if (accuracy < 0) accuracy = 0;
-            if (accuracy > 100) accuracy = 100;
+            accuracy = Mathf.Clamp(accuracy, 0, 100);
 
             return accuracy;
         }

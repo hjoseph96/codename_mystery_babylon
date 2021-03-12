@@ -174,22 +174,22 @@ public class CombatManager : MonoBehaviour
             _expBarUI.Show(friendlyUnit.Experience);
 
             var damageDealt = _friendlyBattler.DamageDealt;
-            var expGained = damageDealt;
 
-            // TODO: Implement when classes are done, for now just add damage dealt
-            // (31 + Enemy's level + Enemy promoted bonus - Player's level - Player promoted bonus) / Player's Class relative power
-            if (damageDealt == 0)
-                expGained += 1;
+            int expGained = ((31 + hostileUnit.Level + hostileUnit.Class.PromotedBonus) - (friendlyUnit.Level - friendlyUnit.Class.PromotedBonus)) / friendlyUnit.Class.RelativePower;
+            if (damageDealt <= 0)
+                expGained = 1;
 
 
-            // TODO: Implement when classes are done
             // [EXP from doing damage] + [Silencer factor] × [Enemy's level × Enemy Class relative power + Enemy class bonus - 
             // ([Player's level × Player Class relative power + Player class bonus] / Mode divisor) + 20 + Thief bonus + Boss bonus + Entombed bonus
             if (_hostileBattler.Unit.CurrentHealth == 0)
-                expGained += ((hostileUnit.Level - friendlyUnit.Level) / 2) + 20;
+            {
+                var enemyExpCalc = (hostileUnit.Level * hostileUnit.Class.RelativePower + hostileUnit.Class.PromotedBonus);
+                var playerExpCalc = (friendlyUnit.Level * friendlyUnit.Class.RelativePower + friendlyUnit.Class.PromotedBonus);
 
-            // if (expGained > 100)
-            //     expGained = 100;
+                // TODO: replace 2 with mode divisor, add boss units
+                expGained += ((enemyExpCalc - playerExpCalc) / 2) + 20;
+            }
             
             _expBarUI.OnBarFilled  += delegate() {
                 if (!_expBarUI.IsFilling)
@@ -203,8 +203,6 @@ public class CombatManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
 
             _expBarUI.StartFilling(friendlyUnit.Experience + expGained);
-
-
         }
     }
 
