@@ -13,7 +13,6 @@ using Sirenix.Serialization;
 [RequireComponent(typeof(Animator))]
 public class Unit : SerializedMonoBehaviour, IInitializable
 {
-
     [FoldoutGroup("Basic Properties")]
     [SerializeField] private string _name;
     public string Name { get { return _name; } }
@@ -37,6 +36,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SoundGroupAttribute] public string dirtFootsteps;
     [FoldoutGroup("Audio")]    
     [SoundGroupAttribute] public string grassFootsteps;
+    [FoldoutGroup("Audio")]    
+    [SoundGroupAttribute] public string rockFootsteps;
+
 
 
 
@@ -140,6 +142,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private Vector2 _lookDirection;
     private Dictionary<SurfaceType, string> _footsteps = new Dictionary<SurfaceType, string>();
 
+    
+    private Material _allInOneMat; 
+
     public void Init()
     {
         _gridPosition = GridUtility.SnapToGrid(this);
@@ -157,6 +162,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _animancer = GetComponent<AnimancerComponent>();
         Rotate(Direction.Down);
         PlayAnimation(_idleAnimation);
+
+        _allInOneMat = GetComponent<Renderer>().material;
 
         Inventory = new UnitInventory(this);
         foreach (var item in _startingItems)
@@ -191,6 +198,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         _footsteps[SurfaceType.Grass] = grassFootsteps;
         _footsteps[SurfaceType.Dirt] = dirtFootsteps;
+        _footsteps[SurfaceType.Rock] = rockFootsteps;
     }
 
     public bool IsAlly(Unit unit) => Player.IsAlly(unit.Player);
@@ -215,8 +223,20 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _animancer.Play(clip).Speed = speed;
     }
 
-    public void TookAction() => _hasTakenAction = true;
-    public void AllowAction() => _hasTakenAction = false;
+    public void TookAction() 
+    {
+        _hasTakenAction = true;
+        SetInactiveShader();
+    }
+
+    private void SetInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");    
+    private void RemoveInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");    
+
+    public void AllowAction()
+    {
+        _hasTakenAction = false;
+        RemoveInactiveShader();
+    }
 
     public void EquipWeapon(Weapon weapon)
     {

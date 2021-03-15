@@ -435,14 +435,11 @@ public static class GridUtility
         var cameFrom = new Dictionary<Vector2Int, Vector2Int>(capacity);
 
         if (!WorldGrid.Instance.PointInGrid(goal) || !WorldGrid.Instance[goal].IsPassable(unitType))
-        {
             return null;
-        }
 
         frontier.Enqueue(start, 0f);
         runningCost[start] = 0f;
 
-        // TODO: Warning! No safety (PointInGrid) checks! This is done to increase performance slightly
         // We use classic A*
         while (frontier.Length > 0)
         {
@@ -465,30 +462,23 @@ public static class GridUtility
                 var neighbourPosition = currentPosition + offset;
 
                 // Check if not out of bounds
-                //if (!WorldGrid.Instance.PointInGrid(neighbourPosition))
-                //{
-                //    continue;
-                //}
+                if (!WorldGrid.Instance.PointInGrid(neighbourPosition))
+                   continue;
+
 
                 // Check if cell free
                 var otherUnit = WorldGrid.Instance[neighbourPosition].Unit;
                 if (otherUnit != null && otherUnit.IsEnemy(unit))
-                {
                     continue;
-                }
 
                 // Check if can move
                 if (!WorldGrid.Instance[currentPosition].CanMove(neighbourPosition, unitType))
-                {
                     continue;
-                }
 
                 var neighbourCost = WorldGrid.Instance[currentPosition].GetTravelCost(neighbourPosition, unitType);
                 var newCost = currentCost + neighbourCost;
                 if (newCost > maxCost || runningCost.TryGetValue(neighbourPosition, out var oldCost) && newCost > oldCost)
-                {
                     continue;
-                }
 
                 runningCost[neighbourPosition] = newCost;
                 cameFrom[neighbourPosition] = currentPosition;
@@ -497,13 +487,9 @@ public static class GridUtility
                 var priority = newCost + heuristic;
 
                 if (frontier.Contains(neighbourPosition))
-                {
                     frontier[neighbourPosition] = priority;
-                }
                 else
-                {
                     frontier.Enqueue(neighbourPosition, priority);
-                }
             }
         }
 
@@ -537,15 +523,11 @@ public static class GridUtility
 
         // Nearest cells always visible
         if ((end - start).sqrMagnitude == 1)
-        {
             return true;
-        }
 
         // Return false if we have no LOS for end position
         if (!validator(start, end))
-        {
             return false;
-        }
 
         // Last point with LOS
         Vector2Int? prevPoint = null;
@@ -556,15 +538,11 @@ public static class GridUtility
             // Check distance from last point with LOS to current point
             // If it's greater than 1, then LOS is blocked
             if (prevPoint != null && GetBoxDistance(prevPoint.Value, point) > 1)
-            {
                 return false;
-            }
 
             // Skip point with out LOS
             if (!validator(start, point))
-            {
                 continue;
-            }
 
             // Do additional checks for diagonals
             if (prevPoint != null && prevPoint.Value.x != point.x && prevPoint.Value.y != point.y && // If direction from previous is diagonal

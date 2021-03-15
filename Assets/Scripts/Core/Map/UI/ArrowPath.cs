@@ -6,14 +6,14 @@ using UnityEngine;
 
 public class ArrowPath : SerializedMonoBehaviour
 {
-    [Header("Arrow sprites")]
+    [Header("Arrow Sprites")]
     [OdinSerialize] private readonly Dictionary<DirectionPair, Sprite> _arrowBodySprites = new Dictionary<DirectionPair, Sprite>();
     [OdinSerialize] private readonly Dictionary<Direction, Sprite> _arrowHeadSprites = new Dictionary<Direction, Sprite>();
     [OdinSerialize] private readonly Dictionary<Direction, Sprite> _cornersSprites = new Dictionary<Direction, Sprite>();
 
     [SerializeField] private ArrowSprite _arrowSpritePrefab;
 
-    #region Private fields and properties
+    #region Private Fields and Properties
 
     private Unit _unit;
     private UnitType UnitType => _unit.UnitType;
@@ -34,10 +34,6 @@ public class ArrowPath : SerializedMonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-        }
-
         if (_positions.Count == 0)
             return;
 
@@ -45,8 +41,7 @@ public class ArrowPath : SerializedMonoBehaviour
         for (var i = 1; i < _positions.Count; i++)
         {
             var curr = _positions[i];
-            Debug.DrawLine(_worldGrid.Grid.GetCellCenterWorld((Vector3Int) prev),
-                _worldGrid.Grid.GetCellCenterWorld((Vector3Int) curr), Color.yellow);
+            // Debug.DrawLine(_worldGrid.Grid.GetCellCenterWorld((Vector3Int) prev), _worldGrid.Grid.GetCellCenterWorld((Vector3Int) curr), Color.yellow);
             prev = curr;
         }
     }
@@ -62,7 +57,6 @@ public class ArrowPath : SerializedMonoBehaviour
         _travelCosts.Add(0);
 
         SpawnObject(_unit.GridPosition);
-        //Tail.drawMode = SpriteDrawMode.Sliced;
     }
 
     public void Move(Vector2Int position, bool performChecks = true)
@@ -81,9 +75,7 @@ public class ArrowPath : SerializedMonoBehaviour
         if (index > 0)
         {
             if (index == 1)
-            {
                 UpdateTailSprite();
-            }
 
             Truncate(index + 1);
             if (Head != null)
@@ -183,7 +175,6 @@ public class ArrowPath : SerializedMonoBehaviour
 
         _positions.Add(position);
         _travelCosts.Add(newCost);
-        //Debug.Log(newCost);
 
         if (Length == 2)
         {
@@ -193,8 +184,6 @@ public class ArrowPath : SerializedMonoBehaviour
 
     private void PostProcessPath(int start = 0)
     {
-        //if (!PostProcess)
-        //  return;
 
         bool MatchesPattern(int i, Direction first, Direction second, Vector2Int offset)
         {
@@ -237,7 +226,6 @@ public class ArrowPath : SerializedMonoBehaviour
                         _instantiatedObjects[key].transform.position = _worldGrid.Grid.GetCellCenterWorld((Vector3Int) _positions[key]);
                     }
                     
-                    //Debug.LogError("REVERT");
                     return;
                 }
 
@@ -301,19 +289,6 @@ public class ArrowPath : SerializedMonoBehaviour
         var positions = new List<Vector2Int>(_positions);
         positions.RemoveAt(0);
         var travelCost = _positions.Sum(pos => _worldGrid[pos].GetTravelCost(UnitType)); 
-                        // _worldGrid[positions[0]].GetTravelCost(_unitType);
-
-        // Post-processing for stairs cases
-        /*for (var i = 0; i < positions.Count - 2; i++)
-        {
-            if ((_worldGrid[positions[i]].IsStairs ||
-                _worldGrid[positions[i + 2]].IsStairs) &&
-                (positions[i] - positions[i + 2]).sqrMagnitude == 2)
-            {
-                Debug.LogError("This should not happen!");
-                positions.RemoveAt(i + 1);
-            }
-        }*/
 
         return new GridPath(positions, travelCost);
     }
@@ -344,34 +319,6 @@ public class ArrowPath : SerializedMonoBehaviour
             var sprite = GetBodySprite(direction);
             Tail.SetSprites(sprite);
             Tail.Cut(direction);
-
-            
-            /*Tail.sprite = sprite;
-            Tail.transform.position = 
-                _worldGrid.Grid.GetCellCenterWorld((Vector3Int) _unit.GridPosition);
-
-            switch (direction)
-            {
-                case Direction.Left:
-                    Tail.size = new Vector2(0.5f, 1f);
-                    Tail.transform.Translate(new Vector2(-0.25f, 0f));
-                    break;
-
-                case Direction.Right:
-                    Tail.size = new Vector2(0.5f, 1f);
-                    Tail.transform.Translate(new Vector2(0.25f, 0f));
-                    break;
-
-                case Direction.Up:
-                    Tail.size = new Vector2(1f, 0.5f);
-                    Tail.transform.Translate(new Vector2(0f, 0.25f));
-                    break;
-
-                case Direction.Down:
-                    Tail.size = new Vector2(1f, 0.5f);
-                    Tail.transform.Translate(new Vector2(0f, -0.25f));
-                    break;
-            }*/
         }
     }
 
@@ -386,11 +333,7 @@ public class ArrowPath : SerializedMonoBehaviour
         }
     }
 
-    private Sprite GetHeadSprite(Direction direction)
-    {
-        //Debug.LogError(direction);
-        return _arrowHeadSprites[direction];
-    }
+    private Sprite GetHeadSprite(Direction direction) => _arrowHeadSprites[direction];
 
     private Sprite GetBodySprite(Direction direction)
     {
@@ -413,7 +356,6 @@ public class ArrowPath : SerializedMonoBehaviour
     {
         var first = (Direction) Mathf.Min((int) directionNext, (int) directionPrev);
         var second = (Direction) Mathf.Max((int) directionNext, (int) directionPrev);
-        //Debug.Log(directionNext + "____" + directionPrev);
 
         return _arrowBodySprites[new DirectionPair(first, second)];
     }
