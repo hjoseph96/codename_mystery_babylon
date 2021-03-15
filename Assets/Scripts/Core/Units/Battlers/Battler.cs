@@ -343,10 +343,10 @@ public class Battler : SerializedMonoBehaviour
 
     protected virtual void NextAttack()
     {
-        if (currentAttackIndex != _attacks.Count - 1)
-            currentAttackIndex += 1;
-        else
+        if (targetBattler.State == BattlerState.Dead || currentAttackIndex == _attacks.Count - 1)
             FinishFighting();
+        else
+            currentAttackIndex += 1;
         
         currentlyAttacking = false;
     }

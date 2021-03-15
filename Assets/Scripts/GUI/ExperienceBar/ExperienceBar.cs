@@ -58,6 +58,7 @@ public class ExperienceBar : MonoBehaviour
         _timeSet = false;
         IsFilling = false;
         OnBarFilled = null;
+        _barSpawned = false;
 
         _barFillPrefab.transform.parent = null;
         Destroy(_barFill.gameObject);

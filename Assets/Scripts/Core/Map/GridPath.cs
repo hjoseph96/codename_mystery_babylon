@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine;
 
 public class GridPath
@@ -17,19 +16,10 @@ public class GridPath
         TravelCost = travelCost;
     }
 
-    /*public GridPath(Vector2Int position) : this(new List<Vector2Int>() { position }, 0)
-    { }*/
-
     public Vector2Int Pop()
     {
         var value = _path[0];
         _path.RemoveAt(0);
         return value;
     }
-
-    /*public GridPath Clone()
-    {
-        var pathClone = new List<Vector2Int>(_path);
-        return new GridPath(pathClone, TravelCost);
-    }*/
 }

@@ -111,7 +111,7 @@ public class AttackForecastMenu : Menu
         _defendingUnit.LookAt(attackerPosition);
         _defendingUnit.SetIdle();
         
-        CampaignManager.Instance.StartBattle(_attackingUnit, _defendingUnit, ConfirmSound);
+        CampaignManager.Instance.StartCombat(_attackingUnit, _defendingUnit, ConfirmSound);
         
         _attackingUnit.TookAction();
         

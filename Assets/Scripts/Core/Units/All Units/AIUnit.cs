@@ -21,6 +21,8 @@ public class AIUnit : Unit
                GridUtility.HasLineOfSight(GridPosition, position);
     }
 
+    public GridPath MovePath(Vector2Int destination) => GridUtility.FindPath(this, GridPosition, destination, this.CurrentMovementPoints);
+
     private void OnDrawGizmos()
     {
         if (!_showVisionRange || !Application.isPlaying)

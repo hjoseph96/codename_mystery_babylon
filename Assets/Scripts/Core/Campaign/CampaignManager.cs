@@ -28,9 +28,14 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     [ShowInInspector] public TurnPhase Phase { get { return _phase; } }
 
 
+    private List<Unit> _allUnits = new List<Unit>();
     [FoldoutGroup("Game State")]
-    [ReadOnly] private List<Unit> _allUnits = new List<Unit>();
+    [ShowInInspector] public List<Unit> AllUnits {  get { return _allUnits; } }
 
+    [FoldoutGroup("Battle UI")]
+    [SerializeField] private TurnDisplay _turnDisplay;
+    [FoldoutGroup("Battle UI")]
+    [SerializeField] private PhaseDisplay _phaseDisplay;
 
     [FoldoutGroup("Cameras")]
     public ProCamera2D GridCamera;
@@ -46,6 +51,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
     [HideInInspector] public CombatManager CombatManager;
     private WorldGrid _worldGrid;
+    private GridCursor _gridCursor;
 
 
     public void Init()
@@ -64,10 +70,18 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         ToggleCamera(_gridUICamera);
     }
 
-    public void AddUnit(Unit unit)
+
+    void Start()
     {
-        _allUnits.Add(unit);
+        BeginBattleMap();
     }
+
+    void Update()
+    {
+    }
+
+
+    public void AddUnit(Unit unit) => _allUnits.Add(unit);
 
     public void RemoveUnit(Unit unit)
     {
@@ -78,7 +92,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         _allUnits.Remove(unit);
     }
 
-    public void StartBattle(Unit attacker, Unit defender, string attackSound)
+    public void StartCombat(Unit attacker, Unit defender, string attackSound)
     {
         _gridTransitionFX.OnTransitionExitEnded += async delegate () {
             await new WaitForSeconds(1.6f);
@@ -110,22 +124,28 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         _gridTransitionFX.TransitionEnter();
     }
 
-    void SetAllUnitsIdle()
+    private void BeginBattleMap()
+    {
+        _turn = 1;
+        _phase = TurnPhase.Player;
+        _gridCursor = GridCursor.Instance;
+
+        _gridCursor.SetLockedMode();
+        _phaseDisplay.OnDisplayComplete += delegate ()
+        {
+            _turnDisplay.Show(_turn);
+            _gridCursor.SetFreeMode();
+        };
+
+        _phaseDisplay.Show(_phase);
+    }
+
+    private void SetAllUnitsIdle()
     {
         foreach(Unit unit in _allUnits)
             unit.SetIdle();
     }
-
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-
+    
     private void ToggleCamera(Camera camera)
     {
         camera.enabled = false;
