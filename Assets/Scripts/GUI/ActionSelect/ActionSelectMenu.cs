@@ -59,6 +59,9 @@ public class WaitOption : ActionMenuOption
     {
         Menu.ResetAndHide();
 
+        Menu.FinishTurnForUnit();
+
+        GridCursor.Instance.ClearAll();
         GridCursor.Instance.SetFreeMode();
         UserInput.Instance.InputTarget = GridCursor.Instance;
     }
@@ -145,10 +148,13 @@ public class ActionSelectMenu : Menu
         _inventoryMenu.PreviousMenu = this;
     }
 
-    public void ShowAttackForecast() {
+    public void ShowAttackForecast()
+    {
         _attackForecastMenu.Show(_selectedUnit);
         _attackForecastMenu.PreviousMenu = this;
     }
+
+    public void FinishTurnForUnit() => _selectedUnit.TookAction();
 
     private void ClearOptions()
     {
