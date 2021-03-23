@@ -1,10 +1,10 @@
 Using pre-set license
-Built from '2020.2/release' branch; Version is '2020.2.1f1 (270dd8c3da1c) revision 2559448'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10  (10.0.0) 64bit' Language: 'en' Physical Memory: 32658 MB
+Built from '2020.3/staging' branch; Version is '2020.3.0f1 (c7b5465681fb) revision 13088070'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 18363.1316; Version 1909; 64bit' Language: 'en' Physical Memory: 32658 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
-C:\Program Files\Unity\Hub\Editor\2020.2.1f1\Editor\Unity.exe
+C:\Program Files\Unity\Hub\Editor\2020.3.0f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
@@ -15,14 +15,14 @@ C:/Users/godkingherb/Divinity Soul
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-62948
+65440
 Successfully changed project path to: C:/Users/godkingherb/Divinity Soul
 C:/Users/godkingherb/Divinity Soul
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 200.47 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 204.31 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Initialize engine version: 2020.2.1f1 (270dd8c3da1c)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/Resources/UnitySubsystems
+Initialize engine version: 2020.3.0f1 (c7b5465681fb)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path C:/Users/godkingherb/Divinity Soul/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
@@ -37,1242 +37,272 @@ Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'O
 Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
 Initialize mono
-Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/Managed'
-Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
-Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56824
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56296
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.1f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
-Registered in 0.003666 seconds.
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
+Registered in 0.003621 seconds.
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 193.62 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 188.86 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  2.121 seconds
+- Completed reload, in  2.047 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.015312 seconds.
+Registered in 0.014498 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 212.93 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 212.19 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  2.418 seconds
+- Completed reload, in  2.292 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 1.99 ms, found 1 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.10 seconds
+Refreshing native plugins compatible for Editor in 2.23 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5041 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 342.4 MB.
-System memory in use after: 340.0 MB.
+Unloading 5183 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 356.7 MB.
+System memory in use after: 354.3 MB.
 
-Unloading 65 unused Assets to reduce memory usage. Loaded Objects now: 5569.
-Total: 23.220500 ms (FindLiveObjects: 1.040800 ms CreateObjectMapping: 0.642600 ms MarkObjects: 19.465400 ms  DeleteObjects: 2.069500 ms)
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 5714.
+Total: 17.859300 ms (FindLiveObjects: 0.505500 ms CreateObjectMapping: 0.300200 ms MarkObjects: 15.106800 ms  DeleteObjects: 1.945700 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Positive_02.wav
-  artifactKey: Guid(ef6360f13a267094db324b77b7db5820) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Positive_02.wav using Guid(ef6360f13a267094db324b77b7db5820) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '963b6f3b3f35603a5a7af43be4764a77') in 0.123318 seconds
-  Import took 0.131964 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000385 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Positive_01.wav
-  artifactKey: Guid(7b2615b664db9b54fa181f42bcb4988d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Positive_01.wav using Guid(7b2615b664db9b54fa181f42bcb4988d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7a9e62277161625a47ccdf36b9e9f9e4') in 0.008819 seconds
-  Import took 0.019000 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.789608 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Positive_03.wav
-  artifactKey: Guid(1cf4f80886b86e64ab21d635b2c293b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Positive_03.wav using Guid(1cf4f80886b86e64ab21d635b2c293b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b76a5121494cd4e3f2a50b4718b0771') in 0.009383 seconds
-  Import took 0.017707 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.057448 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Positive_03.wav
-  artifactKey: Guid(1cf4f80886b86e64ab21d635b2c293b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Positive_03.wav using Guid(1cf4f80886b86e64ab21d635b2c293b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b76a5121494cd4e3f2a50b4718b0771') in 0.007366 seconds
-  Import took 0.014554 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.621016 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_01.wav
-  artifactKey: Guid(d0670ddb040492849995d3a64226440d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_01.wav using Guid(d0670ddb040492849995d3a64226440d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '403026629bcc9be33167c4b3bf0c896f') in 0.008624 seconds
-  Import took 0.016236 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.019136 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_01.wav
-  artifactKey: Guid(d0670ddb040492849995d3a64226440d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_01.wav using Guid(d0670ddb040492849995d3a64226440d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '403026629bcc9be33167c4b3bf0c896f') in 0.006798 seconds
-  Import took 0.014299 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 8.340268 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_02.wav
-  artifactKey: Guid(4e1828941a719ab4cba65cb69e7b923f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_02.wav using Guid(4e1828941a719ab4cba65cb69e7b923f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b3c06d83fcd5526476eaa1380eb59b1') in 0.011553 seconds
-  Import took 0.020948 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.020476 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_02.wav
-  artifactKey: Guid(4e1828941a719ab4cba65cb69e7b923f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_02.wav using Guid(4e1828941a719ab4cba65cb69e7b923f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b3c06d83fcd5526476eaa1380eb59b1') in 0.007685 seconds
-  Import took 0.015321 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.016145 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_03.wav
-  artifactKey: Guid(aeec44dcca12ccf459bd6162d2d0399a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_03.wav using Guid(aeec44dcca12ccf459bd6162d2d0399a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '000ebed0ebd55b603d41e48d3d45a186') in 0.019568 seconds
-  Import took 0.027489 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.008382 seconds.
-  path: Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_03.wav
-  artifactKey: Guid(aeec44dcca12ccf459bd6162d2d0399a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sound/SFX/UI/UI Medieval SFX/UI_MEDIEVAL_Jingle_Orchestral_Neutral_03.wav using Guid(aeec44dcca12ccf459bd6162d2d0399a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '000ebed0ebd55b603d41e48d3d45a186') in 0.006150 seconds
-  Import took 0.012975 seconds .
+  path: Assets/Scripts/Core/Units/AI Behaviors/Actions/AttackAction.cs
+  artifactKey: Guid(11c82f4087537ee4cb8ee0c1a4f44cef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Core/Units/AI Behaviors/Actions/AttackAction.cs using Guid(11c82f4087537ee4cb8ee0c1a4f44cef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '56502e47aa33603dbfcc31fe847e235c') in 0.029509 seconds
+  Import took 0.037569 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013566 seconds.
+Registered in 0.013272 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.18 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.24 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.460 seconds
+- Completed reload, in  1.568 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.0 MB.
-System memory in use after: 302.6 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5582.
-Total: 20.215200 ms (FindLiveObjects: 0.779300 ms CreateObjectMapping: 0.435900 ms MarkObjects: 16.949600 ms  DeleteObjects: 2.049000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013515 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.18 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.462 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.1 MB.
-System memory in use after: 302.7 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5586.
-Total: 19.488300 ms (FindLiveObjects: 0.457300 ms CreateObjectMapping: 0.241000 ms MarkObjects: 16.635900 ms  DeleteObjects: 2.152900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013245 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.480 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.1 MB.
-System memory in use after: 302.7 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5590.
-Total: 18.981700 ms (FindLiveObjects: 0.464900 ms CreateObjectMapping: 0.246900 ms MarkObjects: 15.930200 ms  DeleteObjects: 2.338400 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013311 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.96 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.547 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.92 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.1 MB.
-System memory in use after: 302.8 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5594.
-Total: 19.279500 ms (FindLiveObjects: 0.450500 ms CreateObjectMapping: 0.251100 ms MarkObjects: 16.294000 ms  DeleteObjects: 2.282700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.016593 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.508 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.0 MB.
-System memory in use after: 302.6 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5598.
-Total: 18.741100 ms (FindLiveObjects: 0.478300 ms CreateObjectMapping: 0.261100 ms MarkObjects: 15.647700 ms  DeleteObjects: 2.353200 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013776 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.551 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.2 MB.
-System memory in use after: 302.8 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5602.
-Total: 21.504400 ms (FindLiveObjects: 0.487900 ms CreateObjectMapping: 0.274000 ms MarkObjects: 18.158800 ms  DeleteObjects: 2.582400 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013412 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.541 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.92 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.2 MB.
-System memory in use after: 302.8 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5606.
-Total: 19.348200 ms (FindLiveObjects: 0.461600 ms CreateObjectMapping: 0.303100 ms MarkObjects: 16.197400 ms  DeleteObjects: 2.385100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.014131 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.13 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.508 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.90 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.2 MB.
-System memory in use after: 302.8 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5610.
-Total: 19.608400 ms (FindLiveObjects: 0.514200 ms CreateObjectMapping: 0.251700 ms MarkObjects: 16.348100 ms  DeleteObjects: 2.493500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013551 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.484 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.12 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.2 MB.
-System memory in use after: 302.8 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5614.
-Total: 19.283200 ms (FindLiveObjects: 0.463800 ms CreateObjectMapping: 0.250100 ms MarkObjects: 16.041000 ms  DeleteObjects: 2.527600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013507 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.21 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.482 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.0 MB.
-System memory in use after: 302.6 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5618.
-Total: 20.494700 ms (FindLiveObjects: 0.435000 ms CreateObjectMapping: 0.281200 ms MarkObjects: 17.345000 ms  DeleteObjects: 2.432100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013500 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 3.30 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.479 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 3.06 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 302.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5622.
-Total: 19.808900 ms (FindLiveObjects: 0.443900 ms CreateObjectMapping: 0.285800 ms MarkObjects: 16.632100 ms  DeleteObjects: 2.446000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013869 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.489 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.91 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.2 MB.
-System memory in use after: 302.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5626.
-Total: 18.768300 ms (FindLiveObjects: 0.432800 ms CreateObjectMapping: 0.273800 ms MarkObjects: 15.704500 ms  DeleteObjects: 2.356500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013402 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.17 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.605 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 302.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5630.
-Total: 19.889800 ms (FindLiveObjects: 0.499700 ms CreateObjectMapping: 0.265200 ms MarkObjects: 16.659000 ms  DeleteObjects: 2.464700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.014288 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.532 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.92 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 302.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5634.
-Total: 19.595600 ms (FindLiveObjects: 0.442800 ms CreateObjectMapping: 0.269000 ms MarkObjects: 16.411900 ms  DeleteObjects: 2.471000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013471 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.499 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.1 MB.
-System memory in use after: 302.7 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5638.
-Total: 21.468500 ms (FindLiveObjects: 0.467500 ms CreateObjectMapping: 0.244500 ms MarkObjects: 17.771700 ms  DeleteObjects: 2.983500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.014052 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.11 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.520 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.25 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 306.3 MB.
-System memory in use after: 303.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5642.
-Total: 19.491000 ms (FindLiveObjects: 0.435500 ms CreateObjectMapping: 0.252600 ms MarkObjects: 16.384900 ms  DeleteObjects: 2.417100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.014705 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.90 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.505 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 302.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5646.
-Total: 19.723700 ms (FindLiveObjects: 0.436600 ms CreateObjectMapping: 0.280000 ms MarkObjects: 16.444800 ms  DeleteObjects: 2.561400 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013706 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.491 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.91 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 302.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5650.
-Total: 20.101600 ms (FindLiveObjects: 0.448700 ms CreateObjectMapping: 0.266100 ms MarkObjects: 16.792600 ms  DeleteObjects: 2.593100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013148 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.17 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.505 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.46 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 306.3 MB.
-System memory in use after: 303.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5654.
-Total: 20.275700 ms (FindLiveObjects: 0.478400 ms CreateObjectMapping: 0.253700 ms MarkObjects: 16.946600 ms  DeleteObjects: 2.595900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013423 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.32 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.550 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.92 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.1 MB.
-System memory in use after: 302.7 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5658.
-Total: 23.308400 ms (FindLiveObjects: 0.468300 ms CreateObjectMapping: 0.294000 ms MarkObjects: 19.196400 ms  DeleteObjects: 3.348200 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013456 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.00 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.557 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 302.9 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5662.
-Total: 20.387100 ms (FindLiveObjects: 0.489800 ms CreateObjectMapping: 0.274800 ms MarkObjects: 17.086600 ms  DeleteObjects: 2.534700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013297 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.08 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.483 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 303.0 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5666.
-Total: 19.762800 ms (FindLiveObjects: 0.481300 ms CreateObjectMapping: 0.251200 ms MarkObjects: 16.571400 ms  DeleteObjects: 2.457900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.018479 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.16 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.531 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.92 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 303.0 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5670.
-Total: 19.354500 ms (FindLiveObjects: 0.455400 ms CreateObjectMapping: 0.279700 ms MarkObjects: 16.226100 ms  DeleteObjects: 2.392600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013377 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.485 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.4 MB.
-System memory in use after: 303.0 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5674.
-Total: 19.916500 ms (FindLiveObjects: 0.460000 ms CreateObjectMapping: 0.299400 ms MarkObjects: 16.656700 ms  DeleteObjects: 2.499700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013481 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.97 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.509 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.96 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 306.2 MB.
-System memory in use after: 303.8 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5678.
-Total: 19.314200 ms (FindLiveObjects: 0.510800 ms CreateObjectMapping: 0.338700 ms MarkObjects: 16.030800 ms  DeleteObjects: 2.433000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013316 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.534 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.4 MB.
-System memory in use after: 303.0 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5682.
-Total: 19.272700 ms (FindLiveObjects: 0.432800 ms CreateObjectMapping: 0.270900 ms MarkObjects: 16.143300 ms  DeleteObjects: 2.424900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013347 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.97 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.526 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 303.0 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5686.
-Total: 21.425600 ms (FindLiveObjects: 0.476700 ms CreateObjectMapping: 0.304200 ms MarkObjects: 17.248900 ms  DeleteObjects: 3.394800 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013229 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.07 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.465 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.02 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.4 MB.
-System memory in use after: 303.0 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5690.
-Total: 19.601800 ms (FindLiveObjects: 0.463400 ms CreateObjectMapping: 0.270700 ms MarkObjects: 16.430200 ms  DeleteObjects: 2.436900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013293 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.09 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.514 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.21 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.4 MB.
-System memory in use after: 303.0 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5694.
-Total: 19.497900 ms (FindLiveObjects: 0.440800 ms CreateObjectMapping: 0.279300 ms MarkObjects: 16.338300 ms  DeleteObjects: 2.438600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.014223 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.98 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.515 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.2 MB.
-System memory in use after: 302.8 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5698.
-Total: 19.882000 ms (FindLiveObjects: 0.469200 ms CreateObjectMapping: 0.252600 ms MarkObjects: 16.560800 ms  DeleteObjects: 2.598600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013810 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.01 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.575 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.03 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.4 MB.
-System memory in use after: 303.0 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5702.
-Total: 20.495200 ms (FindLiveObjects: 0.495000 ms CreateObjectMapping: 0.292400 ms MarkObjects: 17.165000 ms  DeleteObjects: 2.541100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.016160 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.83 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.552 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.5 MB.
-System memory in use after: 303.1 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5706.
-Total: 19.648600 ms (FindLiveObjects: 0.458100 ms CreateObjectMapping: 0.287400 ms MarkObjects: 16.427200 ms  DeleteObjects: 2.475100 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013478 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.04 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.491 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.00 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.5 MB.
-System memory in use after: 303.1 MB.
-
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5710.
-Total: 20.115500 ms (FindLiveObjects: 0.491800 ms CreateObjectMapping: 0.268300 ms MarkObjects: 16.827800 ms  DeleteObjects: 2.526600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013342 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for LinuxStandalone target not found
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Native extension for WebGL target not found
 Refreshing native plugins compatible for Editor in 2.20 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.501 seconds
-Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 306.4 MB.
-System memory in use after: 304.1 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 314.5 MB.
+System memory in use after: 312.2 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5714.
-Total: 19.632600 ms (FindLiveObjects: 0.466400 ms CreateObjectMapping: 0.241800 ms MarkObjects: 16.384400 ms  DeleteObjects: 2.538900 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5719.
+Total: 18.758500 ms (FindLiveObjects: 0.465800 ms CreateObjectMapping: 0.292700 ms MarkObjects: 16.031500 ms  DeleteObjects: 1.967400 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.014554 seconds.
+Registered in 0.013391 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.06 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.25 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.508 seconds
+- Completed reload, in  1.555 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.31 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.2 MB.
-System memory in use after: 302.9 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 314.7 MB.
+System memory in use after: 312.3 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5718.
-Total: 19.183300 ms (FindLiveObjects: 0.471900 ms CreateObjectMapping: 0.253600 ms MarkObjects: 15.987500 ms  DeleteObjects: 2.469500 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5724.
+Total: 19.436500 ms (FindLiveObjects: 0.481600 ms CreateObjectMapping: 0.256100 ms MarkObjects: 16.517600 ms  DeleteObjects: 2.180300 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013345 seconds.
+Registered in 0.014570 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.30 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.488 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.21 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 314.7 MB.
+System memory in use after: 312.3 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5729.
+Total: 18.714200 ms (FindLiveObjects: 0.406300 ms CreateObjectMapping: 0.261600 ms MarkObjects: 15.820800 ms  DeleteObjects: 2.224500 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 1598.351450 seconds.
+  path: Assets/Sprites/Character/zenovia/portraits/zenovia_5.png
+  artifactKey: Guid(cc1cede51fc35ba40913baf18e043cf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Character/zenovia/portraits/zenovia_5.png using Guid(cc1cede51fc35ba40913baf18e043cf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ea40b49a848ee3f098abc21b4e1f32b8') in 0.101031 seconds
+  Import took 0.110047 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.015413 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.22 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.525 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.20 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.0 MB.
+System memory in use after: 315.6 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5740.
+Total: 18.326600 ms (FindLiveObjects: 0.460500 ms CreateObjectMapping: 0.270800 ms MarkObjects: 15.584600 ms  DeleteObjects: 2.009300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.013952 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.39 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.463 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.20 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 317.8 MB.
+System memory in use after: 315.4 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5745.
+Total: 19.034000 ms (FindLiveObjects: 0.417000 ms CreateObjectMapping: 0.275000 ms MarkObjects: 15.973100 ms  DeleteObjects: 2.368100 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.013916 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.44 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.521 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.20 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.6 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5750.
+Total: 19.000300 ms (FindLiveObjects: 0.427900 ms CreateObjectMapping: 0.236300 ms MarkObjects: 16.006300 ms  DeleteObjects: 2.328800 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.013622 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
@@ -1284,334 +314,515 @@ Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.520 seconds
+- Completed reload, in  1.454 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.20 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.5 MB.
-System memory in use after: 303.1 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5722.
-Total: 19.401100 ms (FindLiveObjects: 0.464100 ms CreateObjectMapping: 0.276300 ms MarkObjects: 16.215900 ms  DeleteObjects: 2.444100 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5755.
+Total: 19.104500 ms (FindLiveObjects: 0.442900 ms CreateObjectMapping: 0.272200 ms MarkObjects: 15.996700 ms  DeleteObjects: 2.391700 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013228 seconds.
+Registered in 0.013625 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.99 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.29 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.531 seconds
+- Completed reload, in  1.505 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.18 ms, found 1 plugins.
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.29 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 306.5 MB.
-System memory in use after: 304.1 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5726.
-Total: 20.487500 ms (FindLiveObjects: 0.496200 ms CreateObjectMapping: 0.250800 ms MarkObjects: 17.209500 ms  DeleteObjects: 2.529900 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5760.
+Total: 20.561400 ms (FindLiveObjects: 0.510500 ms CreateObjectMapping: 0.290400 ms MarkObjects: 17.235700 ms  DeleteObjects: 2.523600 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.014422 seconds.
+Registered in 0.013730 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.96 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.33 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.538 seconds
+- Completed reload, in  1.493 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.97 ms, found 1 plugins.
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.21 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.5 MB.
-System memory in use after: 303.1 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5730.
-Total: 19.610400 ms (FindLiveObjects: 0.464300 ms CreateObjectMapping: 0.233400 ms MarkObjects: 16.436300 ms  DeleteObjects: 2.475600 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5765.
+Total: 19.227600 ms (FindLiveObjects: 0.434100 ms CreateObjectMapping: 0.242600 ms MarkObjects: 16.105000 ms  DeleteObjects: 2.445200 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013247 seconds.
+Registered in 0.013299 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.19 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.497 seconds
+- Completed reload, in  1.490 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.98 ms, found 1 plugins.
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.24 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.5 MB.
-System memory in use after: 303.1 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 317.9 MB.
+System memory in use after: 315.4 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5734.
-Total: 20.140100 ms (FindLiveObjects: 0.509200 ms CreateObjectMapping: 0.296000 ms MarkObjects: 16.791800 ms  DeleteObjects: 2.542000 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5770.
+Total: 19.418000 ms (FindLiveObjects: 0.440000 ms CreateObjectMapping: 0.296000 ms MarkObjects: 16.134900 ms  DeleteObjects: 2.546100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 667.266691 seconds.
+  path: Assets/ScriptableObjects/Classes/Infantry.asset
+  artifactKey: Guid(076da26e37b75284c9cb18be67ffaa2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/Classes/Infantry.asset using Guid(076da26e37b75284c9cb18be67ffaa2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21feb93c6103f89677aed5f3b4c834f9') in 0.093770 seconds
+  Import took 0.102243 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008561 seconds.
+  path: Assets/ScriptableObjects/Classes/Infantry.asset
+  artifactKey: Guid(076da26e37b75284c9cb18be67ffaa2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/Classes/Infantry.asset using Guid(076da26e37b75284c9cb18be67ffaa2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21feb93c6103f89677aed5f3b4c834f9') in 0.003204 seconds
+  Import took 0.010933 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013879 seconds.
+Registered in 0.013680 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.00 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.39 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.485 seconds
+- Completed reload, in  1.474 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.96 ms, found 1 plugins.
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.24 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.3 MB.
-System memory in use after: 302.9 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5738.
-Total: 20.700400 ms (FindLiveObjects: 0.614500 ms CreateObjectMapping: 0.477600 ms MarkObjects: 17.120300 ms  DeleteObjects: 2.486700 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5775.
+Total: 18.339700 ms (FindLiveObjects: 0.437700 ms CreateObjectMapping: 0.273500 ms MarkObjects: 15.189000 ms  DeleteObjects: 2.438700 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013271 seconds.
+Registered in 0.013825 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.17 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.39 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.549 seconds
+- Completed reload, in  1.478 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.94 ms, found 1 plugins.
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.22 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.5 MB.
-System memory in use after: 303.1 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5742.
-Total: 19.511100 ms (FindLiveObjects: 0.475400 ms CreateObjectMapping: 0.249500 ms MarkObjects: 16.325900 ms  DeleteObjects: 2.459500 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5780.
+Total: 19.097300 ms (FindLiveObjects: 0.479100 ms CreateObjectMapping: 0.291500 ms MarkObjects: 15.836800 ms  DeleteObjects: 2.488500 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013276 seconds.
+Registered in 0.013513 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.96 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.24 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.502 seconds
+- Completed reload, in  1.519 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 1 plugins.
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.20 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.5 MB.
-System memory in use after: 303.2 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5746.
-Total: 19.399800 ms (FindLiveObjects: 0.461700 ms CreateObjectMapping: 0.277700 ms MarkObjects: 16.172300 ms  DeleteObjects: 2.487200 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5785.
+Total: 19.286400 ms (FindLiveObjects: 0.435800 ms CreateObjectMapping: 0.280300 ms MarkObjects: 16.090300 ms  DeleteObjects: 2.478800 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.014717 seconds.
+Registered in 0.013470 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.97 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.29 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.497 seconds
+- Completed reload, in  1.513 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.91 ms, found 1 plugins.
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 3.94 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 306.5 MB.
-System memory in use after: 304.2 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5750.
-Total: 19.496300 ms (FindLiveObjects: 0.483100 ms CreateObjectMapping: 0.257600 ms MarkObjects: 16.262600 ms  DeleteObjects: 2.492200 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5790.
+Total: 18.847200 ms (FindLiveObjects: 0.467800 ms CreateObjectMapping: 0.288300 ms MarkObjects: 15.478400 ms  DeleteObjects: 2.611700 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013191 seconds.
+Registered in 0.013649 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.40 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.532 seconds
+- Completed reload, in  1.494 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.96 ms, found 1 plugins.
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.24 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.5 MB.
-System memory in use after: 303.1 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 317.9 MB.
+System memory in use after: 315.5 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5754.
-Total: 19.960500 ms (FindLiveObjects: 0.490300 ms CreateObjectMapping: 0.243500 ms MarkObjects: 16.669500 ms  DeleteObjects: 2.556200 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5795.
+Total: 19.289000 ms (FindLiveObjects: 0.414400 ms CreateObjectMapping: 0.275000 ms MarkObjects: 16.119400 ms  DeleteObjects: 2.479500 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013214 seconds.
+Registered in 0.013904 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.96 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.22 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.507 seconds
+- Completed reload, in  1.528 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 2.04 ms, found 1 plugins.
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.31 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 305.4 MB.
-System memory in use after: 303.0 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5758.
-Total: 19.752600 ms (FindLiveObjects: 0.482400 ms CreateObjectMapping: 0.243300 ms MarkObjects: 16.559400 ms  DeleteObjects: 2.466500 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5800.
+Total: 19.812200 ms (FindLiveObjects: 0.464700 ms CreateObjectMapping: 0.254900 ms MarkObjects: 16.543500 ms  DeleteObjects: 2.548100 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.013285 seconds.
+Registered in 0.013883 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for LinuxStandalone target not found
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.95 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 2.23 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.514 seconds
+- Completed reload, in  1.550 seconds
 Platform modules already initialized, skipping
-Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
 Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
 Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
-Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
-Refreshing native plugins compatible for Editor in 1.92 ms, found 1 plugins.
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.21 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4505 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 306.6 MB.
-System memory in use after: 304.2 MB.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.1 MB.
+System memory in use after: 315.7 MB.
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 5762.
-Total: 18.976300 ms (FindLiveObjects: 0.451500 ms CreateObjectMapping: 0.270300 ms MarkObjects: 15.817300 ms  DeleteObjects: 2.436400 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5805.
+Total: 20.130300 ms (FindLiveObjects: 0.471900 ms CreateObjectMapping: 0.310000 ms MarkObjects: 16.758100 ms  DeleteObjects: 2.588400 ms)
 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.015544 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.57 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.550 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.43 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.2 MB.
+System memory in use after: 315.7 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5810.
+Total: 19.017600 ms (FindLiveObjects: 0.507900 ms CreateObjectMapping: 0.309000 ms MarkObjects: 15.660200 ms  DeleteObjects: 2.539200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.013390 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.24 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.508 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.25 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.2 MB.
+System memory in use after: 315.8 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5815.
+Total: 19.040900 ms (FindLiveObjects: 0.475300 ms CreateObjectMapping: 0.253600 ms MarkObjects: 15.752100 ms  DeleteObjects: 2.559100 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.013480 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.36 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.561 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.22 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.0 MB.
+System memory in use after: 315.6 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5820.
+Total: 24.440800 ms (FindLiveObjects: 0.454400 ms CreateObjectMapping: 0.294700 ms MarkObjects: 20.034200 ms  DeleteObjects: 3.655600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.015271 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.54 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.518 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.21 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.2 MB.
+System memory in use after: 315.8 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5825.
+Total: 19.435200 ms (FindLiveObjects: 0.498600 ms CreateObjectMapping: 0.309200 ms MarkObjects: 15.962600 ms  DeleteObjects: 2.663700 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.013375 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 2.22 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.510 seconds
+Platform modules already initialized, skipping
+Shader 'NeatWolf/NW_Particle Rim AddSmooth': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Shader 'NeatWolf/NW_Particle Rim AddSmooth 2S': fallback shader 'Particles/Additive (Soft)' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark Optimized': dependency 'BillboardShader' shader 'Hidden/Nature/Tree Creator/Bark Rendertex' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Bark': dependency 'OptimizedShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creato/Bark Optimized' not found
+Shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Fast Optimized': dependency 'BillboardShader' shader 'VacuumShaders/Advanced Dissolve/Nature/Tree Creator/Leaves Rendertex' not found
+Refreshing native plugins compatible for Editor in 2.21 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4641 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 318.2 MB.
+System memory in use after: 315.8 MB.
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 5830.
+Total: 18.861600 ms (FindLiveObjects: 0.427100 ms CreateObjectMapping: 0.292600 ms MarkObjects: 15.638800 ms  DeleteObjects: 2.502200 ms)
+

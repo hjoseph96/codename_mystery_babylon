@@ -4,5 +4,5 @@ public enum TurnPhase
     Enemy,
     OtherEnemy,
     Ally,
-    Other
+    Neutral
 }

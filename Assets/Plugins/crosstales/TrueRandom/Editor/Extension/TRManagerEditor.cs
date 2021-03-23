@@ -127,7 +127,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                   {
                      script.GenerateInteger(intMin, intMax, Mathf.Abs(intNumber));
                   }
-
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
                   GUI.enabled = script.CurrentIntegers.Count > 0;
                   if (GUILayout.Button(new GUIContent(" Save TXT", EditorHelper.Icon_Save, "Save random integers as text-file.")))
                   {
@@ -137,7 +137,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                         Util.Helper.SaveAsText(path, script.CurrentIntegers);
                      }
                   }
-
+#endif
                   GUI.enabled = true;
 
                   EditorGUI.indentLevel++;
@@ -173,7 +173,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                   {
                      script.GenerateFloat(floatMin, floatMax, Mathf.Abs(floatNumber));
                   }
-
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
                   GUI.enabled = script.CurrentFloats.Count > 0;
                   if (GUILayout.Button(new GUIContent(" Save TXT", EditorHelper.Icon_Save, "Save random floats as text-file.")))
                   {
@@ -183,7 +183,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                         Util.Helper.SaveAsText(path, script.CurrentFloats);
                      }
                   }
-
+#endif
                   EditorGUI.indentLevel++;
 
                   showFloatResults = EditorGUILayout.Foldout(showFloatResults, $"Results ({script.CurrentFloats.Count})");
@@ -217,7 +217,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                   {
                      script.GenerateSequence(seqtMin, seqMax, seqNumber);
                   }
-
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
                   GUI.enabled = script.CurrentSequence.Count > 0;
                   if (GUILayout.Button(new GUIContent(" Save TXT", EditorHelper.Icon_Save, "Save random sequence as text-file.")))
                   {
@@ -227,7 +227,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                         Util.Helper.SaveAsText(path, script.CurrentSequence);
                      }
                   }
-
+#endif
                   EditorGUI.indentLevel++;
 
                   showSeqResults = EditorGUILayout.Foldout(showSeqResults, "Results (" + script.CurrentSequence.Count + ")");
@@ -264,7 +264,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                   {
                      script.GenerateString(stringLength, stringNumber, digits, upper, lower, unique);
                   }
-
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
                   GUI.enabled = script.CurrentStrings.Count > 0;
                   if (GUILayout.Button(new GUIContent(" Save TXT", EditorHelper.Icon_Save, "Save random strings as text-file.")))
                   {
@@ -274,7 +274,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                         Util.Helper.SaveAsText(path, script.CurrentStrings);
                      }
                   }
-
+#endif
                   EditorGUI.indentLevel++;
 
                   showStringResults = EditorGUILayout.Foldout(showStringResults, "Results (" + script.CurrentStrings.Count + ")");
@@ -308,7 +308,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                   {
                      script.GenerateVector2(vector2Min, vector2Max, Mathf.Abs(vector2Number));
                   }
-
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
                   GUI.enabled = script.CurrentVector2.Count > 0;
                   if (GUILayout.Button(new GUIContent(" Save TXT", EditorHelper.Icon_Save, "Save random Vector2 as text-file.")))
                   {
@@ -318,7 +318,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                         Util.Helper.SaveAsText(path, script.CurrentVector2);
                      }
                   }
-
+#endif
                   EditorGUI.indentLevel++;
 
                   showVector2Results = EditorGUILayout.Foldout(showVector2Results, "Results (" + script.CurrentVector2.Count + ")");
@@ -352,7 +352,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                   {
                      script.GenerateVector3(vector3Min, vector3Max, Mathf.Abs(vector3Number));
                   }
-
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
                   GUI.enabled = script.CurrentVector3.Count > 0;
                   if (GUILayout.Button(new GUIContent(" Save TXT", EditorHelper.Icon_Save, "Save random Vector3 as text-file.")))
                   {
@@ -362,7 +362,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                         Util.Helper.SaveAsText(path, script.CurrentVector3);
                      }
                   }
-
+#endif
                   EditorGUI.indentLevel++;
 
                   showVector3Results = EditorGUILayout.Foldout(showVector3Results, "Results (" + script.CurrentVector3.Count + ")");
@@ -397,7 +397,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                   {
                      script.GenerateVector4(vector4Min, vector4Max, Mathf.Abs(vector4Number));
                   }
-
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
                   GUI.enabled = script.CurrentVector4.Count > 0;
                   if (GUILayout.Button(new GUIContent(" Save TXT", EditorHelper.Icon_Save, "Save random Vector4 as text-file.")))
                   {
@@ -407,7 +407,7 @@ namespace Crosstales.TrueRandom.EditorExtension
                         Util.Helper.SaveAsText(path, script.CurrentVector4);
                      }
                   }
-
+#endif
                   EditorGUI.indentLevel++;
 
                   showVector4Results = EditorGUILayout.Foldout(showVector4Results, "Results (" + script.CurrentVector4.Count + ")");

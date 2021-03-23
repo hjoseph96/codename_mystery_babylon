@@ -10,7 +10,8 @@ public class Magician : Battler
     private bool _attackingWithMagic = false;
 
     private bool _circleSpawned = false;
-    private ParticleLifetimeEvents _spellCircle = new ParticleLifetimeEvents();
+    private GameObject _spellCircleInstance;
+    private ParticleSystem _spellCircle = new ParticleSystem();
     private bool _effectSpawned = false;
     private MagicEffect _magicEffect = new MagicEffect();
 
@@ -62,6 +63,18 @@ public class Magician : Battler
         }
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        if (_circleSpawned && _spellCircle != null && _spellCircle.time > 0.97f)
+        {
+            _spellCircle = null;
+            Destroy(_spellCircleInstance);
+            ReleaseSpell();
+        }
+    }
+
     // Animation Event Handlers
 
     protected override void NextAttack()
@@ -82,15 +95,11 @@ public class Magician : Battler
             var spellCircleObj = Instantiate(
                 magicCircle, _spellCircleSpawnPoint.position, magicCircle.transform.rotation
             );
-            _spellCircle = spellCircleObj.GetComponentInChildren<ParticleLifetimeEvents>();
+            _spellCircleInstance = spellCircleObj;
+            _spellCircle = spellCircleObj.GetComponentInChildren<ParticleSystem>();
             
             MasterAudio.PlaySound3DFollowTransform(Unit.EquippedWeapon.castingSound, CampaignManager.AudioListenerTransform);
             _circleSpawned = true;
-            
-            _spellCircle.ParticleDied += delegate () {
-                Destroy(spellCircleObj);
-                ReleaseSpell();
-            };
         }
     }
 

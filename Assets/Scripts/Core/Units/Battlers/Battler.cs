@@ -4,8 +4,9 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 using UnityEngine;
+ #if UNITY_EDITOR
 using UnityEditor.Animations;
-
+#endif
 using Sirenix.OdinInspector;
 using DarkTonic.MasterAudio;
 
@@ -25,7 +26,8 @@ public class Battler : SerializedMonoBehaviour
     private PostEffectMaskRenderer _pixelateShaderRenderer;
     [FoldoutGroup("Animation Overrides")]
     public Dictionary<string, int> AnimationsAsHashes = new Dictionary<string, int>();
-        
+    
+    #if UNITY_EDITOR
     [FoldoutGroup("Animation Overrides"), PropertyOrder(0)]
     [Button(ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
     private void SetAnimationStateNames()   // Get State Names from Animator in Editor, turn to hashes
@@ -38,7 +40,8 @@ public class Battler : SerializedMonoBehaviour
         foreach (ChildAnimatorState s in states)
             AnimationsAsHashes.Add(s.state.name, Animator.StringToHash(s.state.name));
     }
-
+    #endif
+    
     [FoldoutGroup("Animation Overrides")]
     [SerializeField] private Dictionary<string, float> animationRotations = new Dictionary<string, float>();
     private float _defaultRotation;
@@ -129,7 +132,7 @@ public class Battler : SerializedMonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (Animator == null)
             return;
@@ -343,7 +346,8 @@ public class Battler : SerializedMonoBehaviour
 
     protected virtual void NextAttack()
     {
-        if (targetBattler.State == BattlerState.Dead || currentAttackIndex == _attacks.Count - 1)
+        bool targetDead = CurrentAttack.Landed && CurrentAttack.Damage(targetBattler.Unit) > targetBattler.Unit.CurrentHealth;
+        if (targetDead || currentAttackIndex == _attacks.Count - 1)
             FinishFighting();
         else
             currentAttackIndex += 1;

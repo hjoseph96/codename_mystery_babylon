@@ -1,0 +1,207 @@
+
+Mesh "ag_pelo1_Z_Cabello_0" uses material "Z_Cabello"
+Mesh "espada_funda_espada_funda_mat_0_0" uses material "espada_funda_mat"
+Mesh "piso_piso_mat_0_0" uses material "piso_mat"
+Mesh "piernas_J_Piernas_0_0" uses material "J_Piernas"
+Mesh "Cinturon_gab_Cinturon_gab1_0_0" uses material "Cinturon_gab1"
+Mesh "Hombreras_coderas_E_Hombreras_coderas_0_0" uses material "E_Hombreras_coderas"
+Mesh "Brazos_cuello_D_Brazos_Cuello_0_0" uses material "D_Brazos_Cuello"
+Mesh "hevillas_torso_H_hevillas_torso_0_0" uses material "H_hevillas_torso"
+Mesh "armadura_C_Armadura_0_0" uses material "C_Armadura"
+Mesh "ojos_B_Ojos_0_0" uses material "B_Ojos"
+Mesh "gabardina_ext_F_Gabardina_0_0" uses material "F_Gabardina"
+Mesh "gabardina_interior_G_Gabardina_interior_0_0" uses material "G_Gabardina_interior"
+Mesh "Pelo_Z_Cabello_0_0" uses material "Z_Cabello"
+Mesh "cabeza_A_Cabeza_0_0" uses material "A_Cabeza"
+
+Material "Z_Cabello" has ID 418c914e-5cb9-40ca-844d-770ec972d741.
+	AO: PELO_occ.jpg
+	Opacity: PELO_transparencia.jpg
+	Albedo: PELO_albedo.jpg
+	Cavity: PELO_cavidad.jpg
+	Normal: PELO__normals.jpg
+	Anisotropy: 1
+	Specular F0: 0.513910061
+	Diffuse colour: PELO_albedo.jpg
+	Metalness: 0
+	Roughness: 0.7
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: PELO_occ.jpg
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "espada_funda_mat" has ID e2de571a-f8e3-4bd4-a924-d2ab1a3210cc.
+	AO: espada_combinada_espada_OCC.jpg
+	Albedo: espada_combinada_espada_ALBEDO.jpg
+	Normal: espada_combinada_espada_NORM.jpg
+	Specular F0: 0.5
+	Diffuse colour: espada_combinada_espada_ALBEDO.jpg
+	Metalness: espada_combinada_espada_METAL.jpg
+	Roughness: espada_combinada_espada_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: espada_combinada_espada_OCC.jpg
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "piso_mat" has ID 7d84ae59-5ec1-42aa-9bbc-b13b5aff25b7.
+	AO: piso_baja_piso_OCC.jpg
+	Opacity: piso_baja_piso_TRANSPARENCIA.jpg
+	Albedo: piso_baja_piso_ALBEDO.jpg
+	Normal: piso_baja_piso_NORM.jpg
+	Specular F0: 0.5
+	Diffuse colour: piso_baja_piso_ALBEDO.jpg
+	Metalness: 0
+	Roughness: piso_baja_piso_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: piso_baja_piso_OCC.jpg
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "J_Piernas" has ID 6f80a900-51ce-4bb8-b831-f99b09837d51.
+	AO: 1
+	Albedo: mono_J_Piernas_ALBEDO.jpg
+	Normal: mono_J_Piernas_NORM.jpg
+	Specular F0: 0.5
+	Diffuse colour: mono_J_Piernas_ALBEDO.jpg
+	Metalness: mono_J_Piernas_METAL.jpg
+	Roughness: mono_J_Piernas_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "Cinturon_gab1" has ID d18a987d-3f65-4733-bc86-ca0871d10389.
+	AO: mono_I_Cinturon_gabardina_OCC.jpg
+	Albedo: mono_I_Cinturon_gabardina_ALBEDO.jpg
+	Normal: mono_I_Cinturon_gabardina_NORM.jpg
+	Specular F0: 0.5
+	Diffuse colour: mono_I_Cinturon_gabardina_ALBEDO.jpg
+	Metalness: mono_I_Cinturon_gabardina_METAL.jpg
+	Roughness: mono_I_Cinturon_gabardina_ROUGH.jpg
+	Specular colour: 0|0|0
+	Diffuse intensity: mono_I_Cinturon_gabardina_OCC.jpg
+	Specular hardness: 2
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "E_Hombreras_coderas" has ID cd07b649-e6e2-40b6-a381-db1ffc860aec.
+	Albedo: mono_E_Hombreras_coderas_ALBEDO.jpg
+	Emission: 0|0|0
+	Normal: mono_E_Hombreras_coderas_NORM.jpg
+	Specular F0: 0.5
+	Diffuse colour: mono_E_Hombreras_coderas_ALBEDO.jpg
+	Displacement: 0
+	Metalness: mono_E_Hombreras_coderas_METAL.jpg
+	Roughness: mono_E_Hombreras_coderas_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "D_Brazos_Cuello" has ID aedf5f6f-31cc-4e8e-81bc-76cea785f341.
+	AO: mono_D_Brazos_Cuello_OCC.jpg
+	Albedo: mono_D_Brazos_Cuello_ALBEDO.jpg
+	Normal: mono_D_Brazos_Cuello_NORM.jpg
+	Specular F0: 0.4468368902
+	Diffuse colour: mono_D_Brazos_Cuello_ALBEDO.jpg
+	Metalness: mono_D_Brazos_Cuello_METAL.jpg
+	Roughness: mono_D_Brazos_Cuello_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: mono_D_Brazos_Cuello_OCC.jpg
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "H_hevillas_torso" has ID 8320d171-4a5f-4824-86b8-842fc7210d4f.
+	AO: mono_H_hevillas_torso_OCC.jpg
+	Albedo: mono_H_hevillas_torso_ALBEDO.jpg
+	Normal: mono_H_hevillas_torso_NORM.jpg
+	Specular F0: 0.5
+	Diffuse colour: mono_H_hevillas_torso_ALBEDO.jpg
+	Metalness: mono_H_hevillas_torso_METAL.jpg
+	Roughness: mono_H_hevillas_torso_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: mono_H_hevillas_torso_OCC.jpg
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "C_Armadura" has ID db3cf07f-0fe6-4573-85db-9054c365fd7e.
+	AO: mono_C_Armadura_OCC.jpg
+	Albedo: mono_C_Armadura_ALBEDO.jpg
+	Normal: mono_C_Armadura_NORM.jpg
+	Specular F0: 0.5
+	Diffuse colour: mono_C_Armadura_ALBEDO.jpg
+	Metalness: mono_C_Armadura_METAL.jpg
+	Roughness: mono_C_Armadura_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: mono_C_Armadura_OCC.jpg
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "B_Ojos" has ID 9cc3bb81-f205-4149-858a-ff1966118df1.
+	Albedo: mono_B_Ojos_ALBEDO.jpg
+	Emission: 0|0|0
+	Normal: mono_B_Ojos_NORM.jpg
+	Specular F0: 1
+	Diffuse colour: mono_B_Ojos_ALBEDO.jpg
+	Metalness: mono_B_Ojos_METAL.jpg
+	Roughness: mono_B_Ojos_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "F_Gabardina" has ID 6e8ebd48-70f0-4a61-8fd4-7af4f2932357.
+	Albedo: mono_F_Gabardina_ALBEDO.jpg
+	Emission: 0|0|0
+	Normal (Flipped Y): mono_F_Gabardina_NORM.jpg
+	Specular F0: 0.5
+	Diffuse colour: mono_F_Gabardina_ALBEDO.jpg
+	Displacement: 0
+	Metalness: mono_F_Gabardina_METAL.jpg
+	Roughness: mono_F_Gabardina_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "G_Gabardina_interior" has ID d4de0c0f-5653-4b90-8b18-a94c6e2923bb.
+	AO: plano_gabardina_interior_interior gabardina_OCC.jpg
+	Albedo: plano_gabardina_interior_interior gabardina_ALBEDO.jpg
+	Emission: 0|0|0
+	Normal: plano_gabardina_interior_interior gabardina_NORM.jpg
+	Specular F0: 0.4590320122
+	Diffuse colour: plano_gabardina_interior_interior gabardina_ALBEDO.jpg
+	Displacement: 0
+	Metalness: 0
+	Glossiness: 0.4
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: plano_gabardina_interior_interior gabardina_OCC.jpg
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "A_Cabeza" has ID 66084729-25cf-40c8-9c8d-c31a7296e650.
+	AO: mono_A_Cabeza_OCC.jpg
+	Opacity: 1
+	Albedo: mono_A_Cabeza_ALBEDO.jpg
+	Cavity: 1
+	Normal: mono_A_Cabeza_NORM.jpg
+	Specular F0: 0.5687881098
+	Diffuse colour: mono_A_Cabeza_ALBEDO.jpg
+	Metalness: mono_A_Cabeza_METAL.2.jpg
+	Roughness: mono_A_Cabeza_ROUGH.jpg
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: mono_A_Cabeza_OCC.jpg
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04

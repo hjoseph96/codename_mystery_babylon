@@ -1,9 +1,10 @@
+#if UNITY_EDITOR
 using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
+using UnityEditor;
 using Newtonsoft.Json;
 
 public class UnitClassRepository
@@ -122,3 +123,5 @@ public class UnitClassData
         return targetJson == currentJson;
     }
 }
+
+#endif

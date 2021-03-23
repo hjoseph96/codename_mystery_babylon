@@ -15,6 +15,8 @@ public class WorldGrid : MonoBehaviour, IInitializable
 
     [HideInInspector] public Grid Grid;
     [HideInInspector] public Vector2Int Size;
+    private Vector2Int _origin;
+    public Vector2Int Origin { get { return _origin; } }
     public int Width => Size.x;
     public int Height => Size.y;
     public WorldCell this[int x, int y] => _worldGrid[x, y];
@@ -41,14 +43,13 @@ public class WorldGrid : MonoBehaviour, IInitializable
 
         var editor = GetComponent<WorldGridEditor>();
         Size = editor.Size;
+        _origin = editor.Origin;
 
         // Translate such that (0, 0) cell will have (0, 0) world position
         var offset = Grid.CellToWorld((Vector3Int) editor.Origin);
         transform.position = offset;
         foreach (Transform child in transform)
-        {
             child.position -= offset;
-        }
 
         _worldGrid = editor.WorldGrid;
     }

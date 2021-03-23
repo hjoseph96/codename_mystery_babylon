@@ -14,8 +14,8 @@ public class WeaponSelectView : MonoBehaviour
 
     public void Populate(Weapon selectedWeapon)
     {
-        _weaponName.SetText(selectedWeapon.Name);
         _weaponIcon.sprite = selectedWeapon.Icon;
+        _weaponName.SetText(selectedWeapon.Name);
 
         var textLocalPosition = _weaponName.textInfo.characterInfo[0].bottomLeft;
         _weaponIcon.transform.localPosition =  new Vector2(

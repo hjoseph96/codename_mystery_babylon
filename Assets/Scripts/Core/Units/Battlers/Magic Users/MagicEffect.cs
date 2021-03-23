@@ -41,11 +41,8 @@ public class MagicEffect : MonoBehaviour
         if (EffectType == MagicEffectType.Projectile)
         {
             Destroy(this.gameObject);
-            var shownHitEffect = Instantiate(hitEffect, this.transform.position, hitEffect.transform.rotation).GetComponent<ParticleLifetimeEvents>();
-            
-            shownHitEffect.ParticleDied += delegate() {
-                Destroy(shownHitEffect);
-            };
+            Instantiate(hitEffect, this.transform.position, hitEffect.transform.rotation);
+
             MasterAudio.PlaySound3DFollowTransform(hitSound, CampaignManager.AudioListenerTransform);
 
             OnHitTarget.Invoke();

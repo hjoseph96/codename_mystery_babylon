@@ -15,17 +15,27 @@ using DarkTonic.MasterAudio;
 public class PhaseDisplay : SerializedMonoBehaviour
 {
     [SerializeField] private Dictionary<TurnPhase, Color> turnColors = new Dictionary<TurnPhase, Color>();
-    [SerializeField, SoundGroupAttribute] private string revealSound;
-    [HideInInspector] public Action OnDisplayComplete;
+    [SerializeField, SoundGroupAttribute] private string playerPhaseSound;
+    [SerializeField, SoundGroupAttribute] private string enemyPhaseSound;
+    [SerializeField, SoundGroupAttribute] private string otherEnemyPhaseSound;
+    [SerializeField, SoundGroupAttribute] private string allyPhaseSound;
+    [SerializeField, SoundGroupAttribute] private string neutralPhaseSound;
+
+
+    public Action OnDisplayComplete;
 
     private TurnPhase _phase;
     private Image _phaseNameHolder;
     private TextMeshProUGUI _phaseText;
 
+    private bool _isDisplaying = false;
+    public bool IsDisplaying { get { return _isDisplaying; } }
     private bool _setupComplete = false;
 
     public void Show(TurnPhase phase)
     {
+        _isDisplaying = true;
+
         _phase = phase;
         
         Setup();
@@ -80,7 +90,7 @@ public class PhaseDisplay : SerializedMonoBehaviour
         };
 
         MasterAudio.FadeBusToVolume("Music", .2f, 0.5f);
-        MasterAudio.PlaySound3DFollowTransform(revealSound, CampaignManager.AudioListenerTransform);
+        MasterAudio.PlaySound3DFollowTransform(PhaseSound(), CampaignManager.AudioListenerTransform);
         yield return new WaitForSecondsRealtime(3f);
 
         for (int i = 0; i < animator.textInfo.characterCount; ++i) {
@@ -102,7 +112,27 @@ public class PhaseDisplay : SerializedMonoBehaviour
         _phaseNameHolder.DOFade(0, 0.5f).onComplete += delegate ()
         {
             OnDisplayComplete.Invoke();
+            _isDisplaying = false;
         };
     }
 
+
+    private string PhaseSound()
+    {
+        switch(_phase)
+        {
+            case TurnPhase.Player:
+                return playerPhaseSound;
+            case TurnPhase.Enemy:
+                return enemyPhaseSound;
+            case TurnPhase.OtherEnemy:
+                return otherEnemyPhaseSound;
+            case TurnPhase.Ally:
+                return allyPhaseSound;
+            case TurnPhase.Neutral:
+                return neutralPhaseSound;            
+        }
+
+        throw new Exception($"Invalid TurnPhase: {_phase.ToString()}");
+    }
 }

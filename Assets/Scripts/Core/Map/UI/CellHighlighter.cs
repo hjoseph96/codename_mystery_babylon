@@ -156,9 +156,7 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
     private void Highlight(IReadOnlyCollection<Vector2Int> positions, Vector2Int center, int range, HighlightingMode mode)
     {
         if (positions.Count == 0)
-        {
             return;
-        }
 
         _positions = positions;
         _center = center;

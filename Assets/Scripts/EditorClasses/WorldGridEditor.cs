@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+ #if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -139,11 +141,6 @@ public class WorldGridEditor : SerializedMonoBehaviour
         Grid = GetComponent<Grid>();
     }
 
-    private void OnEnable()
-    {
-        SceneView.duringSceneGui -= OnSceneGUI;
-        SceneView.duringSceneGui += OnSceneGUI;
-    }
 
     private void Update()
     {
@@ -158,10 +155,6 @@ public class WorldGridEditor : SerializedMonoBehaviour
         BakeWorldGridData();
     }
 
-    private void OnDisable()
-    {
-        SceneView.duringSceneGui -= OnSceneGUI;
-    }
 
     private IEnumerable<Tilemap> GetTilemaps() => GetComponentsInChildren<Tilemap>();
 
@@ -188,6 +181,16 @@ public class WorldGridEditor : SerializedMonoBehaviour
         Origin = min;
     }
 
+    #if UNITY_EDITOR
+    private void OnEnable()
+    {
+        SceneView.duringSceneGui -= OnSceneGUI;
+        SceneView.duringSceneGui += OnSceneGUI;
+    }
+    private void OnDisable()
+    {
+        SceneView.duringSceneGui -= OnSceneGUI;
+    }
     private void OnSceneGUI(SceneView sceneView)
     {
         if (ActiveTilemap == null)
@@ -426,4 +429,5 @@ public class WorldGridEditor : SerializedMonoBehaviour
             Handles.DrawWireCube(ActiveTilemap.GetCellCenterWorld(tilemapPosition), Vector3.one);
         }
     }
+    #endif
 }

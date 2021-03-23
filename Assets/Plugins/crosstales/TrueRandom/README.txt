@@ -1,4 +1,4 @@
-﻿# True Random PRO 2021.1.0
+﻿# True Random PRO 2021.1.1
 
 Thank you for buying our asset "True Random PRO"! 
 If you have questions about this asset, send us an email at [truerandom@crosstales.com](mailto:truerandom@crosstales.com). 
@@ -89,4 +89,4 @@ CH-8002 Zürich
 * [PlayMaker](https://assetstore.unity.com/packages/slug/368?aid=1011lNGT)
 
 
-`Version: 06.01.2021`
+`Version: 26.02.2021`

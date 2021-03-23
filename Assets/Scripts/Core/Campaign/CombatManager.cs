@@ -44,7 +44,7 @@ public class CombatManager : MonoBehaviour
 
     [FoldoutGroup("Battle Status")]
     private CombatPhase _phase = CombatPhase.NotInCombat;
-    [ShowInInspector] public CombatPhase Phase { get { return _phase; } }
+    [ShowInInspector] public CombatPhase Phase { get =>_phase; }
 
     private PostEffectMask _pixelateEffectMask;
 
@@ -252,8 +252,12 @@ public class CombatManager : MonoBehaviour
         var unitClass = deadUnit.GetType();
         if (unitClass.IsSubclassOf(typeof(AIUnit)))
         {
+            CampaignManager.Instance.OnCombatReturn += delegate ()
+            {
+                CampaignManager.Instance.RemoveUnit(deadUnit);
+            };
+
             // TODO: Check for any special dialogue or events to happen upon specific unit's death
-            CampaignManager.Instance.RemoveUnit(deadUnit);
         }
     }
     
@@ -370,11 +374,13 @@ public class CombatManager : MonoBehaviour
 
         bool diceRolled = false;
 
-        TRManager.Instance.GenerateInteger(0, 100, 1);
         TRManager.Instance.OnGenerateIntegerFinished += delegate(List<int> results, string key) {
             rollResult = results[0];
-            diceRolled = true;
+
+            if (rollResult > 0)
+                diceRolled = true;
         };
+        TRManager.Instance.GenerateInteger(0, 100, 1);
 
 
         await new WaitUntil(() => diceRolled == true);

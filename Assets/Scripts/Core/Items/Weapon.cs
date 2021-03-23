@@ -8,10 +8,11 @@ public class Weapon : Item
     public override string Description => !IsBroken ? DescriptionNormal : DescriptionBroken;
     public readonly string DescriptionNormal, DescriptionBroken; 
 
-    public string MeleeSound;
+    public readonly string MeleeSound;
 
     public readonly WeaponRank RequiredRank;
     public readonly WeaponType Type;
+    public readonly MagicType MagicType;
     public readonly Dictionary<WeaponStat, Stat> Stats = new Dictionary<WeaponStat, Stat>();
     private readonly Dictionary<WeaponStat, EditorWeaponStat> _brokenStats = new Dictionary<WeaponStat, EditorWeaponStat>();
 
@@ -47,22 +48,23 @@ public class Weapon : Item
         Stats[WeaponStat.MinRange] = new Stat(WeaponStat.MinRange.ToString(), source.AttackRange.x);
         Stats[WeaponStat.MaxRange] = new Stat(WeaponStat.MinRange.ToString(), source.AttackRange.y);
 
-        Name = source.Name;
-        Icon = source.Icon;
-        Weight = source.Weight;
+        Name    = source.Name;
+        Icon    = source.Icon;
+        Weight  = source.Weight;
         MaxDurability = source.MaxDurability;
         CurrentDurability = MaxDurability;
         
-        Type = source.Type;
-        RequiredRank = source.RequiredRank;
+        Type            = source.Type;
+        RequiredRank    = source.RequiredRank;
 
         IsUsable = source.IsUsable;
 
         if (Type == WeaponType.Grimiore)
         {
-            castingSound = source.castingSound;
-            magicEffect = source.magicEffect;
-            magicCirclePrefab = source.magicCirclePrefab;
+            MagicType           = source.MagicType;
+            castingSound        = source.castingSound;
+            magicEffect         = source.magicEffect;
+            magicCirclePrefab   = source.magicCirclePrefab;
         }
     }
 
@@ -93,10 +95,10 @@ public class Weapon : Item
 
     public override IEnumerable<Type> GetUIOptions()
     {
-        var options = new List<Type>
-        {
-            IsEquipped ? typeof(UnequipOption) : typeof(EquipOption)
-        };
+        var options = new List<Type>();
+
+        if (CanWield)
+            options.Add(IsEquipped ? typeof(UnequipOption) : typeof(EquipOption));
 
         if (IsUsable)
             options.Add(typeof(UseOption));
