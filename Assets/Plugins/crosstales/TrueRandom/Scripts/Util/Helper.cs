@@ -15,7 +15,7 @@ namespace Crosstales.TrueRandom.Util
 
 
       #region Static methods
-
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
       /// <summary>Save generated results as text-file.</summary>
       /// <param name="filePath">Path for the file</param>
       /// <param name="results">Results to save</param>
@@ -68,7 +68,7 @@ namespace Crosstales.TrueRandom.Util
             Debug.LogError("Could not save file: " + path + System.Environment.NewLine + ex);
          }
       }
-
+#endif
       #endregion
    }
 }

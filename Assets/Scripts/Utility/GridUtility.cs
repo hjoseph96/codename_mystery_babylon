@@ -199,6 +199,17 @@ public static class GridUtility
         return DefaultNeighboursOffsets;
     }
 
+    public static List<Vector2Int> GetNeighbours(Vector2Int gridPosition)
+    {
+        var neighbors = new List<Vector2Int>();
+
+        var offsets = GetNeighboursOffsets(gridPosition);
+        foreach (Vector2Int offset in offsets)
+            neighbors.Add(gridPosition + offset);
+
+        return neighbors;
+    }
+
     public static int GetBoxDistance(Vector2Int from, Vector2Int to)
     {
         return Mathf.Max(Mathf.Abs(from.x - to.x), Mathf.Abs(from.y - to.y));
@@ -222,14 +233,116 @@ public static class GridUtility
     /// <param name="unit"></param>
     /// <param name="movePoints">Available movement points. If to -1, unit's current movement points value will be used</param>
     /// <returns></returns>
-    public static HashSet<Vector2Int> GetReachableCells(Unit unit, int movePoints = -1)
+    public static HashSet<Vector2Int> GetReachableCells(Unit unit, int movePoints = -1, bool fullRadiusMode = false, bool includeEnemy = false)
     {
         if (movePoints == -1)
-        {
             movePoints = unit.CurrentMovementPoints;
-        }
 
         var start = unit.GridPosition;
+        var unitType = unit.UnitType;
+
+        var queue = new Queue<Vector2Int>();
+        var isolatedCells = new HashSet<Vector2Int>();
+        var movementCost = new Dictionary<Vector2Int, int>();
+
+        queue.Enqueue(start);
+        movementCost[start] = 0;
+
+        var _worldGrid = WorldGrid.Instance;
+
+        // We use breadth-first search to find all reachable cells
+        while (queue.Count > 0)
+        {
+            var currentPosition = queue.Dequeue();
+            var offsets = GetNeighboursOffsets(currentPosition);
+
+            for (var i = 0; i < offsets.Length; i++)
+            {
+                var offset = offsets[i];
+                var neighbourPosition = currentPosition + offset;
+
+                // Skip out of bounds cells
+                var currentPositionIsInGrid = _worldGrid.PointInGrid(currentPosition);
+                var neighborIsInGrid = _worldGrid.PointInGrid(neighbourPosition);
+                if (!currentPositionIsInGrid || !neighborIsInGrid)
+                   continue;
+
+
+                // Check if can move
+                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unitType) && !fullRadiusMode)
+                    continue;
+
+                // We can not pass through enemy units
+                var otherUnit = _worldGrid[neighbourPosition].Unit;
+                
+                if (otherUnit != null)
+                    if (otherUnit.IsEnemy(unit) && !fullRadiusMode && !includeEnemy)
+                        continue;
+
+                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unitType);
+                var newCost = movementCost[currentPosition] + neighbourCost;
+
+                // If new cost if more than we can move
+                if (newCost > movePoints)
+                    continue;
+
+                // We maintain a list of potentially isolated cells. Isolated cell is a such cell than can only be reached diagonally
+                var alreadyVisited = movementCost.TryGetValue(neighbourPosition, out var oldCost);
+                if (!GetDirection(currentPosition, neighbourPosition, false, true).IsCardinal())
+                    if (!alreadyVisited)
+                        isolatedCells.Add(neighbourPosition);
+                else
+                    isolatedCells.Remove(neighbourPosition);
+
+                // If new cost is more than old cost
+                if (alreadyVisited && newCost >= oldCost)
+                    continue;
+
+                movementCost[neighbourPosition] = newCost;
+
+                // Add cell to queue
+                if (!queue.Contains(neighbourPosition))
+                    queue.Enqueue(neighbourPosition);
+            }
+        }
+
+        // Access enumerator manually for performance reasons
+        var result = new HashSet<Vector2Int>();
+        var en = movementCost.GetEnumerator();
+        while (en.MoveNext())
+        {
+            var key = en.Current.Key;
+            var currentUnit = WorldGrid.Instance[key].Unit;
+            if (currentUnit == null || currentUnit == unit)
+                result.Add(key);
+        }
+        en.Dispose();
+
+        // Exclude isolated cells
+        foreach (var cell in isolatedCells)
+        {
+            if (!result.Contains(cell + Vector2Int.left)    &&
+                !result.Contains(cell + Vector2Int.right)   &&
+                !result.Contains(cell + Vector2Int.up)      &&
+                !result.Contains(cell + Vector2Int.down)    )
+            {
+                result.Remove(cell);
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Finds all grid cells than can be reached by unit within a specified range of a target `GridPosition`
+    /// </summary>
+    /// <param name="targetCell"></param>
+    /// <param name="radius">How wide to make the search</param>
+    /// <param name="unit">Unit to check reachability for</param>
+    /// <returns></returns>
+    public static HashSet<Vector2Int> GetReachableCellNeighbours(Vector2Int targetCell, int radius, Unit unit)
+    {
+        var start = targetCell;
         var unitType = unit.UnitType;
 
         var queue = new Queue<Vector2Int>();
@@ -264,18 +377,16 @@ public static class GridUtility
                 if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unitType))
                     continue;
 
-                // We can not pass through enemy units
+                // We can not attack from a position that has a unit already there
                 var otherUnit = _worldGrid[neighbourPosition].Unit;
-                if (otherUnit != null && otherUnit.IsEnemy(unit))
-                {
+                if (otherUnit != null)
                     continue;
-                }
 
                 var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unitType);
                 var newCost = movementCost[currentPosition] + neighbourCost;
 
                 // If new cost if more than we can move
-                if (newCost > movePoints)
+                if (newCost > radius)
                     continue;
 
                 // We maintain a list of potentially isolated cells. Isolated cell is a such cell than can only be reached diagonally
@@ -445,6 +556,10 @@ public static class GridUtility
         {
             var currentPosition = frontier.Dequeue();
 
+
+            var currentCost = runningCost[currentPosition];
+            var offsets = GetNeighboursOffsets(currentPosition);
+            // Reached Goal
             if (currentPosition == goal)
             {
                 var path = RestorePath(start, currentPosition, cameFrom);
@@ -452,9 +567,6 @@ public static class GridUtility
                 var gridPath =  new GridPath(path, travelCost);
                 return gridPath;
             }
-
-            var currentCost = runningCost[currentPosition];
-            var offsets = GetNeighboursOffsets(currentPosition);
 
             for (var i = 0; i < offsets.Length; i++)
             {

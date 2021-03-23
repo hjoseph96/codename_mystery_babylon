@@ -296,8 +296,8 @@ namespace Crosstales
       #region Arrays
 
       /// <summary>
-      /// Extension method for Arrays.
-      /// Shuffles an Array.
+      /// Extension method for arrays.
+      /// Shuffles an array.
       /// </summary>
       /// <param name="array">Array-instance to shuffle.</param>
       /// <param name="seed">Seed for the PRNG (default: 0 (=standard), optional)</param>
@@ -318,7 +318,7 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Arrays.
+      /// Extension method for arrays.
       /// Dumps an array to a string.
       /// </summary>
       /// <param name="array">Array-instance to dump.</param>
@@ -346,10 +346,10 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Quaternion-Arrays.
+      /// Extension method for Quaternion-arrays.
       /// Dumps an array to a string.
       /// </summary>
-      /// <param name="array">Quaternion-Array-instance to dump.</param>
+      /// <param name="array">Quaternion-array-instance to dump.</param>
       /// <returns>String with lines for all array entries.</returns>
       public static string CTDump(this Quaternion[] array)
       {
@@ -376,10 +376,10 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Vector2-Arrays.
+      /// Extension method for Vector2-arrays.
       /// Dumps an array to a string.
       /// </summary>
-      /// <param name="array">Vector2-Array-instance to dump.</param>
+      /// <param name="array">Vector2-array-instance to dump.</param>
       /// <returns>String with lines for all array entries.</returns>
       public static string CTDump(this Vector2[] array)
       {
@@ -402,10 +402,10 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Vector3-Arrays.
+      /// Extension method for Vector3-arrays.
       /// Dumps an array to a string.
       /// </summary>
-      /// <param name="array">Vector3-Array-instance to dump.</param>
+      /// <param name="array">Vector3-array-instance to dump.</param>
       /// <returns>String with lines for all array entries.</returns>
       public static string CTDump(this Vector3[] array)
       {
@@ -430,10 +430,10 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Vector4-Arrays.
+      /// Extension method for Vector4-arrays.
       /// Dumps an array to a string.
       /// </summary>
-      /// <param name="array">Vector4-Array-instance to dump.</param>
+      /// <param name="array">Vector4-array-instance to dump.</param>
       /// <returns>String with lines for all array entries.</returns>
       public static string CTDump(this Vector4[] array)
       {
@@ -460,7 +460,7 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Arrays.
+      /// Extension method for arrays.
       /// Generates a string array with all entries (via ToString).
       /// </summary>
       /// <param name="array">Array-instance to ToString.</param>
@@ -478,6 +478,69 @@ namespace Crosstales
          }
 
          return result;
+      }
+
+      /// <summary>
+      /// Extension method for byte-arrays.
+      /// Converts a byte-array to a float-array.
+      /// </summary>
+      /// <param name="array">Array-instance to convert.</param>
+      /// <param name="count">Number of bytes to convert (optional).</param>
+      /// <returns>Converted float-array.</returns>
+      public static float[] CTToFloatArray(this byte[] array, int count = 0)
+      {
+         if (array == null) // || array.Length <= 0)
+            throw new System.ArgumentNullException(nameof(array));
+
+         int _count = count;
+
+         if (_count <= 0)
+            _count = array.Length;
+
+         float[] floats = new float[_count / 2];
+
+         int ii = 0;
+         for (int zz = 0; zz < _count; zz += 2)
+         {
+            floats[ii] = bytesToFloat(array[zz], array[zz + 1]);
+            ii++;
+         }
+
+         return floats;
+      }
+
+      /// <summary>
+      /// Extension method for float-arrays.
+      /// Converts a float-array to a byte-array.
+      /// </summary>
+      /// <param name="array">Array-instance to convert.</param>
+      /// <param name="count">Number of floats to convert (optional).</param>
+      /// <returns>Converted byte-array.</returns>
+      public static byte[] CTToByteArray(this float[] array, int count = 0)
+      {
+         if (array == null) // || array.Length <= 0)
+            throw new System.ArgumentNullException(nameof(array));
+
+         int _count = count;
+
+         if (_count <= 0)
+            _count = array.Length;
+
+         byte[] bytes = new byte[_count * 2];
+         int byteIndex = 0;
+
+         for (int ii = 0; ii < _count; ii++)
+         {
+            short outsample = (short)(array[ii] * short.MaxValue);
+
+            bytes[byteIndex] = (byte)(outsample & 0xff);
+
+            bytes[byteIndex + 1] = (byte)((outsample >> 8) & 0xff);
+
+            byteIndex += 2;
+         }
+
+         return bytes;
       }
 
       #endregion
@@ -795,24 +858,28 @@ namespace Crosstales
       /// Reads the full content of a Stream.
       /// </summary>
       /// <param name="input">Stream-instance to read.</param>
-      /// <param name="bufferSize">Buffer size in bytes (default: 16384, optional).</param>
       /// <returns>Byte-array of the Stream content.</returns>
-      public static byte[] CTReadFully(this System.IO.Stream input, int bufferSize = 16384)
+      public static byte[] CTReadFully(this System.IO.Stream input)
       {
          if (input == null)
             throw new System.ArgumentNullException(nameof(input));
 
-         byte[] buffer = new byte[bufferSize];
          using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
          {
-            int read;
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-               ms.Write(buffer, 0, read);
-            }
-
+            input.CopyTo(ms);
             return ms.ToArray();
          }
+      }
+
+      #endregion
+
+
+      #region Private methods
+
+      private static float bytesToFloat(byte firstByte, byte secondByte)
+      {
+         // convert two bytes to one short (little endian) and convert it to range from -1 to (just below) 1
+         return (short)((secondByte << 8) | firstByte) / Common.Util.BaseConstants.FLOAT_32768;
       }
 
       #endregion

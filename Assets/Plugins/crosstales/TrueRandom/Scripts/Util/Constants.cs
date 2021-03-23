@@ -12,16 +12,16 @@
       public const string ASSET_NAME_SHORT = "TR PRO";
 
       /// <summary>Version of the asset.</summary>
-      public const string ASSET_VERSION = "2021.1.0";
+      public const string ASSET_VERSION = "2021.1.1";
 
       /// <summary>Build number of the asset.</summary>
-      public const int ASSET_BUILD = 20210106;
+      public const int ASSET_BUILD = 20210226;
 
       /// <summary>Create date of the asset (YYYY, MM, DD).</summary>
       public static readonly System.DateTime ASSET_CREATED = new System.DateTime(2016, 12, 5);
 
       /// <summary>Change date of the asset (YYYY, MM, DD).</summary>
-      public static readonly System.DateTime ASSET_CHANGED = new System.DateTime(2021, 1, 6);
+      public static readonly System.DateTime ASSET_CHANGED = new System.DateTime(2021, 2, 26);
 
       /// <summary>URL of the PRO asset in UAS.</summary>
       public const string ASSET_PRO_URL = "https://assetstore.unity.com/packages/slug/61617?aid=1011lNGT";

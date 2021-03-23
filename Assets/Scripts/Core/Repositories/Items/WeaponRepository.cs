@@ -1,3 +1,6 @@
+
+#if UNITY_EDITOR
+
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -125,3 +128,5 @@ public class WeaponData : ItemData
         return targetJson == currentJson;
     }
 }
+
+#endif

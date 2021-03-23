@@ -51,7 +51,7 @@ namespace Crosstales.Common.Util
 
          if (!locationShown && ShowFileLocation)
          {
-            BaseHelper.ShowFileLocation(file);
+            BaseHelper.ShowFile(file);
             locationShown = true;
          }
       }

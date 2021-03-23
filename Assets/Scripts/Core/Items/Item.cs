@@ -14,6 +14,7 @@ public class Item
 
     public Unit Unit { get; set; }
     public bool IsEquipped { get; set; }
+    public bool CanWield { get; set; }
 
 
     public Item(ScriptableItem source)

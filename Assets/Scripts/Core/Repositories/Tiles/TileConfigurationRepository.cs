@@ -1,3 +1,5 @@
+ #if UNITY_EDITOR
+
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -136,3 +138,5 @@ public class TileConfigurationData
         return targetJson == currentJson;
     }
 }
+
+#endif

@@ -25,7 +25,7 @@ MonoBehaviour:
         - layer: 0
           type: 0
           sorting: 0
-      nightLayers:
+      lightLayers:
         list:
         - layer: 0
           type: 0
@@ -41,8 +41,8 @@ MonoBehaviour:
           sortingIgnore: 0
           shadowEffect: 4
           shadowEffectLayer: 0
-          maskEffect: 0
-          maskEffectDistance: 1
+          maskLit: 0
+          maskLitDistance: 1
   eventPresets:
     list:
     - name: Disabled
@@ -65,23 +65,18 @@ MonoBehaviour:
     alpha: 0.5655935
     direction: 143
     height: 4.6179123
-    softness:
-      enable: 1
-      intensity: 0.5
     bumpMap:
       height: 1
       strength: 1
   layers:
+    colliderLayers:
+      names:
+      - Default
     lightLayers:
       names:
       - Default
       - Light Layer 1
-    nightLayers:
-      names:
-      - Default
-      - Night Layer 1
     dayLayers:
       names:
       - Default
       - Day Layer 1
-  disable: 0

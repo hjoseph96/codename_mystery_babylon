@@ -19,6 +19,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     [SoundGroupAttribute] public string selectedUnitSound;
     [SoundGroupAttribute] public string deselectedUnitSound;
     [SoundGroupAttribute] public string cursorMoveSound;
+    [SoundGroupAttribute] public string notAllowedSound;
 
 
 
@@ -26,6 +27,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     [SerializeField] private float _totalMovementTime = 0.1f;
     [SerializeField, Range(0, 1)]
     private float _normalizedDistanceThreshold = 0.95f;
+    public List<ProCamera2DTriggerBoundaries> CameraBoundaries;
 
     [Header("References")]
     [SerializeField] private ArrowPath _arrowPath;
@@ -83,7 +85,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             if (nextAttackTargetIndex > _allowedPositions.Count - 1) nextAttackTargetIndex = 0;
             
             var newPosition = _attackPositions[nextAttackTargetIndex];
-            
+
             if (_worldGrid.PointInGrid(newPosition))
                 StartMovement(newPosition);
         }
@@ -98,7 +100,8 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             if (_mode != CursorMode.Locked && _mode != CursorMode.Attack)
             {
                 var newPosition = GridPosition + inputData.MovementVector;
-                if (_worldGrid.PointInGrid(newPosition))
+                var worldPosition = _worldGrid.Grid.GetCellCenterWorld((Vector3Int)newPosition);
+                if (_worldGrid.PointInGrid(newPosition) && IsWithinCameraBounds(worldPosition))
                     StartMovement(newPosition);
             }
         }
@@ -111,11 +114,23 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
                     // TODO: Add !unit.HasTakenAction, after implementing multiple player units.
                     // Don't allow Units to move twice per turn.
-                    if (unit != null && unit.IsLocalPlayerUnit)
+                    if (unit != null)
                     {
-                        MasterAudio.PlaySound3DFollowTransform(selectedUnitSound, CampaignManager.AudioListenerTransform);
-                        SetRestrictedMode(unit);
+                        switch(unit.TeamId)
+                        {
+                            case Team.LocalPlayerTeamId:
+                                if (!unit.HasTakenAction)
+                                {
+                                    MasterAudio.PlaySound3DFollowTransform(selectedUnitSound, CampaignManager.AudioListenerTransform);
+                                    SetRestrictedMode(unit);
+                                } else
+                                {
+                                    MasterAudio.PlaySound3DAtTransform(notAllowedSound, CampaignManager.AudioListenerTransform);
+                                }
+                                break;
+                        }
                     }
+                    
                 }
                 
                 break;
@@ -126,6 +141,16 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                     case KeyCode.Z:
                         if (_allowedPositions.Contains(GridPosition))
                             MoveSelectedUnit();
+                        else if (GridPosition == _selectedUnit.GridPosition)
+                        {
+                            // Unlock and show cursor
+                            Show();
+
+                            // Move to selected unit's position and set camera target to self
+                            MoveInstant(_selectedUnit.GridPosition);
+
+                            actionSelectMenu.Show(_selectedUnit);
+                        }
                         break;
 
                     case KeyCode.X: case KeyCode.Escape:
@@ -207,6 +232,16 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             currentRenderer.enabled = false;
     }
 
+    public void ResetUnit(Unit unit)
+    {
+        unit.ResetToInitialPosition();
+        MoveInstant(unit.GridPosition);
+
+        MasterAudio.PlaySound3DFollowTransform(notAllowedSound, CampaignManager.AudioListenerTransform);
+
+        SetFreeMode();
+    }
+
     public void MoveInstant(Vector2Int destination)
     {
         GridPosition = destination;
@@ -224,6 +259,12 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     {
         _arrowPath.Clear();
         _cellHighlighter.Clear();
+    }
+
+    public void SetAsCameraTarget() 
+    {
+        _camera.SetSingleTarget(transform);
+        _camera.SetCameraWindowMode(CameraWindowMode.Cursor);
     }
 
     private IEnumerator MoveSelectedUnitCoroutine(GridPath path)
@@ -335,5 +376,19 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
         if (_mode != CursorMode.Attack)
             _userInput.InputTarget = this;
+    }
+
+    private bool IsWithinCameraBounds(Vector3 worldPosition)
+    {
+        if (CameraBoundaries.Count == 0)
+            return true;
+
+        bool _isWithinBoundary = false;
+
+        foreach (var boundary in CameraBoundaries)
+            if (boundary.IsWithinTrigger(worldPosition))
+                _isWithinBoundary = true;
+
+        return _isWithinBoundary;
     }
 }

@@ -1,0 +1,322 @@
+
+Mesh "HairCap_MI_HairCap_0" uses material "MI_HairCap"
+Mesh "Hair_main_MI_Hair_0_0" uses material "MI_Hair"
+Mesh "Eyes_MI_Eyes_0_0" uses material "MI_Eyes"
+Mesh "Teeth_MI_Teeth_0_0" uses material "MI_Teeth"
+Mesh "EyesTear_MI_EyeTear_0_0" uses material "MI_EyeTear"
+Mesh "EyeBrows_MI_EyeBrows_0_0" uses material "MI_EyeBrows"
+Mesh "Head_MI_HeadSkin_0_0" uses material "MI_HeadSkin"
+Mesh "Eyelash_MI_Eyeslash_0_0" uses material "MI_Eyeslash"
+Mesh "Beard_MI_Beard_0_0" uses material "MI_Beard"
+Mesh "UpperArm_Belts_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "Shirt_in_A_MI_Shirt_0_0" uses material "MI_Shirt"
+Mesh "Shirt_out_A_MI_Shirt_0_0" uses material "MI_Shirt"
+Mesh "P_Belt_MI_Shirt_0_0" uses material "MI_Shirt"
+Mesh "P_BeltCloth_MI_Shirt_0_0" uses material "MI_Shirt"
+Mesh "Shoulder_Armor_A_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "Shoulder_Armor_B_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "Cloth_F_MI_ShoulderCloth_0_0" uses material "MI_ShoulderCloth"
+Mesh "Cloth_B_MI_ShoulderCloth_0_0" uses material "MI_ShoulderCloth"
+Mesh "S_Fur_MI_Fur_0_0" uses material "MI_Fur"
+Mesh "Shoulder_Leather_MI_ShoulderCloth_0_0" uses material "MI_ShoulderCloth"
+Mesh "Glover_L_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "LowerArms_Armor_L_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "LowerArm_Belts_L_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "Glover_R_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "LowerArms_Armor_R_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "LowerArm_Belts_R_MI_UpperArmor_0_0" uses material "MI_UpperArmor"
+Mesh "Metal_Pelvis_MI_BottomArmor_0_0" uses material "MI_BottomArmor"
+Mesh "Pant_C_MI_Pant_0_0" uses material "MI_Pant"
+Mesh "BotBody_C_MI_BodySkin_0_0" uses material "MI_BodySkin"
+Mesh "MetalCalf_MI_BottomArmor_0_0" uses material "MI_BottomArmor"
+Mesh "MetalShoes_MI_BottomArmor_0_0" uses material "MI_BottomArmor"
+Mesh "MetalKnees_MI_BottomArmor_0_0" uses material "MI_BottomArmor"
+Mesh "MetalLeg_MI_BottomArmor_0_0" uses material "MI_BottomArmor"
+Mesh "MetalKneesCircles_MI_BottomArmor_0_0" uses material "MI_BottomArmor"
+Mesh "LegBelt_MI_BottomArmor_0_0" uses material "MI_BottomArmor"
+Mesh "MetalKnees_back_MI_BottomArmor_0_0" uses material "MI_BottomArmor"
+Mesh "LongSword_Equip_MI_LongSword_0_0" uses material "MI_LongSword"
+Mesh "H_Lock2_MI_Helmet_0_0" uses material "MI_Helmet"
+Mesh "Helmet_F2_MI_Helmet_0_0" uses material "MI_Helmet"
+Mesh "Helmet_B2_MI_Helmet_0_0" uses material "MI_Helmet"
+Mesh "H_Pivot2_MI_Helmet_0_0" uses material "MI_Helmet"
+Mesh "Meshes:pCylinder1_MI_Cynder_0_0" uses material "MI_Cynder"
+
+Material "MI_HairCap" has ID 57c90b8c-9cff-49fd-a5e9-495a659075d2.
+	AO: T_HairCap_AO.tga.png
+	Opacity: T_HairCap_BC.tga.png
+	Albedo: T_HairCap_BC.tga.png
+	Normal: T_HairCap_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_HairCap_D.tga.png
+	Roughness: T_HairCap_ID.tga.png
+	Specular colour: 0|0|0
+	Diffuse intensity: 1|1|1
+	Specular hardness: 100
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Hair" has ID 45f2736b-596e-41d9-a2e6-a32363be5708.
+	AO: T_Hair4_AO.tga.png
+	Opacity: T_Hair4_Alpha.tga.png
+	Albedo: 0.3310827365|0.216671901|0.2016095048
+	Normal: T_Hair4_N.tga.png
+	Anisotropy: T_Hair4_Flow.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Hair4_D.tga.png
+	Roughness: T_Hair4_ID.tga.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Eyes" has ID f770c7fc-aa86-4177-90e0-195a23404b31.
+	Albedo: T_Eye_BC.tga.png
+	Normal: T_Eyes_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Eye_MT.tga.png
+	Roughness: T_Eye_R.tga.png
+	Specular colour: 0.0709677|0.0709677|0.0709677
+	Diffuse intensity: 1|1|1
+	Specular hardness: 89.8839
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Teeth" has ID 2228dc39-7ec3-4c63-ab9d-c63e20cde873.
+	AO: T_Teeth_AO.tga.png
+	Albedo: T_Teeth_BC.tga.png
+	Normal: T_Teeth_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Teeth_MT.tga.png
+	Roughness: T_Teeth_R.TGA.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 6.31179
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_EyeTear" has ID 4db51f2c-b41b-411b-936f-4feecc93bd09.
+	Opacity: 0.9198161964
+	Albedo: 0.0065982759|0.0065982759|0.0065982759
+	Emission: 0|0|0
+	Specular F0: 0.4455626896
+	Diffuse colour: 0.374194|0.374194|0.374194
+	Metalness: 0
+	Roughness: 0.609727365
+	Specular colour: 0.664516|0.664516|0.664516
+	Diffuse intensity: 1|1|1
+	Specular hardness: 17.0644
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_EyeBrows" has ID 392545fd-430e-442b-b2a3-d7c8962ff2e1.
+	AO: T_Hair4_AO.tga.png
+	Opacity: T_Hair4_Alpha.tga.png
+	Albedo: T_Hair4_BC.tga.png
+	Emission: 0|0|0
+	Normal: T_Hair4_N.tga.png
+	Anisotropy: T_Hair4_Flow.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 0|0|0
+	Metalness: T_Hair4_D.tga.png
+	Roughness: T_Hair4_ID.tga.png
+	Specular colour: 0|0|0
+	Diffuse intensity: 1|1|1
+	Specular hardness: 2.63226
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_HeadSkin" has ID 31a6c3d5-d2e8-461f-bd27-34468a7f1afc.
+	AO: T_Head_AO.tga.png
+	Albedo: T_Head_BC.tga.png
+	Normal: T_Head_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: 0
+	Roughness: T_Head_R.tga.png
+	Specular colour: 0|0|0
+	Diffuse intensity: 1|1|1
+	Specular hardness: 100
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Eyeslash" has ID d28ce896-6410-48da-8beb-bf9f986fc2c5.
+	AO: T_Hair4_AO.tga.png
+	Opacity: T_Hair4_Alpha.tga.png
+	Albedo: T_Hair4_BC.tga.png
+	Normal: T_Hair4_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 0|0|0
+	Metalness: T_Hair4_D.tga.png
+	Roughness: T_Hair4_ID.tga.png
+	Specular colour: 0|0|0
+	Diffuse intensity: 1|1|1
+	Specular hardness: 300
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Beard" has ID e7457044-4b96-4743-9e50-9f7c5435a58c.
+	AO: T_Hair4_AO.tga.png
+	Opacity: T_Hair4_Alpha.tga.png
+	Albedo: T_Hair4_BC.tga.png
+	Normal: T_Hair4_N.tga.png
+	Anisotropy: T_Hair4_Flow.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Hair4_ID.tga.png
+	Roughness: T_Hair4_D.tga.png
+	Specular colour: 0.116129|0.116129|0.116129
+	Diffuse intensity: 1|1|1
+	Specular hardness: 68.3993
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_UpperArmor" has ID 1e339cb6-c10a-4737-8681-4fbff4258a64.
+	AO: T_UpperArmor_AO.tga.png
+	Albedo: T_UpperArmor_BC.tga.png
+	Normal: T_UpperArmor_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_UpperArmor_MT.tga.png
+	Roughness: T_UpperArmor_R.tga.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 68.3993
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Shirt" has ID 20daace1-c091-4294-ac03-850d60de8a15.
+	AO: T_Shirt_AO.tga.png
+	Opacity: T_Shirt_BC.tga.png
+	Albedo: T_Shirt_BC.tga.png
+	Emission: 0|0|0
+	Normal: T_Shirt_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Shirt_MT.tga.png
+	Roughness: T_Shirt_R.tga.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 12.5
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_ShoulderCloth" has ID aa23e7e7-0d9e-4444-b843-d3515bc7e020.
+	AO: T_ShoulderCloth_AO.tga.png
+	Opacity: T_ShoulderCloth_BC.tga.png
+	Albedo: T_ShoulderCloth_BC.tga.png
+	Normal: T_ShoulderCloth_N.tga.png
+	Specular F0: 0.3057187069
+	Diffuse colour: 1|1|1
+	Metalness: T_ShoulderCloth_MT.tga.png
+	Roughness: T_ShoulderCloth_R.tga.png
+	Specular colour: 0.083871|0.083871|0.083871
+	Diffuse intensity: 1|1|1
+	Specular hardness: 41.5762
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Fur" has ID 18319a3d-6a60-4fc8-87ce-11d8c97313ce.
+	AO: T_Hair4_AO.tga.png
+	Opacity: T_Hair4_Alpha.tga.png
+	Albedo: T_Hair4_BC.tga.png
+	Emission: 0|0|0
+	Normal: T_Hair4_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Hair4_D.tga.png
+	Roughness: T_Hair4_ID.tga.png
+	Specular colour: 0|0|0
+	Diffuse intensity: 1|1|1
+	Specular hardness: 8.66885
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_BottomArmor" has ID b68c37f9-5554-40b7-824d-3f68680eec02.
+	AO: T_BottomArmor_AO.tga.png
+	Albedo: T_BottomArmor_BC.tga.png
+	Normal: T_BottomArmor_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_BottomArmor_MT.tga.png
+	Roughness: T_BottomArmor_R.tga.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 6.31179
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Pant" has ID f8d9fe14-07ac-4b7f-a909-3fcc95b8f55b.
+	AO: T_Pant_AO.tga.png
+	Albedo: T_Pant_BC.tga.png
+	Normal: T_Pant_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Pant_MT.tga.png
+	Roughness: T_Pant_R.tga.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 6.31179
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_BodySkin" has ID e5192a24-bea1-40d6-9e14-bacd6341b831.
+	AO: T_Body_AO.tga.png
+	Albedo: T_Body_BC.tga.png
+	Normal: T_Body_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: 0
+	Roughness: T_Body_R.tga.png
+	Specular colour: 0|0|0
+	Diffuse intensity: 1|1|1
+	Specular hardness: 2
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_LongSword" has ID 97da257d-f913-4ca9-aa31-a1ccc9ecce50.
+	AO: T_LongSword_AO.tga.png
+	Albedo: T_LongSword_BC.tga.png
+	Normal: T_LongSword_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_LongSword_MT.tga.png
+	Roughness: T_LongSword_R.tga.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 6.31179
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Helmet" has ID 144e38d2-baad-4bff-84ca-889aa07f48fd.
+	AO: T_Helmet_AO.tga.png
+	Albedo: T_Helmet_BC.tga.png
+	Normal: T_Helmet_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Helmet_MT.tga.png
+	Roughness: T_Helmet_R.tga.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 6.31179
+	Clear coat normal: 1
+	Clear coat roughness: 0.04
+
+Material "MI_Cynder" has ID 643bb899-5421-48b9-8736-14b5ca493263.
+	AO: T_Cynder_AO.tga.png
+	Albedo: T_Cynder_BC.tga.png
+	Normal: T_Cynder_N.tga.png
+	Specular F0: 0.5
+	Diffuse colour: 1|1|1
+	Metalness: T_Cynder_MT.tga.png
+	Roughness: T_Cynder_R.tga.png
+	Specular colour: 0.5|0.5|0.5
+	Diffuse intensity: 1|1|1
+	Specular hardness: 6.31179
+	Clear coat normal: 1
+	Clear coat roughness: 0.04

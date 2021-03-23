@@ -189,7 +189,7 @@ public class ItemActionsMenu : Menu
 
     private void SetPositionUnderItemSlot(Vector2 slotLocalPosition) {
         var newPosition = new Vector2(
-            this.transform.localPosition.x, slotLocalPosition.y - 100
+            this.transform.localPosition.x, slotLocalPosition.y - 145
         );
         this.transform.localPosition = newPosition;
     } 

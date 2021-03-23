@@ -1,0 +1,413 @@
+fileFormatVersion: 2
+guid: 635b8178fa4d3a64fbaadae13c648bc2
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Beard
+    second: {fileID: 2100000, guid: 9a464a46fce5e0742b34faba344f2b27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_BodySkin
+    second: {fileID: 2100000, guid: 54fa42eab3bf07b499920719c6324544, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_BottomArmor
+    second: {fileID: 2100000, guid: d3145d89521a5654d8f5e4393ae01a68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Cynder
+    second: {fileID: 2100000, guid: f81b1e36a2e20d64ba3e91c5623aa9f5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_EyeBrows
+    second: {fileID: 2100000, guid: f50d944e7f36e45429fc1b0cdd127615, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_EyeTear
+    second: {fileID: 2100000, guid: f48070522ea395649a38b4c66e557f12, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Eyes
+    second: {fileID: 2100000, guid: 8aa7a55f0c1466f4ebfdcad83f524395, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Eyeslash
+    second: {fileID: 2100000, guid: 44f2900f2b6e142419b65074b206f6ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Fur
+    second: {fileID: 2100000, guid: f849b74b2b68ac841a61735a1bcd57a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Hair
+    second: {fileID: 2100000, guid: 07f38327fc0267f468d988a279894aaa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_HairCap
+    second: {fileID: 2100000, guid: 40e32ddff995b404eb63d3df69796e23, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_HeadSkin
+    second: {fileID: 2100000, guid: 7a4cedeb3c005fe4093af8b8d82b509f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Helmet
+    second: {fileID: 2100000, guid: dcd7e06bcec76a54684268bf31bcc5e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_LongSword
+    second: {fileID: 2100000, guid: 2eda6240316661449941dacb7916b54f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Pant
+    second: {fileID: 2100000, guid: 92c1faac73dad5e49a86d44a29c9c17a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Shirt
+    second: {fileID: 2100000, guid: 9ca4d9b5721459a42bad0f6fcbce3166, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_ShoulderCloth
+    second: {fileID: 2100000, guid: c9c246e779206fe418370c7014e97d09, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Teeth
+    second: {fileID: 2100000, guid: 0e39fa5baeca82a41960659bb93e63da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_UpperArmor
+    second: {fileID: 2100000, guid: 761b8408a3035be45bfa1028c5ebcb24, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'Hips' not found\n"
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0143
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: ravens-s2-templar-knight-preview(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Meshes:pCylinder1_MI_Cynder_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: H_Pivot2_MI_Helmet_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 1.001e-18, y: 0, z: -2.86e-19}
+      rotation: {x: -0.7071068, y: 6.1706756e-18, z: -3.0853354e-17, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Helmet_B2_MI_Helmet_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 1.001e-18, y: 0, z: -2.86e-19}
+      rotation: {x: -0.7071068, y: 6.1706756e-18, z: -3.0853354e-17, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Helmet_F2_MI_Helmet_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 1.001e-18, y: 0, z: -2.86e-19}
+      rotation: {x: -0.7071068, y: 6.1706756e-18, z: -3.0853354e-17, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: H_Lock2_MI_Helmet_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 1.001e-18, y: 0, z: -2.86e-19}
+      rotation: {x: -0.7071068, y: 6.1706756e-18, z: -3.0853354e-17, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LongSword_Equip_MI_LongSword_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -1.001e-18, y: -2.002e-18, z: 2.86e-19}
+      rotation: {x: -0.7071068, y: 3.7024035e-17, z: -3.7024025e-17, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MetalKnees_back_MI_BottomArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LegBelt_MI_BottomArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MetalKneesCircles_MI_BottomArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MetalLeg_MI_BottomArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MetalKnees_MI_BottomArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 5.72e-19, y: -1.001e-18, z: 2.86e-19}
+      rotation: {x: 0, y: 0, z: 8.726646e-18, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MetalShoes_MI_BottomArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 5.72e-19, y: 0, z: 1.43e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MetalCalf_MI_BottomArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 5.72e-19, y: 0, z: 1.43e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BotBody_C_MI_BodySkin_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Pant_C_MI_Pant_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Metal_Pelvis_MI_BottomArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LowerArm_Belts_R_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 1.43e-19, y: 0, z: -2.86e-19}
+      rotation: {x: 0, y: -7.853981e-17, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LowerArms_Armor_R_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 1.43e-19, y: 0, z: -2.86e-19}
+      rotation: {x: 0, y: -7.853981e-17, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Glover_R_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 1.43e-19, y: 0, z: -2.86e-19}
+      rotation: {x: 0, y: -7.853981e-17, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LowerArm_Belts_L_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -4.2899998e-19, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LowerArms_Armor_L_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -4.2899998e-19, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Glover_L_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -4.2899998e-19, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Shoulder_Leather_MI_ShoulderCloth_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: S_Fur_MI_Fur_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Cloth_B_MI_ShoulderCloth_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Cloth_F_MI_ShoulderCloth_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Shoulder_Armor_B_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: -4.004e-18, z: 2.86e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Shoulder_Armor_A_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: P_BeltCloth_MI_Shirt_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: P_Belt_MI_Shirt_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Shirt_out_A_MI_Shirt_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Shirt_in_A_MI_Shirt_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: UpperArm_Belts_MI_UpperArmor_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: 5.72e-19, y: 4.004e-18, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Beard_MI_Beard_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Eyelash_MI_Eyeslash_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: -4.004e-18, z: 1.43e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Head_MI_HeadSkin_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EyeBrows_MI_EyeBrows_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: -4.004e-18, z: 2.86e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EyesTear_MI_EyeTear_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: -4.004e-18, z: 2.86e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Teeth_MI_Teeth_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: -4.004e-18, z: 1.43e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Eyes_MI_Eyes_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: -4.004e-18, z: -1.43e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_main_MI_Hair_0_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: -4.004e-18, z: 1.43e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: HairCap_MI_HairCap_0
+      parentName: ravens-s2-templar-knight-preview(Clone)
+      position: {x: -0, y: -4.004e-18, z: 1.43e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 0.0143
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

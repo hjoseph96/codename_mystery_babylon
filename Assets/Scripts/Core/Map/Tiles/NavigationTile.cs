@@ -1,5 +1,8 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Tilemaps;
+#endif
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

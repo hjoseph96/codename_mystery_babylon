@@ -12,7 +12,6 @@ public class ExperienceBar : MonoBehaviour
     [SerializeField] private Transform _fillSpawnPoint;
 
     [SerializeField] private GameObject _barFillPrefab;
-    private Image _barFill;
     [SerializeField] private float _fillDuration = 0.67f;
     [SerializeField] private float _fillMax = -641.87f;
 
@@ -20,6 +19,7 @@ public class ExperienceBar : MonoBehaviour
 
     private TextMeshProUGUI _expAmount;
 
+    private Image _barFill;
     private int _percentage;
     [ShowInInspector] public int Percentage { get { return _percentage; } }
 
@@ -60,7 +60,7 @@ public class ExperienceBar : MonoBehaviour
         OnBarFilled = null;
         _barSpawned = false;
 
-        _barFillPrefab.transform.parent = null;
+        _barFillPrefab.transform.SetParent(null);
         Destroy(_barFill.gameObject);
     }
 
@@ -83,11 +83,6 @@ public class ExperienceBar : MonoBehaviour
             Fill();
     }
 
-    private void ToggleChildren(bool enabled)
-    {
-        for (var i = 0; i < this.transform.childCount; i++)
-            this.transform.GetChild(i).gameObject.SetActive(enabled);
-    }
 
     private void Fill()
     {

@@ -1,10 +1,12 @@
 using System;
 using System.IO;
 using Sirenix.OdinInspector;
-using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.U2D;
-
+ #if UNITY_EDITOR
+using UnityEditor;
+#endif
 public abstract class ScriptableItem : SerializedScriptableObject
 {
     [FoldoutGroup("Basic Properties"), PreviewField]
@@ -23,6 +25,7 @@ public abstract class ScriptableItem : SerializedScriptableObject
 
     public abstract Item GetItem();
 
+    #if UNITY_EDITOR
     public void SetFromItemData(ItemData item)
     {
         Name = item.ItemName;
@@ -44,4 +47,5 @@ public abstract class ScriptableItem : SerializedScriptableObject
         if (string.IsNullOrEmpty(Name))
             Name = fileName;
     }
+    #endif
 }

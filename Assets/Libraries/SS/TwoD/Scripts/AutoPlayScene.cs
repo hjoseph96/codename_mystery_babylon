@@ -6,6 +6,7 @@ namespace SS.TwoD
     [ExecuteInEditMode]
     public class AutoPlayScene : MonoBehaviour
     {
+        #if UNITY_EDITOR
         public static void Play()
         {
             if (!UnityEditor.EditorApplication.isPlaying)
@@ -14,7 +15,6 @@ namespace SS.TwoD
             }
         }
         
-        #if UNITY_EDITOR
         void Update()
         {
             if (!UnityEditor.EditorApplication.isPlaying)

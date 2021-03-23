@@ -415,9 +415,8 @@ namespace Crosstales.Common.Util
       /// <returns>True if the AudioSource has an active clip.</returns>
       public static bool hasActiveClip(AudioSource source)
       {
-         int timeSamples = source.timeSamples;
          return source != null && source.clip != null &&
-                (!source.loop && timeSamples > 0 && timeSamples < source.clip.samples - 256 ||
+                (!source.loop && source.timeSamples > 0 && source.timeSamples < source.clip.samples - 256 ||
                  source.loop ||
                  source.isPlaying);
       }
@@ -960,7 +959,7 @@ namespace Crosstales.Common.Util
       /// <returns>True if the current platform is supported.</returns>
       public static Color HSVToRGB(float h, float s, float v, float a = 1f)
       {
-         if (Mathf.Abs(s) < BaseConstants.FLOAT_TOLERANCE)
+         if (s < BaseConstants.FLOAT_TOLERANCE)
             return new Color(v, v, v, a);
 
          float _h = h / 60f;
@@ -998,67 +997,125 @@ namespace Crosstales.Common.Util
                  url.StartsWith(BaseConstants.PREFIX_HTTPS, System.StringComparison.OrdinalIgnoreCase));
       }
 
-      /// <summary>Copy or move a file.</summary>
-      /// <param name="inputFile">Input file path</param>
-      /// <param name="outputFile">Output file path</param>
-      /// <param name="move">Move file instead of copy (default: false, optional)</param>
-      public static void FileCopy(string inputFile, string outputFile, bool move = false)
+      /// <summary>Copy or move a directory.</summary>
+      /// <param name="sourcePath">Source directory path</param>
+      /// <param name="destPath">Destination directory path</param>
+      /// <param name="move">Move directory instead of copy (default: false, optional)</param>
+      public static void CopyPath(string sourcePath, string destPath, bool move = false)
       {
          if ((isWSABasedPlatform || isWebPlatform) && !isEditor)
          {
-            Debug.LogWarning("'FileCopy' is not supported for the current platform!");
+            Debug.LogWarning("'CopyPath' is not supported for the current platform!");
          }
          else
          {
-            if (!string.IsNullOrEmpty(outputFile))
+            if (!string.IsNullOrEmpty(destPath))
             {
                try
                {
-                  if (!System.IO.File.Exists(inputFile))
+                  if (!System.IO.Directory.Exists(sourcePath))
                   {
-                     Debug.LogError($"Input file does not exists: {inputFile}");
+                     Debug.LogError($"Source directory does not exists: {sourcePath}");
                   }
                   else
                   {
-                     System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(outputFile));
+                     //System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destPath));
 
-                     if (System.IO.File.Exists(outputFile))
+                     if (System.IO.Directory.Exists(destPath))
                      {
                         if (BaseConstants.DEV_DEBUG)
-                           Debug.LogWarning($"Overwrite output file: {outputFile}");
+                           Debug.LogWarning($"Overwrite destination directory: {destPath}");
 
-                        System.IO.File.Delete(outputFile);
+                        System.IO.Directory.Delete(destPath, true);
                      }
 
                      if (move)
                      {
-#if UNITY_STANDALONE || UNITY_EDITOR
-                        System.IO.File.Move(inputFile, outputFile);
-#else
-                        System.IO.File.Copy(inputFile, outputFile);
-                        System.IO.File.Delete(inputFile);
-#endif
+                        System.IO.Directory.Move(sourcePath, destPath);
                      }
                      else
                      {
-                        System.IO.File.Copy(inputFile, outputFile);
+                        copyAll(new System.IO.DirectoryInfo(sourcePath), new System.IO.DirectoryInfo(destPath));
                      }
                   }
                }
                catch (System.Exception ex)
                {
-                  Debug.LogError($"Could not copy file: {ex}");
+                  Debug.LogError($"Could not {(move ? "move" : "copy")} directory: {ex}");
+               }
+            }
+         }
+      }
+
+      /// <summary>Copy or move a file.</summary>
+      /// <param name="sourceFile">Source file path</param>
+      /// <param name="destFile">Destination file path</param>
+      /// <param name="move">Move file instead of copy (default: false, optional)</param>
+      public static void CopyFile(string sourceFile, string destFile, bool move = false)
+      {
+         if ((isWSABasedPlatform || isWebPlatform) && !isEditor)
+         {
+            Debug.LogWarning("'CopyFile' is not supported for the current platform!");
+         }
+         else
+         {
+            if (!string.IsNullOrEmpty(destFile))
+            {
+               try
+               {
+                  if (!System.IO.File.Exists(sourceFile))
+                  {
+                     Debug.LogError($"Source file does not exists: {sourceFile}");
+                  }
+                  else
+                  {
+                     System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destFile));
+
+                     if (System.IO.File.Exists(destFile))
+                     {
+                        if (BaseConstants.DEV_DEBUG)
+                           Debug.LogWarning($"Overwrite destination file: {destFile}");
+
+                        System.IO.File.Delete(destFile);
+                     }
+
+                     if (move)
+                     {
+#if UNITY_STANDALONE || UNITY_EDITOR
+                        System.IO.File.Move(sourceFile, destFile);
+#else
+                        System.IO.File.Copy(sourceFile, destFile);
+                        System.IO.File.Delete(destFile);
+#endif
+                     }
+                     else
+                     {
+                        System.IO.File.Copy(sourceFile, destFile);
+                     }
+                  }
+               }
+               catch (System.Exception ex)
+               {
+                  Debug.LogError($"Could not {(move ? "move" : "copy")} file: {ex}");
                }
             }
          }
       }
 
       /// <summary>
-      /// Shows the location of a path or file in OS file explorer.
-      /// NOTE: only works for standalone platforms
+      /// Shows the location of a path (or file) in OS file explorer.
+      /// NOTE: only works on standalone platforms
       /// </summary>
-      /// <param name="file">File path</param>
-      public static void ShowFileLocation(string file)
+      public static void ShowPath(string path)
+      {
+         ShowFile(path);
+      }
+
+      /// <summary>
+      /// Shows the location of a file (or path) in OS file explorer.
+      /// NOTE: only works on standalone platforms
+      /// </summary>
+      public static void ShowFile(string file)
       {
          if (isStandalonePlatform || isEditor)
          {
@@ -1232,10 +1289,34 @@ namespace Crosstales.Common.Util
          return host;
       }
 
+      #endregion
+
+
+      #region Private methods
+
       private static string addLeadingZero(int value)
       {
          return value < 10 ? "0" + value : value.ToString();
       }
+
+      private static void copyAll(System.IO.DirectoryInfo source, System.IO.DirectoryInfo target)
+      {
+         System.IO.Directory.CreateDirectory(target.FullName);
+
+         foreach (System.IO.FileInfo fi in source.GetFiles())
+         {
+            fi.CopyTo(System.IO.Path.Combine(target.FullName, fi.Name), true);
+         }
+
+         // Copy each subdirectory using recursion.
+         foreach (System.IO.DirectoryInfo sourceSubDir in source.GetDirectories())
+         {
+            System.IO.DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(sourceSubDir.Name);
+            copyAll(sourceSubDir, nextTargetSubDir);
+         }
+      }
+
+      #endregion
 
       // StringHelper
       /*
@@ -1297,8 +1378,6 @@ namespace Crosstales.Common.Util
           return new Color32(r, g, b, 255);
       }
       */
-
-      #endregion
    }
 
    /// <summary>Helper to reset the necessary settings.</summary>

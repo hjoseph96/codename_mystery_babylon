@@ -15,7 +15,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 {
     [FoldoutGroup("Basic Properties")]
     [SerializeField] private string _name;
-    public string Name { get { return _name; } }
+    public string Name { get => _name; }
     
     [FoldoutGroup("Basic Properties")]
     [DistinctUnitType]
@@ -27,7 +27,13 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     
     [FoldoutGroup("Basic Properties")] 
     [SerializeField] private float _moveAnimationSpeed = 1.75f;
-    
+
+    [FoldoutGroup("Basic Properties")]
+    [SerializeField] private Direction _startingLookDirection;
+
+    [FoldoutGroup("Basic Properties")]
+    public Portrait Portrait;
+
     [FoldoutGroup("Basic Properties")] 
     public GameObject BattlerPrefab;
 
@@ -53,18 +59,18 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public static int MAX_LEVEL = 40;
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _level;
-    public int Level { get { return _level; } }
+    public int Level { get => _level; }
     
     [FoldoutGroup("Base Stats")]
     public ScriptableUnitClass UnitClass;
 
     private UnitClass _unitClass;
     [FoldoutGroup("Base Stats")]
-    public UnitClass Class { get { return _unitClass; } }
+    public UnitClass Class { get => _unitClass; }
     
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _experience;
-    public int Experience { get { return _experience; } }
+    public int Experience { get => _experience; }
     public static int MAX_EXP_AMOUNT = 100;
     
     [FoldoutGroup("Base Stats")]
@@ -75,10 +81,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [ProgressBar(0, "MaxHealth", ColorGetter = "HealthColor", BackgroundColorGetter = "BackgroundColor", Height = 20)]
     [SerializeField] private int _currentHealth;
     public bool IsAlive => CurrentHealth > 0;
-    public int CurrentHealth {
-        get { return _currentHealth; }
-    }
-    public int MaxHealth => Stats[UnitStat.MaxHealth].ValueInt;
+    public int CurrentHealth { get => _currentHealth; }
 
     [FoldoutGroup("Stats"), ShowIf("IsPlaying"), PropertyOrder(1)]
     [UnitStats]
@@ -92,11 +95,20 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Items")]
     [SerializeField] private ScriptableItem[] _startingItems;
 
-    // TODO: Implement WeaponRanks (equippable weapons and rank with each)
-    // TODO: Create custom odin drawer to assign weapons wieldable to unit
-    // And only allow selection of ScriptableWeapons created from JSON
-
     public UnitInventory Inventory { get; private set; }
+
+    [FoldoutGroup("Items")]
+    // Temporary measure until Playerunit have Stats seerialized
+    [SerializeField] private WeaponRank _startingRank = WeaponRank.D;
+
+
+    private Dictionary<WeaponType, WeaponRank> _weaponProfiency = new Dictionary<WeaponType, WeaponRank>();
+    [FoldoutGroup("Items")]
+    [ShowInInspector] public Dictionary<WeaponType, WeaponRank> WeaponProfiency { get => _weaponProfiency; }
+
+    private Dictionary<MagicType, WeaponRank> _magicProfiency = new Dictionary<MagicType, WeaponRank>();
+    [FoldoutGroup("Items")]
+    [ShowInInspector] public Dictionary<MagicType, WeaponRank> MagicProfiency { get => _magicProfiency; }
 
     
     [FoldoutGroup("Game Status")]
@@ -113,8 +125,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public Vector2Int GridPosition { get { return _gridPosition; } }
 
-    private Vector2Int _initialGridPosition;
-    public Vector2Int InitialGridPosition { get { return _initialGridPosition; } }  // Where Unit began the turn.
+
+    // Key == GridPosition && Value == _lookDirection
+    private KeyValuePair<Vector2Int, Vector2> _initialGridPosition;
+    public KeyValuePair<Vector2Int, Vector2> InitialGridPosition { get { return _initialGridPosition; } }  // Where Unit began the turn.
 
     private bool _hasTakenAction;
     [FoldoutGroup("Game Status")]
@@ -126,17 +140,31 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
 
 
-    [FoldoutGroup("Events")]
-    public Action<Unit> UponDeath;
+    [HideInInspector] public Action OnFinishedMoving;
+    [HideInInspector] public Action<Unit> UponDeath;
+    [HideInInspector] public Action<Unit> UponLevelUp;
 
-    [FoldoutGroup("Events")]
-    public Action<Unit> UponLevelUp;
+
+    // Stat Convenience Methods
+    public int Weight {     get => Stats[UnitStat.Weight].ValueInt; }
+    public int Strength {   get => Stats[UnitStat.Strength].ValueInt; }
+    public int Skill {      get => Stats[UnitStat.Skill].ValueInt; }
+    public int Resistance { get => Stats[UnitStat.Resistance].ValueInt; }
+    public int MaxHealth {  get => Stats[UnitStat.MaxHealth].ValueInt; }
+    public int Magic {      get => Stats[UnitStat.Magic].ValueInt; }
+    public int Luck {       get => Stats[UnitStat.Luck].ValueInt; }
+    public int Defense {    get => Stats[UnitStat.Defense].ValueInt; }
+    public int Constitution { get => Stats[UnitStat.Constitution].ValueInt; }
+    public int Speed {      get => Stats[UnitStat.Speed].ValueInt; }
 
 
     public bool IsLocalPlayerUnit => Player == Player.LocalPlayer;
 
+
     protected virtual Player Player { get; }
     protected Battler Battler;
+    protected bool isMoving = false;
+    protected List<Unit> PotentialThreats = new List<Unit>();
 
     private AnimancerComponent _animancer;
     private Vector2 _lookDirection;
@@ -150,17 +178,17 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _gridPosition = GridUtility.SnapToGrid(this);
         WorldGrid.Instance[GridPosition].Unit = this;
 
-        _initialGridPosition = GridPosition;
-
         SetupFootstepSounds();
-
-        Player.AddUnit(this);
 
         _unitClass = UnitClass.GetUnitClass();
         InitStats();
 
         _animancer = GetComponent<AnimancerComponent>();
-        Rotate(Direction.Down);
+        Portrait = GetComponent<Portrait>();
+
+        Rotate(_startingLookDirection);
+        _initialGridPosition =  new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
+        
         PlayAnimation(_idleAnimation);
 
         _allInOneMat = GetComponent<Renderer>().material;
@@ -174,14 +202,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             EquipWeapon(weapons[0]);
     }
 
-    private void InitStats()
+    protected virtual void InitStats()
     {
+        // TODO: Setup serialization of Unit Stats for PlayerUnits
         Stats = new Dictionary<UnitStat, Stat>();
 
         // Copy base stats
         foreach (var stat in _statsDictionary.Keys)
         {
-            var value = _statsDictionary[stat];
+            var value   = _statsDictionary[stat];
             Stats[stat] = new Stat(stat.ToString(), value.Value, value.GrowthRate);
             //Stats[stat].AddEffect(new FlatBonusEffect(10));
             //Stats[stat].AddEffect(new PercentageBonusEffect(0.2f));
@@ -191,14 +220,35 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         _currentMovementPoints = Stats[UnitStat.Movement].ValueInt;
         _currentHealth = MaxHealth;
+
+        foreach (var weaponType in Class.UsableWeapons)
+            _weaponProfiency.Add(weaponType, _startingRank);
+
+        foreach (var magicType in Class.UsableMagic)
+            _magicProfiency.Add(magicType, _startingRank);
     }
 
 
     private void SetupFootstepSounds()
     {
-        _footsteps[SurfaceType.Grass] = grassFootsteps;
-        _footsteps[SurfaceType.Dirt] = dirtFootsteps;
-        _footsteps[SurfaceType.Rock] = rockFootsteps;
+        _footsteps[SurfaceType.Grass]   = grassFootsteps;
+        _footsteps[SurfaceType.Dirt]    = dirtFootsteps;
+        _footsteps[SurfaceType.Rock]    = rockFootsteps;
+    }
+
+    public void SetInitialPosition() => _initialGridPosition = new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
+
+    public void ResetToInitialPosition()
+    {
+        // Move back to Start instantly
+        this.transform.position = WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)InitialGridPosition.Key);
+        
+        // Reset Original Look Direction
+        LookAt(InitialGridPosition.Value);
+        SetIdle();
+
+        // Change Grid Position locally and within WorldGrid's WorldCell.
+        SetGridPosition(InitialGridPosition.Key);
     }
 
     public bool IsAlly(Unit unit) => Player.IsAlly(unit.Player);
@@ -217,40 +267,81 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public void SetIdle() => PlayAnimation(_idleAnimation);
 
+    private void SetGridPosition(Vector2Int newGridPosition)
+    {
+        WorldGrid.Instance[GridPosition].Unit = null;
+
+        _gridPosition = newGridPosition;
+        WorldGrid.Instance[GridPosition].Unit = this;
+    }
+
     private void PlayAnimation(DirectionalAnimationSet animations, float speed = 1f)
     {
         var clip = animations.GetClip(_lookDirection);
         _animancer.Play(clip).Speed = speed;
     }
 
-    public void TookAction() 
+    public virtual void TookAction() 
     {
         _hasTakenAction = true;
         SetInactiveShader();
     }
 
-    private void SetInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");    
-    private void RemoveInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");    
-
-    public void AllowAction()
+    public virtual void AllowAction()
     {
         _hasTakenAction = false;
         RemoveInactiveShader();
+    }
+
+    private void SetInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");    
+    private void RemoveInactiveShader() => _allInOneMat.DisableKeyword("HSV_ON");
+
+    public bool CanWield(Weapon weapon)
+    {
+        if (weapon.Type == WeaponType.Grimiore)
+        {
+            if (!MagicProfiency.Keys.Contains(weapon.MagicType))
+                return false;
+
+            if (MagicProfiency[weapon.MagicType] >= weapon.RequiredRank)
+                return true;
+            else
+                return false;
+        }
+
+        if (WeaponProfiency.Keys.Contains(weapon.Type) && WeaponProfiency[weapon.Type] >= weapon.RequiredRank)
+            return true;
+        else
+            return false;
+    }
+
+    public List<Weapon> WieldableWeapons()
+    {
+        var wieldableWeapons = new List<Weapon>();
+        
+        foreach (Weapon inventoryWeapon in Inventory.GetItems<Weapon>())
+            if (CanWield(inventoryWeapon))
+                wieldableWeapons.Add(inventoryWeapon);
+
+        return wieldableWeapons;
     }
 
     public void EquipWeapon(Weapon weapon)
     {
         var availableWeapons = new List<Weapon>();
         foreach(Weapon inventoryWeapon in Inventory.GetItems<Weapon>())
+        {
+            inventoryWeapon.CanWield = CanWield(inventoryWeapon);
             availableWeapons.Add(inventoryWeapon);
+        }
 
-        if (availableWeapons.Contains(weapon))
+        if (availableWeapons.Contains(weapon) && weapon.CanWield)
         {
             UnequipWeapon();
             _equippedWeapon = weapon;
             weapon.IsEquipped = true;
         } else 
-            throw new System.Exception($"Provided Weapon: {weapon.Name} is not in Unit#{Name}'s Inventory...");
+            throw new Exception($"Provided Weapon: {weapon.Name} is not in Unit#{Name}'s Inventory...");
     }
 
     public void UnequipWeapon()
@@ -259,6 +350,16 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             EquippedWeapon.IsEquipped = false;
 
         _equippedWeapon = null;
+    }
+
+    public bool IsArmed()
+    {
+        var wieldableWeapons = WieldableWeapons();
+
+        if (wieldableWeapons.Count == 0)
+            return false;
+
+        return !wieldableWeapons.All((weapon) => weapon.IsBroken == true);
     }
 
 
@@ -292,7 +393,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         if (currentExpAmount > MAX_EXP_AMOUNT)
         {
             currentExpAmount -= MAX_EXP_AMOUNT;
-            UponLevelUp.Invoke(this);
+            
+            if (UponLevelUp != null)
+                UponLevelUp.Invoke(this);
         }
         
         _experience = currentExpAmount;
@@ -311,39 +414,103 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return canAttack;
     }
 
-    public Dictionary<Weapon, List<Vector2Int>> AttackableWeapons() 
+    public Dictionary<Weapon, List<Vector2Int>> AttackableWeapons(bool currentPositionOnly = true) 
     {
         var attackableWeapons = new Dictionary<Weapon, List<Vector2Int>>();
-
-        var immediatePositions = GridUtility.GetReachableCells(this, 0);
+        
+        var moveCost = -1;
+        if (currentPositionOnly)
+            moveCost = 0;
+        var reachableCells = GridUtility.GetReachableCells(this, moveCost);
 
         foreach(var weapon in Inventory.GetItems<Weapon>()) {
-            var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions, weapon);
+            var attackableCells = GridUtility.GetAttackableCells(this, reachableCells, weapon);
             if (attackableCells.Count > 0)
                 attackableWeapons[weapon] = attackableCells;
         }
 
+        // Sort by Attack Damage
+        attackableWeapons.OrderBy((entry) => AttackDamage(entry.Key));
+
         return attackableWeapons;
     }
 
-    public List<Vector2Int> AllAttackableCells() 
+    public List<Vector2Int> AllAttackableCells(bool currentPositionOnly = true) 
     {
         var allAttackableCells = new List<Vector2Int>();
 
-        var immediatePositions = GridUtility.GetReachableCells(this, 0);
+        var moveCost = -1;
+        if (currentPositionOnly)
+            moveCost = 0;
+        var reachableCells = GridUtility.GetReachableCells(this, moveCost);
 
         foreach(var weapon in Inventory.GetItems<Weapon>()) {
-            var maxRange = weapon.Stats[WeaponStat.MaxRange].ValueInt;
-            var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions, weapon);
-            
+            var attackableCells = GridUtility.GetAttackableCells(this, reachableCells, weapon);
+
             if (attackableCells.Count > 0)
-                foreach(Vector2Int pos in attackableCells)
+                foreach (Vector2Int pos in attackableCells)
                     if (!allAttackableCells.Contains(pos))
                         allAttackableCells.Add(pos);
-
         }
 
         return allAttackableCells;
+    }
+
+    public List<Vector2Int> AttackableCells()
+    {
+        var attackableCellsByEquippedWeapon = new List<Vector2Int>();
+
+        if (EquippedWeapon == null)
+            return attackableCellsByEquippedWeapon;
+
+        var reachableCells = GridUtility.GetReachableCells(this);
+
+        var attackableCells = GridUtility.GetAttackableCells(this, reachableCells, EquippedWeapon);
+        
+        if (attackableCells.Count > 0)
+            foreach(Vector2Int pos in attackableCells)
+                if (!attackableCellsByEquippedWeapon.Contains(pos))
+                    attackableCellsByEquippedWeapon.Add(pos);
+
+        // Sort by distance from current position
+        var sortedByDistance = attackableCellsByEquippedWeapon.OrderBy(
+            (atkTarget) => GridUtility.GetBoxDistance(this.GridPosition, atkTarget)
+        ).ToList();
+
+        return sortedByDistance;
+    }
+
+    public Dictionary<Vector2Int, List<Vector2Int>> CellsWhereICanAttackFrom()
+    {
+        var cellsToNavigateToForAnAttack = new Dictionary<Vector2Int, List<Vector2Int>>();
+
+        var attackableCellsByEquippedWeapon = AttackableCells();
+
+        // Set radius based on weapon range's max range
+        var radius = EquippedWeapon.Stats[WeaponStat.MaxRange].ValueInt;
+
+        foreach(Vector2Int atkTarget in attackableCellsByEquippedWeapon)
+        {
+            var reachableAttackPoints = GridUtility.GetReachableCellNeighbours(atkTarget, radius, this);
+            foreach (Vector2Int potentialAttackPoint in reachableAttackPoints)
+            {
+                if (!cellsToNavigateToForAnAttack.Keys.Contains(atkTarget))
+                    cellsToNavigateToForAnAttack[atkTarget] = new List<Vector2Int>();
+
+                cellsToNavigateToForAnAttack[atkTarget].Add(potentialAttackPoint);
+            }
+        }
+
+        // order attack point lists by distance away, without linq
+        foreach(KeyValuePair<Vector2Int, List<Vector2Int>> entry in cellsToNavigateToForAnAttack)
+            entry.Value.Sort(delegate(Vector2Int atkPoint1, Vector2Int atkPoint2) {
+                var firstDistance = GridUtility.GetBoxDistance(this.GridPosition, atkPoint1);
+                var secondDistance = GridUtility.GetBoxDistance(this.GridPosition, atkPoint2);
+                
+                return firstDistance.CompareTo(secondDistance);
+            });
+
+        return cellsToNavigateToForAnAttack;
     }
 
 
@@ -407,6 +574,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         PlayAnimation(_walkAnimation, _moveAnimationSpeed);
 
+        isMoving = true;
         while (!reachedGoal)
         {
             var speed = _moveSpeed * Time.deltaTime;
@@ -443,12 +611,18 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             }
 
             yield return new WaitForEndOfFrame();
+            
         }
 
         PlayAnimation(_idleAnimation);
 
         _gridPosition = goal;
         WorldGrid.Instance[GridPosition].Unit = this;
+
+        isMoving = false;
+
+        if (OnFinishedMoving != null)
+            OnFinishedMoving.Invoke();
     }
 
     private float MoveTo(Vector2 goal, float speed)
@@ -475,8 +649,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return speed;
     }
 
-    private static bool IsPlaying => Application.isPlaying;
-    
 
     // =====================
     // || Battle Formulas ||
@@ -485,38 +657,27 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public int AttackDamage(Weapon weapon)
     {
         int weaponDamage = weapon.Stats[WeaponStat.Damage].ValueInt;
-        
-        if (weapon.Type == WeaponType.Grimiore) { // MAGIC USER
-            int magicStat = Stats[UnitStat.Magic].ValueInt;
-            
-            return magicStat + weaponDamage;
-        } else {
-            int strengthStat = Stats[UnitStat.Strength].ValueInt;
 
-            return strengthStat + weaponDamage;
-        }
+        if (EquippedWeapon.Type == WeaponType.Grimiore)  // MAGIC USER
+            return Magic + weaponDamage;
+        else
+            return Strength + weaponDamage;
     }
 
     public int AttackDamage()
     {
         int weaponDamage = EquippedWeapon.Stats[WeaponStat.Damage].ValueInt;
         
-        if (EquippedWeapon.Type == WeaponType.Grimiore) { // MAGIC USER
-            int magicStat = Stats[UnitStat.Magic].ValueInt;
-            
-            return magicStat + weaponDamage;
-        } else {
-            int strengthStat = Stats[UnitStat.Strength].ValueInt;
-
-            return strengthStat + weaponDamage;
-        }
+        if (EquippedWeapon.Type == WeaponType.Grimiore)  // MAGIC USER
+            return Magic + weaponDamage;
+        else
+            return Strength + weaponDamage;
     }
 
     public int AttackSpeed(Weapon weapon)
     {
         int weaponWeight = weapon.Weight;
-        int constitutionStat = Stats[UnitStat.Constitution].ValueInt;
-        int burden = weaponWeight - constitutionStat;
+        int burden = weaponWeight - Constitution;
 
         if (burden < 0)
             burden = 0;
@@ -528,8 +689,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public int AttackSpeed()
     {
         int weaponWeight = EquippedWeapon.Weight;
-        int constitutionStat = Stats[UnitStat.Constitution].ValueInt;
-        int burden = weaponWeight - constitutionStat;
+        int burden = weaponWeight - Constitution;
 
         if (burden < 0)
             burden = 0;
@@ -541,24 +701,25 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         Dictionary<string, int> battleStats = new Dictionary<string, int>();
 
-        if (!CanAttack(defender))
-        {   // -1 == Cannot Attack
-            battleStats["ATK_DMG"] = -1;
-            battleStats["ACCURACY"] = -1;
-            battleStats["CRIT_RATE"] = -1;
+        //if (!CanAttack(defender))
+        //{   // -1 == Cannot Attack
+        //    battleStats["ATK_DMG"] = -1;
+        //    battleStats["ACCURACY"] = -1;
+        //    battleStats["CRIT_RATE"] = -1;
 
-            return battleStats;
-        }
+        //    return battleStats;
+        //}
 
         int atkDmg;
         if (weapon.Type == WeaponType.Grimiore)
-            atkDmg = AttackDamage(weapon) - defender.Stats[UnitStat.Resistance].ValueInt;
+            atkDmg = AttackDamage(weapon) - defender.Resistance;
         else
-            atkDmg = AttackDamage(weapon) - defender.Stats[UnitStat.Defense].ValueInt;
+            atkDmg = AttackDamage(weapon) - defender.Defense;
 
         battleStats["ATK_DMG"] = atkDmg;
         battleStats["ACCURACY"] = Accuracy(defender, weapon);
         battleStats["CRIT_RATE"] = CriticalHitRate(defender, weapon);
+
 
         return battleStats;
     }
@@ -575,15 +736,19 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public int CriticalHitRate(Unit target, Weapon weapon)
     {
-        int skill = Stats[UnitStat.Skill].ValueInt;
         int weaponCritChance = weapon.Stats[WeaponStat.CriticalHit].ValueInt;
 
-        int critRate = ((skill / 2) + weaponCritChance) - target.Stats[UnitStat.Luck].ValueInt;
+        int critRate = ((Skill / 2) + weaponCritChance) - target.Luck;
         if (critRate < 0)
             critRate = 0;
-        
-        // if (WEAPON_RANKS[EquippedWeapon.Type] == Weapon.RANKS["S"])
-        //     critRate += 5;
+
+        if (EquippedWeapon.Type == WeaponType.Grimiore)
+        {
+            if (MagicProfiency[EquippedWeapon.MagicType] == WeaponRank.S)
+                critRate += 5;
+        }
+        else if (WeaponProfiency[EquippedWeapon.Type] == WeaponRank.S)
+            critRate += 5;
 
         return critRate;
     }
@@ -598,11 +763,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public int HitRate(Vector2Int targetPosition, Weapon weapon)
     {
         int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, targetPosition);
-        int luckStat = Stats[UnitStat.Luck].ValueInt;
-        int skillStat = Stats[UnitStat.Skill].ValueInt;
         int weaponHitStat = weapon.Stats[WeaponStat.Hit].ValueInt;
 
-        int hitRate = (skillStat * 2) + luckStat  + weaponHitStat;
+        int hitRate = (Skill * 2) + Luck  + weaponHitStat;
         if (boxDistance >= 2)
             hitRate -= 15;
         
@@ -619,14 +782,160 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             // TODO: Add weapon W△ Weapon triangle effects
             return HitRate(target.GridPosition, weapon) - target.DodgeChance(weapon);
         } else {
-            int magicStat = Stats[UnitStat.Magic].ValueInt;
-            int resistanceStat = Stats[UnitStat.Resistance].ValueInt;
-            int skillStat = Stats[UnitStat.Skill].ValueInt;
-            
-            var accuracy = (magicStat - resistanceStat) + skillStat + 30 - (boxDistance * 2);
+            var accuracy = (Magic - Resistance) + Skill + 30 - (boxDistance * 2);
             accuracy = Mathf.Clamp(accuracy, 0, 100);
 
             return accuracy;
         }
     }
+
+    // Where int == Player.TeamId
+    protected Dictionary<int, List<Unit>> ThreateningUnits()
+    {
+        Dictionary<int, List<Unit>> unitsByTeam = new Dictionary<int, List<Unit>>();
+
+        foreach (Vector2Int gridPos in ThreatDetectionRange())
+        {
+            var unit = WorldGrid.Instance[gridPos].Unit;
+            if (unit != null && IsEnemy(unit))
+            { 
+                int unitTeam = unit.Player.TeamId;
+                if (!unitsByTeam.Keys.Contains(unitTeam))
+                    unitsByTeam[unitTeam] = new List<Unit>();
+
+                unitsByTeam[unitTeam].Add(unit);
+            }
+        }
+
+        return unitsByTeam;
+    }
+
+
+    protected List<Vector2Int> PotentialAttackPoints()
+    {
+        List<Vector2Int> potentialAtkPoints = new List<Vector2Int>();
+
+        var allThreateningUnits = ThreateningUnits().Values.SelectMany(x => x).ToList();
+        foreach(Unit unit in allThreateningUnits)
+        {
+            foreach (Vector2Int gridPos in unit.CellsWhereICanAttackFrom()[GridPosition])
+                if (!potentialAtkPoints.Contains(gridPos))
+                    potentialAtkPoints.Add(gridPos);
+        }
+
+        return potentialAtkPoints;
+    }
+
+    protected List<Unit> ReachableAllies()
+    {
+        List<Unit> units = new List<Unit>();
+        var moveRange = GridUtility.GetReachableCells(this, -1, true);
+
+        foreach (Vector2Int gridPos in moveRange)
+        {
+            var unit = WorldGrid.Instance[gridPos].Unit;
+            if (unit != null && IsAlly(unit))
+                units.Add(unit);
+        }
+
+        return units;
+    }
+
+    protected List<int> ThreatOrder()
+    {
+        switch(TeamId)
+        {
+            case Team.LocalPlayerTeamId:
+                return new List<int>
+                {
+                    Team.EnemyTeamId, Team.OtherEnemyTeamId, Team.AllyTeamId, Team.NeutralTeamId
+                };
+            case Team.EnemyTeamId:
+                return new List<int>
+                {
+                    Team.OtherEnemyTeamId, Team.AllyTeamId, Team.NeutralTeamId, Team.LocalPlayerTeamId
+                };
+            case Team.OtherEnemyTeamId:
+                return new List<int>
+                {
+                    Team.AllyTeamId, Team.NeutralTeamId, Team.LocalPlayerTeamId, Team.EnemyTeamId
+                };
+            case Team.AllyTeamId:
+                return new List<int>
+                {
+                    Team.NeutralTeamId, Team.EnemyTeamId, Team.OtherEnemyTeamId, Team.AllyTeamId
+                };
+            case Team.NeutralTeamId:
+                return new List<int>
+                {
+                    Team.LocalPlayerTeamId, Team.EnemyTeamId, Team.OtherEnemyTeamId, Team.AllyTeamId
+                };
+        }
+
+        throw new Exception($"Invalid TeamId: {TeamId}");
+    }
+
+    protected void SetPotentialThreats()
+    {
+        // Empty List pf Potential Units
+        PotentialThreats = new List<Unit>();
+
+        var potentialThreats = ThreateningUnits();
+        var allPotentialAtkPoints = PotentialAttackPoints();
+
+        // Prioritize Units who will attack in the sooner phases
+        foreach(int teamId in ThreatOrder())
+        {
+            if (!potentialThreats.Keys.Contains(teamId))
+                continue;
+
+            var threatsOnTeam = potentialThreats[teamId];
+            threatsOnTeam.Sort(delegate (Unit unitOne, Unit unitTwo)
+            {
+                var firstThreateningWeapon = unitOne.AttackableWeapons(false);
+                var firstMostDangerousWeapon = firstThreateningWeapon.Keys.First((weapon) => firstThreateningWeapon[weapon].Contains(GridPosition) == true);
+
+                var secondThreateningWeapon = unitTwo.AttackableWeapons(false);
+                var secondMostDangerousWeapon = secondThreateningWeapon.Keys.First((weapon) => secondThreateningWeapon[weapon].Contains(GridPosition) == true);
+
+                var firstPreview = unitOne.PreviewAttack(this, firstMostDangerousWeapon);
+                var firstPotentialDamage = firstPreview["ATK_DMG"];
+
+                var secondPreview = unitTwo.PreviewAttack(this, secondMostDangerousWeapon);
+                var secondPotentialDamage = secondPreview["ATK_DMG"];
+
+                return firstPotentialDamage.CompareTo(secondPotentialDamage);
+            });
+
+            var unitsToAdd = Mathf.Min(threatsOnTeam.Count, allPotentialAtkPoints.Count - PotentialThreats.Count) - 1;
+            for(int i = 0; i < unitsToAdd; i++)
+                PotentialThreats.Add(threatsOnTeam[i]);
+
+            if (PotentialThreats.Count == allPotentialAtkPoints.Count)
+                break;
+        }
+    }
+
+
+    public float ThreatLevel()
+    {
+        float threatLevel = 0;
+
+        SetPotentialThreats();
+        var threatCount = PotentialThreats.Count;
+
+        foreach (Unit unit in PotentialThreats)
+        {
+            var threateningWeapons  = unit.AttackableWeapons(false);
+            var mostDangerousWeapon = threateningWeapons.Keys.First((weapon) => threateningWeapons[weapon].Contains(GridPosition) == true);
+            var attackPreview       = unit.PreviewAttack(this, mostDangerousWeapon);
+            var accuracyAsDecimal   = (float)attackPreview["ACCURACY"] / 100;
+
+            threatLevel += (accuracyAsDecimal * (1 - (CurrentHealth - attackPreview["ATK_DMG"]) / CurrentHealth));
+        }
+
+        return Mathf.Clamp(threatLevel, 0, 1f);
+    }
+
+    protected virtual List<Vector2Int> ThreatDetectionRange() => throw new Exception("You haven't implemented ThreatLevel for me!");
 }

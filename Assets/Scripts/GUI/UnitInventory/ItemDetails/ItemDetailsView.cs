@@ -35,7 +35,7 @@ public class ItemDetailsView : MonoBehaviour
     }
 
     public void SetPosition(Vector2 localPosition) {
-        var newPosition = new Vector2(this.transform.localPosition.x, localPosition.y - 96);
+        var newPosition = new Vector2(this.transform.localPosition.x, localPosition.y - 147);
         this.transform.localPosition = newPosition;
     }
 
