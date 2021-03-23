@@ -17,15 +17,12 @@ public class AttackForecastMenu : Menu
     Weapon _selectedWeapon;
     List<Weapon> _allAttackableWeapons = new List<Weapon>();
     Dictionary<Weapon, List<Vector2Int>> _attackableWeaponsByPosition = new Dictionary<Weapon, List<Vector2Int>>();
-    List<Vector2Int> _allAttackableCells = new List<Vector2Int>();
-
     PlaySoundResult _attackSound = new PlaySoundResult();
     
 
     public void Show(Unit unit)
     {
         _attackingUnit = unit;
-        _allAttackableCells = _attackingUnit.AllAttackableCells();
         _attackableWeaponsByPosition = _attackingUnit.AttackableWeapons();
         _allAttackableWeapons = new List<Weapon>(_attackableWeaponsByPosition.Keys);
 
@@ -111,9 +108,14 @@ public class AttackForecastMenu : Menu
         _defendingUnit.LookAt(attackerPosition);
         _defendingUnit.SetIdle();
         
-        CampaignManager.Instance.StartCombat(_attackingUnit, _defendingUnit, ConfirmSound);
+        var campaignManager = CampaignManager.Instance;
+        campaignManager.OnCombatReturn = null;
+        campaignManager.OnCombatReturn += delegate()
+        {
+            _attackingUnit.TookAction();
+        };
+        campaignManager.StartCombat(_attackingUnit, _defendingUnit, ConfirmSound);
         
-        _attackingUnit.TookAction();
         
         var prevMenu = PreviousMenu;
         Close();
@@ -129,6 +131,7 @@ public class AttackForecastMenu : Menu
 
     public override void OnClose()
     {
+        GridCursor.Instance.ClearAll();
         GridCursor.Instance.SetFreeMode();
     }
 

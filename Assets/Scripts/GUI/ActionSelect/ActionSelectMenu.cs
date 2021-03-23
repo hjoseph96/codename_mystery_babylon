@@ -136,9 +136,7 @@ public class ActionSelectMenu : Menu
 
     public override void OnClose()
     {
-        // TODO: Rewind Unit back to initialGridPosition, GridCursor.ClearAll, then SetRestrictedMode on unit. 
-        // Do this in CampaignManager (must implement Unit.InitialGridPosition at start of each turn in there as well).
-        GridCursor.Instance.SetRestrictedMode(_selectedUnit);
+        GridCursor.Instance.ResetUnit(_selectedUnit);
         UserInput.Instance.InputTarget = GridCursor.Instance;
     }
 

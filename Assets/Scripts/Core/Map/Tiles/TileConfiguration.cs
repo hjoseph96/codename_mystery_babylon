@@ -68,6 +68,8 @@ public class TileConfiguration : SerializedScriptableObject
             BlockEntrance.Add(keyValuePair.Key, keyValuePair.Value);
     }
 
+    #if UNITY_EDITOR
     [Button("Save As JSON")]
     private void WriteToJSON() => TileConfigurationRepository.Write(this);
+    #endif
 }

@@ -1,3 +1,5 @@
+ #if UNITY_EDITOR
+
 using System.Collections.Generic;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities.Editor;
@@ -71,3 +73,5 @@ public class UnitStatsEditorAttributeDrawer : OdinAttributeDrawer<UnitStatsAttri
         }
     }
 }
+
+#endif

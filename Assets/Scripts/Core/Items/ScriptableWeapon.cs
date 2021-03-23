@@ -49,18 +49,15 @@ public class ScriptableWeapon : ScriptableItem
     [FoldoutGroup("Active Ability"), ShowIf("IsUsable")]
     public ScriptableAction Action;
 
-
+    #if UNITY_EDITOR
     [Button("Save As JSON")]
     private void WriteToJSON() => WeaponRepository.Write(this);
 
     [Button("Create From JSON")]
     private void CreateFromJSON() => WeaponRepository.FromJSON(name);
-
+    #endif
     
 
 
-    public override Item GetItem()
-    {
-        return new Weapon(this);
-    }
+    public override Item GetItem() => new Weapon(this);
 }

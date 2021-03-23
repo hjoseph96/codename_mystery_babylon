@@ -8,10 +8,10 @@ public class WorldCell
     public string TerrainName;
     public SurfaceType SurfaceType;
     public Vector2Int Position { get; }
-    public bool HasLineOfSight { get; }
-    public StairsOrientation StairsOrientation { get; }
+    public bool HasLineOfSight { get; set;  }
+    public StairsOrientation StairsOrientation { get; set;  }
     public bool IsStairs => StairsOrientation != StairsOrientation.None;
-    public int Height { get; }
+    public int Height { get; set; }
 
 
     public Unit Unit { get; set; }
@@ -24,64 +24,73 @@ public class WorldCell
     {
         Position = position;
         if (config != null)
-        {
-            TerrainName = config.TerrainName;
-            SurfaceType = config.SurfaceType;
-            HasLineOfSight = config.HasLineOfSight;
-            StairsOrientation = config.IsStairs ? config.StairsOrientation : StairsOrientation.None;
-            _travelCost = config.TravelCost;
-            Height = height;
-
-            var isFlippedX = scale.x < 0;
-            var isFlippedY = scale.y < 0;
-
-            if (isFlippedX && IsStairs)
-            {
-                StairsOrientation = StairsOrientation == StairsOrientation.LeftToRight
-                    ? StairsOrientation.RightToLeft
-                    : StairsOrientation.LeftToRight;
-            }
-
-            if (isFlippedX || isFlippedY)
-            {
-                _blockExit = new Dictionary<Direction, UnitType>();
-                _blockEntrance = new Dictionary<Direction, UnitType>();
-
-                foreach (var key in config.BlockExit.Keys)
-                {
-                    var finalKey = key;
-                    if (key.IsHorizontal() && isFlippedX ||
-                        key.IsVertical() && isFlippedY)
-                    {
-                        finalKey = key.Inverse();
-                    }
-
-                    _blockExit[finalKey] = config.BlockExit[key];
-                }
-
-                foreach (var key in config.BlockEntrance.Keys)
-                {
-                    var finalKey = key;
-                    if (key.IsHorizontal() && isFlippedX ||
-                        key.IsVertical() && isFlippedY)
-                    {
-                        finalKey = key.Inverse();
-                    }
-
-                    _blockEntrance[finalKey] = config.BlockEntrance[key];
-                }
-            }
-            else
-            {
-                _blockExit = config.BlockExit;
-                _blockEntrance = config.BlockEntrance;
-            }
-        }
+            SetTileConfig(config, height, scale);
     }
 
     public static implicit operator WorldCell(Vector2Int position)
     {
         return WorldGrid.Instance[position];
+    }
+
+    public void SetTileConfig(TileConfiguration config, int height = -999, Vector3 scale = new Vector3())
+    {
+        TerrainName = config.TerrainName;
+        SurfaceType = config.SurfaceType;
+        HasLineOfSight      = config.HasLineOfSight;
+        StairsOrientation   = config.IsStairs ? config.StairsOrientation : StairsOrientation.None;
+        _travelCost         = config.TravelCost;
+
+        if (height != -999)
+            Height = height;
+
+        // scale matters for diagonal stairs
+        if (scale == new Vector3())
+            scale = Vector3.one;
+
+        var isFlippedX = scale.x < 0;
+        var isFlippedY = scale.y < 0;
+
+        if (isFlippedX && IsStairs)
+        {
+            StairsOrientation = StairsOrientation == StairsOrientation.LeftToRight
+                ? StairsOrientation.RightToLeft
+                : StairsOrientation.LeftToRight;
+        }
+
+        if (isFlippedX || isFlippedY)
+        {
+            _blockExit = new Dictionary<Direction, UnitType>();
+            _blockEntrance = new Dictionary<Direction, UnitType>();
+
+            foreach (var key in config.BlockExit.Keys)
+            {
+                var finalKey = key;
+                if (key.IsHorizontal() && isFlippedX ||
+                    key.IsVertical() && isFlippedY)
+                {
+                    finalKey = key.Inverse();
+                }
+
+                _blockExit[finalKey] = config.BlockExit[key];
+            }
+
+            foreach (var key in config.BlockEntrance.Keys)
+            {
+                var finalKey = key;
+                if (key.IsHorizontal() && isFlippedX ||
+                    key.IsVertical() && isFlippedY)
+                {
+                    finalKey = key.Inverse();
+                }
+
+                _blockEntrance[finalKey] = config.BlockEntrance[key];
+            }
+        }
+        else
+        {
+            _blockExit = config.BlockExit;
+            _blockEntrance = config.BlockEntrance;
+        }
     }
 
     public int GetTravelCost(UnitType unitType)

@@ -1,9 +1,10 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.U2D;
+ 
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [Serializable]
 public class ItemData
@@ -16,6 +17,7 @@ public class ItemData
     public Dictionary<string, uint> Pricing = new Dictionary<string, uint>();
     public Dictionary<string, string> Icon = new Dictionary<string, string>();
 
+    #if UNITY_EDITOR
     public void AssignItemFields(ScriptableItem source)
     {
         Filename = source.name;
@@ -32,4 +34,5 @@ public class ItemData
         Icon.Add("AtlasPath", path);
         Icon.Add("SpriteName", source.Icon.name);
     }
+    #endif
 }

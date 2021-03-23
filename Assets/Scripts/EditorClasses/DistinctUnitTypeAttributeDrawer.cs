@@ -1,3 +1,6 @@
+ #if UNITY_EDITOR
+
+
 using System;
 using System.Linq;
 using Sirenix.OdinInspector.Editor;
@@ -25,3 +28,5 @@ public sealed class DistinctUnitTypeAttributeDrawer : OdinAttributeDrawer<Distin
         ValueEntry.SmartValue = (UnitType) Enum.Parse(typeof(UnitType), options[EditorGUI.Popup(rect, Property.Name, selected, options)]);
     }
 }
+
+#endif

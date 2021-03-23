@@ -356,7 +356,7 @@ namespace Crosstales.TrueRandom.Module
       }
 
 #endif
-
+#if !UNITY_WSA && !UNITY_XBOXONE
       private static void readData(int min, int max, int number)
       {
          try
@@ -419,7 +419,7 @@ namespace Crosstales.TrueRandom.Module
             result = GeneratePRNG(min, max, number, TRManager.Seed);
          }
       }
-
+#endif
       #endregion
    }
 }

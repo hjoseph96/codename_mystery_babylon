@@ -146,6 +146,6 @@ public class UnitInventoryMenu : Menu
     private void MoveSelectionToOption(int index, bool instant = false)
     {
         _cursor.transform.parent = _itemSlots[index].transform;
-        _cursor.MoveTo(new Vector2(-300, -15), instant);
+        _cursor.MoveTo(new Vector2(-215, -13), instant);
     }
 }

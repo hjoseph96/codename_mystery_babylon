@@ -5,16 +5,20 @@ public class UnitClass
     public readonly string Title;
     public readonly int RelativePower = 1;
     public readonly int PromotedBonus = 0;
-    public readonly Dictionary<UnitStat, Stat> Stats = new Dictionary<UnitStat, Stat>();
-    public readonly Dictionary<UnitStat, int> MaxStats = new Dictionary<UnitStat, int>();
-    public readonly Dictionary<UnitStat, int> PromotionGains = new Dictionary<UnitStat, int>();
-    public readonly List<UnitClass> PromotionOptions = new List<UnitClass>();
+    public readonly Dictionary<UnitStat, Stat> Stats    = new Dictionary<UnitStat, Stat>();
+    public readonly Dictionary<UnitStat, int> MaxStats  = new Dictionary<UnitStat, int>();
+    public readonly Dictionary<UnitStat, int> PromotionGains    = new Dictionary<UnitStat, int>();
+    public readonly List<UnitClass> PromotionOptions            = new List<UnitClass>();
+    public readonly List<WeaponType> UsableWeapons  = new List<WeaponType>();
+    public readonly List<MagicType> UsableMagic     = new List<MagicType>();
 
     public UnitClass(ScriptableUnitClass source)
     {
         Title = source.Title;
         RelativePower = source.RelativePower;
         PromotedBonus = source.PromotedBonus;
+        UsableWeapons = source.UsableWeapons;
+        UsableMagic   = source.UsableMagic;
 
         foreach(KeyValuePair<UnitStat, EditorStat> entry in source.BaseStats)
             Stats.Add(entry.Key, new Stat(entry.Key.ToString(), entry.Value.Value, entry.Value.GrowthRate));

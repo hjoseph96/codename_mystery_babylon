@@ -1,8 +1,10 @@
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
+ #if UNITY_EDITOR
+using UnityEditor;
+#endif
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 
@@ -48,12 +50,14 @@ public class ScriptableUnitClass : SerializedScriptableObject
     [Header("Usable Magic")]
     public List<MagicType> UsableMagic = new List<MagicType>();
 
+    #if UNITY_EDITOR
     [Button("Save As JSON")]
     private void WriteToJSON() => UnitClassRepository.Write(this);
-
+    #endif
 
     public UnitClass GetUnitClass() => new UnitClass(this);
 
+    #if UNITY_EDITOR
     private void OnValidate()
     {
         var assetPath = AssetDatabase.GetAssetPath(GetInstanceID());
@@ -62,4 +66,5 @@ public class ScriptableUnitClass : SerializedScriptableObject
         if (string.IsNullOrEmpty(Title))
             Title = fileName;
     }
+    #endif
 }

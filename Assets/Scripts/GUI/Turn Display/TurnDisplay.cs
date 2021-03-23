@@ -31,6 +31,16 @@ public class TurnDisplay : MonoBehaviour
         };
     }
 
+    public void ChangeNumber(int turnNumber)
+    {
+        _turnNumber.text = turnNumber.ToString();
+
+        _turnNumber.DOScale(1.5f, 0.3f).onComplete += delegate ()
+        {
+            _turnNumber.DOScale(1, 0.2f);
+        };
+    }
+
     private void Setup(int turnNumber)
     {
         if (!_setupComplete)
