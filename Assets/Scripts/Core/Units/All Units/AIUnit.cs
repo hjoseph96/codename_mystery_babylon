@@ -19,13 +19,14 @@ public class AIUnit : Unit
     private bool _isTakingAction = false;
     [ShowInInspector] public bool IsTakingAction { get => _isTakingAction; }
 
-    private int CurrentVisionRange => _visionRange +
+    [ShowInInspector] private int CurrentVisionRange => _visionRange +
                                       Mathf.RoundToInt(WorldGrid.Instance[GridPosition].Height * 
                                                        WorldGrid.Instance.ExtraVisionRangePerHeightUnit);
 
     private bool _movedThisTurn = false;
-    public bool MovedThisTurn { get => _movedThisTurn; }
+    [ShowInInspector] public bool MovedThisTurn { get => _movedThisTurn; }
 
+    private bool _hasDecidedAction = false;
 
     public override void Init()
     {
@@ -54,6 +55,13 @@ public class AIUnit : Unit
         base.AllowAction();
         _movedThisTurn = false;
         OnFinishedMoving = null;
+    }
+
+    public override void TookAction()
+    {
+        base.TookAction();
+        _isTakingAction = false;
+        _hasDecidedAction = false;
     }
 
 
@@ -112,9 +120,9 @@ public class AIUnit : Unit
 
     private void Update()
     {
-        if (IsTakingAction)
+        if (IsTakingAction && !_hasDecidedAction)
         {
-            _isTakingAction = false;
+            _hasDecidedAction = true;
 
             _decideAction.PerformAction();
         }

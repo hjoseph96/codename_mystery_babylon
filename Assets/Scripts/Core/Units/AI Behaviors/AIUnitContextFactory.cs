@@ -18,13 +18,20 @@ public class AIUnitContextFactory : SingleContextFactory
     {
         var context = new ContextDictionary();
 
+        float urgencyToHeal = _aiAgent.NeedToHeal();
+        float needToRetreat = _aiAgent.NeedToRetreat();
+
         float currentThreatLevel = _aiAgent.ThreatLevel();
+        if (needToRetreat > 0.85f)
+            currentThreatLevel -= 0.1f;
+
+        if (needToRetreat > 0.7f)
+            currentThreatLevel -= 0.1f;
+
         context.SetContext("Threat Level", currentThreatLevel);
 
-        float urgencyToHeal = _aiAgent.NeedToHeal();
         context.SetContext("Need To Heal", urgencyToHeal);
 
-        float needToRetreat = _aiAgent.NeedToRetreat();
         context.SetContext("Need To Retreat", needToRetreat);
 
         Debug.Log($"Threat Level: {currentThreatLevel}");
