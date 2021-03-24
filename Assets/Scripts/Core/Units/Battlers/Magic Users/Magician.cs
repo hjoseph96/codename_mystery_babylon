@@ -11,9 +11,9 @@ public class Magician : Battler
 
     private bool _circleSpawned = false;
     private GameObject _spellCircleInstance;
-    private ParticleSystem _spellCircle = new ParticleSystem();
+    private ParticleSystem _spellCircle;
     private bool _effectSpawned = false;
-    private MagicEffect _magicEffect = new MagicEffect();
+    private MagicEffect _magicEffect;
 
     public override void Setup(Unit unit, BattleHUD hud, Dictionary<string, bool> battleResults, PostEffectMask pixelShaderMask)
     {
