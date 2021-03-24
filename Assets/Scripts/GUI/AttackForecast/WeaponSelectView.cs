@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+// Attack Forecast but be ENABLED at start of Play Mode...
+
 public class WeaponSelectView : MonoBehaviour
 {
     [SerializeField] private Image _leftArrow; 
@@ -15,10 +18,11 @@ public class WeaponSelectView : MonoBehaviour
     public void Populate(Weapon selectedWeapon)
     {
         _weaponIcon.sprite = selectedWeapon.Icon;
-        _weaponName.SetText(selectedWeapon.Name);
+        _weaponName.text = selectedWeapon.Name;
+        _weaponName.ForceMeshUpdate(true);
 
-        var textLocalPosition = _weaponName.textInfo.characterInfo[0].bottomLeft;
-        _weaponIcon.transform.localPosition =  new Vector2(
+         var textLocalPosition = _weaponName.textInfo.characterInfo[0].bottomLeft;
+         _weaponIcon.transform.localPosition =  new Vector2(
             textLocalPosition.x - 60, _weaponIcon.transform.localPosition.y
         );
     }

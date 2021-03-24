@@ -46,9 +46,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SoundGroupAttribute] public string rockFootsteps;
 
 
-
-
-
     [FoldoutGroup("Animations")] 
     [SerializeField] private DirectionalAnimationSet _idleAnimation;
     
@@ -72,6 +69,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private int _experience;
     public int Experience { get => _experience; }
     public static int MAX_EXP_AMOUNT = 100;
+
+    public bool IsLeader;
+    // TODO: Leadership rank and influence radius
     
     [FoldoutGroup("Base Stats")]
     [UnitStats, OdinSerialize, HideIf("IsPlaying")]
@@ -118,25 +118,25 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private Weapon _equippedWeapon;
     
     [FoldoutGroup("Game Status")]
-    [ShowInInspector] public Weapon EquippedWeapon { get { return _equippedWeapon; } }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
+    [ShowInInspector] public Weapon EquippedWeapon { get => _equippedWeapon; }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
 
     private Vector2Int _gridPosition;
     [FoldoutGroup("Game Status")]
-    [ShowInInspector] public Vector2Int GridPosition { get { return _gridPosition; } }
+    [ShowInInspector] public Vector2Int GridPosition { get => _gridPosition; }
 
 
     // Key == GridPosition && Value == _lookDirection
     private KeyValuePair<Vector2Int, Vector2> _initialGridPosition;
-    public KeyValuePair<Vector2Int, Vector2> InitialGridPosition { get { return _initialGridPosition; } }  // Where Unit began the turn.
+    public KeyValuePair<Vector2Int, Vector2> InitialGridPosition { get => _initialGridPosition; }  // Where Unit began the turn.
 
     private bool _hasTakenAction;
     [FoldoutGroup("Game Status")]
-    [ShowInInspector] public bool HasTakenAction { get { return _hasTakenAction; } }  // Has the unit moved this turn?
+    [ShowInInspector] public bool HasTakenAction { get => _hasTakenAction; }  // Has the unit moved this turn?
     
     private int _currentMovementPoints;
     [FoldoutGroup("Game Status")]
-    [ShowInInspector] public int CurrentMovementPoints { get { return _currentMovementPoints; } }
+    [ShowInInspector] public int CurrentMovementPoints { get => _currentMovementPoints; }
 
 
 
@@ -173,7 +173,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     
     private Material _allInOneMat; 
 
-    public void Init()
+    public virtual void Init()
     {
         _gridPosition = GridUtility.SnapToGrid(this);
         WorldGrid.Instance[GridPosition].Unit = this;
@@ -202,7 +202,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             EquipWeapon(weapons[0]);
     }
 
-    protected virtual void InitStats()
+    private void InitStats()
     {
         // TODO: Setup serialization of Unit Stats for PlayerUnits
         Stats = new Dictionary<UnitStat, Stat>();
@@ -401,7 +401,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _experience = currentExpAmount;
     }
 
-    public bool CanDefend(Vector2Int attackerPosition)
+    public bool CanDefend()
     {
         bool canAttack = false;
 
@@ -649,6 +649,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return speed;
     }
 
+    public bool IsPlaying => Application.IsPlaying(this);
+
 
     // =====================
     // || Battle Formulas ||
@@ -664,15 +666,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             return Strength + weaponDamage;
     }
 
-    public int AttackDamage()
-    {
-        int weaponDamage = EquippedWeapon.Stats[WeaponStat.Damage].ValueInt;
-        
-        if (EquippedWeapon.Type == WeaponType.Grimiore)  // MAGIC USER
-            return Magic + weaponDamage;
-        else
-            return Strength + weaponDamage;
-    }
+    public int AttackDamage() => AttackDamage(EquippedWeapon);
 
     public int AttackSpeed(Weapon weapon)
     {
@@ -685,30 +679,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return Stats[UnitStat.Speed].ValueInt - burden;
     }
 
-    
-    public int AttackSpeed()
-    {
-        int weaponWeight = EquippedWeapon.Weight;
-        int burden = weaponWeight - Constitution;
 
-        if (burden < 0)
-            burden = 0;
-        
-        return Stats[UnitStat.Speed].ValueInt - burden;
-    }
+    public int AttackSpeed() => AttackSpeed(EquippedWeapon);
 
     public Dictionary<string, int> PreviewAttack(Unit defender, Weapon weapon)
     {
         Dictionary<string, int> battleStats = new Dictionary<string, int>();
-
-        //if (!CanAttack(defender))
-        //{   // -1 == Cannot Attack
-        //    battleStats["ATK_DMG"] = -1;
-        //    battleStats["ACCURACY"] = -1;
-        //    battleStats["CRIT_RATE"] = -1;
-
-        //    return battleStats;
-        //}
 
         int atkDmg;
         if (weapon.Type == WeaponType.Grimiore)
@@ -818,7 +794,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var allThreateningUnits = ThreateningUnits().Values.SelectMany(x => x).ToList();
         foreach(Unit unit in allThreateningUnits)
         {
-            foreach (Vector2Int gridPos in unit.CellsWhereICanAttackFrom()[GridPosition])
+            var atkPoints = unit.CellsWhereICanAttackFrom();
+
+            if (atkPoints.Count == 0 || !atkPoints.ContainsKey(GridPosition))
+                continue;
+
+            foreach (Vector2Int gridPos in atkPoints[GridPosition])
                 if (!potentialAtkPoints.Contains(gridPos))
                     potentialAtkPoints.Add(gridPos);
         }

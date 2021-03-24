@@ -421,7 +421,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
         foreach (Unit unit in UnitsByTeam[Player.Ally.TeamId])
         {
-            if (unit is OtherEnemyUnit)
+            if (unit is AllyUnit)
                 allyUnits.Add(unit as AllyUnit);
             else
                 throw new Exception($"{unit.Name} is NOT an AllyUnit!");
