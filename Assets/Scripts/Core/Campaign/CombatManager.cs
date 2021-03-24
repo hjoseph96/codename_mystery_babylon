@@ -71,8 +71,8 @@ public class CombatManager : MonoBehaviour
         await SetupBattlers(attacker, defender);
 
         // State Boolean Flags
-        _beganAttacks = false;
-        _gainedExp = false;
+        _beganAttacks   = false;
+        _gainedExp      = false;
         _transitionedOut = false;
 
         _platformOriginalPosition = _playerForeground.transform.position;
@@ -93,7 +93,7 @@ public class CombatManager : MonoBehaviour
         Dictionary<string, bool> battleResults = new Dictionary<string, bool>();
         
         // If the attacking cannot defend himself, return empty
-        if (!attacker.CanDefend(defender.GridPosition))
+        if (!attacker.CanDefend())
             return battleResults;
 
         var hitResults = await HitResults(attacker, defender);
