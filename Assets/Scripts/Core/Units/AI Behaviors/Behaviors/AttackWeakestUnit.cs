@@ -55,6 +55,8 @@ public class AttackWeakestUnit : AIBehavior
                     StartCoroutine(executingAgent.MovementCoroutine(movePath));
                 }
             }
+            else
+                executingAgent.TookAction();
         }
 
     }

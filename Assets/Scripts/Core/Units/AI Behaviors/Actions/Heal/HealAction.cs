@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using TenPN.DecisionFlex;
 
-public class HealAction : MonoBehaviour, IAction
+public class HealAction : BaseAction
 {
-    public void Perform(IContext context)
+    private Dictionary<string, AIBehavior> _healingStrategies = new Dictionary<string, AIBehavior>();
+
+    void Start()
+    {
+        foreach (AIBehavior behavior in BehaviorList.HealBehaviors)
+            _healingStrategies.Add(behavior.GetType().ToString(), behavior);
+    }
+
+    public override void Perform(IContext context)
     {
         Debug.Log("I AM CHOOSING TO HEAL");
+        AIAgent.TookAction();
     }
 }

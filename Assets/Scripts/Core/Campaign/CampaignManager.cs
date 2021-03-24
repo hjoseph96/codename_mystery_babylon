@@ -287,16 +287,18 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     {
         for (int i = 0; i < agents.Count; i++)
         {
+            var movingAgent = agents[i];
 
-            if (agents[i].HasTakenAction) continue;
+            if (movingAgent.HasTakenAction) continue;
 
             // Follow AI Agent while it takes action
-            GridCamera.SetSingleTarget(agents[i].transform);
+            GridCamera.SetSingleTarget(movingAgent.transform);
             GridCamera.SetCameraWindowMode(CameraWindowMode.Unit);
 
-            agents[i].PerformAction();
+            if (!movingAgent.IsTakingAction)
+                movingAgent.PerformAction();
 
-            yield return new WaitUntil(() => agents[i].HasTakenAction);
+            yield return new WaitUntil(() => movingAgent.HasTakenAction);
 
             Debug.Log("Done");
         }
