@@ -15,6 +15,9 @@ public class AIUnit : Unit
     [FoldoutGroup("AI Properties")] 
     [SerializeField] private bool _showVisionRange;
 
+    [FoldoutGroup("AI Properties")]
+    [SerializeField] private bool _showMovementRange;
+
     [FoldoutGroup("State")]
     private bool _isTakingAction = false;
     [ShowInInspector] public bool IsTakingAction { get => _isTakingAction; }
@@ -37,6 +40,16 @@ public class AIUnit : Unit
             throw new System.Exception($"No DecisionFlex Utility AI opbject was found on AIUnit: {name}");
     }
 
+    private void Update()
+    {
+        if (IsTakingAction && !_hasDecidedAction)
+        {
+            _hasDecidedAction = true;
+
+            _decideAction.PerformAction();
+        }
+    }
+
     public bool HasVision(Vector2Int position)
     {
         return (GridPosition - position).sqrMagnitude <= CurrentVisionRange * CurrentVisionRange &&
@@ -44,7 +57,6 @@ public class AIUnit : Unit
     }
 
     public GridPath MovePath(Vector2Int destination) => GridUtility.FindPath(this, GridPosition, destination, this.CurrentMovementPoints);
-
 
     public void SetMovedThisTurn() => _movedThisTurn = true;
 
@@ -97,7 +109,34 @@ public class AIUnit : Unit
             return false;
     }
 
+    public List<Vector2Int> VisionRange()
+    {
+        List<Vector2Int> visionRange = new List<Vector2Int>();
 
+        var worldGrid = WorldGrid.Instance;
+        var range = CurrentVisionRange;
+
+        var minX = Mathf.Max(0, GridPosition.x - range);
+        var maxX = Mathf.Min(worldGrid.Width - 1, GridPosition.x + range);
+        var minY = Mathf.Max(0, GridPosition.y - range);
+        var maxY = Mathf.Min(worldGrid.Height - 1, GridPosition.y + range);
+
+        var color = Color.yellow;
+        color.a = 0.3f;
+        Gizmos.color = color;
+
+        for (var i = minX; i <= maxX; i++)
+        {
+            for (var j = minY; j <= maxY; j++)
+            {
+                var currentPosition = new Vector2Int(i, j);
+                if (HasVision(currentPosition))
+                    visionRange.Add(currentPosition);
+            }
+        }
+
+        return visionRange;
+    }
 
     // Metrics used in Utility AI to make decisions on AIBehavior
     protected override List<Vector2Int> ThreatDetectionRange()
@@ -118,17 +157,6 @@ public class AIUnit : Unit
         return needToRetreat;
     }
 
-    private void Update()
-    {
-        if (IsTakingAction && !_hasDecidedAction)
-        {
-            _hasDecidedAction = true;
-
-            _decideAction.PerformAction();
-        }
-    }
-
-
     // Vision Range Scene Mode Visualizer
     private void OnDrawGizmos()
     {
@@ -140,28 +168,12 @@ public class AIUnit : Unit
         Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int) GridPosition), Vector3.one);
 
 
-        if (!_showVisionRange)
-            return;
+        if (_showMovementRange)
+            foreach(Vector2Int gridPosition in GridUtility.GetReachableCells(this))
+                Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)gridPosition), Vector3.one);
 
-        var range = CurrentVisionRange;
-
-        var minX = Mathf.Max(0, GridPosition.x - range);
-        var maxX = Mathf.Min(worldGrid.Width - 1, GridPosition.x + range);
-        var minY = Mathf.Max(0, GridPosition.y - range);
-        var maxY = Mathf.Min(worldGrid.Height - 1, GridPosition.y + range);
-
-        var color = Color.yellow;
-        color.a = 0.3f;
-        Gizmos.color = color;
-
-        for (var i = minX; i <= maxX; i++)
-        {
-            for (var j = minY; j <= maxY; j++)
-            {
-                var currentPosition = new Vector2Int(i, j);
-                if (HasVision(currentPosition))
-                    Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int) currentPosition), Vector3.one);
-            }
-        }
+        if (_showVisionRange)
+            foreach(Vector2Int gridPosition in VisionRange())
+                Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int) gridPosition), Vector3.one);
     }
 }
