@@ -27,15 +27,18 @@ public class AIBehavior : MonoBehaviour
 
     protected AIBehaviorState executionState = AIBehaviorState.NotStarted;
     [ShowInInspector] public AIBehaviorState ExecutionState { get => executionState; }
-    protected AIUnit executingAgent;
+    protected AIUnit AIAgent;
 
+    /// <summary>
+    /// This will begin to execution of this AIBehavior at runtime
+    /// </summary>
     public virtual void Execute() => throw new System.Exception("You didn't implement Execute() for this AIBehavior!");
 
-    public void SetTargetAgent(AIUnit agent) => executingAgent = agent;
+    public void SetTargetAgent(AIUnit agent) => AIAgent = agent;
 
     protected Vector2Int FindClosestCellToTarget(Vector2Int goal)
     {
-        var moveRange = GridUtility.GetReachableCells(executingAgent);
+        var moveRange = GridUtility.GetReachableCells(AIAgent);
 
         if (moveRange.Contains(goal))
             return goal;
@@ -44,11 +47,11 @@ public class AIBehavior : MonoBehaviour
 
         // Get cells next to the target that are passable and unoccupied
         var targetNeighbors = GridUtility.GetNeighbours(goal);
-        targetNeighbors.Select((position) => WorldGrid.Instance[position].IsPassable(executingAgent.UnitType));
+        targetNeighbors.Select((position) => WorldGrid.Instance[position].IsPassable(AIAgent.UnitType));
 
         // Find the nearest neighbor
-        var shortestDistance = targetNeighbors.Min((position) => GridUtility.GetBoxDistance(executingAgent.GridPosition, position));
-        targetCell = targetNeighbors.First((position) => GridUtility.GetBoxDistance(executingAgent.GridPosition, position) == shortestDistance);
+        var shortestDistance = targetNeighbors.Min((position) => GridUtility.GetBoxDistance(AIAgent.GridPosition, position));
+        targetCell = targetNeighbors.First((position) => GridUtility.GetBoxDistance(AIAgent.GridPosition, position) == shortestDistance);
 
         // Take the nearest neighbor and go to the closest REACHABLE cell
         shortestDistance = moveRange.Min((position) => GridUtility.GetBoxDistance(position, targetCell));
@@ -59,6 +62,6 @@ public class AIBehavior : MonoBehaviour
 
     public GridPath MovePath(Vector2Int destination)
     {
-        return GridUtility.FindPath(executingAgent, executingAgent.GridPosition, destination, executingAgent.CurrentMovementPoints);
+        return GridUtility.FindPath(AIAgent, AIAgent.GridPosition, destination, AIAgent.CurrentMovementPoints);
     }
 }

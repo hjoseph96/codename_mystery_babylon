@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,11 @@ public class RetreatAction : BaseAction
 
     public override void Perform(IContext context)
     {
+        var canSeeAllies = AIAgent.AlliesWithinSight().Count > 0;
+        if (canSeeAllies)
+            _retreatStrategies["RetreatToFarthestAlly"].Execute();
+
+        // TODO: Find the farthest cell from the nearest sighted enemy, and the closest cell to the closest ally
         Debug.Log("I AM CHOOSING TO RETREAT");
         AIAgent.TookAction();
     }

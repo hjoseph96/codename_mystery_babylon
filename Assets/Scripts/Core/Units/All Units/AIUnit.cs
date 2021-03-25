@@ -78,11 +78,11 @@ public class AIUnit : Unit
 
 
     // Override in Team-Specific Classes
-    public virtual List<Unit> Enemies()
-    {
-        var enemies = new List<Unit>();
-        return enemies;
-    }
+    public virtual List<Unit> Enemies() => throw new System.Exception("You did not implement Enemies() this AIUnit...");
+    
+    // Override in Team-Specific Classes
+    public virtual List<Unit> Allies() => throw new System.Exception("You did not implement Allies() this AIUnit...");
+
 
     public List<Unit> EnemiesWithinSight()
     {
@@ -93,6 +93,17 @@ public class AIUnit : Unit
                 enemies.Add(enemy);
 
         return enemies;
+    }
+
+    public List<Unit> AlliesWithinSight()
+    {
+        var allies = new List<Unit>();
+
+        foreach (Unit ally in Allies())
+            if (HasVision(ally.GridPosition))
+                allies.Add(ally);
+
+        return allies;
     }
 
     public bool CanAttackLeader()

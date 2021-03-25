@@ -8,10 +8,14 @@ public class Portrait : MonoBehaviour
 {
     public Sprite Default;
 
+    [InfoBox("ImageColor is used to shade/tint the Portrait when it's assign in the GUI.")]
+    public Color ImageColor;
+
+    public RuntimeAnimatorController _animationController;
+
     private bool _isAnimated;
     [ShowInInspector] public bool IsAnimated { get => _isAnimated; }
 
-    public RuntimeAnimatorController _animationController;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +25,5 @@ public class Portrait : MonoBehaviour
             _isAnimated = false;
         else
             _isAnimated = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

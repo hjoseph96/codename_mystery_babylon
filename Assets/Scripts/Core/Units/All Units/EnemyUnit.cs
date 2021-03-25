@@ -18,4 +18,6 @@ public class EnemyUnit : AIUnit
 
         return enemies;
     }
+
+    public override List<Unit> Allies() => new List<Unit>(CampaignManager.Instance.EnemyUnits());
 }
