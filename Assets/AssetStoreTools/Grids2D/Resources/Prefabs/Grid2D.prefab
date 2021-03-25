@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1424966990680236}
+  m_IsPrefabParent: 1
+--- !u!1 &1424966990680236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4143659052374428}
+  - component: {fileID: 33539804752643804}
+  - component: {fileID: 23640482582084526}
+  - component: {fileID: 114490879593785584}
+  - component: {fileID: 64068099303069312}
+  m_Layer: 5
+  m_Name: Grid2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4143659052374428
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424966990680236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 500, y: 500, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23640482582084526
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424966990680236}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 384cd0540ba4f480ba0d48aaf58c2eff, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &33539804752643804
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424966990680236}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &64068099303069312
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424966990680236}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114490879593785584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424966990680236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a01c2198d58422e8c1c252ad33df90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDirty: 0
+  mouseIsOver: 0
+  canvasTexture: {fileID: 0}
+  _gridMask: {fileID: 0}
+  _gridTopology: 0
+  _renderQueue: 0
+  _sortingOrder: 0
+  _seed: 1
+  _regularHexagons: 0
+  _hexSize: 1
+  _gridRelaxation: 1
+  _gridCurvature: 0.0027
+  _highlightMode: 2
+  _highlightFadeAmount: 0.5
+  _overlayMode: 1
+  _evenLayout: 0
+  _gridDepthOffset: -1
+  textures:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _respectOtherUI: 1
+  _mainCamera: {fileID: 0}
+  _numCells: 40
+  _showCells: 1
+  _cellBorderColor: {r: 0.48659173, g: 0.49043074, b: 0.5294118, a: 1}
+  _cellHighlightColor: {r: 0, g: 0, b: 1, a: 0.7}
+  _cellHighlightNonVisible: 1
+  _cellRowCount: 8
+  _cellColumnCount: 8
+  _pathFindingHeuristicFormula: 5
+  _pathFindingMaxSteps: 2000
+  _pathFindingMaxCost: 200000
+  _pathFindingUseDiagonals: 1
+  _pathFindingHeavyDiagonalsCost: 1.4
+  territoriesTexture: {fileID: 0}
+  territoriesTextureNeutralColor: {r: 0, g: 0, b: 0, a: 0}
+  _enableTerritories: 1
+  _numTerritories: 2
+  _showTerritories: 1
+  _colorizeTerritories: 0
+  _colorizedTerritoriesAlpha: 0.71
+  _territoryHighlightColor: {r: 1, g: 0, b: 0, a: 0.7}
+  _territoryFrontierColor: {r: 0, g: 0, b: 0, a: 1}
+  _showTerritoriesOuterBorder: 1
+  _allowTerritoriesInsideTerritories: 0
