@@ -129,6 +129,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [ShowInInspector] public Weapon EquippedWeapon { get => _equippedWeapon; }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
 
+    [FoldoutGroup("Game Status")]
+    private Gear _equippedGear;
+
+    [FoldoutGroup("Game Status")]
+    [ShowInInspector] public Gear EquippedGear { get => _equippedGear; }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
+    public bool HasGear => EquippedGear != null;
+
+    [ShowInInspector] public Dictionary<UnitStat, IEffect> GearEffects = new Dictionary<UnitStat, IEffect>();
+
     private Vector2Int _gridPosition;
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public Vector2Int GridPosition { get => _gridPosition; }
@@ -209,6 +218,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var weapons = Inventory.GetItems<Weapon>();
         if (weapons.Length > 0)
             EquipWeapon(weapons[0]);
+
+        var gears = Inventory.GetItems<Gear>();
+        if (gears.Length > 0)
+            EquipGear(gears[0]);
     }
 
     private void InitStats()
@@ -376,6 +389,62 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         return !wieldableWeapons.All((weapon) => weapon.IsBroken == true);
     }
+    #endregion
+
+    #region Gear 
+    public List<Gear> WieldableGear()
+    {
+        var wieldableGear = new List<Gear>();
+
+        foreach (Gear inventoryWeapon in Inventory.GetItems<Gear>())
+
+            wieldableGear.Add(inventoryWeapon);
+
+        return wieldableGear;
+    }
+
+    public void EquipGear(Gear gear)
+    {
+        var availableGear = new List<Gear>();
+        foreach (Gear inventoryGear in Inventory.GetItems<Gear>())
+        {
+            availableGear.Add(inventoryGear);
+        }
+
+        if (availableGear.Contains(gear))
+        {
+            UnequipGear();
+            _equippedGear = gear;
+
+            // add stat from the gear
+            foreach (var key in gear.Stats.Keys)
+            {
+                UnitStat _statType = (UnitStat)Enum.Parse(typeof(UnitStat), key.ToString());
+                IEffect _gearEffect = new FlatBonusEffect(gear.Stats[key].ValueInt);
+                GearEffects.Add(_statType, _gearEffect);
+                Stats[_statType].AddEffect(_gearEffect);
+            }
+                
+
+            gear.IsEquipped = true;
+        }
+        else
+            throw new Exception($"Provided Weapon: {gear.Name} is not in Unit#{Name}'s Inventory...");
+    }
+
+    public void UnequipGear()
+    {
+        if (EquippedGear != null)
+            EquippedGear.IsEquipped = false;
+        foreach (var effect in GearEffects)
+        {
+            Stats[effect.Key].RemoveEffect(effect.Value);
+        }
+        GearEffects.Clear();
+        _equippedGear = null;
+    }
+    
+
     #endregion
 
     #region Health
