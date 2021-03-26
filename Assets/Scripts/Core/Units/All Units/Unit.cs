@@ -269,7 +269,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public void LookAt(Vector2 position)
     {
-        _lookDirection = position - (Vector2) transform.position;
+
+        _lookDirection = (position - (Vector2)transform.position).normalized;
+
     }
 
     public void Rotate(Direction direction)
