@@ -66,13 +66,13 @@ public class AttackWeakestUnit : AIBehavior
         var targetUnit = WorldGrid.Instance[targetGridPosition].Unit;
 
         // Attacker turns to face defender
-        Vector2 defenderPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int)targetUnit.GridPosition);
-        executingAgent.LookAt(defenderPosition);
+        // Vector2 defenderPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int)targetUnit.GridPosition);
+        executingAgent.LookAt((Vector2)targetUnit.transform.position);
         executingAgent.SetIdle();
 
         // Defender turns to face attacker
-        Vector2 attackerPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int)executingAgent.GridPosition);
-        targetUnit.LookAt(attackerPosition);
+        // Vector2 attackerPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int)executingAgent.GridPosition);
+        targetUnit.LookAt((Vector2)executingAgent.transform.position);
         targetUnit.SetIdle();
 
         CampaignManager.Instance.OnCombatReturn = null;
