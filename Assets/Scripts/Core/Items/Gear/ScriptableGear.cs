@@ -19,10 +19,7 @@ public class ScriptableGear : ScriptableItem
     public Dictionary<GearStat, EditorGearStat> GearStats = new Dictionary<GearStat, EditorGearStat>();
 
     [FoldoutGroup("Stats")]
-    public GearRank RequiredRank;
-
-    [FoldoutGroup("Stats")]
-    public int Weight, MaxDurability;
+    public int Weight;
 
     [FoldoutGroup("Active Ability")]
     public bool IsUsable;

@@ -1,4 +1,4 @@
 public struct EditorGearStat
 {
-    public int BaseValue, BrokenValue;
+    public int BaseValue;
 }

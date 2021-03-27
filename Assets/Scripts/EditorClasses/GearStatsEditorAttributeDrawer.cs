@@ -36,7 +36,6 @@ public class GearStatsEditorAttributeDrawer : OdinAttributeDrawer<WeaponStatsAtt
             {
                 EditorGUI.indentLevel += 1;
                 stat.BaseValue = EditorGUILayout.IntSlider("Value", stat.BaseValue, 0, 99);
-                stat.BrokenValue = 0;
                 EditorGUI.indentLevel -= 1;
             }
 

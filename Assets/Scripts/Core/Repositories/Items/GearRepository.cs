@@ -28,10 +28,9 @@ public class GearRepository
 
         data.AssignItemFields(gear);
         data.GearType = gear.Type.ToString();
-        data.DescriptionBroken = gear.DescriptionBroken;
-        data.RequiredRank = gear.RequiredRank.ToString();
+
         data.Weight = gear.Weight;
-        data.MaxDurability = gear.MaxDurability;
+
 
         foreach (KeyValuePair<GearStat, EditorGearStat> entry in gear.GearStats)
         {
@@ -69,12 +68,11 @@ public class GearRepository
                 AssetDatabase.CreateAsset(gear, assetPath);
 
             gear.SetFromItemData(data as ItemData);
-            gear.DescriptionBroken = data.DescriptionBroken;
             gear.Weight = data.Weight;
-            gear.MaxDurability = data.MaxDurability;
+       
 
             gear.Type = (GearType)Enum.Parse(typeof(GearType), data.GearType);
-            gear.RequiredRank = (GearRank)Enum.Parse(typeof(GearRank), data.RequiredRank);
+           
 
             var statTypes = new List<string>(data.Stats.Keys);
             var baseStats = new List<int>(data.Stats.Values);
@@ -85,7 +83,7 @@ public class GearRepository
 
                 var gearStat = new EditorGearStat();
                 gearStat.BaseValue = baseStats[i];
-                gearStat.BrokenValue = 0;
+   
 
                 gear.GearStats.Add(statType, gearStat);
             }
@@ -105,11 +103,8 @@ public class GearRepository
 public class GearData : ItemData
 {
     public string GearType;
-    public string DescriptionBroken;
-    public string RequiredRank;
     public Dictionary<string, int> Stats = new Dictionary<string, int>();
     public int Weight;
-    public int MaxDurability;
 
     public bool IsSyncedWith(ScriptableGear gear)
     {

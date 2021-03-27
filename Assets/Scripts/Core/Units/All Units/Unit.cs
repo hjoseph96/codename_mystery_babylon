@@ -326,23 +326,33 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private void SetInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");    
     private void RemoveInactiveShader() => _allInOneMat.DisableKeyword("HSV_ON");
 
-    public bool CanWield(Weapon weapon)
+    public bool CanWield(Item item)
     {
-        if (weapon.Type == WeaponType.Grimiore)
+        Weapon weapon;
+        if (item is Weapon)
         {
-            if (!MagicProfiency.Keys.Contains(weapon.MagicType))
-                return false;
+            weapon = (Weapon)item;
+            if (weapon.Type == WeaponType.Grimiore)
+            {
+                if (!MagicProfiency.Keys.Contains(weapon.MagicType))
+                    return false;
 
-            if (MagicProfiency[weapon.MagicType] >= weapon.RequiredRank)
+                if (MagicProfiency[weapon.MagicType] >= weapon.RequiredRank)
+                    return true;
+                else
+                    return false;
+            }
+
+            if (WeaponProfiency.Keys.Contains(weapon.Type) && WeaponProfiency[weapon.Type] >= weapon.RequiredRank)
                 return true;
             else
                 return false;
-        }
-
-        if (WeaponProfiency.Keys.Contains(weapon.Type) && WeaponProfiency[weapon.Type] >= weapon.RequiredRank)
+        } else
+        {
+            // Gear item
             return true;
-        else
-            return false;
+        }
+        
     }
 
     #region Weapon
@@ -399,9 +409,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         var wieldableGear = new List<Gear>();
 
-        foreach (Gear inventoryWeapon in Inventory.GetItems<Gear>())
-
-            wieldableGear.Add(inventoryWeapon);
+        foreach (Gear inventoryGear in Inventory.GetItems<Gear>())
+        {
+            wieldableGear.Add(inventoryGear);
+        }
 
         return wieldableGear;
     }
@@ -411,6 +422,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var availableGear = new List<Gear>();
         foreach (Gear inventoryGear in Inventory.GetItems<Gear>())
         {
+            inventoryGear.CanWield = true;
             availableGear.Add(inventoryGear);
         }
 
