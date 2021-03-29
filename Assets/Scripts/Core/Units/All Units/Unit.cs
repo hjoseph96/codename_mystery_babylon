@@ -13,6 +13,8 @@ using Sirenix.Serialization;
 [RequireComponent(typeof(Animator))]
 public class Unit : SerializedMonoBehaviour, IInitializable
 {
+
+    #region Basic Properties var
     [FoldoutGroup("Basic Properties")]
     [SerializeField] private string _name;
     public string Name { get => _name; }
@@ -36,23 +38,26 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     [FoldoutGroup("Basic Properties")] 
     public GameObject BattlerPrefab;
+    #endregion
 
-
+    #region Audio var
     [FoldoutGroup("Audio")]
     [SoundGroupAttribute] public string dirtFootsteps;
     [FoldoutGroup("Audio")]    
     [SoundGroupAttribute] public string grassFootsteps;
     [FoldoutGroup("Audio")]    
     [SoundGroupAttribute] public string rockFootsteps;
+    #endregion
 
-
+    #region Animation var
     [FoldoutGroup("Animations")] 
     [SerializeField] private DirectionalAnimationSet _idleAnimation;
     
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _walkAnimation;
+    #endregion
 
-
+    #region Base stats var
     public static int MAX_LEVEL = 40;
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _level;
@@ -67,6 +72,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _experience;
+
     public int Experience { get => _experience; }
     public static int MAX_EXP_AMOUNT = 100;
 
@@ -86,9 +92,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Stats"), ShowIf("IsPlaying"), PropertyOrder(1)]
     [UnitStats]
     public Dictionary<UnitStat, Stat> Stats;
-    
+
+    #endregion
 
 
+    #region Items var
 
     
     
@@ -109,8 +117,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private Dictionary<MagicType, WeaponRank> _magicProfiency = new Dictionary<MagicType, WeaponRank>();
     [FoldoutGroup("Items")]
     [ShowInInspector] public Dictionary<MagicType, WeaponRank> MagicProfiency { get => _magicProfiency; }
+    #endregion
 
-    
+    #region Game Status var
+
     [FoldoutGroup("Game Status")]
     public int TeamId => Player.TeamId;
 
@@ -120,6 +130,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public Weapon EquippedWeapon { get => _equippedWeapon; }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
+
+    [FoldoutGroup("Game Status")]
+    private Gear _equippedGear;
+
+    [FoldoutGroup("Game Status")]
+    [ShowInInspector] public Gear EquippedGear { get => _equippedGear; }   // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
+    public bool HasGear => EquippedGear != null;
+
+    [ShowInInspector] public Dictionary<UnitStat, IEffect> GearEffects = new Dictionary<UnitStat, IEffect>();
 
     private Vector2Int _gridPosition;
     [FoldoutGroup("Game Status")]
@@ -138,6 +157,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public int CurrentMovementPoints { get => _currentMovementPoints; }
 
+    #endregion
 
 
     [HideInInspector] public Action OnFinishedMoving;
@@ -145,7 +165,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [HideInInspector] public Action<Unit> UponLevelUp;
 
 
-    // Stat Convenience Methods
+    #region Stat Convenience Methods
     public int Weight {     get => Stats[UnitStat.Weight].ValueInt; }
     public int Strength {   get => Stats[UnitStat.Strength].ValueInt; }
     public int Skill {      get => Stats[UnitStat.Skill].ValueInt; }
@@ -157,7 +177,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public int Constitution { get => Stats[UnitStat.Constitution].ValueInt; }
     public int Speed {      get => Stats[UnitStat.Speed].ValueInt; }
 
-
+    #endregion
     public bool IsLocalPlayerUnit => Player == Player.LocalPlayer;
 
 
@@ -171,8 +191,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private Dictionary<SurfaceType, string> _footsteps = new Dictionary<SurfaceType, string>();
 
     
-    private Material _allInOneMat; 
+    private Material _allInOneMat;
 
+    #region Unit Initialization
     public virtual void Init()
     {
         _gridPosition = GridUtility.SnapToGrid(this);
@@ -200,6 +221,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var weapons = Inventory.GetItems<Weapon>();
         if (weapons.Length > 0)
             EquipWeapon(weapons[0]);
+
+        var gears = Inventory.GetItems<Gear>();
+        if (gears.Length > 0)
+            EquipGear(gears[0]);
     }
 
     private void InitStats()
@@ -236,6 +261,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _footsteps[SurfaceType.Rock]    = rockFootsteps;
     }
 
+    #endregion
+
+    #region Initial Position
     public void SetInitialPosition() => _initialGridPosition = new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
 
     public void ResetToInitialPosition()
@@ -250,14 +278,16 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         // Change Grid Position locally and within WorldGrid's WorldCell.
         SetGridPosition(InitialGridPosition.Key);
     }
-
+    #endregion
     public bool IsAlly(Unit unit) => Player.IsAlly(unit.Player);
 
     public bool IsEnemy(Unit unit) => !IsAlly(unit);
 
     public void LookAt(Vector2 position)
     {
-        _lookDirection = position - (Vector2) transform.position;
+
+        _lookDirection = (position - (Vector2)transform.position).normalized;
+
     }
 
     public void Rotate(Direction direction)
@@ -296,25 +326,36 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private void SetInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");    
     private void RemoveInactiveShader() => _allInOneMat.DisableKeyword("HSV_ON");
 
-    public bool CanWield(Weapon weapon)
+    public bool CanWield(Item item)
     {
-        if (weapon.Type == WeaponType.Grimiore)
+        Weapon weapon;
+        if (item is Weapon)
         {
-            if (!MagicProfiency.Keys.Contains(weapon.MagicType))
-                return false;
+            weapon = (Weapon)item;
+            if (weapon.Type == WeaponType.Grimiore)
+            {
+                if (!MagicProfiency.Keys.Contains(weapon.MagicType))
+                    return false;
 
-            if (MagicProfiency[weapon.MagicType] >= weapon.RequiredRank)
+                if (MagicProfiency[weapon.MagicType] >= weapon.RequiredRank)
+                    return true;
+                else
+                    return false;
+            }
+
+            if (WeaponProfiency.Keys.Contains(weapon.Type) && WeaponProfiency[weapon.Type] >= weapon.RequiredRank)
                 return true;
             else
                 return false;
-        }
-
-        if (WeaponProfiency.Keys.Contains(weapon.Type) && WeaponProfiency[weapon.Type] >= weapon.RequiredRank)
+        } else
+        {
+            // Gear item
             return true;
-        else
-            return false;
+        }
+        
     }
 
+    #region Weapon
     public List<Weapon> WieldableWeapons()
     {
         var wieldableWeapons = new List<Weapon>();
@@ -361,6 +402,67 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         return !wieldableWeapons.All((weapon) => weapon.IsBroken == true);
     }
+    #endregion
+
+    #region Gear 
+    public List<Gear> WieldableGear()
+    {
+        var wieldableGear = new List<Gear>();
+
+        foreach (Gear inventoryGear in Inventory.GetItems<Gear>())
+        {
+            wieldableGear.Add(inventoryGear);
+        }
+
+        return wieldableGear;
+    }
+
+    public void EquipGear(Gear gear)
+    {
+        var availableGear = new List<Gear>();
+        foreach (Gear inventoryGear in Inventory.GetItems<Gear>())
+        {
+            inventoryGear.CanWield = true;
+            availableGear.Add(inventoryGear);
+        }
+
+        if (availableGear.Contains(gear))
+        {
+            UnequipGear();
+            _equippedGear = gear;
+
+            // add stat from the gear
+            foreach (var key in gear.Stats.Keys)
+            {
+                UnitStat _statType = (UnitStat)Enum.Parse(typeof(UnitStat), key.ToString());
+                IEffect _gearEffect = new FlatBonusEffect(gear.Stats[key].ValueInt);
+                GearEffects.Add(_statType, _gearEffect);
+                Stats[_statType].AddEffect(_gearEffect);
+            }
+                
+
+            gear.IsEquipped = true;
+        }
+        else
+            throw new Exception($"Provided Weapon: {gear.Name} is not in Unit#{Name}'s Inventory...");
+    }
+
+    public void UnequipGear()
+    {
+        if (EquippedGear != null)
+            EquippedGear.IsEquipped = false;
+        foreach (var effect in GearEffects)
+        {
+            Stats[effect.Key].RemoveEffect(effect.Value);
+        }
+        GearEffects.Clear();
+        _equippedGear = null;
+    }
+    
+
+    #endregion
+
+    #region Health
 
 
     public void DecreaseHealth(int amount)
@@ -384,8 +486,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         
         _currentHealth = currentHealthAmount;
     }
+    #endregion
 
-
+    #region Experience
     public void GainExperience(int amount)
     {
         int currentExpAmount = _experience + amount;
@@ -400,6 +503,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         
         _experience = currentExpAmount;
     }
+    #endregion
 
     public bool CanDefend()
     {
@@ -413,7 +517,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         
         return canAttack;
     }
-
+    #region Attack
     public Dictionary<Weapon, List<Vector2Int>> AttackableWeapons(bool currentPositionOnly = true) 
     {
         var attackableWeapons = new Dictionary<Weapon, List<Vector2Int>>();
@@ -525,7 +629,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         return weaponsThatCanHit[EquippedWeapon].Contains(targetUnit.GridPosition);
     }
+    #endregion
 
+    #region Trade
     public bool CanTrade()
     {
         return GridUtility.DefaultNeighboursOffsets.Any(offset =>
@@ -562,6 +668,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         return true;
     }
+
+    #endregion
+
+    #region Move
 
     public IEnumerator MovementCoroutine(GridPath path)
     {
@@ -648,10 +758,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         return speed;
     }
-
+    #endregion
     public bool IsPlaying => Application.IsPlaying(this);
 
-
+    #region Battle Formulas
     // =====================
     // || Battle Formulas ||
     // =====================
@@ -765,6 +875,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
     }
 
+    #endregion
+
     // Where int == Player.TeamId
     protected Dictionary<int, List<Unit>> ThreateningUnits()
     {
@@ -821,6 +933,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         return units;
     }
+
+    #region Threat
 
     protected List<int> ThreatOrder()
     {
@@ -920,3 +1034,4 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     protected virtual List<Vector2Int> ThreatDetectionRange() => throw new Exception("You haven't implemented ThreatLevel for me!");
 }
+#endregion

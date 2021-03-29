@@ -54,6 +54,15 @@ public class ItemActionsMenuOption : MenuOption<ItemActionsMenu>
 
         return playerItems.IndexOf(Unit.EquippedWeapon);
     }
+
+    public int EquippedGearSlotIndex()
+    {
+        var playerItems = new List<Item>();
+        foreach (var item in Unit.Inventory.GetItems<Item>())
+            playerItems.Add(item);
+
+        return playerItems.IndexOf(Unit.EquippedGear);
+    }
 }
 
 
@@ -64,12 +73,21 @@ public class EquipOption : ItemActionsMenuOption
     public override void Execute()
     {
         // Remove Equipped Icon from currently Equipped ItemSlot
-        var currentlyEquippedSlot = ParentMenu.AllItemSlots[EquippedWeaponSlotIndex()];
-        currentlyEquippedSlot.HideEquippedIcon();
-        
-        Unit.EquipWeapon(Item as Weapon);
-        ItemSlot.ShowEquippedIcon();
+        if (Item is Weapon)
+        {
+            var currentlyEquippedSlotWeapon = ParentMenu.AllItemSlots[EquippedWeaponSlotIndex()];
+            currentlyEquippedSlotWeapon.HideEquippedIcon();
 
+            Unit.EquipWeapon(Item as Weapon);
+        } else if (Item is Gear)
+        {
+            var currentlyEquippedSlotGear = ParentMenu.AllItemSlots[EquippedGearSlotIndex()];
+            currentlyEquippedSlotGear.HideEquippedIcon();
+
+            Unit.EquipGear(Item as Gear);     
+        }
+
+        ItemSlot.ShowEquippedIcon();
         Menu.Close();
     }
 }
@@ -80,7 +98,13 @@ public class UnequipOption : ItemActionsMenuOption
 
     public override void Execute()
     {
-        Unit.UnequipWeapon();
+        if (Item is Weapon)
+        {
+            Unit.UnequipWeapon();
+        } else if (Item is Gear)
+        {
+            Unit.UnequipGear();
+        }
         ItemSlot.HideEquippedIcon();
         Menu.Close();
     }
