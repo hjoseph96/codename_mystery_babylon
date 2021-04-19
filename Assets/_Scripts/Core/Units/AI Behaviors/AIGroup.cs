@@ -19,15 +19,6 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
     public Vector2Int TargetCell { get => _targetCell; }
 
 
-    // Used To determine "Flanks"
-    // Direction.up && Direction.Down: Left and Right are the Flanks
-    // Direction.left && Direction.Right: Up and Down are the Flanks
-
-    private Direction _lastTravelDirection;
-    public Direction LastTravelDirection { get => _lastTravelDirection; }
-
-    private Vector2Int _lastUnitPosition;
-
     //********************************************************************
 
     public AIGroupRole GroupRole;
@@ -105,16 +96,6 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         return sightedEnemies;
     }
 
-    public Vector2 WorldPosition()
-    {
-        Vector2 averagePosition = Vector2.zero;
-
-        foreach (var member in _groupMembers)
-            averagePosition += (Vector2)WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)member.GridPosition);
-
-        return averagePosition / _groupMembers.Count;
-    }
-
     public Vector2Int CenterOfGravity()
     {
         Vector2Int averagePosition = Vector2Int.zero;
@@ -125,24 +106,6 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         return averagePosition / _groupMembers.Count;
     }
 
-    private Direction TargetDirection()
-    {
-        var targetWorldPosition = (Vector2)WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)_targetCell);
-
-        var difference = WorldPosition() - targetWorldPosition;
-
-        var absoluteDifference = new Vector2(Mathf.Abs(difference.x), Mathf.Abs(difference.y));
-
-        var greatestDirectionChange = Mathf.Max(absoluteDifference.x, absoluteDifference.y);
-
-        if (Mathf.Abs(difference.x) == greatestDirectionChange)
-            return difference.x < 0 ? Direction.Left : Direction.Right;
-
-        if (Mathf.Abs(difference.y) == greatestDirectionChange)
-            return difference.y < 0 ? Direction.Down : Direction.Up;
-
-        throw new System.Exception("Unable to determine the direction of the Group's target cell? Your function and math is terrible.");
-    }
     public void SetFormation()
     {
         if (TargetCell == null)
@@ -211,6 +174,9 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         switch (GroupRole)
         {
             case AIGroupRole.Vanguard:
+                // TODO: You're going to want to update this based on the Unit's Enemies() method.
+                // Check EnemyUnit#Enemeis, and so on.
+
                 var playerUnits = CampaignManager.Instance.PlayerUnits();
                 var paths = playerUnits.Select(player => new RelativePosition(player, CampaignManager.Instance.PlayerDestination));
                 RelativePosition closestPlayerPath = paths
@@ -334,10 +300,6 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         }
 
         DrawFormationGizmos();
-
-
-
-
     }
 
     //Greater value for the more prioritized
