@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Sirenix.OdinInspector;
-using Crosstales.TrueRandom;
 using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine;
 
@@ -109,8 +108,8 @@ public class CombatManager : MonoBehaviour
         if (!attacker.CanDefend())
             return battleResults;
 
-        var hitResults = await HitResults(attacker, defender);
-        var critResults = await CriticalHitResults(attacker, defender);
+        var hitResults = await TrueRandomUtility.HitResults(attacker, defender);
+        var critResults = await TrueRandomUtility.CriticalHitResults(attacker, defender);
 
         // Merge the dictionaries
         return hitResults.Concat(critResults)
@@ -247,10 +246,6 @@ public class CombatManager : MonoBehaviour
             _friendlyBattler = null;
             _hostileBattler = null;
 
-            //_enemyHUD.Reset();
-            //_playerHUD.Reset();
-            //_expBarUI.Reset();
-
             CampaignManager.Instance.SwitchToMap(attackingUnit, defendingUnit);
             _playerForeground.transform.position = _platformOriginalPosition;
 
@@ -339,87 +334,6 @@ public class CombatManager : MonoBehaviour
         return newBattler;
     }
 
-    private async Task<Dictionary<string, bool>> HitResults(Unit attacker, Unit defender)
-    {
-        Dictionary<string, bool> hitResults = new Dictionary<string, bool>();
-        var attackPreview = attacker.PreviewAttack(defender, attacker.EquippedWeapon);
-
-        int chance = await RollDice();
-        var hitChance = attackPreview["ACCURACY"];
-
-        if ( WithinRange(chance, hitChance) )
-            hitResults["HIT"] = true;
-        else
-            hitResults["HIT"] = false;
-        
-        if( attacker.CanDoubleAttack(defender, attacker.EquippedWeapon) )
-        {
-            hitResults["DOUBLE_ATTACK"] = true;
-            chance = await RollDice();
-
-            if (WithinRange(chance, hitChance))
-                hitResults["SECOND_HIT"] = true;
-            else
-                hitResults["SECOND_HIT"] = false;
-        } else {
-            hitResults["DOUBLE_ATTACK"] = false;
-        }
-
-        return hitResults;
-    }
-
-    private async Task<Dictionary<string, bool>> CriticalHitResults(Unit attacker, Unit defender)
-    {
-        Dictionary<string, bool> critResults = new Dictionary<string, bool>();
-        var attackPreview = attacker.PreviewAttack(defender, attacker.EquippedWeapon);
-
-        int chance = await RollDice();
-        var critChance = attackPreview["CRIT_RATE"];
-
-        if ( WithinRange(chance, critChance) )
-            critResults["CRITICAL"] = true;
-        else
-            critResults["CRITICAL"] = false;
-
-        if( attacker.CanDoubleAttack(defender, attacker.EquippedWeapon) )
-        {
-            chance = await RollDice();
-
-            if (WithinRange(chance, critChance))
-                critResults["CRIT_SECOND_HIT"] = true;
-            else
-                critResults["CRIT_SECOND_HIT"] = false;
-        }
-
-        return critResults;
-    }
-
-
-    // This makes an API call, hence the asyc other thread to receive a truly random integer
-    async Task<int> RollDice()
-    {
-        int rollResult = -1;
-
-        bool diceRolled = false;
-
-        TRManager.Instance.OnGenerateIntegerFinished += delegate(List<int> results, string key) {
-            rollResult = results[0];
-
-            if (rollResult > 0)
-                diceRolled = true;
-        };
-        TRManager.Instance.GenerateInteger(0, 100, 1);
-
-
-        await new WaitUntil(() => diceRolled == true);
-
-        if (rollResult == -1)
-            throw new System.Exception("Invalid Dice Roll!");
-
-        return rollResult;
-    }
-
-    private bool WithinRange(int chance, int range) => chance >= 1 && chance <= range;
 
     private void SetToTransitionPosition(Transform objTransform, float amount = -4f)
     {
