@@ -174,11 +174,8 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         switch (GroupRole)
         {
             case AIGroupRole.Vanguard:
-                // TODO: You're going to want to update this based on the Unit's Enemies() method.
-                // Check EnemyUnit#Enemeis, and so on.
-
-                var playerUnits = CampaignManager.Instance.PlayerUnits();
-                var paths = playerUnits.Select(player => new RelativePosition(player, CampaignManager.Instance.PlayerDestination));
+                var enemies = Members[0].Enemies();
+                var paths = enemies.Select(enemy => new RelativePosition(enemy, CampaignManager.Instance.PlayerDestination));
                 RelativePosition closestPlayerPath = paths
                     .OrderBy(path => path.Path.Length).First();
 

@@ -318,7 +318,9 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         {
             _gridCursor.SetActive(false);
             _phase = TurnPhase.Enemy;
-            UpdateGroupsPreferredPositions(EnemyUnits());
+            
+            UpdateGroupsPreferredPositions(players[0].Enemies());
+
             foreach (PlayerUnit player in players)
                 player.AllowAction();
 
@@ -392,20 +394,17 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         }
     }
 
-    private void UpdateGroupsPreferredPositions(List<EnemyUnit> enemies)
+
+    private void UpdateGroupsPreferredPositions(List<AIUnit> agents)
     {
-        var groups = EnemiesAsGroups(enemies);
+        var groups = AgentsAsGroups(agents);
 
         foreach (var group in groups)
-        {
             group.UpdatePreferredGroupPosition();
-        }
     }
 
-    private List<AIGroup> EnemiesAsGroups(List<EnemyUnit> enemies)
-    {
-        return enemies.Select(enemy => enemy.group).Distinct().ToList();
-    }
+    private List<AIGroup> AgentsAsGroups(List<AIUnit> agents) => agents.Select(enemy => enemy.group).Distinct().ToList();
+
     private void ProcessOtherEnemyPhase()
     {
         if (OtherEnemyUnits().Count > 0)

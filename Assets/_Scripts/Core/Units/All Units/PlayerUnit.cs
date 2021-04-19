@@ -8,4 +8,21 @@ public class PlayerUnit : Unit
 
     protected override List<Vector2Int> ThreatDetectionRange() => GridUtility.GetReachableCells(this, -1, true).ToList();
 
+    public List<AIUnit> Enemies()
+    {
+        var enemies = new List<AIUnit>();
+
+        var campaignManager = CampaignManager.Instance;
+
+        foreach (EnemyUnit enemy in campaignManager.EnemyUnits())
+            enemies.Add(enemy);
+
+        foreach (OtherEnemyUnit otherEnemy in campaignManager.OtherEnemyUnits())
+            enemies.Add(otherEnemy);
+
+        return enemies;
+    }
+
+    public List<AIUnit> Allies() => new List<AIUnit>(CampaignManager.Instance.AllyUnits());
+
 }
