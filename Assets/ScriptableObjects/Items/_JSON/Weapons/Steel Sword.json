@@ -1,0 +1,34 @@
+{
+  "WeaponType": "Sword",
+  "DescriptionBroken": "A broken steel sword, nearly useless in battle. A blacksmith can repair it.",
+  "MeleeSound": "swosh-05",
+  "RequiredRank": "D",
+  "AttackRange": {
+    "Minimum": 1,
+    "Maximum": 1
+  },
+  "Stats": {
+    "Damage": 12,
+    "Hit": 70,
+    "CriticalHit": 9
+  },
+  "BrokenStats": {
+    "Damage": 0,
+    "Hit": 45,
+    "CriticalHit": 9
+  },
+  "Weight": 8,
+  "MaxDurability": 35,
+  "Filename": "Steel Sword",
+  "ItemName": "Steel Sword",
+  "ItemType": "Weapon",
+  "Description": "A durable steel sword.",
+  "Pricing": {
+    "Cost": 1000,
+    "SaleValue": 600
+  },
+  "Icon": {
+    "AtlasPath": "Assets/Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+    "SpriteName": "heartamulet_4"
+  }
+}

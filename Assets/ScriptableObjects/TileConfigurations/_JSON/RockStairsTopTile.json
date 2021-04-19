@@ -1,0 +1,21 @@
+{
+  "Filename": "RockStairsTopTile",
+  "TerrainName": "Stairs",
+  "SurfaceType": "Rock",
+  "TravelCost": {
+    "All": 0,
+    "Mounted": 3,
+    "Unmounted": 2
+  },
+  "HasLightOfSight": true,
+  "IsStairs": true,
+  "StairsOrientation": "LeftToRight",
+  "BlockExit": {
+    "Up": "Ground",
+    "Left": "Ground"
+  },
+  "BlockEntrance": {
+    "Up": "Ground",
+    "Left": "Ground"
+  }
+}

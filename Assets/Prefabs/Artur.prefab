@@ -1,0 +1,624 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5482592249530156530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5482592249530156542}
+  - component: {fileID: 5482592249530156541}
+  - component: {fileID: 5482592249530156536}
+  - component: {fileID: 5482592249530156519}
+  - component: {fileID: 5482592249530156537}
+  - component: {fileID: 5482592249530156538}
+  - component: {fileID: 5482592249530156540}
+  - component: {fileID: 5482592249530156543}
+  - component: {fileID: 5482592249530156531}
+  - component: {fileID: 5482592249530156539}
+  - component: {fileID: 5482592249530156517}
+  - component: {fileID: 5482592249530156516}
+  - component: {fileID: 5482592249530156518}
+  m_Layer: 0
+  m_Name: Artur
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5482592249530156542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 101.24133, y: 1.75, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &5482592249530156541
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1843570775
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -8195445119041432950, guid: 4bae55753cec11644ab626679d82b824,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.1666666, y: 2.6666667}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &5482592249530156536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cab655059dfc44545b40962c22b790f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _statsDictionary
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[UnitStat, Assembly-CSharp],[EditorStat,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[UnitStat, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 11
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 14
+    - Name: GrowthRate
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 25
+    - Name: GrowthRate
+      Entry: 4
+      Data: 60
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 5
+    - Name: GrowthRate
+      Entry: 4
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 10
+    - Name: GrowthRate
+      Entry: 4
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 28
+    - Name: GrowthRate
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 3
+    - Name: GrowthRate
+      Entry: 4
+      Data: 25
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 8
+    - Name: GrowthRate
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 6
+    - Name: GrowthRate
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 9
+    - Name: GrowthRate
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 9
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 16
+    - Name: GrowthRate
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 10
+    - Name: $v
+      Entry: 7
+      Data: EditorStat, Assembly-CSharp
+    - Name: Value
+      Entry: 3
+      Data: 17
+    - Name: GrowthRate
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Stats
+      Entry: 7
+      Data: 2|System.Collections.Generic.Dictionary`2[[UnitStat, Assembly-CSharp],[Stat,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[UnitStat, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnFinishedMoving
+      Entry: 6
+      Data: 
+    - Name: UponDeath
+      Entry: 6
+      Data: 
+    - Name: UponLevelUp
+      Entry: 6
+      Data: 
+  _name: Artur
+  UnitType: 1
+  _moveSpeed: 4.71
+  _moveAnimationSpeed: 1.81
+  _startingLookDirection: 4
+  Portrait: {fileID: 0}
+  BattlerPrefab: {fileID: 2424102588716194449, guid: b504037b6402af94a85806f1ddb2d538,
+    type: 3}
+  dirtFootsteps: 
+  grassFootsteps: 
+  rockFootsteps: 
+  _idleAnimation: {fileID: 11400000, guid: 3be614b6e9c35734ea7b7f3ebafdf294, type: 2}
+  _walkAnimation: {fileID: 11400000, guid: 8f7f112b7b4303845af27dfafe7569c5, type: 2}
+  _level: 21
+  UnitClass: {fileID: 11400000, guid: d6118c49748cd544781428ad8d334805, type: 2}
+  _experience: 0
+  IsLeader: 0
+  currentHealth: 0
+  _startingItems:
+  - {fileID: 11400000, guid: 46b079320e7f84b4aa8f7865bbba6df5, type: 2}
+  - {fileID: 11400000, guid: 039c3aa44089c5a43a6b296f187af60f, type: 2}
+  - {fileID: 11400000, guid: 5e26fb550039cf34c8a05d98da5f1f67, type: 2}
+  - {fileID: 11400000, guid: 19185f02913a1a448a840dad866176a3, type: 2}
+  _startingRank: 1
+--- !u!114 &5482592249530156519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7388df1882bf24099ba17ad8f7d780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Collider: {fileID: 5482592249530156517}
+  _Rigidbody: {fileID: 5482592249530156516}
+  _WalkSpeed: 4.3
+  _RunSpeed: 7.18
+  _JumpDuration: 1.6
+  _Animancer: {fileID: 5482592249530156543}
+  _Idle: {fileID: 11400000, guid: 3be614b6e9c35734ea7b7f3ebafdf294, type: 2}
+  _Walk: {fileID: 11400000, guid: 8f7f112b7b4303845af27dfafe7569c5, type: 2}
+  _Run: {fileID: 11400000, guid: 6a5331bf6f6147b4592d2fa669da7362, type: 2}
+  _Push: {fileID: 0}
+  _Jump: {fileID: 11400000, guid: 698942a7eec97144b875d1d21e47f9d4, type: 2}
+  _InAir: {fileID: 11400000, guid: 047f572a4d8cd4e45bfb3fd6ae751fa0, type: 2}
+  _Landing: {fileID: 11400000, guid: b9c39deeb0c3f8b408c7a4a9d9cfcf3e, type: 2}
+  _Facing: {x: 0, y: -1}
+--- !u!114 &5482592249530156537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b8d017952dfe046a218eec57d859d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dirtFootsteps: stepdirt_1
+  grassFootsteps: footsteps grass  1
+  rockFootsteps: footsteps dirt 1
+--- !u!114 &5482592249530156538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0984195b07fd63c4ca55e4c78ce736c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Default: {fileID: 21300000, guid: 7d0ff0ee49c86f64384652c1eba36062, type: 3}
+  ImageColor: {r: 0, g: 0, b: 0, a: 0}
+  _animationController: {fileID: 9100000, guid: ff35605b1cd793547abc3bb3b674b944,
+    type: 2}
+--- !u!95 &5482592249530156540
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 57f5dcb0f24a17240ab1abe436558b68, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5482592249530156543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 5482592249530156540}
+  _ActionOnDisable: 0
+--- !u!114 &5482592249530156531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4ab6ba76a19a947b8fd15e8cf78623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowLayer: 0
+  maskLayer: 0
+  shadowType: 4
+  maskType: 1
+  shadowDistance: 0.33
+  shadowThickness: 0.7
+  shadowTranslucency: 0
+  mainShape:
+    shadowType: 4
+    maskType: 1
+    transform: {fileID: 5482592249530156542}
+    height: 0.33
+    thickness: 0.7
+  shapes:
+  - shadowType: 4
+    maskType: 1
+    transform: {fileID: 5482592249530156542}
+    height: 0.33
+    thickness: 0.7
+  normalMapMode:
+    textureType: 0
+    texture: {fileID: 0}
+    sprite: {fileID: 0}
+  applyToChildren: 0
+--- !u!114 &5482592249530156539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0984195b07fd63c4ca55e4c78ce736c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Default: {fileID: 21300000, guid: 9c0f8a0b0f91c1f449af03830c99bce3, type: 3}
+  ImageColor: {r: 0, g: 0, b: 0, a: 0}
+  _animationController: {fileID: 9100000, guid: ff35605b1cd793547abc3bb3b674b944,
+    type: 2}
+--- !u!70 &5482592249530156517
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.02}
+  m_Size: {x: 0.53, y: 0.42}
+  m_Direction: 0
+--- !u!50 &5482592249530156516
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &5482592249530156518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482592249530156530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9257da430cc7e4c4d8927b813f29a5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
