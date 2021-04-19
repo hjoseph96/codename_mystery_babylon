@@ -16,6 +16,9 @@ public class EnemyUnit : AIUnit
         foreach (AllyUnit ally in campaignManager.AllyUnits())
             enemies.Add(ally);
 
+        foreach (OtherEnemyUnit otherEnemy in campaignManager.OtherEnemyUnits())
+            enemies.Add(otherEnemy);
+
         return enemies;
     }
 
