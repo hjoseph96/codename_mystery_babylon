@@ -37,25 +37,16 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Basic Properties")] 
     public GameObject BattlerPrefab;
 
-
-    [FoldoutGroup("Audio")]
-    [SoundGroupAttribute] public string dirtFootsteps;
-    [FoldoutGroup("Audio")]    
-    [SoundGroupAttribute] public string grassFootsteps;
-    [FoldoutGroup("Audio")]    
-    [SoundGroupAttribute] public string rockFootsteps;
-
-
     [FoldoutGroup("Animations")] 
     [SerializeField] private DirectionalAnimationSet _idleAnimation;
     
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _walkAnimation;
 
-    [FoldoutGroup('Animations')]
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _runAnimation;
 
-    [FoldoutGroup('Animations')]
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _drinkPotionAnimation;
 
 
@@ -104,7 +95,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public UnitInventory Inventory { get; private set; }
 
     [FoldoutGroup("Items")]
-    // Temporary measure until Playerunit have Stats seerialized
+    // Temporary measure until Playerunit have Stats serialized
     [SerializeField] private WeaponRank _startingRank = WeaponRank.D;
 
 
@@ -176,7 +167,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     private AnimancerComponent _animancer;
     private Vector2 _lookDirection;
-    private Dictionary<SurfaceType, string> _footsteps = new Dictionary<SurfaceType, string>();
+
+    private FootstepController _footstepController;
+
+    // Mecanim AnimationEvent Listeners
+    private AnimationEventReceiver _OnPlayFootsteps;
 
     private Renderer _renderer;
 
@@ -188,14 +183,13 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _gridPosition = GridUtility.SnapToGrid(this);
         WorldGrid.Instance[GridPosition].Unit = this;
 
-        SetupFootstepSounds();
-
         _unitClass = UnitClass.GetUnitClass();
         InitStats();
 
-        _animancer = GetComponent<AnimancerComponent>();
-        _renderer = GetComponent<Renderer>();
-        Portrait = GetComponent<Portrait>();
+        _renderer           = GetComponent<Renderer>();
+        _animancer          = GetComponent<AnimancerComponent>();
+        _footstepController = GetComponent<FootstepController>();
+        Portrait            = GetComponent<Portrait>();
 
         Rotate(_startingLookDirection);
         _initialGridPosition =  new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
@@ -254,14 +248,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
                 _magicProfiency.Add(magicType, _startingRank);
     }
 
-
-    private void SetupFootstepSounds()
-    {
-        _footsteps[SurfaceType.Grass]   = grassFootsteps;
-        _footsteps[SurfaceType.Dirt]    = dirtFootsteps;
-        _footsteps[SurfaceType.Rock]    = rockFootsteps;
-    }
-
     public void SetInitialPosition() => _initialGridPosition = new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
 
     public void ResetToInitialPosition()
@@ -304,7 +290,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private void PlayAnimation(DirectionalAnimationSet animations, float speed = 1f)
     {
         var clip = animations.GetClip(_lookDirection);
-        _animancer.Play(clip).Speed = speed;
+        
+        var state = _animancer.Play(clip);
+        state.Speed = speed;
+
+        if (animations == _walkAnimation || animations == _runAnimation)
+            _OnPlayFootsteps.Set(state, PlayFootstepSound());
     }
 
     public virtual void TookAction() 
@@ -632,11 +623,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
                         // Get new destination position and direction
                         var newGridPosition = path.Pop();
                         var direction = GridUtility.GetDirection(nextPathGridPosition, newGridPosition, true);
-
-                        var footstepSound = _footsteps[WorldGrid.Instance[newGridPosition].GetSurfaceType(SortingLayerId)];
-                        MasterAudio.PlaySound3DFollowTransform(footstepSound, CampaignManager.AudioListenerTransform);
-
-
 
                         nextPathPosition = WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)newGridPosition);
                         nextPathGridPosition = newGridPosition;
@@ -968,4 +954,26 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     }
 
     protected virtual List<Vector2Int> ThreatDetectionRange() => throw new Exception("You haven't implemented ThreatLevel for me!");
+
+    /************************************************************************************************************************/
+    //  Animation Event Listeners and Logic
+    /************************************************************************************************************************/
+
+    private void PlayFootsteps(AnimationEvent animationEvent)
+    {
+        _OnPlayFootsteps.SetFunctionName("PlayFootsteps");
+        _OnPlayFootsteps.HandleEvent(animationEvent);
+    }
+
+    private System.Action<AnimationEvent> PlayFootstepSound()
+    {
+        return delegate (AnimationEvent animationEvent)
+        {
+            var currentSortingLayer = _renderer.sortingLayerID;
+            var worldCell = WorldGrid.Instance[GridPosition];
+            var walkingOnSurface = worldCell.TileAtSortingLayer(currentSortingLayer).SurfaceType;
+
+            _footstepController.PlaySound(walkingOnSurface);
+        };
+    }
 }

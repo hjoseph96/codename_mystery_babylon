@@ -26,7 +26,7 @@ public class ArticyChapter
     public Dialogue GetDialogueSequence(string sequenceName)
     {
         return DialogSequences()
-            .Where((obj) => obj.DisplayName == sequenceName && obj.)
+            .Where((obj) => obj.DisplayName == sequenceName)
             .First();
     }
 
