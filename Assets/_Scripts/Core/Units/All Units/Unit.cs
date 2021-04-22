@@ -52,6 +52,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _walkAnimation;
 
+    [FoldoutGroup('Animations')]
+    [SerializeField] private DirectionalAnimationSet _runAnimation;
+
+    [FoldoutGroup('Animations')]
+    [SerializeField] private DirectionalAnimationSet _drinkPotionAnimation;
+
 
     public static int MAX_LEVEL = 40;
     [FoldoutGroup("Base Stats")]
@@ -145,16 +151,16 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
 
     // Stat Convenience Methods
-    public int Weight => Stats[UnitStat.Weight].ValueInt;
-    public int Strength => Stats[UnitStat.Strength].ValueInt;
-    public int Skill => Stats[UnitStat.Skill].ValueInt;
-    public int Resistance => Stats[UnitStat.Resistance].ValueInt;
-    public int MaxHealth => Stats[UnitStat.MaxHealth].ValueInt;
-    public int Magic => Stats[UnitStat.Magic].ValueInt;
-    public int Luck => Stats[UnitStat.Luck].ValueInt;
-    public int Defense => Stats[UnitStat.Defense].ValueInt;
+    public int Weight       => Stats[UnitStat.Weight].ValueInt;
+    public int Strength     => Stats[UnitStat.Strength].ValueInt;
+    public int Skill        => Stats[UnitStat.Skill].ValueInt;
+    public int Resistance   => Stats[UnitStat.Resistance].ValueInt;
+    public int MaxHealth    => Stats[UnitStat.MaxHealth].ValueInt;
+    public int Magic        => Stats[UnitStat.Magic].ValueInt;
+    public int Luck         => Stats[UnitStat.Luck].ValueInt;
+    public int Defense      => Stats[UnitStat.Defense].ValueInt;
     public int Constitution => Stats[UnitStat.Constitution].ValueInt;
-    public int Speed => Stats[UnitStat.Speed].ValueInt;
+    public int Speed        => Stats[UnitStat.Speed].ValueInt;
     public int MaxMoveRange => Stats[UnitStat.Movement].ValueInt;
 
 
@@ -198,6 +204,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         _allInOneMat = GetComponent<Renderer>().material;
 
+        // TODO: load from serialization
         Inventory = new UnitInventory(this);
         foreach (var item in _startingItems)
             Inventory.AddItem(item.GetItem());
