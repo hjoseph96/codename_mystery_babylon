@@ -21,12 +21,17 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [DistinctUnitType]
     public UnitType UnitType;
 
-    [FoldoutGroup("Basic Properties")] 
-    [SerializeField] private float _moveSpeed = 4f;
-    
-    
+    [FoldoutGroup("Basic Properties")]
+    [SerializeField] private float _walkSpeed = 4f;
+    public float WalkSpeed { get => _walkSpeed; }
+
+    [FoldoutGroup("Basic Properties")]
+    [SerializeField] private float _runSpeed = 4f;
+    public float RunSpeed { get => _runSpeed; }
+
     [FoldoutGroup("Basic Properties")] 
     [SerializeField] private float _moveAnimationSpeed = 1.75f;
+    public float MoveAnimationSpeed { get => _moveAnimationSpeed; }
 
     [FoldoutGroup("Basic Properties")]
     [SerializeField] private Direction _startingLookDirection;
@@ -73,6 +78,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Base Stats")]
     [UnitStats, OdinSerialize, HideIf("IsPlaying")]
     private Dictionary<UnitStat, EditorStat> _statsDictionary = new Dictionary<UnitStat, EditorStat>();
+    public Dictionary<UnitStat, EditorStat> EditorStats { get => _statsDictionary; }
 
     [FoldoutGroup("Stats"), ShowIf("IsPlaying"), PropertyOrder(0)]
     [ProgressBar(0, "MaxHealth", ColorGetter = "HealthColor", BackgroundColorGetter = "BackgroundColor", Height = 20)]
@@ -606,13 +612,20 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var goal = path.Goal;
         WorldGrid.Instance[GridPosition].Unit = null;
 
-        PlayAnimation(_walkAnimation, _moveAnimationSpeed);
+        var speed = _walkSpeed * Time.deltaTime;
+        DirectionalAnimationSet moveAnimation = _walkAnimation;
+
+        if (this is PlayerUnit && Input.GetButton("Fire3")) // Left Shift by default.
+        {
+            moveAnimation = _runAnimation;
+            speed = _runSpeed * Time.deltaTime;
+        }
+
+        PlayAnimation(moveAnimation, _moveAnimationSpeed);
 
         isMoving = true;
         while (!reachedGoal)
         {
-            var speed = _moveSpeed * Time.deltaTime;
-
             while (speed > 0.0001f)
             {
                 speed = MoveTo(nextPathPosition, speed);
