@@ -1,16 +1,17 @@
- #if UNITY_EDITOR
 
 using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 using Newtonsoft.Json;
 
+#if UNITY_EDITOR
 public class UnitRepository
 {
-
     public static void Write(Unit unit)
     {
         var parentFolder = $"{Application.dataPath}/SerializedData/Entities/Playable Characters/";
@@ -26,6 +27,7 @@ public class UnitRepository
         File.WriteAllText($"{jsonPath}/UnitData.json", json);
     }
 }
+#endif
 
 
 [Serializable]
@@ -100,5 +102,3 @@ public class UnitData
         return unitData;
     }
 }
-
-#endif
