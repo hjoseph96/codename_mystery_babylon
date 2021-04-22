@@ -47,7 +47,9 @@ public class DialogBox : MonoBehaviour
     public void SetText(string text)
     {
         Split(text);
-        SetActivePortrait(CurrentPortrait);
+
+        if (CurrentPortrait != null)
+            SetActivePortrait(CurrentPortrait);
 
         _currentTextIndex = 0;
         ShowNextText();
@@ -129,8 +131,11 @@ public class DialogBox : MonoBehaviour
         _textAnimatorPlayer.onTypewriterStart.RemoveAllListeners();
         _textAnimatorPlayer.onTextShowed.RemoveAllListeners();
 
-        _textAnimatorPlayer.onTypewriterStart.AddListener(_currentPortrait.Talk);
-        _textAnimatorPlayer.onTextShowed.AddListener(_currentPortrait.SetNeutral);
+        if (_currentPortrait != null)
+        {
+            _textAnimatorPlayer.onTypewriterStart.AddListener(_currentPortrait.Talk);
+            _textAnimatorPlayer.onTextShowed.AddListener(_currentPortrait.SetNeutral);
+        }
 
         _textAnimatorPlayer.onTypewriterStart.AddListener(BeginTyping);
         _textAnimatorPlayer.onTextShowed.AddListener(EndTyping);

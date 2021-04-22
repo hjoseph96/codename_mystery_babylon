@@ -13,7 +13,7 @@ public class ColliderGroup : SerializedMonoBehaviour
     public TileConfiguration Config;
 
     [HideInInspector] public int SortingLayerId => SortingLayer.GetLayerValueFromName(SortingLayerName);
-    [HideInInspector] [OdinSerialize] 
+    [OdinSerialize] 
     private HashSet<Vector2Int> _collisions = new HashSet<Vector2Int>();
 
     private WorldGridEditor Editor
@@ -60,6 +60,8 @@ public class ColliderGroup : SerializedMonoBehaviour
                 }
             }
         }
+
+        EditorUtility.SetDirty(gameObject);
     }
 
     private void OnEnable()
@@ -136,6 +138,8 @@ public class ColliderGroup : SerializedMonoBehaviour
     {
         // Lazy init
         _overrideTile ??= new WorldCellTile(Config, Vector3.one);
+
+        Debug.Assert(_collisions.Count > 0);
 
         foreach (var pos in _collisions)
         {

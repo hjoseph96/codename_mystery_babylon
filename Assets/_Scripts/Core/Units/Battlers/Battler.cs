@@ -314,7 +314,6 @@ public class Battler : SerializedMonoBehaviour
         _timesHit += 1;
     }
 
-    private void BackToIdle() => _state = BattlerState.Idle;
 
     public void Dodge() 
     {
@@ -329,19 +328,6 @@ public class Battler : SerializedMonoBehaviour
     }
 
     private void BlockImpact() => PlayAnimation("Block Impact");
-
-    private void WeaponMeleeSound()
-    {
-        MasterAudio.PlaySound3DFollowTransform(Unit.EquippedWeapon.MeleeSound, CampaignManager.AudioListenerTransform);
-    }
-
-    private void StartDissolving()
-    {
-        _startedDissolving = true;
-        _dissolveStartTime = Time.time;
-    }
-
-    private void ReadyToFight() => _readyToFight = true;
 
     private void ReceiveDamage(int damageAmount)
     {
@@ -396,6 +382,22 @@ public class Battler : SerializedMonoBehaviour
             targetBattler.Dodge();
     }
 
+    #region Animation Events
+    private void BackToIdle() => _state = BattlerState.Idle;
+
+    private void WeaponMeleeSound()
+    {
+        MasterAudio.PlaySound3DFollowTransform(Unit.EquippedWeapon.MeleeSound, CampaignManager.AudioListenerTransform);
+    }
+
+    private void StartDissolving()
+    {
+        _startedDissolving = true;
+        _dissolveStartTime = Time.time;
+    }
+
+    private void ReadyToFight() => _readyToFight = true;
+
     private void BeginAttack()
     {
         currentlyAttacking = true;
@@ -405,6 +407,13 @@ public class Battler : SerializedMonoBehaviour
         if (attackDamage == 0)
             targetBattler.StartBlocking();
     }
+    #endregion
+
+
+    // ******************************************************
+    //   Animation Variation Names                         ||
+    // ******************************************************
+
 
     protected List<string> NormalAttackAnims()
     {

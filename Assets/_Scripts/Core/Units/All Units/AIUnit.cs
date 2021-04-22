@@ -254,6 +254,8 @@ public class AIUnit : Unit
 
     public float NeedToBeWithGroup()
     {
+        return 1f;
+
         var closestEnemy = EnemiesWithinSight()
             .OrderBy((enemy) => GridUtility.GetBoxDistance(GridPosition, enemy.GridPosition)).FirstOrDefault();
 
