@@ -141,6 +141,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public int CurrentMovementPoints => currentMovementPoints;
 
+    #if UNITY_EDITOR
+    [Button("Save As JSON")]
+    private void SerializeUnit() => UnitRepository.Write(this);
+    #endif
 
     [HideInInspector] public Action OnFinishedMoving;
     [HideInInspector] public Action<Unit> UponDeath;
@@ -612,20 +616,32 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var goal = path.Goal;
         WorldGrid.Instance[GridPosition].Unit = null;
 
-        var speed = _walkSpeed * Time.deltaTime;
+
+
         DirectionalAnimationSet moveAnimation = _walkAnimation;
-
-        if (this is PlayerUnit && Input.GetButton("Fire3")) // Left Shift by default.
-        {
-            moveAnimation = _runAnimation;
-            speed = _runSpeed * Time.deltaTime;
-        }
-
-        PlayAnimation(moveAnimation, _moveAnimationSpeed);
-
+        
         isMoving = true;
         while (!reachedGoal)
         {
+            var speed = _walkSpeed * Time.deltaTime;
+
+            if (this is PlayerUnit && Input.GetButton("Fire3")) // Left Shift by default.
+            {
+                moveAnimation = _runAnimation;
+                _moveAnimationSpeed = 1;
+                speed = _runSpeed * Time.deltaTime;
+            }
+            else
+                moveAnimation = _walkAnimation;
+
+            Debug.Log($"Clip: {moveAnimation.GetClip(_lookDirection)}");
+            Debug.Log($"Move Animation Speed: {_moveAnimationSpeed}");
+            Debug.Log($"Already being played?: {_animancer.IsPlaying(moveAnimation.GetClip(_lookDirection))}");
+
+
+            if (!_animancer.IsPlaying(moveAnimation.GetClip(_lookDirection)))
+                PlayAnimation(moveAnimation, _moveAnimationSpeed);
+            
             while (speed > 0.0001f)
             {
                 speed = MoveTo(nextPathPosition, speed);
@@ -642,7 +658,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
                         // Rotate
                         Rotate(direction);
-                        PlayAnimation(_walkAnimation, _moveAnimationSpeed);
                     }
                     else // End movement
                     {
@@ -982,8 +997,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         return delegate (AnimationEvent animationEvent)
         {
+            var currentGridPosition = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(transform.position);
+
             var currentSortingLayer = _renderer.sortingLayerID;
-            var worldCell = WorldGrid.Instance[GridPosition];
+            var worldCell = WorldGrid.Instance[currentGridPosition];
             var walkingOnSurface = worldCell.TileAtSortingLayer(currentSortingLayer).SurfaceType;
 
             _footstepController.PlaySound(walkingOnSurface);

@@ -11,7 +11,7 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
     private List<AIUnit> _groupMembers = new List<AIUnit>();
     [ShowInInspector] public List<AIUnit> Members { get => _groupMembers; }
 
-    private Dictionary<AIUnit, Vector2Int> _unitDestinations;
+    private Dictionary<AIUnit, Vector2Int> _unitDestinations = new Dictionary<AIUnit, Vector2Int>();
 
     // Target Point for the whole group
 
@@ -261,19 +261,18 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
             // Flank Wing
             Gizmos.color = new Color(24 / 255f, 196 / 255f, 216 / 255f, 1);
 
-            foreach (var item in FlankGuards)
-            {
-                Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)item.Value), new Vector3(.5f, .5f, .5f));
-            }
+            if (FlankGuards != null)
+                foreach (var item in FlankGuards)
+                    Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)item.Value), new Vector3(.5f, .5f, .5f));
 
-            //Gizmos.color = new Color(0, 1, 0, 1);
-            //var gl = new GridLine(_lastPreferredGroupPosition, PreferredGroupPosition.Position);
-            //for (int i = 0; i < worldGrid.Width; i++)
-            //{
-            //    var p = new Vector2Int(i, gl.Resolve(i));
-            //    if (p.y >= 0 && p.y < worldGrid.Height)
-            //        Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)p), new Vector3(.5f, .5f, .5f));
-            //}
+            Gizmos.color = new Color(0, 1, 0, 1);
+            var gl = new GridLine(_lastPreferredGroupPosition, PreferredGroupPosition.Position);
+            for (int i = 0; i < worldGrid.Width; i++)
+            {
+                var p = new Vector2Int(i, gl.Resolve(i));
+                if (p.y >= 0 && p.y < worldGrid.Height)
+                    Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)p), new Vector3(.5f, .5f, .5f));
+            }
 
             Gizmos.color = new Color(0, 1, 0, 1);
             GridPath pathToCollaborator = GridUtility.FindPath(Members[0], CenterOfGravity(), PreferredGroupPosition.Position);

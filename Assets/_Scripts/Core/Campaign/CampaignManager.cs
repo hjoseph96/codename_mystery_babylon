@@ -98,6 +98,8 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         UIManager.Instance.GridBattleCanvas.SetCamera(_gridUICamera);
 
         CombatManager = GetComponent<CombatManager>();
+
+        GridCamera.GetComponent<EventSounds>().enabled = true;
         
         _gridTransitionFX = GridCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
 

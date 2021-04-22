@@ -18,7 +18,7 @@ public class UnitRepository
         string jsonPath = $"{parentFolder}/{unit.Name}";
 
         if (!AssetDatabase.IsValidFolder(jsonPath))
-            AssetDatabase.CreateFolder(parentFolder, unit.Name);
+            Directory.CreateDirectory(jsonPath);
 
         var unitData = UnitData.Populate(unit);
 
@@ -37,6 +37,7 @@ public class UnitData
     public float WalkSpeed;
     public float RunSpeed;
     public float MoveAnimationSpeed;
+    public int Experience;
 
     // TODO: Find out if there's a cleaner way to do nested JSON in C#...
     public Dictionary<string, Dictionary<string,int>> Stats = new Dictionary<string, Dictionary<string, int>>();
@@ -52,6 +53,7 @@ public class UnitData
         unitData.UnitType           = unit.UnitType.ToString();
         unitData.WalkSpeed          = unit.WalkSpeed;
         unitData.RunSpeed           = unit.RunSpeed;
+        unitData.Experience         = unit.Experience;
         unitData.MoveAnimationSpeed = unit.MoveAnimationSpeed;
 
         if (unit.IsPlaying)
