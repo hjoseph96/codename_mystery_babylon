@@ -97,7 +97,7 @@ public class UnitData
         }
         else
         {
-            foreach (var weaponType in unit.UnitClass.UsableWeapons)
+            foreach (var weaponType in unit.UnitClass.UsableMagic)
                 unitData.MagicProfiency.Add(weaponType.ToString(), WeaponRank.D.ToString());
         }
 
