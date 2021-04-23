@@ -6,6 +6,8 @@ public class ScriptableConsumable : ScriptableItem
     [SerializeField] public bool canHeal;
 
     public ScriptableAction Action;
+    public int CurrentDurability;
+    public int MaxDurability;
 
     public override Item GetItem() => new Consumable(this);
 }

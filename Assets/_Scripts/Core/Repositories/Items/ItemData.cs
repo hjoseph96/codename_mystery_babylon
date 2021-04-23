@@ -67,6 +67,7 @@ public class WeaponData : ItemData
     public string MeleeSound;
     public string RequiredRank;
     public int Weight;
+    public int CurrentDurability;
     public int MaxDurability;
     public Dictionary<string, int> AttackRange  = new Dictionary<string, int>();
     public Dictionary<string, int> Stats        = new Dictionary<string, int>();
@@ -94,6 +95,7 @@ public class WeaponData : ItemData
         weaponData.RequiredRank         = weapon.RequiredRank.ToString();
         weaponData.Weight               = weapon.Weight;
         weaponData.MaxDurability        = weapon.MaxDurability;
+        weaponData.CurrentDurability    = weapon.CurrentDurability;
 
         weaponData.AttackRange = new Dictionary<string, int>
         {
@@ -116,6 +118,8 @@ public class ConsumableData : ItemData
 {
     public bool CanHeal;
     public string ActionToExecute;
+    public int CurrentDurability;
+    public int MaxDurability;
 
     public static ConsumableData Populate(Consumable consumable)
     {
