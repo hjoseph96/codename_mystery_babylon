@@ -9,21 +9,12 @@ using Sirenix.Serialization;
 using Articy.Unity;
 using Articy.Codename_Mysterybabylon;
 
-public struct PortraitTarget
-    {
-        public EntityType EntityType;
-        public string Name;
-
-        public PortraitTarget(EntityType entityType, string name)
-        {
-            Name = name;
-            EntityType  = entityType;
-        }
-    }
-
 public class PortraitManager : MonoBehaviour, IInitializable
 {
     public static PortraitManager Instance;
+
+    [FoldoutGroup("Portrait Holders")]
+    [SerializeField] private GameObject _PlayableCharacterHolder;
 
 
     [SerializeField] private EntityType _entityType;
@@ -52,17 +43,13 @@ public class PortraitManager : MonoBehaviour, IInitializable
     private void AssignPortrait()
     {
         var entityType = (EntityType)Enum.Parse(typeof(EntityType), _entityType.ToString());
-        var portraitTarget = new PortraitTarget(entityType, _name);
-
-        var animatedPortraitForEntity = new AnimatedPortraitForEntity();
-        animatedPortraitForEntity.Setup(portraitTarget, _animatedPortrait);
 
         var alreadyAdded = AnimatedPortraitsForEntities.Any(delegate (AnimatedPortraitForEntity portraitContainer)
         {
             var alreadySet = false;
 
-            var sameEntityType = portraitContainer.PortraitTarget.EntityType == _entityType;
-            var nameAlreadySet = portraitContainer.PortraitTarget.Name == _name;
+            var sameEntityType = portraitContainer.EntityType == _entityType;
+            var nameAlreadySet = portraitContainer.Name == _name;
             if (sameEntityType && nameAlreadySet)
                 alreadySet = true;
 
@@ -72,7 +59,25 @@ public class PortraitManager : MonoBehaviour, IInitializable
         if (alreadyAdded)
             return;
 
+        var parent = GetEntityTypeObject();
+        var portraitObj = new GameObject($"{_name} [Portrait]");
+        var animatedPortraitForEntity = portraitObj.AddComponent<AnimatedPortraitForEntity>();
+        animatedPortraitForEntity.Setup(_entityType, _name, _animatedPortrait);
+
+        portraitObj.transform.SetParent(parent.transform);
+
         AnimatedPortraitsForEntities.Add(animatedPortraitForEntity);
+    }
+
+    private GameObject GetEntityTypeObject()
+    {
+        switch (_entityType)
+        {
+            case EntityType.PlayableCharacter:
+                return _PlayableCharacterHolder;
+            default:
+                throw new Exception($"[PortraitManager] Somehow, we could not find a Portrait Holder GameObject for EntityType: {_entityType}");
+        }
     }
 
     [OdinSerialize]

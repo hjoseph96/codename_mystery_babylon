@@ -48,12 +48,11 @@ public class WorldGridEditor : SerializedMonoBehaviour
     [FoldoutGroup("Colliders"), PropertyOrder(20)]
     public bool ConsiderCollidersInEditor = true;
     [FoldoutGroup("Colliders"), PropertyOrder(21)]
-    public List<ColliderGroup> ColliderGroups;
+    public List<ColliderGroupBase> ColliderGroups;
 
     [PropertyOrder(50)]
     public TileConfiguration DefaultConfig;
 
-    //[SerializeField, HideInInspector] private TileConfigurationInfluenceZone[] _influenceZones;
 
     [HideInInspector] public Grid Grid;
     [HideInInspector] public List<Tilemap> Tilemaps = new List<Tilemap>();
@@ -295,7 +294,7 @@ public class WorldGridEditor : SerializedMonoBehaviour
         var colliderGroups = Selection.objects
             .OfType<GameObject>()
             .Where(go => go.activeInHierarchy)
-            .Select(go => go.GetComponent<ColliderGroup>())
+            .Select(go => go.GetComponent<ColliderGroupSimple>())
             .Where(c => c != null)
             .ToArray();
 
@@ -318,7 +317,7 @@ public class WorldGridEditor : SerializedMonoBehaviour
                 {
                     var pos = new Vector2Int(i, j);// + Origin;
 
-                    /*if (DebugCollisions)
+                    if (DebugCollisions)
                     {
                         foreach (var colliderGroup in colliderGroups)
                         {
@@ -335,7 +334,7 @@ public class WorldGridEditor : SerializedMonoBehaviour
                                 break;
                             }
                         }
-                    }*/
+                    }
 
                     var gridPos = pos - Origin;
                     var cell = WorldGridArray[gridPos.x, gridPos.y];
@@ -457,12 +456,12 @@ public class WorldGridEditor : SerializedMonoBehaviour
         }
 
 
-        /*if (DebugCollisions && colliderGroups.Length > 0)
+        if (DebugCollisions && colliderGroups.Length > 0)
         {
             var tilemapPosition = Grid.WorldToCell(mouseWorldPosition);
             Handles.color = Color.blue;
             Handles.DrawWireCube(Grid.GetCellCenterWorld(tilemapPosition), Vector3.one);
-        }*/
+        }
     }
     #endif
 }

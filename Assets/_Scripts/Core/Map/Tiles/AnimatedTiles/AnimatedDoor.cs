@@ -17,7 +17,7 @@ public class AnimatedDoor : GridAnimatedTile
     [SerializeField] private bool _animateOnStart;
 
     [Header("Collider Settings")] 
-    [SerializeField] private ColliderGroup _colliderGroup;
+    [SerializeField] private ColliderGroupSimple _colliderGroup;
 
     [Header("Sorting Layer Changes")]
     [SerializeField] private bool _changeSortingLayerUponOpening;

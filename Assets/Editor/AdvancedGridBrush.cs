@@ -44,7 +44,7 @@ public class AdvancedGridBrushEditor : GridBrushEditor
 
         if (GUILayout.Button("Update Collisions"))
         {
-            var colliderGroup = GridPaintingState.scenePaintTarget.GetComponent<ColliderGroup>();
+            var colliderGroup = GridPaintingState.scenePaintTarget.GetComponent<ColliderGroupTilemap>();
             colliderGroup.UpdateCollisions(_brush.SelectedTile);
         }
 
