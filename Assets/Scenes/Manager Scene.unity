@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &793882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 793883}
+  m_Layer: 0
+  m_Name: Playable Characters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &793883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793882}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1627545840}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &22266775
 GameObject:
   m_ObjectHideFlags: 0
@@ -2999,7 +3029,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1135927963}
+  - {fileID: 1379930316}
+  - {fileID: 1433739057}
+  - {fileID: 1379495407}
   m_Father: {fileID: 1724423002}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7831,10 +7863,11 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 1431544958}
     - {fileID: 61071144377594564}
-    - {fileID: 1820732221}
     - {fileID: 11400000, guid: 0eb55417261bc85418d73b0e173360cd, type: 2}
-    - {fileID: 670078940}
+    - {fileID: 1627545839}
     - {fileID: 1724423001}
+    - {fileID: 1820732221}
+    - {fileID: 670078940}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -7863,10 +7896,10 @@ MonoBehaviour:
       Data: 4
     - Name: 
       Entry: 10
-      Data: 2
+      Data: 5
     - Name: 
       Entry: 10
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 13
       Data: 
@@ -10278,51 +10311,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1135927961
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1135927963}
-  - component: {fileID: 1135927962}
-  m_Layer: 0
-  m_Name: Artur [Portrait]
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1135927962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1135927961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1705ada33ea9af845b7134ad94b00756, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimatedPortrait: {fileID: 4792668326031820119, guid: 826d05124466ed54ba6d1081e59a3c46,
-    type: 3}
---- !u!4 &1135927963
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1135927961}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 285816710}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1150660879
 GameObject:
   m_ObjectHideFlags: 0
@@ -13394,6 +13382,100 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1379495405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1379495407}
+  - component: {fileID: 1379495406}
+  m_Layer: 0
+  m_Name: Penelope [Portrait]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1379495406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379495405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1705ada33ea9af845b7134ad94b00756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimatedPortrait: {fileID: 310365916745437830, guid: 09aa735349d69c248835c4e5cc9da836,
+    type: 3}
+  EntityType: 0
+  Name: Penelope
+--- !u!4 &1379495407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379495405}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 285816710}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1379930315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1379930316}
+  - component: {fileID: 1379930317}
+  m_Layer: 0
+  m_Name: Artur [Portrait]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1379930316
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379930315}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 285816710}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1379930317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379930315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1705ada33ea9af845b7134ad94b00756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimatedPortrait: {fileID: 4792668326031820119, guid: 826d05124466ed54ba6d1081e59a3c46,
+    type: 3}
+  EntityType: 0
+  Name: Artur
 --- !u!224 &1424784789 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3770589029713842371, guid: 74c4fdf4dfd1c0648b6b053d92758c9f,
@@ -13455,6 +13537,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1433739056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1433739057}
+  - component: {fileID: 1433739058}
+  m_Layer: 0
+  m_Name: Jacques [Portrait]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1433739057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433739056}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 285816710}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1433739058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433739056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1705ada33ea9af845b7134ad94b00756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimatedPortrait: {fileID: 7632554350182774501, guid: 991273cafe69ac342bd689d6df2b276d,
+    type: 3}
+  EntityType: 0
+  Name: Jacques
 --- !u!1 &1440392476
 GameObject:
   m_ObjectHideFlags: 0
@@ -15243,6 +15372,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16bb5b210d0790a40a29f33c52de755d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: PlayableCharacters
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[PlayableCharacter, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  _PlayableCharactersObj: {fileID: 793882}
 --- !u!4 &1627545840
 Transform:
   m_ObjectHideFlags: 0
@@ -15253,7 +15405,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 793883}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16739,11 +16892,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PlayableCharacterHolder: {fileID: 285816709}
   _entityType: 0
-  _name: Artur
-  _animatedPortrait: {fileID: 4792668326031820119, guid: 826d05124466ed54ba6d1081e59a3c46,
+  _name: Penelope
+  _animatedPortrait: {fileID: 310365916745437830, guid: 09aa735349d69c248835c4e5cc9da836,
     type: 3}
   AnimatedPortraitsForEntities:
-  - {fileID: 1135927962}
+  - {fileID: 1379930317}
+  - {fileID: 1433739058}
+  - {fileID: 1379495406}
 --- !u!4 &1724423002
 Transform:
   m_ObjectHideFlags: 0

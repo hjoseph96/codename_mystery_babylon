@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using Sirenix.OdinInspector;
 using Articy.Codename_Mysterybabylon;
+
 
 public enum Species
 {
@@ -15,24 +17,54 @@ public enum Species
 public class PlayableCharacter : Entity
 {
     // Used To Serialize Stats & Inventory
-    public UnitData UnitData        { get; protected set; }
+    [FoldoutGroup("Game Data"), ShowInInspector]
+    public UnitData UnitData         { get; protected set; }
+
+    [FoldoutGroup("Game Data"), ShowInInspector]
+    public AnimatedPortrait Portrait { get; protected set; }
 
     // Articy Template Properties
+
+    [FoldoutGroup("Basic Information"), ShowInInspector]
     public string Name              { get; protected set; }
+    
+    [FoldoutGroup("Basic Information"), ShowInInspector]
     public int Age                  { get; protected set; }
+    
+    [FoldoutGroup("Basic Information"), ShowInInspector]
     public string Appearance        { get; protected set; }
+    
+    [FoldoutGroup("Basic Information"), ShowInInspector]
     public string BornIn            { get; protected set; }
+    
+    [FoldoutGroup("Basic Information"), ShowInInspector]
     public string Occupation        { get; protected set; }
+    
+    [FoldoutGroup("Basic Information"), ShowInInspector]
     public string Personality       { get; protected set; }
+    
+    [FoldoutGroup("Basic Information"), ShowInInspector]
     public Sex Gender               { get; protected set; }
+    
+    [FoldoutGroup("Basic Information"), ShowInInspector]
     public Species Species          { get; protected set; }
+
+    [FoldoutGroup("Extended Details"), ShowInInspector]
     public List<string> Skills      { get; protected set; }
+
+    [FoldoutGroup("Extended Details"), ShowInInspector]
     public List<string> Fears       { get; protected set; }
+
+    [FoldoutGroup("Extended Details"), ShowInInspector]
     public string InnerConflict     { get; protected set; }
+
+    [FoldoutGroup("Extended Details"), ShowInInspector]
     public string Motivation        { get; protected set; }
+
+    [FoldoutGroup("Extended Details"), ShowInInspector]
     public string FurtherDetails    { get; protected set; }
 
-    public PlayableCharacter(DefaultMainCharacterTemplate template)
+    public void Setup(DefaultMainCharacterTemplate template)
     {
         var basicCharacterData      = template.GetFeatureDefaultBasicCharacterFeature();
         var extendedCharacterData   = template.GetFeatureDefaultExtendedCharacterFeature();
@@ -47,11 +79,16 @@ public class PlayableCharacter : Entity
 
         SetSpecies(basicCharacterData.Species);
 
+        Skills  = new List<string>();
+        Fears   = new List<string>();
+
         foreach (var fear in extendedCharacterData.Fears.Split(','))
-            Fears.Add(fear.Trim(' '));
+            if (fear != "")
+                Fears.Add(fear.Trim(' '));
 
         foreach (var skill in extendedCharacterData.Skills.Split(','))
-            Skills.Add(skill.Trim(' '));
+            if (skill != "")
+                Skills.Add(skill.Trim(' '));
 
         InnerConflict   = extendedCharacterData.InnerConflict;
         Motivation      = extendedCharacterData.Motivation;
@@ -85,4 +122,5 @@ public class PlayableCharacter : Entity
         UnitData = unitData;
     }
 
+    public void SetPortrait(AnimatedPortrait portrait) => Portrait = portrait;
 }

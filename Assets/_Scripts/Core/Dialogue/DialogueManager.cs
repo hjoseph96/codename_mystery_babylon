@@ -10,20 +10,7 @@ using Articy.Codename_Mysterybabylon;
 
 [RequireComponent(typeof(ArticyFlowPlayer))]
 public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyFlowPlayerCallbacks
-{
-    [SerializeField, ValueDropdown("ChapterList")]
-    private string _currentChapter;
-    public string CurrentChapter { get => _currentChapter; }
-    private List<string> ChapterList()
-    {
-        // TODO: See if we can get Chapter Names directly from ArticyDatabase
-        return new List<string>
-        {
-            "Chapter 1 - Fort Infiltration"
-        };
-    }
-
-    
+{   
     [FoldoutGroup("Dialog Box Prefabs")]
     [Header("Dialog Boxes with Portrait")]
     [SerializeField] private GameObject _leftPortraitDialogBoxPrefab;
@@ -43,6 +30,7 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     public ArticyChapter Chapter { get => _chapter; }
 
     private ArticyFlowPlayer _flowPlayer;
+    private ArticyReference _articyRef;
 
     private Dictionary<string, string> _ChapterTechnicalNames = new Dictionary<string, string>
     {
@@ -53,11 +41,20 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     public void Init()
     {
         _flowPlayer = GetComponent<ArticyFlowPlayer>();
+        _articyRef  = GetComponent<ArticyReference>();
 
-        var chapterTechnicalName = _ChapterTechnicalNames[CurrentChapter];
-        var chapterDialogue = ArticyDatabase.GetObject(chapterTechnicalName) as Dialogue;
+        var chapterDialogueObj = _articyRef.GetObject<ArticyObject>();
+
+        if (chapterDialogueObj is Dialogue == false)
+            throw new System.Exception("[DialogueManager] Assigned ArticyRef is not a Dialogue...");
+
+        var chapterDialogue = chapterDialogueObj as Dialogue;
 
         _chapter = new ArticyChapter(chapterDialogue);
+
+        _flowPlayer.startOn = (ArticyRef)chapterDialogue;
+
+        _flowPlayer.Play();
     }
 
     // Update is called once per frame
@@ -68,14 +65,20 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
     public void OnFlowPlayerPaused(IFlowObject aObject)
     {
+        if (aObject is IDialogue)
+        {
+            _flowPlayer.Play();
+            return;
+        }
+
         var objWithText = aObject as IObjectWithText;
         if (objWithText != null)
         {
+            Debug.Log("Catch me");
         }
     }
 
     public void OnBranchesUpdated(IList<Branch> aBranches)
     {
-
     }
 }

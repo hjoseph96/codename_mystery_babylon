@@ -86,5 +86,25 @@ public class PortraitManager : MonoBehaviour, IInitializable
     public void Init()
     {
         Instance = this;
+
+        SetEntityPortraits();
+    }
+
+    private void SetEntityPortraits()
+    {
+        var entityManager = EntityManager.Instance;
+
+        foreach (var portraitForEntity in AnimatedPortraitsForEntities)
+        {
+            switch (portraitForEntity.EntityType)
+            {
+                case EntityType.PlayableCharacter:
+                    var entity = entityManager.GetPlayableCharacterByName(portraitForEntity.Name);
+
+                    entity.SetPortrait(portraitForEntity.AnimatedPortrait);
+
+                    break;
+            }
+        }
     }
 }

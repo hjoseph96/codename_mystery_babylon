@@ -6,12 +6,16 @@ using Articy.Unity;
 using Articy.Codename_Mysterybabylon;
 
 using Sirenix.Serialization;
+using Sirenix.OdinInspector;
 
-public class EntityManager : MonoBehaviour, IInitializable
+public class EntityManager : SerializedMonoBehaviour, IInitializable
 {
     public static EntityManager Instance;
 
-    [OdinSerialize]
+    [FoldoutGroup("Entity Parent Objects")]
+    [SerializeField] private GameObject _PlayableCharactersObj;
+
+    [OdinSerialize, ShowInInspector]
     public List<PlayableCharacter> PlayableCharacters { get; private set; }
 
     public void Init()
@@ -20,10 +24,17 @@ public class EntityManager : MonoBehaviour, IInitializable
 
         var playableCharacters = ArticyDatabase.GetAllOfType<DefaultMainCharacterTemplate>();
 
-        foreach (var character in playableCharacters)
-            PlayableCharacters.Add(new PlayableCharacter(character));
+        foreach (var characterTemplate in playableCharacters)
+        {
+            var playableCharacterObj = new GameObject($"{characterTemplate.DisplayName} [PlayableCharacter]");
+            playableCharacterObj.transform.SetParent(_PlayableCharactersObj.transform);
 
+            var playableCharacter = playableCharacterObj.AddComponent<PlayableCharacter>();
 
+            playableCharacter.Setup(characterTemplate);
+
+            PlayableCharacters.Add(playableCharacter);
+        }
     }
 
     public PlayableCharacter GetPlayableCharacterByName(string name)

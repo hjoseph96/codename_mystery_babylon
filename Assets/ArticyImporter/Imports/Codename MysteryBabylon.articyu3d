@@ -5,12 +5,12 @@
     "set_IncludedNodes": "Settings, Project, GlobalVariables, ObjectDefinitions, Packages, ScriptMethods, Hierarchy, Assets",
     "set_UseScriptSupport": "True",
     "ExportVersion": "1.2",
-    "ObjectDefinitionsHash": "9123111E2140F83C9788C901E8E1D4F769422B4AAF4F52C6E4FCC412412A1D16",
+    "ObjectDefinitionsHash": "0329FA4214F36AA79C1C051FB58B7675AA1738F8AD4B64276341FD55640878A9",
     "ScriptFragmentsHash": "0000000000"
   },
   "Project": {
     "Name": "Codename: MysteryBabylon",
-    "DetailName": null,
+    "DetailName": "",
     "Guid": "9a383ed9-c5ce-40c0-9655-d25754a0e480",
     "TechnicalName": "Codename_Mysterybabylon"
   },
@@ -2166,75 +2166,6 @@
         {
           "Type": "Dialogue",
           "Properties": {
-            "TechnicalName": "Dlg_F63310E6",
-            "Id": "0x010000000000014A",
-            "Parent": "0x0100000000000337",
-            "Attachments": [
-              "0x010000000000010F",
-              "0x0100000000000121",
-              "0x0100000000000127",
-              "0x010000000000012E"
-            ],
-            "DisplayName": "Carriage Ride",
-            "PreviewImage": {
-              "ViewBox": {
-                "x": 0.0,
-                "y": 0.0,
-                "w": 0.0,
-                "h": 0.0
-              },
-              "Mode": "FromAsset",
-              "Asset": "0x0000000000000000"
-            },
-            "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
-            },
-            "Text": "",
-            "ExternalId": "",
-            "Position": {
-              "x": -2733.0,
-              "y": 575.0
-            },
-            "ZIndex": 0.0,
-            "Size": {
-              "w": 291.0,
-              "h": 200.0
-            },
-            "ShortId": 4130541798,
-            "InputPins": [
-              {
-                "Text": "",
-                "Id": "0x010000000000014D",
-                "Owner": "0x010000000000014A"
-              }
-            ],
-            "OutputPins": [
-              {
-                "Text": "",
-                "Id": "0x010000000000014E",
-                "Owner": "0x010000000000014A",
-                "Connections": [
-                  {
-                    "Color": {
-                      "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
-                    },
-                    "Label": "",
-                    "TargetPin": "0x010000000000033B",
-                    "Target": "0x0100000000000337"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "Type": "Dialogue",
-          "Properties": {
             "TechnicalName": "Dlg_8EC4C13A",
             "Id": "0x0100000000000337",
             "Parent": "0x0300000043CE43F7",
@@ -2251,9 +2182,9 @@
               "Asset": "0x0000000000000000"
             },
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "",
             "ExternalId": "",
@@ -2276,9 +2207,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x010000000000014D",
@@ -2297,6 +2228,88 @@
           }
         },
         {
+          "Type": "Dialogue",
+          "Properties": {
+            "TechnicalName": "Dlg_F63310E6",
+            "Id": "0x010000000000014A",
+            "Parent": "0x0100000000000337",
+            "Attachments": [
+              "0x010000000000010F",
+              "0x0100000000000121",
+              "0x0100000000000127",
+              "0x010000000000012E"
+            ],
+            "DisplayName": "Carriage Ride",
+            "PreviewImage": {
+              "ViewBox": {
+                "x": 0.0,
+                "y": 0.0,
+                "w": 0.0,
+                "h": 0.0
+              },
+              "Mode": "FromAsset",
+              "Asset": "0x0000000000000000"
+            },
+            "Color": {
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
+            },
+            "Text": "",
+            "ExternalId": "",
+            "Position": {
+              "x": -2733.0,
+              "y": 575.0
+            },
+            "ZIndex": 0.0,
+            "Size": {
+              "w": 291.0,
+              "h": 200.0
+            },
+            "ShortId": 4130541798,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000014D",
+                "Owner": "0x010000000000014A",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000157",
+                    "Target": "0x0100000000000154"
+                  }
+                ]
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000014E",
+                "Owner": "0x010000000000014A",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000033B",
+                    "Target": "0x0100000000000337"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
           "Type": "DialogueFragment",
           "Properties": {
             "TechnicalName": "DFr_C5AAC048",
@@ -2306,9 +2319,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "It shouldn't be too long before we arrive.",
             "ExternalId": "",
@@ -2338,9 +2351,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x010000000000015D",
@@ -2361,9 +2374,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Remember, our priority is to stealthily infiltrate the fort.",
             "ExternalId": "",
@@ -2393,9 +2406,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000164",
@@ -2416,9 +2429,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Emphasis on the word <shake t=2>stealth</shake>...",
             "ExternalId": "",
@@ -2448,9 +2461,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x010000000000016B",
@@ -2471,9 +2484,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "I'm looking at you, Jacques. You'll need to control yourself.",
             "ExternalId": "",
@@ -2503,9 +2516,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000172",
@@ -2526,9 +2539,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "We cannot have your raging battle lust rearing it's ugly head.",
             "ExternalId": "",
@@ -2558,9 +2571,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000179",
@@ -2581,9 +2594,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000121",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "What of it? These reserve forces are naught but rabble.",
             "ExternalId": "",
@@ -2613,9 +2626,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000180",
@@ -2636,9 +2649,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000121",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Nothing more than greenhorn soldiers playing at war. Cutting them down would be child's play!",
             "ExternalId": "",
@@ -2668,9 +2681,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000187",
@@ -2691,9 +2704,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Ah, yes, I'm certain you'll fight valiantly!",
             "ExternalId": "",
@@ -2723,9 +2736,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x010000000000018E",
@@ -2746,9 +2759,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "When they sever your pompous head from your body, they'll be doing us all a service.",
             "ExternalId": "",
@@ -2778,9 +2791,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000195",
@@ -2801,9 +2814,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Our ears will bear the torture of your foolish tongue no longer!",
             "ExternalId": "",
@@ -2833,9 +2846,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x010000000000019C",
@@ -2856,9 +2869,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "I simply cannot wait.",
             "ExternalId": "",
@@ -2888,9 +2901,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001A3",
@@ -2911,9 +2924,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000121",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Will you tell this wench to quiet herself, before I do so permanently?",
             "ExternalId": "",
@@ -2943,9 +2956,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001AA",
@@ -2966,9 +2979,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Ohoho, and <shake t-1>that'll</shake> be the day!",
             "ExternalId": "",
@@ -2998,9 +3011,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001B1",
@@ -3021,9 +3034,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "And <shake t=0.5>who</shake> exactly shall heal you once those knights hack you into a bloody mess, then?",
             "ExternalId": "",
@@ -3053,9 +3066,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001B8",
@@ -3076,9 +3089,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Can you two save your lover's quarrel for later?",
             "ExternalId": "",
@@ -3108,9 +3121,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001BF",
@@ -3131,9 +3144,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "You both are talking this far too lightly!",
             "ExternalId": "",
@@ -3163,9 +3176,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001C6",
@@ -3186,9 +3199,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "What will we do if the main force returns while we are still within the fort?",
             "ExternalId": "",
@@ -3218,9 +3231,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001CD",
@@ -3241,9 +3254,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Gods, I cannot believe we are even doing this!",
             "ExternalId": "",
@@ -3273,9 +3286,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001D4",
@@ -3296,9 +3309,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "I did not agree to this at all, this is asking for trouble...",
             "ExternalId": "",
@@ -3328,9 +3341,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001E1",
@@ -3351,9 +3364,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000121",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "And yet, there you sit. You could have remained back at the lodge, if you mean to wimper about it all day.",
             "ExternalId": "",
@@ -3383,9 +3396,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001E8",
@@ -3406,9 +3419,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "That's enough out of all of you!",
             "ExternalId": "",
@@ -3438,9 +3451,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001EF",
@@ -3461,9 +3474,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "I asked her to join us. We will need her skill with a bow in this terrain.",
             "ExternalId": "",
@@ -3493,9 +3506,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001F6",
@@ -3516,9 +3529,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "We all voted on whether to take this on or not.",
             "ExternalId": "",
@@ -3548,9 +3561,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x01000000000001FD",
@@ -3571,9 +3584,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000010F",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Do not complain because you lost. This is the way we have always done things.",
             "ExternalId": "",
@@ -3603,9 +3616,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000204",
@@ -3626,9 +3639,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Ah, the little maiden is such a worrywart.",
             "ExternalId": "",
@@ -3658,9 +3671,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x010000000000020B",
@@ -3681,9 +3694,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Lovers, are we now?",
             "ExternalId": "",
@@ -3713,9 +3726,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000212",
@@ -3736,9 +3749,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Perhaps I should tell everyone who --",
             "ExternalId": "",
@@ -3768,9 +3781,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000219",
@@ -3791,9 +3804,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Zenovia!",
             "ExternalId": "",
@@ -3823,9 +3836,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000220",
@@ -3846,9 +3859,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "... Suit yourselves.",
             "ExternalId": "",
@@ -3878,9 +3891,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000227",
@@ -3901,9 +3914,9 @@
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "I would have gladly remained back rather than follow you all to an early grave.",
             "ExternalId": "",
@@ -3933,9 +3946,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x010000000000022E",
@@ -3956,9 +3969,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000121",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Well, it's far too late now.",
             "ExternalId": "",
@@ -3988,9 +4001,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000235",
@@ -4011,9 +4024,9 @@
             "StageDirections": "",
             "Speaker": "0x0100000000000121",
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "Look, the carriage has come to a stop.",
             "ExternalId": "",
@@ -4038,7 +4051,20 @@
               {
                 "Text": "",
                 "Id": "0x0100000000000236",
-                "Owner": "0x0100000000000232"
+                "Owner": "0x0100000000000232",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000014E",
+                    "Target": "0x010000000000014A"
+                  }
+                ]
               }
             ]
           }
@@ -4291,9 +4317,9 @@
               }
             },
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "",
             "ExternalId": "",
@@ -4329,9 +4355,9 @@
               }
             },
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "",
             "ExternalId": "",
@@ -4367,9 +4393,9 @@
               }
             },
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "",
             "ExternalId": "",
@@ -4405,9 +4431,9 @@
               }
             },
             "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
+              "r": 0.577580452,
+              "g": 0.7605245,
+              "b": 0.7991027
             },
             "Text": "",
             "ExternalId": "",
