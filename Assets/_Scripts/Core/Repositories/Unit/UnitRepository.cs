@@ -3,13 +3,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 using Newtonsoft.Json;
 
-#if UNITY_EDITOR
 public class UnitRepository
 {
     public static void Write(Unit unit)
@@ -17,7 +12,7 @@ public class UnitRepository
         var parentFolder = $"{Application.dataPath}/SerializedData/Entities/Playable Characters/";
         string jsonPath = $"{parentFolder}/{unit.Name}";
 
-        if (!AssetDatabase.IsValidFolder(jsonPath))
+        if (!Directory.Exists(jsonPath))
             Directory.CreateDirectory(jsonPath);
 
         var unitData = UnitData.Populate(unit);
@@ -27,7 +22,6 @@ public class UnitRepository
         File.WriteAllText($"{jsonPath}/UnitData.json", json);
     }
 }
-#endif
 
 
 [Serializable]
