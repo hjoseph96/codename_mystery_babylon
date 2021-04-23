@@ -112,10 +112,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     }
 
 
-    void Start()
-    {
-        BeginBattleMap();
-    }
+    void Start() => BeginBattleMap();
 
     public void BeginBattleMap(bool displayPhase = false)
     {
@@ -143,7 +140,6 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             _gridCursor.SetFreeMode();
         }    
     }
-
 
     public void AddUnit(Unit unit)
     {
@@ -224,7 +220,6 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     public void HealUnit(Unit unit, int amount)
     {
         // Todo: implement diffferent types of heal effects
-
         ApplyNormalHeal.HealUnit(unit, amount);
     }
 
@@ -261,9 +256,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         if (callback != null)
         {
             _phaseDisplay.OnDisplayComplete = null;
-
             _phaseDisplay.OnDisplayComplete += callback;
-            
         }
 
         if (_phase != TurnPhase.Player)

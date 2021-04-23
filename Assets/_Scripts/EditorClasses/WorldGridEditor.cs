@@ -318,7 +318,7 @@ public class WorldGridEditor : SerializedMonoBehaviour
                 {
                     var pos = new Vector2Int(i, j);// + Origin;
 
-                    if (DebugCollisions)
+                    /*if (DebugCollisions)
                     {
                         foreach (var colliderGroup in colliderGroups)
                         {
@@ -335,7 +335,7 @@ public class WorldGridEditor : SerializedMonoBehaviour
                                 break;
                             }
                         }
-                    }
+                    }*/
 
                     var gridPos = pos - Origin;
                     var cell = WorldGridArray[gridPos.x, gridPos.y];
@@ -457,12 +457,12 @@ public class WorldGridEditor : SerializedMonoBehaviour
         }
 
 
-        if (DebugCollisions && colliderGroups.Length > 0)
+        /*if (DebugCollisions && colliderGroups.Length > 0)
         {
             var tilemapPosition = Grid.WorldToCell(mouseWorldPosition);
             Handles.color = Color.blue;
             Handles.DrawWireCube(Grid.GetCellCenterWorld(tilemapPosition), Vector3.one);
-        }
+        }*/
     }
     #endif
 }

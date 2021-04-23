@@ -1,20 +1,19 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 
 [ExecuteInEditMode]
+[RequireComponent(typeof(Grid))]
+[RequireComponent(typeof(Tilemap))]
+[RequireComponent(typeof(TilemapRenderer))]
 public class ColliderGroup : SerializedMonoBehaviour
 {
-    [SortingLayer] public string SortingLayerName;
-    public TileConfiguration Config;
-
-    [HideInInspector] public int SortingLayerId => SortingLayer.GetLayerValueFromName(SortingLayerName);
-    [OdinSerialize] 
-    private HashSet<Vector2Int> _collisions = new HashSet<Vector2Int>();
+    private int _sortingLayerId;
+    [NonSerialized] private Dictionary<Vector2Int, WorldCellTile> _collisions;
 
     private WorldGridEditor Editor
     {
@@ -28,19 +27,36 @@ public class ColliderGroup : SerializedMonoBehaviour
     }
 
     private WorldGridEditor _editor;
-    private WorldCellTile _overrideTile;
     private readonly List<Collider2D> _overlapBoxResults = new List<Collider2D>();
 
-    [Button(ButtonSizes.Large), GUIColor(0, 1, 0)]
-    public void UpdateCollisions()
+    private void Update()
     {
+        GetComponent<TilemapRenderer>().enabled = Selection.activeGameObject == gameObject;
+    }
+
+    [Button(ButtonSizes.Large), GUIColor(0, 1, 0)]
+    private void ClearAll()
+    {
+        GetComponent<Tilemap>().ClearAllTiles();
+    }
+
+    public void UpdateCollisions(TileBase tile)
+    {
+        if (tile == null)
+        {
+            Debug.LogError("Tile was not selected!");
+            return;
+        }
+
+        var tilemap = GetComponent<Tilemap>();
+        tilemap.color = new Color(1f, 0, 0, 0.65f);
+        tilemap.ClearAllTiles();
+
         var filter = new ContactFilter2D
         {
             useLayerMask = true, 
             layerMask = LayerMask.GetMask("Tilemap Colliders")
         };
-
-        _collisions.Clear();
 
         var colliders = GetComponentsInChildren<Collider2D>();
         foreach (var currentCollider in colliders)
@@ -53,10 +69,14 @@ public class ColliderGroup : SerializedMonoBehaviour
             {
                 for (var x = min.x; x <= max.x; x++)
                 {
+                    var pos = new Vector3Int(x, y, 0);
+                    var worldPos = Editor.Grid.GetCellCenterWorld(pos);
+                    //Debug.Log(tilemap.WorldToCell(worldPos));
+
                     _overlapBoxResults.Clear();
-                    if (Physics2D.OverlapBox(Editor.Grid.GetCellCenterWorld(new Vector3Int(x, y, 0)), Vector2.one, 0,
+                    if (Physics2D.OverlapBox(worldPos, Vector2.one, 0,
                         filter, _overlapBoxResults) > 0 && _overlapBoxResults.IndexOf(currentCollider) >= 0)
-                        _collisions.Add(new Vector2Int(x, y) - Editor.Origin);
+                        tilemap.SetTile(tilemap.WorldToCell(worldPos), tile);
                 }
             }
         }
@@ -64,87 +84,14 @@ public class ColliderGroup : SerializedMonoBehaviour
         EditorUtility.SetDirty(gameObject);
     }
 
-    private void OnEnable()
-    {
-        SceneView.duringSceneGui -= OnSceneGUI;
-        SceneView.duringSceneGui += OnSceneGUI;
-    }
-
-    private void OnDisable()
-    {
-        SceneView.duringSceneGui -= OnSceneGUI;
-    }
-
-    private void OnSceneGUI(SceneView sceneView)
-    {
-        if (!Selection.objects.Contains(gameObject) || !gameObject.activeInHierarchy || !Editor.DebugCollisions)
-            return;
-
-        var ev = Event.current;
-        var camera = Camera.current;
-        var mouseWorldPosition = camera.ScreenToWorldPoint(new Vector3(ev.mousePosition.x, camera.pixelHeight - ev.mousePosition.y, camera.nearClipPlane));
-        var gridPosition = (Vector2Int) Editor.Grid.WorldToCell(mouseWorldPosition) - Editor.Origin;
-
-        var controlID = GUIUtility.GetControlID(FocusType.Passive);
-        switch (ev.GetTypeForControl(controlID))
-        {
-            case EventType.MouseDown:
-                if (ev.button == 0 || ev.button == 1)
-                {
-                    if (ev.button == 0)
-                        _collisions.Add(gridPosition);
-                    else
-                        _collisions.Remove(gridPosition);
-
-                    EditorUtility.SetDirty(gameObject);
-
-                    GUIUtility.hotControl = controlID;
-                    ev.Use();
-                }
-
-                break;
-
-            case EventType.MouseDrag:
-                if (ev.button == 0 || ev.button == 1)
-                {
-                    if (ev.button == 0)
-                        _collisions.Add(gridPosition);
-                    else
-                        _collisions.Remove(gridPosition);
-
-                    EditorUtility.SetDirty(gameObject);
-
-                    ev.Use();
-                }
-
-                break;
-
-            case EventType.MouseUp:
-                if (GUIUtility.hotControl == controlID && (ev.button == 0 || ev.button == 1))
-                {
-                    GUIUtility.hotControl = 0;
-                    ev.Use();
-                }
-
-                break;
-        }
-
-        EditorApplication.QueuePlayerLoopUpdate();
-    }
-
-    public bool Contains(Vector2Int position) => _collisions.Contains(position);
-
     public void Apply()
     {
-        // Lazy init
-        _overrideTile ??= new WorldCellTile(Config, Vector3.one);
+        LazyInit();
 
-        Debug.Assert(_collisions.Count > 0);
-
-        foreach (var pos in _collisions)
+        foreach (var pos in _collisions.Keys)
         {
             var tile = Application.isPlaying ? WorldGrid.Instance[pos] : Editor.WorldGridArray[pos.x, pos.y];
-            tile.OverrideTile(SortingLayerId, _overrideTile);
+            tile.OverrideTile(_sortingLayerId, _collisions[pos]);
         }
 
         this.Show();
@@ -152,12 +99,39 @@ public class ColliderGroup : SerializedMonoBehaviour
 
     public void Revert()
     {
-        foreach (var pos in _collisions)
+        LazyInit();
+
+        foreach (var pos in _collisions.Keys)
         {
             var tile = Application.isPlaying ? WorldGrid.Instance[pos] : Editor.WorldGridArray[pos.x, pos.y];
-            tile.ClearOverride(SortingLayerId);
+            tile.ClearOverride(_sortingLayerId);
         }
 
         this.Hide();
+    }
+
+    private void LazyInit()
+    {
+        if (_collisions != null)
+            return;
+
+        _collisions = new Dictionary<Vector2Int, WorldCellTile>();
+        var tilemap = GetComponent<Tilemap>();
+        tilemap.CompressBounds();
+        foreach (var pos in tilemap.cellBounds.allPositionsWithin)
+        {
+            if (tilemap.HasTile(pos))
+            {
+                var tile = tilemap.GetTile<NavigationTile>(pos);
+                var scale = tilemap.GetTransformMatrix(pos).lossyScale;
+                var worldPos = tilemap.GetCellCenterWorld(pos);
+                var gridPos = WorldGrid.Instance.Grid.WorldToCell(worldPos);
+                _collisions.Add((Vector2Int) gridPos, new WorldCellTile(tile.Config, scale));
+            }
+        }
+
+        var tilemapRenderer = GetComponent<TilemapRenderer>();
+        _sortingLayerId = tilemapRenderer.sortingLayerID;
+        tilemapRenderer.enabled = false;
     }
 }

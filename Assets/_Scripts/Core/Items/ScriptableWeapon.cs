@@ -24,11 +24,11 @@ public class ScriptableWeapon : ScriptableItem
     public string DescriptionBroken;
 
     [FoldoutGroup("Audio")] 
-    [SoundGroupAttribute, ShowIf("Type", WeaponType.Sword), ShowIf("Type", WeaponType.Lance), ShowIf("Type", WeaponType.Axe)]
+    [SoundGroup, ShowIf("Type", WeaponType.Sword), ShowIf("Type", WeaponType.Lance), ShowIf("Type", WeaponType.Axe)]
     public string meleeSound;
 
     [FoldoutGroup("Audio")] 
-    [SoundGroupAttribute, ShowIf("Type", WeaponType.Grimiore)]
+    [SoundGroup, ShowIf("Type", WeaponType.Grimiore)]
     public string castingSound;
 
     [FoldoutGroup("Stats"), WeaponStats]

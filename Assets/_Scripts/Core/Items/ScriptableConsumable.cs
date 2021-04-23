@@ -7,8 +7,5 @@ public class ScriptableConsumable : ScriptableItem
 
     public ScriptableAction Action;
 
-    public override Item GetItem()
-    {
-        return new Consumable(this);
-    }
+    public override Item GetItem() => new Consumable(this);
 }

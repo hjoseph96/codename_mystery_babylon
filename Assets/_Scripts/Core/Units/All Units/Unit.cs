@@ -634,11 +634,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             else
                 moveAnimation = _walkAnimation;
 
-            Debug.Log($"Clip: {moveAnimation.GetClip(_lookDirection)}");
-            Debug.Log($"Move Animation Speed: {_moveAnimationSpeed}");
-            Debug.Log($"Already being played?: {_animancer.IsPlaying(moveAnimation.GetClip(_lookDirection))}");
-
-
             if (!_animancer.IsPlaying(moveAnimation.GetClip(_lookDirection)))
                 PlayAnimation(moveAnimation, _moveAnimationSpeed);
             

@@ -10,6 +10,10 @@ public class Item
     public string Name { get; protected set; }
     public Sprite Icon { get; protected set; }
 
+    public uint Cost { get; protected set; }
+    public uint SaleValue { get; protected set; }
+
+
     public virtual string Description { get; protected set; }
 
     public Unit Unit { get; set; }
@@ -21,10 +25,12 @@ public class Item
 
     public Item(ScriptableItem source)
     {
-        Name = source.Name;
-        Icon = source.Icon;
+        Name        = source.Name;
+        ItemType    = source.ItemType;
+        Icon        = source.Icon;
+        Cost        = source.Cost;
+        SaleValue   = source.SaleValue;
         Description = source.Description;
-        ItemType = source.ItemType;
     }
 
     public virtual void UseItem()
@@ -36,8 +42,5 @@ public class Item
     public virtual void Drop()
     { }
 
-    public virtual IEnumerable<Type> GetUIOptions()
-    {
-        throw new NotImplementedException();
-    }
+    public virtual IEnumerable<Type> GetUIOptions() => throw new NotImplementedException();
 }

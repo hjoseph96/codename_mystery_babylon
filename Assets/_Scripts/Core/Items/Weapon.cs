@@ -24,6 +24,7 @@ public class Weapon : Item
     public int CritRate  => Stats[WeaponStat.CriticalHit].ValueInt;
     public int HitChance => Stats[WeaponStat.Hit].ValueInt;
     public int MaxRange  => Stats[WeaponStat.MaxRange].ValueInt;
+    public int MinRange  => Stats[WeaponStat.MinRange].ValueInt;
 
     public int Weight { get; protected set; }
     public int MaxDurability { get; protected set; }
@@ -51,6 +52,7 @@ public class Weapon : Item
             Stats[key] = new Stat(key.ToString(), source.WeaponStats[key].BaseValue);
             _brokenStats[key] = source.WeaponStats[key];
         }
+
         Stats[WeaponStat.MinRange] = new Stat(WeaponStat.MinRange.ToString(), source.AttackRange.x);
         Stats[WeaponStat.MaxRange] = new Stat(WeaponStat.MinRange.ToString(), source.AttackRange.y);
 

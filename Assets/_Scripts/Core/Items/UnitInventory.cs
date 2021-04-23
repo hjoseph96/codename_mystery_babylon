@@ -11,17 +11,14 @@ public class UnitInventory
     private readonly List<Item> _items = new List<Item>(MaxSize);
     public readonly Unit Unit;
 
-    public int Size => _items.Count;
-    public bool IsFull => Size == MaxSize;
+    public int Size     => _items.Count;
+    public bool IsFull  => Size == MaxSize;
 
     public bool HasItem(Item item) => _items.Contains(item);
 
     public T[] GetItems<T>() where T : Item => _items.FilterCast<T>().ToArray();
 
-    public UnitInventory(Unit unit)
-    {
-        Unit = unit;
-    }
+    public UnitInventory(Unit unit) => Unit = unit;
 
     public bool AddItem(Item item)
     {
@@ -30,13 +27,11 @@ public class UnitInventory
 
         _items.Add(item);
         item.Unit = Unit;
+
         return true;
     }
 
-    public void SetItem(int index, Item item)
-    {
-        _items[index] = item;
-    }
+    public void SetItem(int index, Item item) => _items[index] = item;
 
     public void MoveItem(Item item, UnitInventory otherInventory)
     {
@@ -55,14 +50,11 @@ public class UnitInventory
         SetItem(ind1, otherItem);
         otherInventory.SetItem(ind2, item);
 
-        item.Unit = otherInventory.Unit;
-        otherItem.Unit = Unit;
+        item.Unit       = otherInventory.Unit;
+        otherItem.Unit  = Unit;
     }
 
-    public bool RemoveItem(Item item)
-    {
-        return RemoveItem(_items.IndexOf(item));
-    }
+    public bool RemoveItem(Item item) => RemoveItem(_items.IndexOf(item));
 
     public bool RemoveItem(int index)
     {
@@ -71,8 +63,9 @@ public class UnitInventory
 
         _items[index].Drop();
         _items.RemoveAt(index);
+
         return true;
     }
 
-    public int IndexOf(Item item) => _items.IndexOf(item);
+    public int IndexOf(Item item)   => _items.IndexOf(item);
 }
