@@ -57,7 +57,9 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         var chapterTechnicalName = _ChapterTechnicalNames[CurrentChapter];
         var chapterDialogue = ArticyDatabase.GetObject(chapterTechnicalName) as Dialogue;
 
-        ArticyDatabase.GetAllOfType<DefaultMainCharacterTemplate>();
+        var mainCharacters = ArticyDatabase.GetAllOfType<DefaultMainCharacterTemplate>();
+        var firstEntity = mainCharacters[0];
+        Debug.Log("Catch me.");
 
         _chapter = new ArticyChapter(chapterDialogue);
     }
