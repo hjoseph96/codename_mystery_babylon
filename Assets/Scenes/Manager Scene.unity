@@ -3032,7 +3032,7 @@ Transform:
   - {fileID: 1222364405}
   - {fileID: 1854506590}
   - {fileID: 1467215315}
-  - {fileID: 1667720450}
+  - {fileID: 1437037308}
   m_Father: {fileID: 1724423002}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13365,6 +13365,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1437037306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1437037308}
+  - component: {fileID: 1437037307}
+  m_Layer: 0
+  m_Name: Zenovia [Portrait]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1437037307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437037306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1705ada33ea9af845b7134ad94b00756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimatedPortrait: {fileID: 7749296823940325879, guid: 967aa76113259fa4e9404a2c86601e1f,
+    type: 3}
+  EntityType: 0
+  Name: Zenovia
+--- !u!4 &1437037308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437037306}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 285816710}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1440392476
 GameObject:
   m_ObjectHideFlags: 0
@@ -16146,53 +16193,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1667720448
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1667720450}
-  - component: {fileID: 1667720449}
-  m_Layer: 0
-  m_Name: Zenovia [Portrait]
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1667720449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1667720448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1705ada33ea9af845b7134ad94b00756, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimatedPortrait: {fileID: 1978497147147955624, guid: 09aa735349d69c248835c4e5cc9da836,
-    type: 3}
-  EntityType: 0
-  Name: Zenovia
---- !u!4 &1667720450
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1667720448}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 285816710}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1668168967
 GameObject:
   m_ObjectHideFlags: 0
@@ -16643,12 +16643,13 @@ MonoBehaviour:
   _PlayableCharacterHolder: {fileID: 285816709}
   _entityType: 0
   _name: Zenovia
-  _animatedPortrait: {fileID: 1978497147147955624, guid: 09aa735349d69c248835c4e5cc9da836,
+  _animatedPortrait: {fileID: 7749296823940325879, guid: 967aa76113259fa4e9404a2c86601e1f,
     type: 3}
   AnimatedPortraitsForEntities:
   - {fileID: 1222364406}
   - {fileID: 1854506591}
   - {fileID: 1467215314}
+  - {fileID: 1437037307}
 --- !u!4 &1724423002
 Transform:
   m_ObjectHideFlags: 0

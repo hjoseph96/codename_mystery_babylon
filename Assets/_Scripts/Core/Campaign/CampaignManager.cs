@@ -398,7 +398,13 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             group.UpdatePreferredGroupPosition();
     }
 
-    private List<AIGroup> AgentsAsGroups(List<AIUnit> agents) => agents.Select(enemy => enemy.group).Distinct().ToList();
+    private List<AIGroup> AgentsAsGroups(List<AIUnit> enemies)
+    {
+        var groups = enemies.Select(enemy => enemy.group).Distinct().ToList();
+        groups.Sort();
+
+        return groups;
+    }
 
     private void ProcessOtherEnemyPhase()
     {

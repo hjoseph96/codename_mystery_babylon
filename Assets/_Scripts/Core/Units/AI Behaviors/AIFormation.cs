@@ -8,7 +8,7 @@ using UnityEngine;
 public class AIFormation
 {
     public string Name;
-   
+
     public int[,] Grid;
     public int[] grid;
     [SerializeField]
@@ -50,7 +50,7 @@ public class AIFormation
 
     public void UpdatePositionIndexesBeyond(int index)
     {
-       
+
 
         for (int i = 0; i < Width; i++)
         {
@@ -66,7 +66,7 @@ public class AIFormation
     public int GetNewPositionIndex()
     {
         var max = 0;
-        
+
         for (int i = 0; i < Width; i++)
         {
             for (int j = 0; j < Height; j++)
@@ -93,6 +93,36 @@ public class AIFormation
         }
     }
 
+    public Dictionary<int, Vector2Int> GetEffectivePositions()
+    {
+        Dictionary<int, Vector2Int> effectivePositions = new Dictionary<int, Vector2Int>();
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                if (this[i, j] != -1)
+                    effectivePositions.Add(this[i, j], new Vector2Int(i, j));
+            }
+        }
+
+        return effectivePositions;
+    }
+
+    public Dictionary<int, Vector2Int> GetEffectivePositions(Vector2Int worldPos)
+    {
+        Dictionary<int, Vector2Int> effectivePositions = new Dictionary<int, Vector2Int>();
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                if (this[i, j] != -1)
+                    effectivePositions.Add(this[i, j], new Vector2Int(worldPos.x + i, worldPos.y + j));
+            }
+        }
+
+        return effectivePositions;
+    }
+
     public int this[int i, int j]
     {
         get
@@ -106,4 +136,4 @@ public class AIFormation
         }
     }
 
-    }
+}

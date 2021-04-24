@@ -86,7 +86,6 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         if (textObj is DialogueFragment)
         {
             var dialogueFragment = textObj as DialogueFragment;
-            Debug.Log("Catch me");
 
             var stageDirections = ParseStageDirections(dialogueFragment.StageDirections);
             if (stageDirections.Contains("Clear"))
@@ -101,7 +100,6 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
                 dialogBox.OnDialogueDisplayComplete = null;
                 dialogBox.OnDialogueDisplayComplete += delegate ()
                 {
-                    Debug.Log($"Dialog Box Count: {_currentPortraitDialogBoxes.Count}");
                     dialogBox.HideNextButton();
                     _flowPlayer.Play();
 

@@ -15,7 +15,8 @@ public class GroupAction : BaseAction
 
     public override void Perform(IContext context)
     {
-        Debug.Log(AIAgent.Name +  " Going With Group");
+        Debug.Log(AIAgent.Name + " Going With Group");
+
         _groupStrategies["HoldFormation"].Execute();
     }
 }

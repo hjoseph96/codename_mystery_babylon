@@ -11,7 +11,7 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
     private List<AIUnit> _groupMembers = new List<AIUnit>();
     [ShowInInspector] public List<AIUnit> Members { get => _groupMembers; }
 
-    private Dictionary<AIUnit, Vector2Int> _unitDestinations = new Dictionary<AIUnit, Vector2Int>();
+    private Dictionary<AIUnit, Vector2Int> _unitDestinations;
 
     // Target Point for the whole group
 
@@ -23,6 +23,7 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
 
     public AIGroupRole GroupRole;
     public AIGroupFormation GroupFormation;
+    public AIGroupMovementMode MovementMode;
     public AIGroup CollaboratorGroup;
 
     public RelativePosition PreferredGroupPosition;
@@ -36,8 +37,13 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
     private static Dictionary<AIGroupRole, int> GroupRolesPriority;
 
 
+    //*********** Gizmos *********************************
+    private Vector2Int _preferredPositionInTIghtMode;
+
+
     private void Start()
     {
+        MovementMode = AIGroupMovementMode.TightFormation;
         InitGroupRolesPriority();
 
         var agentsInGroup = new List<AIUnit>(GetComponentsInChildren<AIUnit>());
@@ -47,10 +53,10 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         {
             var firstSightedEnemy = SightedEnemies()[0];
             _targetCell = firstSightedEnemy.GridPosition;
-            SetFormation();
+            //SetFormation();
         }
-
-        PreferredGroupPosition = new RelativePosition(Members.Select(m => m).Where(m => m.IsLeader).First(), Vector2Int.zero);
+        
+        PreferredGroupPosition = new RelativePosition(Members.Select(m => m).Where(m => m.IsLeader).First(), Members.Select(m => m).Where(m => m.IsLeader).First().Enemies()[0].GridPosition);
         CurrentFormation = FormationsDB.Instance.Get(_formationNames[SelectedFormationIndex]);
 
         FlankGuards = new Dictionary<AIGroup, Vector2Int>();
@@ -69,6 +75,19 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         }
 
         return combinedMoveRange;
+    }
+
+    public List<Vector2Int> ReachableCellsByAllMembers()
+    {
+        List<Vector2Int> combinedMoveRange = new List<Vector2Int>();
+
+        foreach (AIUnit member in _groupMembers)
+        {
+            var memberMoveRange = GridUtility.GetReachableCells(member).ToList();
+            combinedMoveRange.AddRange(memberMoveRange);
+        }
+
+        return combinedMoveRange.GroupBy(p => p).Where(g => g.Count() == Members.Count).Select(p => p.Key).ToList();
     }
 
     public List<Vector2Int> VisionRange()
@@ -171,35 +190,8 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
 
     public RelativePosition UpdatePreferredGroupPosition()
     {
-        switch (GroupRole)
-        {
-            case AIGroupRole.Vanguard:
-                var enemies = Members[0].Enemies();
-                var paths = enemies.Select(enemy => new RelativePosition(enemy, CampaignManager.Instance.PlayerDestination));
-                RelativePosition closestPlayerPath = paths
-                    .OrderBy(path => path.Path.Length).First();
-
-                _lastPreferredGroupPosition = PreferredGroupPosition.Position;
-                PreferredGroupPosition.Position = closestPlayerPath.Path.GetPointInPath(.05f);
-                PreferredGroupPosition.Target = closestPlayerPath.Position;
-                break;
-
-            case AIGroupRole.Flank:
-                var pathToCollaborator = GridUtility.FindPath(Members[0], PreferredGroupPosition.Position, CollaboratorGroup.CenterOfGravity());
-                PreferredGroupPosition.Position = pathToCollaborator.Intersect(CollaboratorGroup.MoveRange()).FirstOrDefault();
-                Vector2 direction = CenterOfGravity() - CollaboratorGroup.CenterOfGravity();
-                direction.x /= direction.magnitude;
-                direction.y /= direction.magnitude;
-
-                _lastPreferredGroupPosition = PreferredGroupPosition.Position;
-                PreferredGroupPosition.Position = CollaboratorGroup.GetFlankPoint(this);
-                break;
-            default:
-                break;
-        }
-
-
-        return PreferredGroupPosition;
+        _lastPreferredGroupPosition = PreferredGroupPosition.Position;
+        return GroupMovement.UpdateDestination(this);
     }
 
 
@@ -248,6 +240,16 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
             Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)pos), new Vector3(.5f, .5f, .5f));
         }
 
+        Gizmos.color = new Color(0, 0, .6f, 1);
+        Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)_preferredPositionInTIghtMode), Vector3.one / 1.5f);
+
+        List<Vector2Int> groupPositionsTight = FormationPositions();
+        Gizmos.color = new Color(.5f, .5f, .5f, 1);
+        foreach (var pos in groupPositionsTight)
+        {
+            Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)pos), new Vector3(.5f, .5f, .5f));
+        }
+
 
 
         //Group Pathing
@@ -258,21 +260,16 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
             Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)CenterOfGravity()), new Vector3(.5f, .5f, .5f));
 
 
-            // Flank Wing
-            Gizmos.color = new Color(24 / 255f, 196 / 255f, 216 / 255f, 1);
 
-            if (FlankGuards != null)
-                foreach (var item in FlankGuards)
-                    Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)item.Value), new Vector3(.5f, .5f, .5f));
 
-            Gizmos.color = new Color(0, 1, 0, 1);
-            var gl = new GridLine(_lastPreferredGroupPosition, PreferredGroupPosition.Position);
-            for (int i = 0; i < worldGrid.Width; i++)
-            {
-                var p = new Vector2Int(i, gl.Resolve(i));
-                if (p.y >= 0 && p.y < worldGrid.Height)
-                    Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)p), new Vector3(.5f, .5f, .5f));
-            }
+            //Gizmos.color = new Color(0, 1, 0, 1);
+            //var gl = new GridLine(_lastPreferredGroupPosition, PreferredGroupPosition.Position);
+            //for (int i = 0; i < worldGrid.Width; i++)
+            //{
+            //    var p = new Vector2Int(i, gl.Resolve(i));
+            //    if (p.y >= 0 && p.y < worldGrid.Height)
+            //        Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)p), new Vector3(.5f, .5f, .5f));
+            //}
 
             Gizmos.color = new Color(0, 1, 0, 1);
             GridPath pathToCollaborator = GridUtility.FindPath(Members[0], CenterOfGravity(), PreferredGroupPosition.Position);
@@ -280,6 +277,14 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
             foreach (var item in pathToCollaborator.Path())
             {
                 Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)item), new Vector3(.5f, .5f, .5f));
+            }
+
+            // Flank Wing
+            Gizmos.color = new Color(24 / 255f, 196 / 255f, 216 / 255f, 1);
+
+            foreach (var item in FlankGuards)
+            {
+                Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)item.Value), new Vector3(.5f, .5f, .5f));
             }
 
         }
@@ -298,7 +303,7 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         DrawFormationGizmos();
     }
 
-    //Greater value for the more prioritized
+    //Lower value for the more prioritized
     private void InitGroupRolesPriority()
     {
         if (GroupRolesPriority != null)
