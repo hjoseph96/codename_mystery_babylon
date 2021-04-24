@@ -19,6 +19,7 @@ public class CanvasManager : MonoBehaviour
         return ((Vector2)Camera.main.WorldToViewportPoint(worldPosition) - CanvasRectTransform.pivot) * CanvasRectTransform.sizeDelta;
     }
 
+
     public void Disable()   => gameObject.SetActive(false);
     public void Enable()    => gameObject.SetActive(true);
 

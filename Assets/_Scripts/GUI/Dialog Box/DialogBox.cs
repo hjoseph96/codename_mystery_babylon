@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using Febucci.UI;
-using TMPro;
 using UnityEngine;
 
+using Sirenix.OdinInspector;
+using Febucci.UI;
+using TMPro;
 
 public class DialogBox : MonoBehaviour
 {
@@ -13,10 +14,17 @@ public class DialogBox : MonoBehaviour
     [SerializeField] private TextAnimatorPlayer _textAnimatorPlayer;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private GameObject _zButton;
-    [SerializeField] private AnimatedPortrait _currentPortrait;
+    [SerializeField] private Transform _portraitSpawnPoint;
+    [SerializeField, ValueDropdown("LeftOrRight")] private Direction _orientation;
+    private List<Direction> LeftOrRight() => new List<Direction> { Direction.Left, Direction.Right };
 
-    public AnimatedPortrait CurrentPortrait => _currentPortrait;
+    private AnimatedPortrait _currentPortrait;
+    [ShowInInspector]
+    public AnimatedPortrait CurrentPortrait { get => _currentPortrait; }
+
     public bool IsTyping { get; private set; }
+
+    public Action OnDialogueDisplayComplete;
 
     private readonly List<string> _texts = new List<string>();
     private int _currentTextIndex;
@@ -26,7 +34,6 @@ public class DialogBox : MonoBehaviour
         UpdateListeners();
 
         _zButton.SetActive(false);
-        SetText(_text.text);
     }
 
     private void Update()
@@ -37,6 +44,12 @@ public class DialogBox : MonoBehaviour
                 _textAnimatorPlayer.SkipTypewriter();
             else if (_currentTextIndex < _texts.Count)
                 ShowNextText();
+            else if (OnDialogueDisplayComplete != null)
+            {
+                // Fire event signaling the end of this dialogue fragment.
+                OnDialogueDisplayComplete.Invoke();
+            }
+                
         }
     }
 
@@ -48,12 +61,10 @@ public class DialogBox : MonoBehaviour
     {
         Split(text);
 
-        if (CurrentPortrait != null)
-            SetActivePortrait(CurrentPortrait);
-
         _currentTextIndex = 0;
-        ShowNextText();
     }
+
+    public void HideNextButton() => _zButton.SetActive(false);
 
     /// <summary>
     /// Set currently active portrait
@@ -61,8 +72,32 @@ public class DialogBox : MonoBehaviour
     /// <param name="portrait"></param>
     public void SetActivePortrait(AnimatedPortrait portrait)
     {
-        _currentPortrait = portrait;
-        _name.text = portrait.Name;
+        if (CurrentPortrait != null)
+            Destroy(CurrentPortrait.gameObject);
+
+        if (portrait == CurrentPortrait)
+            return;
+
+        var newPortrait = Instantiate(
+            portrait,
+            _portraitSpawnPoint.position,
+            Quaternion.identity,
+            _portraitSpawnPoint
+        );
+
+        if (_orientation == Direction.Right)
+        {
+            var rectTransform   = newPortrait.GetComponent<RectTransform>();
+            
+            var flippedScale    = rectTransform.localScale;
+            flippedScale.x      = -1;
+
+            //rectTransform.localScale = flippedScale;
+        }
+
+        _currentPortrait    = newPortrait;
+        _name.text          = portrait.Name;
+
         UpdateListeners();
     }
 
@@ -120,8 +155,9 @@ public class DialogBox : MonoBehaviour
         return true;
     }
 
-    private void ShowNextText()
+    public void ShowNextText()
     {
+        this.SetActive(true);
         _textAnimatorPlayer.ShowText(_texts[_currentTextIndex++]);
     }
 
