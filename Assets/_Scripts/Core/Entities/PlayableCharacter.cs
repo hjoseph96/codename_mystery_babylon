@@ -77,7 +77,7 @@ public class PlayableCharacter : Entity
         Personality = basicCharacterData.Personality;
         Gender      = basicCharacterData.Sex;
 
-        SetSpecies(basicCharacterData.Species);
+        SetSpecies(basicCharacterData.Species.ToString());
 
         Skills  = new List<string>();
         Fears   = new List<string>();

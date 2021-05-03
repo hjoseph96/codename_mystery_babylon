@@ -314,7 +314,8 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             _gridCursor.SetActive(false);
             _phase = TurnPhase.Enemy;
             
-            UpdateGroupsPreferredPositions(players[0].Enemies());
+            if (players[0].Enemies().Count > 0)
+                UpdateGroupsPreferredPositions(players[0].Enemies());
 
             foreach (PlayerUnit player in players)
                 player.AllowAction();

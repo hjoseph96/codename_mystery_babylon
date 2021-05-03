@@ -55,6 +55,10 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
         _flowPlayer.startOn = (ArticyRef)chapterDialogue;
 
+    }
+
+    private void Start()
+    {
         _flowPlayer.Play();
     }
 

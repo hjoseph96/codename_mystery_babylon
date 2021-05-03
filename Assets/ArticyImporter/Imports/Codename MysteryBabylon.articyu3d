@@ -5,7 +5,7 @@
     "set_IncludedNodes": "Settings, Project, GlobalVariables, ObjectDefinitions, Packages, ScriptMethods, Hierarchy, Assets",
     "set_UseScriptSupport": "True",
     "ExportVersion": "1.2",
-    "ObjectDefinitionsHash": "0329FA4214F36AA79C1C051FB58B7675AA1738F8AD4B64276341FD55640878A9",
+    "ObjectDefinitionsHash": "6CC01CF6B9A9C33A738A748CE0588BB0D7EE807861559C06492CED0CF02D5683",
     "ScriptFragmentsHash": "0000000000"
   },
   "Project": {
@@ -240,6 +240,23 @@
           "Type": "LocationAnchorSize"
         }
       ]
+    },
+    {
+      "Type": "Species",
+      "Class": "Enum",
+      "DisplayName": "Species",
+      "Values": {
+        "Human": 0,
+        "DemonHost": 1,
+        "Demon": 2,
+        "Seraphim": 3
+      },
+      "DisplayNames": {
+        "Human": "Human",
+        "DemonHost": "DemonHost",
+        "Demon": "Demon",
+        "Seraphim": "Seraphim"
+      }
     },
     {
       "Type": "Sex",
@@ -843,11 +860,6 @@
                 "DisplayName": "Age"
               },
               {
-                "Property": "Species",
-                "Type": "string",
-                "DisplayName": "Species"
-              },
-              {
                 "Property": "BornIn",
                 "Type": "string",
                 "DisplayName": "Born in"
@@ -876,6 +888,11 @@
                 "Property": "Appearance",
                 "Type": "string",
                 "DisplayName": "Appearance"
+              },
+              {
+                "Property": "Species",
+                "Type": "Species",
+                "DisplayName": "Species"
               }
             ],
             "Constraints": [
@@ -888,14 +905,6 @@
                 "MinPrecision": "0",
                 "MaxPrecision": "0",
                 "Unit": null
-              },
-              {
-                "Property": "Species",
-                "Type": "Text",
-                "MaxLength": "2048",
-                "PlaceholderValue": "",
-                "IsLocalized": "True",
-                "AllowsLinebreaks": "False"
               },
               {
                 "Property": "BornIn",
@@ -942,6 +951,12 @@
                 "PlaceholderValue": "",
                 "IsLocalized": "True",
                 "AllowsLinebreaks": "True"
+              },
+              {
+                "Property": "Species",
+                "Type": "Enum",
+                "IsLocalized": "False",
+                "SortMode": "BySortIndex"
               }
             ]
           }
@@ -1052,11 +1067,6 @@
                 "DisplayName": "Age"
               },
               {
-                "Property": "Species",
-                "Type": "string",
-                "DisplayName": "Species"
-              },
-              {
                 "Property": "BornIn",
                 "Type": "string",
                 "DisplayName": "Born in"
@@ -1085,6 +1095,11 @@
                 "Property": "Appearance",
                 "Type": "string",
                 "DisplayName": "Appearance"
+              },
+              {
+                "Property": "Species",
+                "Type": "Species",
+                "DisplayName": "Species"
               }
             ],
             "Constraints": [
@@ -1097,14 +1112,6 @@
                 "MinPrecision": "0",
                 "MaxPrecision": "0",
                 "Unit": null
-              },
-              {
-                "Property": "Species",
-                "Type": "Text",
-                "MaxLength": "2048",
-                "PlaceholderValue": "",
-                "IsLocalized": "True",
-                "AllowsLinebreaks": "False"
               },
               {
                 "Property": "BornIn",
@@ -1151,6 +1158,133 @@
                 "PlaceholderValue": "",
                 "IsLocalized": "True",
                 "AllowsLinebreaks": "True"
+              },
+              {
+                "Property": "Species",
+                "Type": "Enum",
+                "IsLocalized": "False",
+                "SortMode": "BySortIndex"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "Type": "NonPlayableCharacterTemplate",
+      "Class": "Entity",
+      "InheritsFrom": "Entity",
+      "Template": {
+        "TechnicalName": "NonPlayableCharacterTemplate",
+        "DisplayName": "Non-Playable Characters",
+        "Features": [
+          {
+            "TechnicalName": "DefaultBasicCharacterFeature",
+            "DisplayName": "Basic Character Properties",
+            "Properties": [
+              {
+                "Property": "Age",
+                "Type": "Float",
+                "DisplayName": "Age"
+              },
+              {
+                "Property": "BornIn",
+                "Type": "string",
+                "DisplayName": "Born in"
+              },
+              {
+                "Property": "Sex",
+                "Type": "Sex",
+                "DisplayName": "Sex"
+              },
+              {
+                "Property": "Occupation",
+                "Type": "string",
+                "DisplayName": "Profession"
+              },
+              {
+                "Property": "Accent",
+                "Type": "string",
+                "DisplayName": "Voice"
+              },
+              {
+                "Property": "Personality",
+                "Type": "string",
+                "DisplayName": "Personality"
+              },
+              {
+                "Property": "Appearance",
+                "Type": "string",
+                "DisplayName": "Appearance"
+              },
+              {
+                "Property": "Species",
+                "Type": "Species",
+                "DisplayName": "Species"
+              }
+            ],
+            "Constraints": [
+              {
+                "Property": "Age",
+                "Type": "Number",
+                "MinValue": "-3.40282346638529E+38",
+                "MaxValue": "3.40282346638529E+38",
+                "Precision": "0",
+                "MinPrecision": "0",
+                "MaxPrecision": "0",
+                "Unit": null
+              },
+              {
+                "Property": "BornIn",
+                "Type": "Text",
+                "MaxLength": "2048",
+                "PlaceholderValue": "",
+                "IsLocalized": "True",
+                "AllowsLinebreaks": "False"
+              },
+              {
+                "Property": "Sex",
+                "Type": "Enum",
+                "IsLocalized": "True",
+                "SortMode": "BySortIndex"
+              },
+              {
+                "Property": "Occupation",
+                "Type": "Text",
+                "MaxLength": "2048",
+                "PlaceholderValue": "",
+                "IsLocalized": "True",
+                "AllowsLinebreaks": "False"
+              },
+              {
+                "Property": "Accent",
+                "Type": "Text",
+                "MaxLength": "2048",
+                "PlaceholderValue": "",
+                "IsLocalized": "True",
+                "AllowsLinebreaks": "False"
+              },
+              {
+                "Property": "Personality",
+                "Type": "Text",
+                "MaxLength": "2048",
+                "PlaceholderValue": "",
+                "IsLocalized": "True",
+                "AllowsLinebreaks": "True"
+              },
+              {
+                "Property": "Appearance",
+                "Type": "Text",
+                "MaxLength": "2048",
+                "PlaceholderValue": "",
+                "IsLocalized": "True",
+                "AllowsLinebreaks": "True"
+              },
+              {
+                "Property": "Species",
+                "Type": "Enum",
+                "IsLocalized": "False",
+                "SortMode": "BySortIndex"
               }
             ]
           }
@@ -2258,8 +2392,8 @@
             "Text": "",
             "ExternalId": "",
             "Position": {
-              "x": -2733.0,
-              "y": 575.0
+              "x": -2758.0,
+              "y": 500.0
             },
             "ZIndex": 0.0,
             "Size": {
@@ -2276,9 +2410,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x0100000000000157",
@@ -2305,6 +2439,108 @@
                     "Target": "0x0100000000000337"
                   }
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "Dialogue",
+          "Properties": {
+            "TechnicalName": "Dlg_C15084DA",
+            "Id": "0x0100000000000349",
+            "Parent": "0x0100000000000337",
+            "Attachments": [],
+            "DisplayName": "NPC Interactions",
+            "PreviewImage": {
+              "ViewBox": {
+                "x": 0.0,
+                "y": 0.0,
+                "w": 0.0,
+                "h": 0.0
+              },
+              "Mode": "FromAsset",
+              "Asset": "0x0000000000000000"
+            },
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "",
+            "ExternalId": "",
+            "Position": {
+              "x": -3208.0,
+              "y": 875.0
+            },
+            "ZIndex": 3.0,
+            "Size": {
+              "w": 291.0,
+              "h": 200.0
+            },
+            "ShortId": 3243279578,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000034C",
+                "Owner": "0x0100000000000349"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000034D",
+                "Owner": "0x0100000000000349"
+              }
+            ]
+          }
+        },
+        {
+          "Type": "Dialogue",
+          "Properties": {
+            "TechnicalName": "Dlg_F47B283B",
+            "Id": "0x01000000000003CE",
+            "Parent": "0x0100000000000349",
+            "Attachments": [],
+            "DisplayName": "Artur Speaks To Garrisoned Knight",
+            "PreviewImage": {
+              "ViewBox": {
+                "x": 0.0,
+                "y": 0.0,
+                "w": 0.0,
+                "h": 0.0
+              },
+              "Mode": "FromAsset",
+              "Asset": "0x0000000000000000"
+            },
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "",
+            "ExternalId": "",
+            "Position": {
+              "x": 217.0,
+              "y": 225.0
+            },
+            "ZIndex": 0.0,
+            "Size": {
+              "w": 291.0,
+              "h": 200.0
+            },
+            "ShortId": 4101711931,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003D1",
+                "Owner": "0x01000000000003CE"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003D2",
+                "Owner": "0x01000000000003CE"
               }
             ]
           }
@@ -4056,9 +4292,9 @@
                   {
                     "Color": {
                       "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
+                      "r": 0.577580452,
+                      "g": 0.7605245,
+                      "b": 0.7991027
                     },
                     "Label": "",
                     "TargetPin": "0x010000000000014E",
@@ -4070,11 +4306,768 @@
           }
         },
         {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_87569880",
+            "Id": "0x01000000000003D4",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x010000000000010F",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Excuse us, would you open the gate? We've got a prisoner to transport to the dungeon.",
+            "ExternalId": "",
+            "Position": {
+              "x": 300.0,
+              "y": 275.0
+            },
+            "ZIndex": 0.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2270599296,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003D7",
+                "Owner": "0x01000000000003D4"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003D8",
+                "Owner": "0x01000000000003D4",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000003E5",
+                    "Target": "0x01000000000003E2"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_00B50F95",
+            "Id": "0x01000000000003D9",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "State your business.",
+            "ExternalId": "",
+            "Position": {
+              "x": -25.0,
+              "y": 275.0
+            },
+            "ZIndex": 1.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 11866005,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003DC",
+                "Owner": "0x01000000000003D9"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003DD",
+                "Owner": "0x01000000000003D9",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000003D7",
+                    "Target": "0x01000000000003D4"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_437AB539",
+            "Id": "0x01000000000003E2",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "That lass, there? What a treat! What did she do?",
+            "ExternalId": "",
+            "Position": {
+              "x": 625.0,
+              "y": 275.0
+            },
+            "ZIndex": 3.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 1132115257,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003E5",
+                "Owner": "0x01000000000003E2"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003E6",
+                "Owner": "0x01000000000003E2",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000003ED",
+                    "Target": "0x01000000000003EA"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_EFB3AD82",
+            "Id": "0x01000000000003EA",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x010000000000010F",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "We caught her while patrolling the perimeter. She was behaving suspiciously.",
+            "ExternalId": "",
+            "Position": {
+              "x": 975.0,
+              "y": 275.0
+            },
+            "ZIndex": 5.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 4021529986,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003ED",
+                "Owner": "0x01000000000003EA"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003EE",
+                "Owner": "0x01000000000003EA",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000003F4",
+                    "Target": "0x01000000000003F1"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_77B98889",
+            "Id": "0x01000000000003F1",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x010000000000010F",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "She refuses to speak a word. Perhaps a night in the dungeons will loosen her tongue.",
+            "ExternalId": "",
+            "Position": {
+              "x": 1325.0,
+              "y": 275.0
+            },
+            "ZIndex": 7.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2008647817,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003F4",
+                "Owner": "0x01000000000003F1"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003F5",
+                "Owner": "0x01000000000003F1",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000003FB",
+                    "Target": "0x01000000000003F8"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_8A1F8472",
+            "Id": "0x01000000000003F8",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Is that so? Maybe I'll pay her a visit tonight...",
+            "ExternalId": "",
+            "Position": {
+              "x": 1675.0,
+              "y": 275.0
+            },
+            "ZIndex": 9.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2317321330,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003FB",
+                "Owner": "0x01000000000003F8"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000003FC",
+                "Owner": "0x01000000000003F8",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000402",
+                    "Target": "0x01000000000003FF"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_A15E7151",
+            "Id": "0x01000000000003FF",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "Clear",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Wouldn't you like that, little lady?",
+            "ExternalId": "",
+            "Position": {
+              "x": 2025.0,
+              "y": 275.0
+            },
+            "ZIndex": 11.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2707321169,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000402",
+                "Owner": "0x01000000000003FF"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000403",
+                "Owner": "0x01000000000003FF",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000409",
+                    "Target": "0x0100000000000406"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_4B167030",
+            "Id": "0x0100000000000406",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x010000000000012E",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "...",
+            "ExternalId": "",
+            "Position": {
+              "x": 2350.0,
+              "y": 275.0
+            },
+            "ZIndex": 13.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 1259761712,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000409",
+                "Owner": "0x0100000000000406"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000040A",
+                "Owner": "0x0100000000000406",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000410",
+                    "Target": "0x010000000000040D"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_01601693",
+            "Id": "0x010000000000040D",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "Clear",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "We'll loosen that tongue, yet.. Along with... other places.",
+            "ExternalId": "",
+            "Position": {
+              "x": 2675.0,
+              "y": 275.0
+            },
+            "ZIndex": 15.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 23074451,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000410",
+                "Owner": "0x010000000000040D"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000411",
+                "Owner": "0x010000000000040D",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000417",
+                    "Target": "0x0100000000000414"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_5CC67C68",
+            "Id": "0x0100000000000414",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Ahahaha!\n\r\n\r\n*ahem*",
+            "ExternalId": "",
+            "Position": {
+              "x": 3000.0,
+              "y": 275.0
+            },
+            "ZIndex": 17.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 1556511848,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000417",
+                "Owner": "0x0100000000000414"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000418",
+                "Owner": "0x0100000000000414",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000041E",
+                    "Target": "0x010000000000041B"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_D71FB1B5",
+            "Id": "0x010000000000041B",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "Clear, OpenFortGate",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Open the gates!",
+            "ExternalId": "",
+            "Position": {
+              "x": 3350.0,
+              "y": 275.0
+            },
+            "ZIndex": 19.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 3609178549,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000041E",
+                "Owner": "0x010000000000041B"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000041F",
+                "Owner": "0x010000000000041B",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000044C",
+                    "Target": "0x0100000000000449"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_C42B55BF",
+            "Id": "0x0100000000000457",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "Clear",
+            "Speaker": "0x010000000000010F",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "You did well to keep your anger hidden. Let's continue on, that one will face justice soon enough.",
+            "ExternalId": "",
+            "Position": {
+              "x": 4400.0,
+              "y": 275.0
+            },
+            "ZIndex": 25.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 3291174335,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000045A",
+                "Owner": "0x0100000000000457"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000045B",
+                "Owner": "0x0100000000000457"
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_01E61620",
+            "Id": "0x0100000000000449",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x010000000000012E",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "When battle breaks out... I'm killing that one first. I'll be sure he gets the slow, painful death he deserves.",
+            "ExternalId": "",
+            "Position": {
+              "x": 3700.0,
+              "y": 275.0
+            },
+            "ZIndex": 21.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 31856160,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000044C",
+                "Owner": "0x0100000000000449"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000044D",
+                "Owner": "0x0100000000000449",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000453",
+                    "Target": "0x0100000000000450"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_6F8E4D76",
+            "Id": "0x0100000000000450",
+            "Parent": "0x01000000000003CE",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x0100000000000127",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "What a loathsome man. Are these the \"gallant\" knights that the country worships?",
+            "ExternalId": "",
+            "Position": {
+              "x": 4050.0,
+              "y": 275.0
+            },
+            "ZIndex": 23.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 1871596918,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000453",
+                "Owner": "0x0100000000000450"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000454",
+                "Owner": "0x0100000000000450",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000045A",
+                    "Target": "0x0100000000000457"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
           "Type": "DefaultMainCharacterTemplate",
           "Properties": {
             "TechnicalName": "Ntt_69F2F93B",
             "Id": "0x010000000000010F",
-            "Parent": "0x03000000AC61A2B3",
+            "Parent": "0x01000000000003C6",
             "Attachments": [],
             "DisplayName": "Artur",
             "Color": {
@@ -4116,13 +5109,13 @@
             },
             "DefaultBasicCharacterFeature": {
               "Age": 33.0,
-              "Species": "Human",
               "BornIn": "",
               "Sex": 0,
               "Occupation": "Guild Leader & Swordsman",
               "Accent": "",
               "Personality": "",
-              "Appearance": ""
+              "Appearance": "",
+              "Species": 0
             }
           }
         },
@@ -4131,7 +5124,7 @@
           "Properties": {
             "TechnicalName": "Ntt_E56579A7",
             "Id": "0x0100000000000121",
-            "Parent": "0x03000000AC61A2B3",
+            "Parent": "0x01000000000003C6",
             "Attachments": [],
             "DisplayName": "Jacques",
             "Color": {
@@ -4173,13 +5166,13 @@
             },
             "DefaultBasicCharacterFeature": {
               "Age": 28.0,
-              "Species": "Human",
               "BornIn": "",
               "Sex": 0,
               "Occupation": "Swordsman",
               "Accent": "",
               "Personality": "",
-              "Appearance": ""
+              "Appearance": "",
+              "Species": 0
             }
           }
         },
@@ -4188,7 +5181,7 @@
           "Properties": {
             "TechnicalName": "Ntt_A349C16A",
             "Id": "0x0100000000000127",
-            "Parent": "0x03000000AC61A2B3",
+            "Parent": "0x01000000000003C6",
             "Attachments": [],
             "DisplayName": "Zenovia",
             "Color": {
@@ -4230,13 +5223,13 @@
             },
             "DefaultBasicCharacterFeature": {
               "Age": 27.0,
-              "Species": "Human",
               "BornIn": "",
               "Sex": 1,
               "Occupation": "Mage",
               "Accent": "",
               "Personality": "",
-              "Appearance": ""
+              "Appearance": "",
+              "Species": 0
             }
           }
         },
@@ -4245,7 +5238,7 @@
           "Properties": {
             "TechnicalName": "Ntt_1752BE1A",
             "Id": "0x010000000000012E",
-            "Parent": "0x03000000AC61A2B3",
+            "Parent": "0x01000000000003C6",
             "Attachments": [],
             "DisplayName": "Penelope",
             "Color": {
@@ -4287,13 +5280,62 @@
             },
             "DefaultBasicCharacterFeature": {
               "Age": 21.0,
-              "Species": "Human",
               "BornIn": "",
               "Sex": null,
               "Occupation": "Archer",
               "Accent": "",
               "Personality": "",
-              "Appearance": ""
+              "Appearance": "",
+              "Species": 0
+            }
+          }
+        },
+        {
+          "Type": "NonPlayableCharacterTemplate",
+          "Properties": {
+            "TechnicalName": "Ntt_8AD00639",
+            "Id": "0x01000000000003CA",
+            "Parent": "0x01000000000003C8",
+            "Attachments": [],
+            "DisplayName": "Garrisoned Knight",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "",
+            "ExternalId": "",
+            "Position": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "ZIndex": 0.0,
+            "Size": {
+              "w": 256.0,
+              "h": 196.0
+            },
+            "PreviewImage": {
+              "ViewBox": {
+                "x": 0.0,
+                "y": 0.0,
+                "w": 0.0,
+                "h": 0.0
+              },
+              "Mode": "FromAsset",
+              "Asset": "0x0000000000000000"
+            },
+            "ShortId": 2328888889
+          },
+          "Template": {
+            "DefaultBasicCharacterFeature": {
+              "Age": null,
+              "BornIn": "",
+              "Sex": 0,
+              "Occupation": "Garrisoned Knight",
+              "Accent": "",
+              "Personality": "",
+              "Appearance": "",
+              "Species": 0
             }
           }
         },
@@ -4503,6 +5545,28 @@
             "ExternalId": "",
             "ShortId": 730752239
           }
+        },
+        {
+          "Type": "UserFolder",
+          "Properties": {
+            "TechnicalName": "Ufo_6DC63AD5",
+            "Id": "0x01000000000003C6",
+            "Parent": "0x03000000AC61A2B3",
+            "DisplayName": "Playable Characters",
+            "ExternalId": "",
+            "ShortId": 1841707733
+          }
+        },
+        {
+          "Type": "UserFolder",
+          "Properties": {
+            "TechnicalName": "Ufo_2828903F",
+            "Id": "0x01000000000003C8",
+            "Parent": "0x03000000AC61A2B3",
+            "DisplayName": "Non-Playable Characters",
+            "ExternalId": "",
+            "ShortId": 673747007
+          }
         }
       ]
     }
@@ -4555,6 +5619,90 @@
             "TechnicalName": "Dlg_8EC4C13A",
             "Type": "Dialogue",
             "Children": [
+              {
+                "Id": "0x0100000000000349",
+                "TechnicalName": "Dlg_C15084DA",
+                "Type": "Dialogue",
+                "Children": [
+                  {
+                    "Id": "0x01000000000003CE",
+                    "TechnicalName": "Dlg_F47B283B",
+                    "Type": "Dialogue",
+                    "Children": [
+                      {
+                        "Id": "0x01000000000003D9",
+                        "TechnicalName": "DFr_00B50F95",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000003D4",
+                        "TechnicalName": "DFr_87569880",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000003E2",
+                        "TechnicalName": "DFr_437AB539",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000003EA",
+                        "TechnicalName": "DFr_EFB3AD82",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000003F1",
+                        "TechnicalName": "DFr_77B98889",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000003F8",
+                        "TechnicalName": "DFr_8A1F8472",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000003FF",
+                        "TechnicalName": "DFr_A15E7151",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000406",
+                        "TechnicalName": "DFr_4B167030",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x010000000000040D",
+                        "TechnicalName": "DFr_01601693",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000414",
+                        "TechnicalName": "DFr_5CC67C68",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x010000000000041B",
+                        "TechnicalName": "DFr_D71FB1B5",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000449",
+                        "TechnicalName": "DFr_01E61620",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000450",
+                        "TechnicalName": "DFr_6F8E4D76",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000457",
+                        "TechnicalName": "DFr_C42B55BF",
+                        "Type": "DialogueFragment"
+                      }
+                    ]
+                  }
+                ]
+              },
               {
                 "Id": "0x010000000000014A",
                 "TechnicalName": "Dlg_F63310E6",
@@ -4732,24 +5880,43 @@
         "Type": "Entities",
         "Children": [
           {
-            "Id": "0x010000000000010F",
-            "TechnicalName": "Ntt_69F2F93B",
-            "Type": "Entity"
+            "Id": "0x01000000000003C8",
+            "TechnicalName": "Ufo_2828903F",
+            "Type": "EntitiesUserFolder",
+            "Children": [
+              {
+                "Id": "0x01000000000003CA",
+                "TechnicalName": "Ntt_8AD00639",
+                "Type": "Entity"
+              }
+            ]
           },
           {
-            "Id": "0x0100000000000121",
-            "TechnicalName": "Ntt_E56579A7",
-            "Type": "Entity"
-          },
-          {
-            "Id": "0x010000000000012E",
-            "TechnicalName": "Ntt_1752BE1A",
-            "Type": "Entity"
-          },
-          {
-            "Id": "0x0100000000000127",
-            "TechnicalName": "Ntt_A349C16A",
-            "Type": "Entity"
+            "Id": "0x01000000000003C6",
+            "TechnicalName": "Ufo_6DC63AD5",
+            "Type": "EntitiesUserFolder",
+            "Children": [
+              {
+                "Id": "0x010000000000010F",
+                "TechnicalName": "Ntt_69F2F93B",
+                "Type": "Entity"
+              },
+              {
+                "Id": "0x0100000000000121",
+                "TechnicalName": "Ntt_E56579A7",
+                "Type": "Entity"
+              },
+              {
+                "Id": "0x010000000000012E",
+                "TechnicalName": "Ntt_1752BE1A",
+                "Type": "Entity"
+              },
+              {
+                "Id": "0x0100000000000127",
+                "TechnicalName": "Ntt_A349C16A",
+                "Type": "Entity"
+              }
+            ]
           }
         ]
       },
@@ -4865,6 +6032,11 @@
                   {
                     "Id": "0x0100000000000095",
                     "TechnicalName": "DefaultMainCharacterTemplate",
+                    "Type": "Template"
+                  },
+                  {
+                    "Id": "0x0100000000000350",
+                    "TechnicalName": "NonPlayableCharacterTemplate",
                     "Type": "Template"
                   },
                   {

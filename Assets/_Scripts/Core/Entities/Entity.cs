@@ -6,7 +6,9 @@ using Sirenix.OdinInspector;
 
 public enum EntityType
 {
-    PlayableCharacter
+    None,
+    PlayableCharacter,
+    NonPlayableCharacter
 }
 
 public class Entity : SerializedMonoBehaviour

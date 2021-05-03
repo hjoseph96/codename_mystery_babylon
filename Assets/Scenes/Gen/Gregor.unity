@@ -330,7 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfuStatus: PSXEffects v1.18 - update available (click to update).
   sections: 01010100
-  customRes: {x: 666, y: 376}
+  customRes: {x: 658, y: 536}
   resolutionFactor: 1
   limitFramerate: 65
   skipFrames: 0
@@ -359,6 +359,12 @@ MonoBehaviour:
   shadowType: 0
   ditherSky: 0
   ditherType: 1
+--- !u!95 &283002121 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6514562427830946121, guid: 9c8ad2ae2b6e8534aa52decdd5a93d90,
+    type: 3}
+  m_PrefabInstance: {fileID: 978882789}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &315930124 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1000014034792040, guid: 5fb524213fbbb4dd1855edc30ab92fcf,
@@ -381,7 +387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &838588732
 Transform:
   m_ObjectHideFlags: 0
@@ -562,7 +568,7 @@ PrefabInstance:
     - target: {fileID: 92728587705461214, guid: 9c8ad2ae2b6e8534aa52decdd5a93d90,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4046209391519170984, guid: 9c8ad2ae2b6e8534aa52decdd5a93d90,
         type: 3}
@@ -598,7 +604,7 @@ PrefabInstance:
     - target: {fileID: 7200507488002284038, guid: 9c8ad2ae2b6e8534aa52decdd5a93d90,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.28066683
+      value: 0.2806668
       objectReference: {fileID: 0}
     - target: {fileID: 7200507488002284038, guid: 9c8ad2ae2b6e8534aa52decdd5a93d90,
         type: 3}
@@ -637,12 +643,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9163166418615681363, guid: 5c36deca23f9b8f4fb80ce4559726aaf,
     type: 3}
   m_PrefabInstance: {fileID: 943860050}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1218175757 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3252387412068337307, guid: 66cf51760ead20f42a6637e2efaadeeb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1702771669}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1288040871
 GameObject:
@@ -972,6 +972,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zenovia
       objectReference: {fileID: 0}
+    - target: {fileID: 8109066920621540955, guid: 66cf51760ead20f42a6637e2efaadeeb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8917938470202432737, guid: 66cf51760ead20f42a6637e2efaadeeb,
         type: 3}
       propertyPath: m_RootOrder
@@ -1182,7 +1187,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758172454}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f1a568752144b439775b143c2b18c7, type: 3}
   m_Name: 
@@ -1218,9 +1223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1855745ef323d4fda8cc42a728ea55a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Zenovia
+  characterName: Sword Knight
   rootObject: {fileID: 2010964038}
-  animator: {fileID: 1218175757}
+  animator: {fileID: 283002121}
   maxDirection: 4
   rotateAxis: 1
   shadowType: 2
@@ -1580,7 +1585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AnimationName: Block Impact
   m_AnimationDuration: 1
-  m_AnimationFrameRate: 10
+  m_AnimationFrameRate: 13
   m_AnimationLoop: 1
   m_AnimationDirections: 1
 --- !u!114 &1758172478
@@ -1658,14 +1663,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758172454}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f1a568752144b439775b143c2b18c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_AnimationName: Death
   m_AnimationDuration: 1
-  m_AnimationFrameRate: 10
+  m_AnimationFrameRate: 13
   m_AnimationLoop: 0
   m_AnimationDirections: 1
 --- !u!4 &1952796751 stripped

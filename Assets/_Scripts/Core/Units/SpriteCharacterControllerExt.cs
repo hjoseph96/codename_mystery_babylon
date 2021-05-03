@@ -353,7 +353,7 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
         _OnPlayFootsteps.HandleEvent(animationEvent);
     }
 
-    private System.Action<AnimationEvent> PlayFootstepSound()
+    private Action<AnimationEvent> PlayFootstepSound()
     {
         return delegate (AnimationEvent animationEvent)
         {
@@ -366,6 +366,7 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
             _footstepController.PlaySound(walkingOnSurface);
         };
     }
+
     private void BeganJumping(AnimationEvent animationEvent)
     {
         _OnBeganJumping.SetFunctionName("BeganJumping");
