@@ -71,7 +71,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private int _experience;
     public int Experience => _experience;
     public static int MAX_EXP_AMOUNT = 100;
-
+    
+    [FoldoutGroup("Base Stats")]
     public bool IsLeader;
     // TODO: Leadership rank and influence radius
     
@@ -204,6 +205,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         Rotate(_startingLookDirection);
         _initialGridPosition =  new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
         
+
         PlayAnimation(_idleAnimation);
 
         _allInOneMat = GetComponent<Renderer>().material;
@@ -615,8 +617,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         var goal = path.Goal;
         WorldGrid.Instance[GridPosition].Unit = null;
-
-
 
         DirectionalAnimationSet moveAnimation = _walkAnimation;
         

@@ -10,6 +10,8 @@ public class EntityReference : SerializedMonoBehaviour
 
     [SerializeField] private EntityType _EntityType;
     [SerializeField, ShowIf("EntityTypeAssigned"), ValueDropdown("GetEntityNames")] private string _EntityName;
+    public string EntityName { get => _EntityName; }
+
     private bool EntityTypeAssigned() => _EntityType != EntityType.None;
     private List<string> GetEntityNames()
     {

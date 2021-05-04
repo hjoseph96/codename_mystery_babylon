@@ -17,10 +17,8 @@ GameObject:
   - component: {fileID: 5482592249530156540}
   - component: {fileID: 5482592249530156543}
   - component: {fileID: 5482592249530156531}
-  - component: {fileID: 5482592249530156539}
   - component: {fileID: 5482592249530156517}
   - component: {fileID: 5482592249530156516}
-  - component: {fileID: 5482592249530156518}
   m_Layer: 0
   m_Name: Artur
   m_TagString: Player
@@ -409,17 +407,17 @@ MonoBehaviour:
       Data: 
   _name: Artur
   UnitType: 1
-  _moveSpeed: 4.71
+  _walkSpeed: 4
+  _runSpeed: 4
   _moveAnimationSpeed: 1.81
   _startingLookDirection: 4
   Portrait: {fileID: 0}
   BattlerPrefab: {fileID: 2424102588716194449, guid: b504037b6402af94a85806f1ddb2d538,
     type: 3}
-  dirtFootsteps: 
-  grassFootsteps: 
-  rockFootsteps: 
   _idleAnimation: {fileID: 11400000, guid: 3be614b6e9c35734ea7b7f3ebafdf294, type: 2}
   _walkAnimation: {fileID: 11400000, guid: 8f7f112b7b4303845af27dfafe7569c5, type: 2}
+  _runAnimation: {fileID: 0}
+  _drinkPotionAnimation: {fileID: 0}
   _level: 21
   UnitClass: {fileID: 11400000, guid: d6118c49748cd544781428ad8d334805, type: 2}
   _experience: 0
@@ -488,8 +486,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Default: {fileID: 21300000, guid: 7d0ff0ee49c86f64384652c1eba36062, type: 3}
   ImageColor: {r: 0, g: 0, b: 0, a: 0}
-  _animationController: {fileID: 9100000, guid: ff35605b1cd793547abc3bb3b674b944,
-    type: 2}
 --- !u!95 &5482592249530156540
 Animator:
   serializedVersion: 3
@@ -559,22 +555,6 @@ MonoBehaviour:
     texture: {fileID: 0}
     sprite: {fileID: 0}
   applyToChildren: 0
---- !u!114 &5482592249530156539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5482592249530156530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0984195b07fd63c4ca55e4c78ce736c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Default: {fileID: 21300000, guid: 9c0f8a0b0f91c1f449af03830c99bce3, type: 3}
-  ImageColor: {r: 0, g: 0, b: 0, a: 0}
-  _animationController: {fileID: 9100000, guid: ff35605b1cd793547abc3bb3b674b944,
-    type: 2}
 --- !u!70 &5482592249530156517
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -612,15 +592,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5482592249530156518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5482592249530156530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9257da430cc7e4c4d8927b813f29a5e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

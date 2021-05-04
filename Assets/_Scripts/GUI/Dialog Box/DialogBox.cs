@@ -26,8 +26,13 @@ public class DialogBox : MonoBehaviour
 
     public Action OnDialogueDisplayComplete;
 
+    // For MapDialogue -- non animated Portrait dialogue
+    private EntityReference _speaker;
+    public EntityReference Speaker { get => _speaker; }
+
     private readonly List<string> _texts = new List<string>();
     private int _currentTextIndex;
+
     
     private void Start()
     {
@@ -85,20 +90,16 @@ public class DialogBox : MonoBehaviour
             _portraitSpawnPoint
         );
 
-        if (_orientation == Direction.Right)
-        {
-            var rectTransform   = newPortrait.GetComponent<RectTransform>();
-            
-            var flippedScale    = rectTransform.localScale;
-            flippedScale.x      = -1;
-
-            //rectTransform.localScale = flippedScale;
-        }
-
         _currentPortrait    = newPortrait;
         _name.text          = portrait.Name;
 
         UpdateListeners();
+    }
+
+    public void SetSpeaker(EntityReference entityReference)
+    {
+        _speaker = entityReference;
+        _name.text = entityReference.EntityName;
     }
 
     // Split text and store the result in _texts List

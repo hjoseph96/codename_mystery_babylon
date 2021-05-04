@@ -18,6 +18,7 @@ public class EntityManager : SerializedMonoBehaviour, IInitializable
 
     [OdinSerialize, ShowInInspector]
     public List<PlayableCharacter> PlayableCharacters { get; private set; }
+    [OdinSerialize, ShowInInspector]
     public List<NonPlayableCharacter> NonPlayableCharacters { get; private set; }
 
     public void Init()
