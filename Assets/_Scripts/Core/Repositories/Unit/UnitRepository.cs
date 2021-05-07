@@ -35,6 +35,7 @@ public class UnitData
 
     // TODO: Find out if there's a cleaner way to do nested JSON in C#...
     public Dictionary<string, Dictionary<string,int>> Stats = new Dictionary<string, Dictionary<string, int>>();
+    public List<StatusEffect> StatusEffects = new List<StatusEffect>();
     public Dictionary<string, string> WeaponProfiency       = new Dictionary<string, string>();
     public Dictionary<string, string> MagicProfiency        = new Dictionary<string, string>();
 
@@ -97,9 +98,11 @@ public class UnitData
                 var baseStatAndGrowthRate = new Dictionary<string, int>();
                 baseStatAndGrowthRate.Add("Base Value", entry.Value.RawValueInt);
                 baseStatAndGrowthRate.Add("Growth Rate", (int)entry.Value.GrowthRate);
-
+                
                 unitData.Stats.Add(entry.Key.ToString(), baseStatAndGrowthRate);
             }
+
+            unitData.SerializeItems(unit.Inventory.GetItems<Item>());
         }
         else
         {
@@ -112,6 +115,9 @@ public class UnitData
                 unitData.Stats.Add(entry.Key.ToString(), baseStatAndGrowthRate);
             }
         }
+
+        unitData.StatusEffects = unit.UnitClass.StatusEffects;
+        
 
         if (unit.WeaponProfiency.Count > 0)
             foreach (var entry in unit.WeaponProfiency)
@@ -128,7 +134,7 @@ public class UnitData
             foreach (var weaponType in unit.UnitClass.UsableMagic)
                 unitData.MagicProfiency.Add(weaponType.ToString(), WeaponRank.D.ToString());
 
-        unitData.SerializeItems(unit.Inventory.GetItems<Item>());
+        
 
         return unitData;
     }

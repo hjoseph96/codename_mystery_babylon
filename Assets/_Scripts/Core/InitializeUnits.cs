@@ -9,5 +9,8 @@ public class InitializeUnits : MonoBehaviour, IInitializable
             unit.Init();
             CampaignManager.Instance.AddUnit(unit);
         }
+
+        foreach (var unit in CampaignManager.Instance.AllUnits)
+            unit.ApplyAuras(unit.GridPosition);
     }
 }

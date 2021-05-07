@@ -20,6 +20,9 @@ public class BehaviorList : MonoBehaviour
     [FoldoutGroup("Heal Behaviors")]
     public List<AIBehavior> HealBehaviors;
 
+    [FoldoutGroup("Heal Allies Behaviors")]
+    public List<AIBehavior> HealAlliesBehaviors;
+
     [FoldoutGroup("Group Behaviors")]
     public List<AIBehavior> GroupBehaviors;
 
@@ -32,6 +35,7 @@ public class BehaviorList : MonoBehaviour
 
         // Ensure Correct AIBehaviors are in the correct list...
         ValidateActionList(HealBehaviors, AIActionType.Heal);
+        ValidateActionList(HealAlliesBehaviors, AIActionType.Heal);
         ValidateActionList(AttackBehaviors, AIActionType.Attack);
         ValidateActionList(DefendBehaviors, AIActionType.Defend);
         ValidateActionList(RetreatBehaviors, AIActionType.Retreat);

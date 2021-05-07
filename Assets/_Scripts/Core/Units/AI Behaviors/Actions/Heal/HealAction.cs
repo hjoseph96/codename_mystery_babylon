@@ -16,6 +16,9 @@ public class HealAction : BaseAction
     public override void Perform(IContext context)
     {
         Debug.Log("I AM CHOOSING TO HEAL");
-        AIAgent.TookAction();
+        var decisionData = context.GetContext<float>("Need To Heal");
+        string chosenStartegy = decisionData == 1 ? "HealAlly" : "HealSelf";
+
+        _healingStrategies[chosenStartegy].Execute();
     }
 }

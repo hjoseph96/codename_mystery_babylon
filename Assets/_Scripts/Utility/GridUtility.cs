@@ -112,12 +112,12 @@ public static class GridUtility
     };
 
     #endregion
-    
+
 
     static GridUtility()
     {
         AttackPositions = new Vector2Int[MaxAttackRange + 1][];
-        AttackPositions[0] = new [] { Vector2Int.zero };
+        AttackPositions[0] = new[] { Vector2Int.zero };
 
         for (var i = 1; i <= MaxAttackRange; i++)
         {
@@ -187,18 +187,18 @@ public static class GridUtility
 
             case StairsOrientation.None:
                 var leftHalfRightToLeftOffset = position + new Vector2Int(-1, 1);
-                
+
                 if (grid.PointInGrid(leftHalfRightToLeftOffset) && grid[leftHalfRightToLeftOffset].GetStairsOrientation(sortingLayerId) == StairsOrientation.RightToLeft)
                     return LeftHalfRightToLeftStairsNeighboursOffsets;
-                
+
                 var rightHalfRightToLeftOffset = position + new Vector2Int(1, -1);
                 if (grid.PointInGrid(rightHalfRightToLeftOffset) && grid[rightHalfRightToLeftOffset].GetStairsOrientation(sortingLayerId) == StairsOrientation.RightToLeft)
                     return RightHalfRightToLeftStairsNeighboursOffsets;
-                
-                var rightHalfLeftToRightOffset = position + new Vector2Int(1, 1); 
+
+                var rightHalfLeftToRightOffset = position + new Vector2Int(1, 1);
                 if (grid.PointInGrid(rightHalfLeftToRightOffset) && grid[rightHalfLeftToRightOffset].GetStairsOrientation(sortingLayerId) == StairsOrientation.LeftToRight)
                     return RightHalfLeftToRightStairsNeighboursOffsets;
-                
+
                 var leftHalfLeftToRightOffset = position + new Vector2Int(-1, -1);
                 if (grid.PointInGrid(leftHalfLeftToRightOffset) && grid[leftHalfLeftToRightOffset].GetStairsOrientation(sortingLayerId) == StairsOrientation.LeftToRight)
                     return LeftHalfLeftToRightStairsNeighboursOffsets;
@@ -252,7 +252,7 @@ public static class GridUtility
     {
         var cell = WorldGrid.Instance.Grid.WorldToCell(monoBehaviour.transform.position);
         monoBehaviour.transform.position = WorldGrid.Instance.Grid.GetCellCenterWorld(cell);
-        return (Vector2Int) cell;
+        return (Vector2Int)cell;
     }
 
     /// <summary>
@@ -293,7 +293,7 @@ public static class GridUtility
                 var currentPositionIsInGrid = _worldGrid.PointInGrid(currentPosition);
                 var neighborIsInGrid = _worldGrid.PointInGrid(neighbourPosition);
                 if (!currentPositionIsInGrid || !neighborIsInGrid)
-                   continue;
+                    continue;
 
 
                 // Check if can move
@@ -302,7 +302,7 @@ public static class GridUtility
 
                 // We can not pass through enemy units
                 var otherUnit = _worldGrid[neighbourPosition].Unit;
-                
+
                 if (otherUnit != null)
                     if (otherUnit.IsEnemy(unit) && !fullRadiusMode && !includeEnemy)
                         continue;
@@ -310,7 +310,7 @@ public static class GridUtility
                 var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unit);
                 var newCost = movementCost[currentPosition] + neighbourCost;
 
-                // If new cost if more than we can move
+                //// If new cost if more than we can move
                 if (newCost > movePoints)
                     continue;
 
@@ -319,8 +319,8 @@ public static class GridUtility
                 if (!GetDirection(currentPosition, neighbourPosition, false, true).IsCardinal())
                     if (!alreadyVisited)
                         isolatedCells.Add(neighbourPosition);
-                else
-                    isolatedCells.Remove(neighbourPosition);
+                    else
+                        isolatedCells.Remove(neighbourPosition);
 
                 // If new cost is more than old cost
                 if (alreadyVisited && newCost >= oldCost)
@@ -349,10 +349,101 @@ public static class GridUtility
         // Exclude isolated cells
         foreach (var cell in isolatedCells)
         {
-            if (!result.Contains(cell + Vector2Int.left)    &&
-                !result.Contains(cell + Vector2Int.right)   &&
-                !result.Contains(cell + Vector2Int.up)      &&
-                !result.Contains(cell + Vector2Int.down)    )
+            if (!result.Contains(cell + Vector2Int.left) &&
+                !result.Contains(cell + Vector2Int.right) &&
+                !result.Contains(cell + Vector2Int.up) &&
+                !result.Contains(cell + Vector2Int.down))
+            {
+                result.Remove(cell);
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Finds all grid cells than can be reached by unit
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <param name="movePoints">Available movement points. If to -1, unit's current movement points value will be used</param>
+    /// <returns></returns>
+    public static HashSet<Vector2Int> GetCellsInRadius(Vector2Int origin, int movePoints)
+    {
+
+        var start = origin;
+
+
+        var queue = new Queue<Vector2Int>();
+        var isolatedCells = new HashSet<Vector2Int>();
+        var movementCost = new Dictionary<Vector2Int, int>();
+
+        queue.Enqueue(start);
+        movementCost[start] = 0;
+
+        var _worldGrid = WorldGrid.Instance;
+
+        // We use breadth-first search to find all reachable cells
+        while (queue.Count > 0)
+        {
+            var currentPosition = queue.Dequeue();
+            var offsets = GetNeighboursOffsets(0, currentPosition);
+
+            for (var i = 0; i < offsets.Length; i++)
+            {
+                var offset = offsets[i];
+                var neighbourPosition = currentPosition + offset;
+
+                // Skip out of bounds cells
+                var currentPositionIsInGrid = _worldGrid.PointInGrid(currentPosition);
+                var neighborIsInGrid = _worldGrid.PointInGrid(neighbourPosition);
+                if (!currentPositionIsInGrid || !neighborIsInGrid)
+                    continue;
+
+
+                var neighbourCost = 1;
+                var newCost = movementCost[currentPosition] + neighbourCost;
+
+                //// If new cost if more than we can move
+                if (newCost > movePoints)
+                    continue;
+
+                // We maintain a list of potentially isolated cells. Isolated cell is a such cell than can only be reached diagonally
+                var alreadyVisited = movementCost.TryGetValue(neighbourPosition, out var oldCost);
+                if (!GetDirection(currentPosition, neighbourPosition, false, true).IsCardinal())
+                    if (!alreadyVisited)
+                        isolatedCells.Add(neighbourPosition);
+                    else
+                        isolatedCells.Remove(neighbourPosition);
+
+                // If new cost is more than old cost
+                if (alreadyVisited && newCost >= oldCost)
+                    continue;
+
+                movementCost[neighbourPosition] = newCost;
+
+                // Add cell to queue
+                if (!queue.Contains(neighbourPosition))
+                    queue.Enqueue(neighbourPosition);
+            }
+        }
+
+        // Access enumerator manually for performance reasons
+        var result = new HashSet<Vector2Int>();
+        var en = movementCost.GetEnumerator();
+        while (en.MoveNext())
+        {
+            var key = en.Current.Key;
+            result.Add(key);
+        }
+        en.Dispose();
+
+        // Exclude isolated cells
+        foreach (var cell in isolatedCells)
+        {
+            if (!result.Contains(cell + Vector2Int.left) &&
+                !result.Contains(cell + Vector2Int.right) &&
+                !result.Contains(cell + Vector2Int.up) &&
+                !result.Contains(cell + Vector2Int.down))
             {
                 result.Remove(cell);
             }
@@ -398,7 +489,7 @@ public static class GridUtility
                 var currentPositionIsInGrid = _worldGrid.PointInGrid(currentPosition);
                 var neighborIsInGrid = _worldGrid.PointInGrid(neighbourPosition);
                 if (!currentPositionIsInGrid || !neighborIsInGrid)
-                   continue;
+                    continue;
 
 
                 // Check if can move
@@ -544,13 +635,114 @@ public static class GridUtility
                 {
                     var position = cell + offset;
                     if (reachableCells.Contains(position) &&
-                        (WorldGrid.Instance[position].Unit == null || WorldGrid.Instance[position].Unit == unit) 
+                        (WorldGrid.Instance[position].Unit == null || WorldGrid.Instance[position].Unit == unit)
                         && HasLineOfSight(unit.SortingLayerId, position, cell))
                         return true;
                 }
             }
 
             return false;
+        }
+
+        return result;
+    }
+
+
+    public static HashSet<Vector2Int> GetCellsWithinMovementRange(Unit unit, int movePoints = -1, bool fullRadiusMode = false, bool includeEnemy = false)
+    {
+        if (movePoints == -1)
+            movePoints = unit.CurrentMovementPoints;
+
+        var start = unit.GridPosition;
+        var unitType = unit.UnitType;
+
+        var queue = new Queue<Vector2Int>();
+        var isolatedCells = new HashSet<Vector2Int>();
+        var movementCost = new Dictionary<Vector2Int, int>();
+
+        queue.Enqueue(start);
+        movementCost[start] = 0;
+
+        var _worldGrid = WorldGrid.Instance;
+
+        // We use breadth-first search to find all reachable cells
+        while (queue.Count > 0)
+        {
+            var currentPosition = queue.Dequeue();
+            var offsets = GetNeighboursOffsets(unit.SortingLayerId, currentPosition);
+
+            for (var i = 0; i < offsets.Length; i++)
+            {
+                var offset = offsets[i];
+                var neighbourPosition = currentPosition + offset;
+
+                // Skip out of bounds cells
+                var currentPositionIsInGrid = _worldGrid.PointInGrid(currentPosition);
+                var neighborIsInGrid = _worldGrid.PointInGrid(neighbourPosition);
+                if (!currentPositionIsInGrid || !neighborIsInGrid)
+                    continue;
+
+
+                // Check if can move
+                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unit) && !fullRadiusMode)
+                    continue;
+
+                // We can not pass through enemy units
+                //var otherUnit = _worldGrid[neighbourPosition].Unit;
+
+                //if (otherUnit != null)
+                //    if (otherUnit.IsEnemy(unit) && !fullRadiusMode && !includeEnemy)
+                //        continue;
+
+                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unit);
+                var newCost = movementCost[currentPosition] + neighbourCost;
+
+                // If new cost if more than we can move
+                if (newCost > movePoints)
+                    continue;
+
+                // We maintain a list of potentially isolated cells. Isolated cell is a such cell than can only be reached diagonally
+                var alreadyVisited = movementCost.TryGetValue(neighbourPosition, out var oldCost);
+                if (!GetDirection(currentPosition, neighbourPosition, false, true).IsCardinal())
+                    if (!alreadyVisited)
+                        isolatedCells.Add(neighbourPosition);
+                    else
+                        isolatedCells.Remove(neighbourPosition);
+
+                // If new cost is more than old cost
+                if (alreadyVisited && newCost >= oldCost)
+                    continue;
+
+                movementCost[neighbourPosition] = newCost;
+
+                // Add cell to queue
+                if (!queue.Contains(neighbourPosition))
+                    queue.Enqueue(neighbourPosition);
+            }
+        }
+
+        // Access enumerator manually for performance reasons
+        var result = new HashSet<Vector2Int>();
+        var en = movementCost.GetEnumerator();
+        while (en.MoveNext())
+        {
+            var key = en.Current.Key;
+            var currentUnit = WorldGrid.Instance[key].Unit;
+            if (currentUnit == null || currentUnit == unit)
+                result.Add(key);
+        }
+        en.Dispose();
+
+        // Exclude isolated cells
+        foreach (var cell in isolatedCells)
+        {
+            if (!result.Contains(cell + Vector2Int.left) &&
+                !result.Contains(cell + Vector2Int.right) &&
+                !result.Contains(cell + Vector2Int.up) &&
+                !result.Contains(cell + Vector2Int.down))
+            {
+                result.Remove(cell);
+            }
         }
 
         return result;
@@ -592,7 +784,7 @@ public static class GridUtility
             {
                 var path = RestorePath(start, currentPosition, cameFrom);
                 var travelCost = runningCost[currentPosition];
-                var gridPath =  new GridPath(path, travelCost);
+                var gridPath = new GridPath(path, travelCost);
                 return gridPath;
             }
 
@@ -603,7 +795,7 @@ public static class GridUtility
 
                 // Check if not out of bounds
                 if (!WorldGrid.Instance.PointInGrid(neighbourPosition))
-                   continue;
+                    continue;
 
 
                 // Check if cell free
@@ -686,7 +878,7 @@ public static class GridUtility
 
             // Do additional checks for diagonals
             if (prevPoint != null && prevPoint.Value.x != point.x && prevPoint.Value.y != point.y && // If direction from previous is diagonal
-                !validator(sortingLayerId, start, new Vector2Int(point.x, prevPoint.Value.y)) && 
+                !validator(sortingLayerId, start, new Vector2Int(point.x, prevPoint.Value.y)) &&
                 !validator(sortingLayerId, start, new Vector2Int(prevPoint.Value.x, point.y))) // If diagonal movement is blocked
             {
                 return false;

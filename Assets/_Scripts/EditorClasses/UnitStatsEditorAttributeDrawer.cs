@@ -22,7 +22,8 @@ public class UnitStatsEditorAttributeDrawer : OdinAttributeDrawer<UnitStatsAttri
         UnitStat.Resistance,
         UnitStat.Defense,
         UnitStat.Weight,
-        UnitStat.Constitution
+        UnitStat.Constitution,
+        UnitStat.Morale
     };
 
     // These stats will have GrowthRate field in Inspector
@@ -30,7 +31,8 @@ public class UnitStatsEditorAttributeDrawer : OdinAttributeDrawer<UnitStatsAttri
     {
         UnitStat.Movement,
         UnitStat.Weight,
-        UnitStat.Constitution
+        UnitStat.Constitution,
+        UnitStat.Morale
     };
 
     private readonly Dictionary<UnitStat, bool> _foldoutStates = new Dictionary<UnitStat, bool>();

@@ -8,6 +8,13 @@ public class PlayerUnit : Unit
 
     protected override List<Vector2Int> ThreatDetectionRange() => GridUtility.GetReachableCells(this, -1, true).ToList();
 
+    public override Vector2Int PreferredDestination { get => CampaignManager.Instance.PlayerDestination; }
+
+    public override void Init()
+    {
+        base.Init();
+    }
+
     public List<AIUnit> Enemies()
     {
         var enemies = new List<AIUnit>();
@@ -24,5 +31,10 @@ public class PlayerUnit : Unit
     }
 
     public List<AIUnit> Allies() => new List<AIUnit>(CampaignManager.Instance.AllyUnits());
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+    }
 
 }

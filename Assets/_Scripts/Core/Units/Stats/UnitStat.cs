@@ -10,5 +10,6 @@ public enum UnitStat
     Resistance,
     Defense,
     Weight,
-    Constitution
+    Constitution,
+    Morale
 }

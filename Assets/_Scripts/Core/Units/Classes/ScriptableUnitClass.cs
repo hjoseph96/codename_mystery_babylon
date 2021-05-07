@@ -50,7 +50,11 @@ public class ScriptableUnitClass : SerializedScriptableObject
     [Header("Usable Magic")]
     public List<MagicType> UsableMagic = new List<MagicType>();
 
-    #if UNITY_EDITOR
+    [FoldoutGroup("Status Effects")]
+    [SerializeField]
+    public List<StatusEffect> StatusEffects = new List<StatusEffect>();
+
+#if UNITY_EDITOR
     [Button("Save As JSON")]
     private void WriteToJSON() => UnitClassRepository.Write(this);
     #endif

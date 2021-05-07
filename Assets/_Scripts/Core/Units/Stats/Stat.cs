@@ -4,7 +4,12 @@ using System.Threading.Tasks;
 using Crosstales.TrueRandom;
 using UnityEngine;
 
-
+public enum StatCalculationMode
+{
+    FlatEffect,
+    Percentage,
+    DependOnOtherStat
+}
 public class Stat
 {
     public readonly string Name;
@@ -106,12 +111,15 @@ public class Stat
 public interface IEffect
 {
     int Priority { get; }
+    string OwnerName { get; set; }
     float Apply(Stat stat, float currentValue);
 }
+
 
 public abstract class EffectBase : IEffect
 {
     public int Priority { get; protected set; }
+    public string OwnerName { get; set; }
 
     public virtual float Apply(Stat stat, float currentValue)
     {
@@ -119,6 +127,7 @@ public abstract class EffectBase : IEffect
     }
 }
 
+[Serializable]
 public class FlatBonusEffect : EffectBase
 {
     private readonly float _bonusValue;
@@ -129,6 +138,12 @@ public class FlatBonusEffect : EffectBase
         _bonusValue = bonusValue;
     }
 
+    public FlatBonusEffect(StatusEffectArgs values)
+    {
+        Priority = 10;
+        _bonusValue = values.BonusValue;
+    }
+
     public override float Apply(Stat stat, float currentValue)
     {
         return currentValue + _bonusValue;
@@ -136,10 +151,11 @@ public class FlatBonusEffect : EffectBase
 
     public override string ToString()
     {
-        return "+" + _bonusValue;
+        return " From " + OwnerName + " +" + _bonusValue;
     }
 }
 
+[Serializable]
 public class PercentageBonusEffect : EffectBase
 {
     private readonly float _bonusValue;
@@ -150,6 +166,12 @@ public class PercentageBonusEffect : EffectBase
         _bonusValue = bonusValue;
     }
 
+    public PercentageBonusEffect(StatusEffectArgs values)
+    {
+        Priority = 20;
+        _bonusValue = values.BonusValue;
+    }
+
     public override float Apply(Stat stat, float currentValue)
     {
         return currentValue + stat.RawValue * _bonusValue;
@@ -157,29 +179,38 @@ public class PercentageBonusEffect : EffectBase
 
     public override string ToString()
     {
-        return "+" + _bonusValue * 100 + "% of RawValue";
+        return " From " + OwnerName + " +" + _bonusValue * 100 + "% of RawValue";
     }
 }
 
+[Serializable]
 public class DependOnOtherStatEffect : EffectBase
 {
-    private readonly Stat _otherStat;
+    private readonly UnitStat _otherStat;
     private readonly float _ratio;
 
-    public DependOnOtherStatEffect(Stat otherStat, float ratio)
+    public DependOnOtherStatEffect(UnitStat otherStat, float ratio)
     {
         Priority = 0;
         _otherStat = otherStat;
         _ratio = ratio;
     }
 
+    public DependOnOtherStatEffect(StatusEffectArgs values)
+    {
+        Priority = 0;
+        _otherStat = values.OtherStat;
+        _ratio = values.Ratio;
+    }
+
     public override float Apply(Stat stat, float currentValue)
     {
-        return currentValue + _otherStat.Value * _ratio;
+        return currentValue + stat.Value * _ratio;
     }
 
     public override string ToString()
     {
-        return "+" + _ratio * 100 + "% of " + _otherStat.Name;
+        return " From " + OwnerName + " +" + _ratio * 100 + "% of " + _otherStat.ToString();
     }
 }
+

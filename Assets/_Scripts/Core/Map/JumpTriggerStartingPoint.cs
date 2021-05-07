@@ -13,13 +13,25 @@ public class JumpTriggerStartingPoint : MonoBehaviour
         if (collision.tag == "Player")  // this may need to be refactored in the future to account for players following the controlled Player
         {
             var playerController = collision.GetComponent<SpriteCharacterControllerExt>();
-            _parentJumpTrigger.AllowJumping(playerController);
+            if (playerController != null && playerController.enabled)
+                _parentJumpTrigger.AllowJumping(playerController);
+
+            var unit = collision.GetComponent<Unit>();
+            if (unit != null && unit.enabled)
+            {
+                _parentJumpTrigger.AllowJumping(unit);
+                unit.AllowJumping(_parentJumpTrigger);
+            }    
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         _parentJumpTrigger.DisableJumping();
+
+        var unit = other.GetComponent<Unit>();
+        if (unit != null)
+            unit.DisableJumping();
     }
 
 }

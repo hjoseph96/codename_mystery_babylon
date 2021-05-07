@@ -22,6 +22,8 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
     //********************************************************************
 
     public AIGroupRole GroupRole;
+    public AIGroupTraits GroupTrait;
+    public AIGroupIntention GroupIntention;
     public AIGroupFormation GroupFormation;
     public AIGroupMovementMode MovementMode;
     public AIGroup CollaboratorGroup;
@@ -55,8 +57,9 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
             _targetCell = firstSightedEnemy.GridPosition;
             //SetFormation();
         }
-        
-        PreferredGroupPosition = new RelativePosition(Members.Select(m => m).Where(m => m.IsLeader).First(), Members.Select(m => m).Where(m => m.IsLeader).First().Enemies()[0].GridPosition);
+
+        var leader = Members.Select(m => m).Where(m => m.IsLeader).First();
+        PreferredGroupPosition = new RelativePosition(leader, leader.Enemies()[0].GridPosition);
         CurrentFormation = FormationsDB.Instance.Get(_formationNames[SelectedFormationIndex]);
 
         FlankGuards = new Dictionary<AIGroup, Vector2Int>();
@@ -204,12 +207,44 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
             for (int j = 0; j < CurrentFormation.Height; j++)
             {
                 if (CurrentFormation[i, j] != -1)
-                    gridPositions.Add(new Vector2Int(PreferredGroupPosition.Position.x + i - CurrentFormation.Pivot.x, PreferredGroupPosition.Position.y + j - CurrentFormation.Pivot.y));
+                {
+                    var rotatedPoints = RotateFormationToTarget(new Vector2Int(i, j), CurrentFormation.Pivot);
+                    var formationPos = new Vector2Int(PreferredGroupPosition.Position.x + rotatedPoints.x - CurrentFormation.Pivot.x
+                        , PreferredGroupPosition.Position.y + rotatedPoints.y - CurrentFormation.Pivot.y);
+
+                    gridPositions.Add(formationPos);
+                }
+
 
             }
         }
 
         return gridPositions;
+    }
+
+    private Vector2Int RotateFormationToTarget(Vector2Int point, Vector2Int pivot)
+    {
+        var dir = GetDirection();
+        Vector2Int newOffset = point - pivot;
+
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        {
+            if (Mathf.Sign(dir.x) > 0)
+                if (newOffset.x > 0)
+                    newOffset.x *= -1;
+                else
+                    newOffset.y *= -1;
+        }
+        else
+        {
+            newOffset.y *= -(int)Mathf.Sign(dir.y);
+            //if (Mathf.Sign(dir.y) > 0)
+            //    newOffset.y *= -1;
+            //else
+            //    newOffset.x *= -1;
+        }
+
+        return pivot + newOffset;
     }
 
     private void Init()

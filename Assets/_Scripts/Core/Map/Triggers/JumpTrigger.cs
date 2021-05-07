@@ -21,8 +21,10 @@ public class JumpTrigger : MonoBehaviour
 
 
     private Vector2 _startPosition;
+    public Vector2 StartPosition { get => _startPosition; }
+
     private Vector2 _endPosition;
-    public Vector2 Destination => _endPosition;
+    public Vector2 Destination { get => _endPosition; }
 
 
 
@@ -31,6 +33,7 @@ public class JumpTrigger : MonoBehaviour
 
     private bool _canJump;
     private SpriteCharacterControllerExt _playerController;
+    private Unit _unit;
 
     // Start is called before the first frame update
     private void Awake() 
@@ -44,15 +47,23 @@ public class JumpTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (_canJump)
+        if (_canJump && Input.GetKeyDown(KeyCode.Z))
         {
-            if (Input.GetKeyDown(KeyCode.Z))
+            ActionNoticeManager.Instance.HideNotice();
+
+            if (_playerController != null)
             {
-                ActionNoticeManager.Instance.HideNotice();
                 _playerController.transform.position = _startPosition;
                 _playerController.Jump(this);
-                MasterAudio.PlaySound3DFollowTransform(JumpSound, CampaignManager.AudioListenerTransform);
             }
+
+            if (_unit != null)
+            {
+                _unit.transform.position = _startPosition;
+                _unit.Jump();
+            }
+
+            MasterAudio.PlaySound3DFollowTransform(JumpSound, CampaignManager.AudioListenerTransform);
         }
     }
 
@@ -67,10 +78,20 @@ public class JumpTrigger : MonoBehaviour
         ActionNoticeManager.Instance.ShowNotice("To Jump");
         _canJump = true;
     }
+
+    public void AllowJumping(Unit unit)
+    {
+        _unit = unit;
+        _canJump = true;
+    }
+
     public void DisableJumping()
     {
+        _unit = null;
         _playerController = null;
+
         ActionNoticeManager.Instance.HideNotice();
+        
         _canJump = false;
     }
 

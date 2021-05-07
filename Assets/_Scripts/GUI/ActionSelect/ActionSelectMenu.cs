@@ -26,6 +26,7 @@ public class ActionSelectMenu : Menu
     private Sprite _normalSprite, _selectedSprite, _pressedSprite;
 
     private Unit _selectedUnit;
+    public Unit SelectedUnit { get => _selectedUnit; }
 
     private readonly List<ActionMenuOption> _options = new List<ActionMenuOption>();
     private int _selectedOptionIndex;
@@ -42,6 +43,9 @@ public class ActionSelectMenu : Menu
         // Attack Option
         if (_selectedUnit.CanAttack())
             AddOption<AttackOption>();
+
+        if (_selectedUnit.CanJump)
+            AddOption<JumpOption>();
 
         // Items Option
         AddOption<ItemsOption>();

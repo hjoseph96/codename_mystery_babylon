@@ -29,7 +29,7 @@ public class JumpController : MonoBehaviour
         if (OnBeginJump != null)
             OnBeginJump.Invoke();
 
-        _startedJumpTime = Time.time;
+        _startedJumpTime  = Time.time;
         _currentlyJumping = true;
     }
 
@@ -65,7 +65,7 @@ public class JumpController : MonoBehaviour
 
     private void MoveOnParabola()
     {
-        float duration = _reachedJumpApex ? _JumpDuration / 1.2f : _JumpDuration;
+        float duration      = _reachedJumpApex ? _JumpDuration / 1.2f : _JumpDuration;
 
         float t = (Time.time - _startedJumpTime) / duration;
         var parabolaTime    = Mathf.SmoothStep(0, 1, t);

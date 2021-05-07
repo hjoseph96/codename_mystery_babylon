@@ -111,7 +111,24 @@ public class WorldCell
 {
     public Vector2Int Position { get; }
     public int Height { get; set; }
-    public Unit Unit { get; set; }
+
+    public event Action<Unit, Vector2Int> OnEnterCell;
+    public event Action<Unit, Vector2Int> OnExitCell;
+
+    private Unit unit;
+    public Unit Unit
+    {
+        get { return unit; }
+        set
+        {
+            if (unit != null)
+                OnExitCell?.Invoke(unit, Position);
+
+            unit = value;
+            if (unit != null)
+                OnEnterCell?.Invoke(unit, Position);
+        }
+    }
 
     private readonly Dictionary<int, WorldCellTile> _tilesByLayer = new Dictionary<int, WorldCellTile>();
     private readonly Dictionary<int, WorldCellTile> _overrideTilesByLayer = new Dictionary<int, WorldCellTile>();

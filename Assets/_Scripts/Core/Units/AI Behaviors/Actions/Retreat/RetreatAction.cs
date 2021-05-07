@@ -18,7 +18,6 @@ public class RetreatAction : BaseAction
     {
         var canSeeAllies = AIAgent.AlliesWithinSight().Count > 0;
         if (canSeeAllies)
-            _retreatStrategies["BackToFormation"].Execute();
-        // _retreatStrategies["RetreatToFarthestAlly"].Execute();
+            _retreatStrategies["RetreatToFarthestAlly"].Execute();
     }
 }

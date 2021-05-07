@@ -46,6 +46,10 @@
     "Constitution": {
       "Base": 16,
       "Growth Rate": 0
+    },
+    "Morale": {
+      "Base": 0,
+      "Growth Rate": 0
     }
   },
   "MaxStats": {
@@ -59,7 +63,8 @@
     "Resistance": 9,
     "Defense": 17,
     "Weight": 29,
-    "Constitution": 37
+    "Constitution": 37,
+    "Morale": 0
   },
   "PromotedBonus": 1,
   "PromotionGains": {
@@ -76,6 +81,8 @@
     "Constitution": 0
   },
   "PromotionOptions": [],
-  "UsableWeapons": [],
+  "UsableWeapons": [
+    "Sword"
+  ],
   "UsableMagic": []
 }

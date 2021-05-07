@@ -10,6 +10,8 @@ public class AIUnit : Unit
     private DecisionFlex _decideAction;
 
     [FoldoutGroup("AI Properties")]
+    [SerializeField] AIUnitTrait _trait;
+    [FoldoutGroup("AI Properties")]
     [SerializeField] private int _visionRange = 21;
 
     [FoldoutGroup("AI Properties")]
@@ -36,9 +38,14 @@ public class AIUnit : Unit
     [ShowInInspector]
     public int positionInGroup;
 
+    public override Vector2Int PreferredDestination { get => group.PreferredGroupPosition.Position; }
+
     public override void Init()
     {
         base.Init();
+
+        TraitUtility.ApplyTrait(this, _trait);
+        gameObject.name += "_" + _trait.ToString();
 
         // Stats come from assigned Class for non-recruitable AIUnits
         // TODO: Autolevel and grow stats for AIUnits
@@ -133,6 +140,7 @@ public class AIUnit : Unit
         base.TookAction();
         _isTakingAction = false;
         _hasDecidedAction = false;
+
     }
 
 
@@ -161,6 +169,17 @@ public class AIUnit : Unit
         foreach (Unit ally in Allies())
             if (HasVision(ally.GridPosition))
                 allies.Add(ally);
+
+        return allies;
+    }
+
+    public List<T> ReachableAllies<T>() where T : Unit
+    {
+        var allies = new List<T>();
+
+        foreach (Unit ally in Allies())
+            if (ally != this && GridUtility.GetBoxDistance(FindClosestCellTo(ally.GridPosition), ally.GridPosition) <= 1)
+                allies.Add(ally as T);
 
         return allies;
     }
@@ -241,11 +260,34 @@ public class AIUnit : Unit
         return moveRange.ToList().Concat(attackableUnitPositions).ToList();
     }
 
-    public float NeedToHeal() => 1f - (float)CurrentHealth / MaxHealth;
+    public float NeedToHeal()
+    {
+        return 1f - (float)CurrentHealth / MaxHealth;
+    }
+
+    public float NeedToHealAlly()
+    {
+        float healAllyModifier = 1f;
+        float urgencyToHealAlly = 0;
+
+        if (_trait == AIUnitTrait.Medic)
+        {
+            var allyToHeal = ReachableAllies<AIUnit>().Select(ally => ally).Where(ally => ally)
+                .OrderByDescending(ally => ally.NeedToHeal()).FirstOrDefault();
+
+            healAllyModifier = allyToHeal != null ? 1.2f : 0;
+            urgencyToHealAlly = allyToHeal != null ? allyToHeal.NeedToHeal() * healAllyModifier : 0;
+        }
+
+        return urgencyToHealAlly;
+    }
+
 
     public float NeedToRetreat()
     {
-        float needToRetreat = Mathf.Clamp((ThreatLevel() - 0.2f) + NeedToHeal(), 0, 1f);
+        float moraleModifier = 2 - Morale / 100f;
+        float retreatScore = ((ThreatLevel() - 0.2f) + Mathf.Clamp01(NeedToHeal() * moraleModifier)) / 2;
+        float needToRetreat = Mathf.Clamp(retreatScore, 0, 1f);
         if (!IsArmed())
             needToRetreat = 1f;
 
@@ -254,8 +296,6 @@ public class AIUnit : Unit
 
     public float NeedToBeWithGroup()
     {
-        return 1f;
-
         var closestEnemy = EnemiesWithinSight()
             .OrderBy((enemy) => GridUtility.GetBoxDistance(GridPosition, enemy.GridPosition)).FirstOrDefault();
 
@@ -277,7 +317,7 @@ public class AIUnit : Unit
     }
 
     // Vision Range Scene Mode Visualizer
-    private void OnDrawGizmos()
+    protected override void OnDrawGizmos()
     {
         if (!Application.isPlaying)
             return;
@@ -295,6 +335,6 @@ public class AIUnit : Unit
             foreach (Vector2Int gridPosition in VisionRange())
                 Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)gridPosition), Vector3.one);
 
-
+       // base.OnDrawGizmos();
     }
 }

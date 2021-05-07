@@ -29,7 +29,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private float _runSpeed = 4f;
     public float RunSpeed { get => _runSpeed; }
 
-    [FoldoutGroup("Basic Properties")] 
+    [FoldoutGroup("Basic Properties")]
     [SerializeField] private float _moveAnimationSpeed = 1.75f;
     public float MoveAnimationSpeed { get => _moveAnimationSpeed; }
 
@@ -39,19 +39,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Basic Properties")]
     public Portrait Portrait;
 
-    [FoldoutGroup("Basic Properties")] 
+    [FoldoutGroup("Basic Properties")]
     public GameObject BattlerPrefab;
 
-    [FoldoutGroup("Basic Properties")]
-    [SerializeField] private float _JumpDuration = 1.6f;
-
-    private bool _canJump = false;
-    [FoldoutGroup("Basic Properties"), ShowInInspector]
-    public bool CanJump { get => _canJump; }
-
-    [FoldoutGroup("Animations")] 
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _idleAnimation;
-    
+
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _walkAnimation;
 
@@ -63,7 +56,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Jump;
-
+    
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _InAir;
     
@@ -87,11 +80,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private int _experience;
     public int Experience => _experience;
     public static int MAX_EXP_AMOUNT = 100;
-    
-    [FoldoutGroup("Base Stats")]
+
     public bool IsLeader;
     // TODO: Leadership rank and influence radius
-    
+
     [FoldoutGroup("Base Stats")]
     [UnitStats, OdinSerialize, HideIf("IsPlaying")]
     private Dictionary<UnitStat, EditorStat> _statsDictionary = new Dictionary<UnitStat, EditorStat>();
@@ -106,12 +98,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Stats"), ShowIf("IsPlaying"), PropertyOrder(1)]
     [UnitStats]
     public Dictionary<UnitStat, Stat> Stats;
-    
 
 
 
-    
-    
+
+
+
     [FoldoutGroup("Items")]
     [SerializeField] private ScriptableItem[] _startingItems;
 
@@ -136,15 +128,26 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     [FoldoutGroup("Game Status")]
     private Weapon _equippedWeapon;
-    
+
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public Weapon EquippedWeapon => _equippedWeapon; // TODO: Implement Gear. EquippedGear. one 1 Gear equipped per unit (ie. shield)
     public bool HasWeapon => EquippedWeapon != null;
 
     private Vector2Int _gridPosition;
     [FoldoutGroup("Game Status")]
-    [ShowInInspector] public Vector2Int GridPosition => _gridPosition;
+    [ShowInInspector]
+    public Vector2Int GridPosition
+    {
+        get { return _gridPosition; }
+        private set
+        {
 
+            _gridPosition = value;
+
+        }
+    }
+
+    public List<Vector2Int> CellsWithMyEffects;
 
     // Key == GridPosition && Value == _lookDirection
     private KeyValuePair<Vector2Int, Vector2> _initialGridPosition;
@@ -153,19 +156,28 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private bool _hasTakenAction;
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public bool HasTakenAction => _hasTakenAction; // Has the unit moved this turn?
-    
+
     protected int currentMovementPoints;
     [FoldoutGroup("Game Status")]
     [ShowInInspector] public int CurrentMovementPoints => currentMovementPoints;
 
-    #if UNITY_EDITOR
+    private bool _canJump = false;
+    [FoldoutGroup("Game Status")]
+    public bool CanJump { get => _canJump; }
+
+
+    public virtual Vector2Int PreferredDestination { get => GridPosition; }
+
+
+#if UNITY_EDITOR
     [Button("Save As JSON")]
     private void SerializeUnit() => UnitRepository.Write(this);
-    #endif
+#endif
 
     [HideInInspector] public Action OnFinishedMoving;
     [HideInInspector] public Action<Unit> UponDeath;
     [HideInInspector] public Action<Unit> UponLevelUp;
+    [HideInInspector] public Action UponJumpLanding;
 
 
     // Stat Convenience Methods
@@ -180,6 +192,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public int Constitution => Stats[UnitStat.Constitution].ValueInt;
     public int Speed        => Stats[UnitStat.Speed].ValueInt;
     public int MaxMoveRange => Stats[UnitStat.Movement].ValueInt;
+    public int Morale       => Stats[UnitStat.Morale].ValueInt;
+
+
 
 
     public bool IsLocalPlayerUnit => Player == Player.LocalPlayer;
@@ -195,8 +210,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private AnimancerComponent _animancer;
     private Vector2 _lookDirection;
 
-    private FootstepController  _footstepController;
-    private JumpController      _jumpController;
+    private FootstepController _footstepController;
+    private JumpController _jumpController;
+    private JumpTrigger _jumpTrigger;
 
     // Mecanim AnimationEvent Listeners
     private AnimationEventReceiver _OnPlayFootsteps;
@@ -206,13 +222,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private Material _allInOneMat;
     private static readonly int StencilRef = Shader.PropertyToID("_StencilRef");
 
-
     public virtual void Init()
     {
         _gridPosition = GridUtility.SnapToGrid(this);
         WorldGrid.Instance[GridPosition].Unit = this;
 
+
         _unitClass = UnitClass.GetUnitClass();
+        _unitClass.StatusEffects.ForEach((se) => { se.SetOwnerName(Name); });
+
         InitStats();
 
         _renderer           = GetComponent<Renderer>();
@@ -222,8 +240,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         Portrait            = GetComponent<Portrait>();
 
         Rotate(_startingLookDirection);
-        _initialGridPosition =  new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
-        
+        _initialGridPosition = new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
 
         PlayAnimation(_idleAnimation);
 
@@ -239,6 +256,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             EquipWeapon(weapons[0]);
 
         EnableSilhouette();
+
     }
 
     public void EnableSilhouette()
@@ -259,7 +277,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         // Copy base stats
         foreach (var stat in _statsDictionary.Keys)
         {
-            var value   = _statsDictionary[stat];
+            var value = _statsDictionary[stat];
             Stats[stat] = new Stat(stat.ToString(), value.Value, value.GrowthRate);
             //Stats[stat].AddEffect(new FlatBonusEffect(10));
             //Stats[stat].AddEffect(new PercentageBonusEffect(0.2f));
@@ -285,7 +303,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         // Move back to Start instantly
         this.transform.position = WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)InitialGridPosition.Key);
-        
+
         // Reset Original Look Direction
         LookAt(InitialGridPosition.Value);
         SetIdle();
@@ -300,28 +318,28 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public void LookAt(Vector2 position)
     {
-        _lookDirection = position - (Vector2) transform.position;
+        _lookDirection = position - (Vector2)transform.position;
     }
 
     public void Rotate(Direction direction)
     {
-        LookAt((Vector2) transform.position + direction.ToVector());
+        LookAt((Vector2)transform.position + direction.ToVector());
     }
 
     public void SetIdle() => PlayAnimation(_idleAnimation);
 
-    private void SetGridPosition(Vector2Int newGridPosition)
+    public void SetGridPosition(Vector2Int newGridPosition)
     {
         WorldGrid.Instance[GridPosition].Unit = null;
 
-        _gridPosition = newGridPosition;
+        GridPosition = newGridPosition;
         WorldGrid.Instance[GridPosition].Unit = this;
     }
 
     private void PlayAnimation(DirectionalAnimationSet animations, float speed = 1f)
     {
         var clip = animations.GetClip(_lookDirection);
-        
+
         var state = _animancer.Play(clip);
         state.Speed = speed;
 
@@ -329,10 +347,13 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             _OnPlayFootsteps.Set(state, PlayFootstepSound());
     }
 
-    public virtual void TookAction() 
+    public virtual void TookAction()
     {
         _hasTakenAction = true;
         SetInactiveShader();
+
+        RemoveAuras(InitialGridPosition.Key);
+        ApplyAuras(GridPosition);
     }
 
     public virtual void AllowAction()
@@ -341,7 +362,54 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         RemoveInactiveShader();
     }
 
-    private void SetInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");    
+    public void Jump()
+    {
+        AttachJumpEvents();
+
+        _jumpController.Jump(_jumpTrigger);
+    }
+
+    private void AttachJumpEvents()
+    {
+        _jumpController.OnBeginJump += delegate ()
+        {
+            PlayAnimation(_Jump);
+
+            _jumpController.OnBeginJump = null;
+        };
+
+        _jumpController.UponLanding += delegate ()
+        {
+            PlayAnimation(_Landing);
+
+            if (UponJumpLanding != null)
+                UponJumpLanding.Invoke();
+
+            _jumpController.UponLanding = null;
+        };
+
+        _jumpController.WhileInAir += delegate ()
+        {
+            PlayAnimation(_InAir);
+
+            _jumpController.WhileInAir = null;
+        };
+    }
+
+    public void AllowJumping(JumpTrigger jumpTrigger)
+    {
+        _jumpTrigger = jumpTrigger;
+        _canJump = true;
+    }
+
+    public void DisableJumping()
+    {
+        _jumpTrigger = null;
+        _canJump = false;
+    }
+
+
+    private void SetInactiveShader() => _allInOneMat.EnableKeyword("HSV_ON");
     private void RemoveInactiveShader() => _allInOneMat.DisableKeyword("HSV_ON");
 
     public bool CanWield(Weapon weapon)
@@ -368,7 +436,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public List<Weapon> WieldableWeapons()
     {
         var wieldableWeapons = new List<Weapon>();
-        
+
         foreach (Weapon inventoryWeapon in Inventory.GetItems<Weapon>())
             if (CanWield(inventoryWeapon))
                 wieldableWeapons.Add(inventoryWeapon);
@@ -379,7 +447,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public void EquipWeapon(Weapon weapon)
     {
         var availableWeapons = new List<Weapon>();
-        foreach(Weapon inventoryWeapon in Inventory.GetItems<Weapon>())
+        foreach (Weapon inventoryWeapon in Inventory.GetItems<Weapon>())
         {
             inventoryWeapon.CanWield = CanWield(inventoryWeapon);
             availableWeapons.Add(inventoryWeapon);
@@ -390,7 +458,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             UnequipWeapon();
             _equippedWeapon = weapon;
             weapon.IsEquipped = true;
-        } else 
+        }
+        else
             throw new Exception($"Provided Weapon: {weapon.Name} is not in Unit#{Name}'s Inventory...");
     }
 
@@ -422,7 +491,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             damageTaken = CurrentHealth;
             UponDeath.Invoke(this);
         }
-        
+
         currentHealth -= damageTaken;
     }
 
@@ -431,7 +500,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         int currentHealthAmount = CurrentHealth + amount;
         if (currentHealthAmount > MaxHealth)
             currentHealthAmount = MaxHealth;
-        
+
         currentHealth = currentHealthAmount;
     }
 
@@ -439,15 +508,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public void GainExperience(int amount)
     {
         int currentExpAmount = _experience + amount;
-        
+
         if (currentExpAmount > MAX_EXP_AMOUNT)
         {
             currentExpAmount -= MAX_EXP_AMOUNT;
-            
+
             if (UponLevelUp != null)
                 UponLevelUp.Invoke(this);
         }
-        
+
         _experience = currentExpAmount;
     }
 
@@ -460,20 +529,21 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var attackableCells = GridUtility.GetAttackableCells(this, immediatePositions, EquippedWeapon);
         if (attackableCells.Count > 0)
             canAttack = true;
-        
+
         return canAttack;
     }
 
-    public Dictionary<Weapon, List<Vector2Int>> AttackableWeapons(bool currentPositionOnly = true) 
+    public Dictionary<Weapon, List<Vector2Int>> AttackableWeapons(bool currentPositionOnly = true)
     {
         var attackableWeapons = new Dictionary<Weapon, List<Vector2Int>>();
-        
+
         var moveCost = -1;
         if (currentPositionOnly)
             moveCost = 0;
         var reachableCells = GridUtility.GetReachableCells(this, moveCost);
 
-        foreach(var weapon in Inventory.GetItems<Weapon>()) {
+        foreach (var weapon in Inventory.GetItems<Weapon>())
+        {
             var attackableCells = GridUtility.GetAttackableCells(this, reachableCells, weapon);
             if (attackableCells.Count > 0)
                 attackableWeapons[weapon] = attackableCells;
@@ -502,7 +572,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return allTradableCells;
     }
 
-    public List<Vector2Int> AllAttackableCells(bool currentPositionOnly = true) 
+    public List<Vector2Int> AllAttackableCells(bool currentPositionOnly = true)
     {
         var allAttackableCells = new List<Vector2Int>();
 
@@ -511,7 +581,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             moveCost = 0;
         var reachableCells = GridUtility.GetReachableCells(this, moveCost);
 
-        foreach(var weapon in Inventory.GetItems<Weapon>()) {
+        foreach (var weapon in Inventory.GetItems<Weapon>())
+        {
             var attackableCells = GridUtility.GetAttackableCells(this, reachableCells, weapon);
 
             if (attackableCells.Count > 0)
@@ -533,9 +604,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var reachableCells = GridUtility.GetReachableCells(this);
 
         var attackableCells = GridUtility.GetAttackableCells(this, reachableCells, EquippedWeapon);
-        
+
         if (attackableCells.Count > 0)
-            foreach(Vector2Int pos in attackableCells)
+            foreach (Vector2Int pos in attackableCells)
                 if (!attackableCellsByEquippedWeapon.Contains(pos))
                     attackableCellsByEquippedWeapon.Add(pos);
 
@@ -556,7 +627,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         // Set radius based on weapon range's max range
         var radius = EquippedWeapon.Stats[WeaponStat.MaxRange].ValueInt;
 
-        foreach(Vector2Int atkTarget in attackableCellsByEquippedWeapon)
+        foreach (Vector2Int atkTarget in attackableCellsByEquippedWeapon)
         {
             var reachableAttackPoints = GridUtility.GetReachableCellNeighbours(atkTarget, radius, this);
             foreach (Vector2Int potentialAttackPoint in reachableAttackPoints)
@@ -569,52 +640,22 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
 
         // order attack point lists by distance away, without linq
-        foreach(KeyValuePair<Vector2Int, List<Vector2Int>> entry in cellsToNavigateToForAnAttack)
-            entry.Value.Sort(delegate(Vector2Int atkPoint1, Vector2Int atkPoint2) {
+        foreach (KeyValuePair<Vector2Int, List<Vector2Int>> entry in cellsToNavigateToForAnAttack)
+            entry.Value.Sort(delegate (Vector2Int atkPoint1, Vector2Int atkPoint2)
+            {
                 var firstDistance = GridUtility.GetBoxDistance(this.GridPosition, atkPoint1);
                 var secondDistance = GridUtility.GetBoxDistance(this.GridPosition, atkPoint2);
-                
+
                 return firstDistance.CompareTo(secondDistance);
             });
 
         return cellsToNavigateToForAnAttack;
     }
 
-    public void Jump(JumpTrigger jumpTrigger)
-    {
-        AttachJumpEvents();
-
-        _jumpController.Jump(jumpTrigger);
-    }
-
-    private void AttachJumpEvents()
-    {
-        _jumpController.OnBeginJump += delegate ()
-        {
-            PlayAnimation(_Jump);
-
-            _jumpController.OnBeginJump = null;
-        };
-
-        _jumpController.UponLanding += delegate ()
-        {
-            PlayAnimation(_Landing);
-
-            _jumpController.UponLanding = null;
-        };
-
-        _jumpController.WhileInAir += delegate ()
-        {
-            PlayAnimation(_InAir);
-
-            _jumpController.WhileInAir = null;
-        };
-    }
-
 
     public bool CanAttack() => AttackableWeapons().Count > 0;
 
-    public bool CanAttack(Unit targetUnit) 
+    public bool CanAttack(Unit targetUnit)
     {
         var weaponsThatCanHit = AttackableWeapons();
 
@@ -654,7 +695,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             otherUnit.Inventory.MoveItem(theirItem, Inventory);
         }
         else
+        {
             throw new ArgumentException("Two empty slots provided or both items not found in inventories!");
+        }
     }
 
     public IEnumerator MovementCoroutine(GridPath path)
@@ -663,11 +706,16 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var nextPathPosition = transform.position;
         var reachedGoal = false;
 
+        var origin = GridPosition;
         var goal = path.Goal;
-        WorldGrid.Instance[GridPosition].Unit = null;
+
+
+        if (WorldGrid.Instance[GridPosition].Unit != null)
+            WorldGrid.Instance[GridPosition].Unit = null;
+
 
         DirectionalAnimationSet moveAnimation = _walkAnimation;
-        
+
         isMoving = true;
         while (!reachedGoal)
         {
@@ -684,7 +732,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
             if (!_animancer.IsPlaying(moveAnimation.GetClip(_lookDirection)))
                 PlayAnimation(moveAnimation, _moveAnimationSpeed);
-            
+
             while (speed > 0.0001f)
             {
                 speed = MoveTo(nextPathPosition, speed);
@@ -705,24 +753,30 @@ public class Unit : SerializedMonoBehaviour, IInitializable
                     else // End movement
                     {
                         reachedGoal = true;
+
                         break;
                     }
                 }
             }
 
             yield return new WaitForEndOfFrame();
-            
+
         }
 
         PlayAnimation(_idleAnimation);
 
-        _gridPosition = goal;
+        GridPosition = goal;
+
         WorldGrid.Instance[GridPosition].Unit = this;
 
         isMoving = false;
 
         if (OnFinishedMoving != null)
+        {
+
             OnFinishedMoving.Invoke();
+        }
+
     }
 
     private float MoveTo(Vector2 goal, float speed)
@@ -732,7 +786,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             return 0;
         }
 
-        var distance = (transform.position - (Vector3) goal).magnitude;
+        var distance = (transform.position - (Vector3)goal).magnitude;
         if (distance <= speed)
         {
             // Move to destination instantly
@@ -741,7 +795,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
         else
         {
-            var moveVector = ((Vector3) goal - transform.position).normalized * speed;
+            var moveVector = ((Vector3)goal - transform.position).normalized * speed;
             transform.Translate(moveVector);
             speed = 0;
         }
@@ -771,7 +825,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public int AttackSpeed(Weapon weapon)
     {
         int burden = 0;
-        
+
         // This way, it's 0 burden if I'm unarmed.
         if (weapon != null)
         {
@@ -781,7 +835,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             if (burden < 0)
                 burden = 0;
         }
-        
+
         return Stats[UnitStat.Speed].ValueInt - burden;
     }
 
@@ -847,10 +901,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, targetPosition);
         int weaponHitStat = weapon.Stats[WeaponStat.Hit].ValueInt;
 
-        int hitRate = (Skill * 2) + Luck  + weaponHitStat;
+        int hitRate = (Skill * 2) + Luck + weaponHitStat;
         if (boxDistance >= 2)
             hitRate -= 15;
-        
+
         hitRate = Mathf.Clamp(hitRate, 0, 100);
 
         return hitRate;
@@ -860,10 +914,13 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         int boxDistance = GridUtility.GetBoxDistance(this.GridPosition, target.GridPosition);
 
-        if (weapon.Type != WeaponType.Staff) {
+        if (weapon.Type != WeaponType.Staff)
+        {
             // TODO: Add weapon W△ Weapon triangle effects
             return HitRate(target.GridPosition, weapon) - target.DodgeChance(weapon);
-        } else {
+        }
+        else
+        {
             var accuracy = (Magic - Resistance) + Skill + 30 - (boxDistance * 2);
             accuracy = Mathf.Clamp(accuracy, 0, 100);
 
@@ -880,7 +937,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         {
             var unit = WorldGrid.Instance[gridPos].Unit;
             if (unit != null && IsEnemy(unit))
-            { 
+            {
                 int unitTeam = unit.Player.TeamId;
                 if (!unitsByTeam.Keys.Contains(unitTeam))
                     unitsByTeam[unitTeam] = new List<Unit>();
@@ -898,7 +955,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         List<Vector2Int> potentialAtkPoints = new List<Vector2Int>();
 
         var allThreateningUnits = ThreateningUnits().Values.SelectMany(x => x).ToList();
-        foreach(Unit unit in allThreateningUnits)
+        foreach (Unit unit in allThreateningUnits)
         {
             var atkPoints = unit.CellsWhereICanAttackFrom();
 
@@ -916,7 +973,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     protected List<Unit> ReachableAllies()
     {
         List<Unit> units = new List<Unit>();
-        var moveRange = GridUtility.GetReachableCells(this, -1, true);
+        var moveRange = GridUtility.GetReachableCells(this, -1);
 
         foreach (Vector2Int gridPos in moveRange)
         {
@@ -930,7 +987,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     protected List<int> ThreatOrder()
     {
-        switch(TeamId)
+        switch (TeamId)
         {
             case Team.LocalPlayerTeamId:
                 return new List<int>
@@ -971,7 +1028,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var allPotentialAtkPoints = PotentialAttackPoints();
 
         // Prioritize Units who will attack in the sooner phases
-        foreach(int teamId in ThreatOrder())
+        foreach (int teamId in ThreatOrder())
         {
             if (!potentialThreats.Keys.Contains(teamId))
                 continue;
@@ -995,7 +1052,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             });
 
             var unitsToAdd = Mathf.Min(threatsOnTeam.Count, allPotentialAtkPoints.Count - PotentialThreats.Count) - 1;
-            for(int i = 0; i < unitsToAdd; i++)
+            for (int i = 0; i < unitsToAdd; i++)
                 PotentialThreats.Add(threatsOnTeam[i]);
 
             if (PotentialThreats.Count == allPotentialAtkPoints.Count)
@@ -1013,16 +1070,94 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         foreach (Unit unit in PotentialThreats)
         {
-            var threateningWeapons  = unit.AttackableWeapons(false);
+            var threateningWeapons = unit.AttackableWeapons(false);
             var mostDangerousWeapon = threateningWeapons.Keys.First((weapon) => threateningWeapons[weapon].Contains(GridPosition) == true);
-            var attackPreview       = unit.PreviewAttack(this, mostDangerousWeapon);
-            var accuracyAsDecimal   = (float)attackPreview["ACCURACY"] / 100;
+            var attackPreview = unit.PreviewAttack(this, mostDangerousWeapon);
+            var accuracyAsDecimal = (float)attackPreview["ACCURACY"] / 100;
 
             threatLevel += (accuracyAsDecimal * (1 - (CurrentHealth - attackPreview["ATK_DMG"]) / CurrentHealth));
         }
 
         return Mathf.Clamp(threatLevel, 0, 1f);
     }
+
+    public virtual void ApplyAuras(Vector2Int origin)
+    {
+        var maxRadius = _unitClass.StatusEffects.Select(se => se)
+            .Where(se => se.Type == StatusEffectType.LeaderAura || se.Type == StatusEffectType.Aura).Max(se => se.Radius);
+
+        CellsWithMyEffects = GridUtility.GetCellsInRadius(GridPosition, maxRadius).ToList();
+        CellsWithMyEffects.Remove(origin);
+
+        foreach (var cell in CellsWithMyEffects)
+        {
+            WorldGrid.Instance[cell].OnEnterCell += ApplyEffect;
+            WorldGrid.Instance[cell].OnExitCell += RemoveEffect;
+
+            if (WorldGrid.Instance[cell].Unit != null)
+                ApplyEffect(WorldGrid.Instance[cell].Unit, WorldGrid.Instance[cell].Position);
+        }
+    }
+
+    protected virtual void RemoveAuras(Vector2Int origin)
+    {
+        var maxRadius = _unitClass.StatusEffects.Select(se => se)
+            .Where(se => se.Type == StatusEffectType.LeaderAura || se.Type == StatusEffectType.Aura).Max(se => se.Radius);
+
+        CellsWithMyEffects = GridUtility.GetCellsInRadius(GridPosition, maxRadius).ToList();
+        CellsWithMyEffects.Remove(origin);
+
+        foreach (var cell in CellsWithMyEffects)
+        {
+            WorldGrid.Instance[cell].OnEnterCell -= ApplyEffect;
+            WorldGrid.Instance[cell].OnExitCell -= RemoveEffect;
+
+            if (WorldGrid.Instance[cell].Unit != null)
+                RemoveEffect(WorldGrid.Instance[cell].Unit, WorldGrid.Instance[cell].Position);
+        }
+    }
+
+    private void ApplyEffect(Unit other, Vector2Int cell)
+    {
+        if (other == this)
+            return;
+
+        var auraEffects = _unitClass.StatusEffects.Select(se => se)
+            .Where(se => se.Type == StatusEffectType.LeaderAura || se.Type == StatusEffectType.Aura).ToList();
+
+        foreach (var aura in auraEffects)
+        {
+            bool inRadius = GridUtility.GetCellsInRadius(GridPosition, aura.Radius).ToList().Contains(cell);
+            bool canBeApplied = aura.Type == StatusEffectType.LeaderAura && IsLeader || aura.Type == StatusEffectType.Aura;
+            if (canBeApplied && inRadius && IsAlly(other) == aura.ToAlly)
+                aura.Add(other);
+        }
+
+        //other.morale += IsAlly(other)? .2f : -.2f;
+        Debug.Log(this.Name + "Is applying morale effect on" + other.Name);
+    }
+
+
+    private void RemoveEffect(Unit other, Vector2Int cell)
+    {
+        if (other == this)
+            return;
+
+        var auraEffects = _unitClass.StatusEffects.Select(se => se)
+            .Where(se => se.Type == StatusEffectType.LeaderAura || se.Type == StatusEffectType.Aura).ToList();
+
+        foreach (var aura in auraEffects)
+        {
+            bool inRadius = GridUtility.GetCellsInRadius(GridPosition, aura.Radius).ToList().Contains(cell);
+            if (inRadius)
+                aura.Remove(other);
+        }
+
+        //other.morale += IsAlly(other) ? -.2f : .2f;
+        Debug.Log(this.Name + "No longer apply morale effect on" + other.Name);
+    }
+
+
 
     protected virtual List<Vector2Int> ThreatDetectionRange() => throw new Exception("You haven't implemented ThreatLevel for me!");
 
@@ -1036,7 +1171,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _OnPlayFootsteps.HandleEvent(animationEvent);
     }
 
-    private Action<AnimationEvent> PlayFootstepSound()
+    private System.Action<AnimationEvent> PlayFootstepSound()
     {
         return delegate (AnimationEvent animationEvent)
         {
@@ -1048,5 +1183,26 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
             _footstepController.PlaySound(walkingOnSurface);
         };
+    }
+
+    private void CellsWithMyEffectsGizmos()
+    {
+        if (CellsWithMyEffects == null)
+            return;
+
+        var worldGrid = WorldGrid.Instance;
+        Gizmos.color = new Color(1, 1, 1, .5f);
+        foreach (var item in CellsWithMyEffects)
+        {
+            Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)item), Vector3.one);
+        }
+    }
+
+    protected virtual void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            CellsWithMyEffectsGizmos();
+        }
     }
 }

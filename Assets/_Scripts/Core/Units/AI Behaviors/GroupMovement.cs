@@ -10,7 +10,7 @@ public static class GroupMovement
         switch (group.GroupRole)
         {
             case AIGroupRole.Vanguard:
-                return Vanguard_Destination(group);
+                return new VanguardAIResolver().Resolve(group); //Vanguard_Destination(group);
             case AIGroupRole.Flank:
                 return Flank_Destination(group);
             default:

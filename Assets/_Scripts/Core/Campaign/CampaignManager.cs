@@ -265,7 +265,8 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             _gridCursor.SetActive(false);
         }
 
-        _phaseDisplay.Show(_phase);
+        callback();
+       // _phaseDisplay.Show(_phase);
     }
 
     private void NextTurn()
@@ -285,6 +286,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     {
         var players = PlayerUnits();
 
+        
         // We use unique display logic on the first turn. From then on, we'll display like this.
         Action phaseDisplayComplete = delegate ()
         {
@@ -302,7 +304,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         };
 
         if (Turn > 1 && !_phaseDisplay.IsDisplaying && !_beganPlayerPhase) {
-            _phaseDisplay.SetActive(true);
+           // _phaseDisplay.SetActive(true);
             DisplayPhase(phaseDisplayComplete);
         }
 
@@ -342,7 +344,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
             yield return new WaitUntil(() => movingAgent.HasTakenAction);
 
-            Debug.Log("Done");
+            
         }
     }
 
@@ -367,6 +369,8 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
                 
                 enemies.Sort((enemyOne, enemyTwo) => enemyOne.Speed.CompareTo(enemyTwo.Speed));
 
+
+           
                 List<AIUnit> aiAgents = new List<AIUnit>(enemies);
                 StartCoroutine(InitiateAction(aiAgents));
                 
@@ -390,32 +394,51 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         }
     }
 
-
-    private void UpdateGroupsPreferredPositions(List<AIUnit> agents)
-    {
-        var groups = AgentsAsGroups(agents);
-
-        foreach (var group in groups)
-            group.UpdatePreferredGroupPosition();
-    }
-
-    private List<AIGroup> AgentsAsGroups(List<AIUnit> enemies)
-    {
-        var groups = enemies.Select(enemy => enemy.group).Distinct().ToList();
-        groups.Sort();
-
-        return groups;
-    }
-
     private void ProcessOtherEnemyPhase()
     {
-        if (OtherEnemyUnits().Count > 0)
+        // Wait until phase display is done to begin AI behavior
+        Action phaseDisplayComplete = delegate ()
         {
-        }
-        else
-            _phase = TurnPhase.Ally;
+            _beganOtherEnemyPhase = true;
+        };
 
+        // If not already displayed and we havent started executing AI behavior
+        if (!_phaseDisplay.IsDisplaying && !_beganOtherEnemyPhase)
+            DisplayPhase(phaseDisplayComplete);
+
+        if (_beganOtherEnemyPhase)
+        {
+            var otherEnemies = OtherEnemyUnits();
+            if (otherEnemies.Count > 0)
+            {
+               otherEnemies.Sort((enemyOne, enemyTwo) => enemyOne.Speed.CompareTo(enemyTwo.Speed));
+
+                List<AIUnit> aiAgents = new List<AIUnit>(otherEnemies);
+                StartCoroutine(InitiateAction(aiAgents));
+
+                bool finishedMoving = otherEnemies.All(enemy => enemy.HasTakenAction);
+
+                if (finishedMoving)
+                {
+                    _phase = TurnPhase.Ally;
+                    _phaseDisplay.OnDisplayComplete -= phaseDisplayComplete;
+
+
+                    foreach (OtherEnemyUnit enemy in otherEnemies)
+                        enemy.AllowAction();
+                }
+
+            }
+            else if(GridScene.activeSelf)
+            {
+                _phase = TurnPhase.Ally;
+                _phaseDisplay.OnDisplayComplete -= phaseDisplayComplete;
+            }
+            
+        }
     }
+
+
     private void ProcessAllyPhase()
     {
         if (AllyUnits().Count > 0)
@@ -431,6 +454,22 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         }
         else
             NextTurn();
+    }
+
+    private void UpdateGroupsPreferredPositions(List<AIUnit> agents)
+    {
+        var groups = AgentsAsGroups(agents);
+
+        foreach (var group in groups)
+            group.UpdatePreferredGroupPosition();
+    }
+
+    private List<AIGroup> AgentsAsGroups(List<AIUnit> enemies)
+    {
+        var groups = enemies.Select(enemy => enemy.group).Distinct().ToList();
+        groups.Sort();
+
+        return groups;
     }
 
     public List<PlayerUnit> PlayerUnits()

@@ -9,12 +9,16 @@ public class AIGroupEditor : Editor
     
     AIGroup _target;
     SerializedProperty _groupRole;
+    SerializedProperty _groupTrait;
+    SerializedProperty _groupIntention;
     SerializedProperty _collaboratorGroup;
     
     void OnEnable()
     {
         _target = target as AIGroup;
         _groupRole = serializedObject.FindProperty("GroupRole");
+        _groupTrait = serializedObject.FindProperty("GroupTrait");
+        _groupIntention = serializedObject.FindProperty("GroupIntention");
         _collaboratorGroup = serializedObject.FindProperty("CollaboratorGroup");
         OnFormationDataChanged();
         FormationsDB.Instance.Formations.OnChanged += OnFormationDataChanged;
@@ -32,6 +36,8 @@ public class AIGroupEditor : Editor
 
         _target.SelectedFormationIndex = EditorGUILayout.Popup(new GUIContent("Formation", "The current formation of this enemy group"), _target.SelectedFormationIndex, _target._formationNames.ToArray());
         EditorGUILayout.PropertyField(_groupRole);
+        EditorGUILayout.PropertyField(_groupTrait);
+        EditorGUILayout.PropertyField(_groupIntention);
         EditorGUILayout.PropertyField(_collaboratorGroup);
         serializedObject.ApplyModifiedProperties();
     }

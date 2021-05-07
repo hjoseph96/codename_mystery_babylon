@@ -22930,9 +22930,38 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 7863030186549923548, guid: 8ac138568b74bc2459e8636de387c38d,
         type: 3}
+      propertyPath: _optionsPrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863030186549923548, guid: 8ac138568b74bc2459e8636de387c38d,
+        type: 3}
       propertyPath: _sourceTradingInventoryMenu
       value: 
       objectReference: {fileID: 2080989693}
+    - target: {fileID: 7863030186549923548, guid: 8ac138568b74bc2459e8636de387c38d,
+        type: 3}
+      propertyPath: _optionsPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 5399113919791678112, guid: fc5279f236316414e8e9ba81cd39b569,
+        type: 3}
+    - target: {fileID: 7863030186549923548, guid: 8ac138568b74bc2459e8636de387c38d,
+        type: 3}
+      propertyPath: _optionsPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 8179129294476274276, guid: f87b97d4451122a4c8fb7e0b315ae1f3,
+        type: 3}
+    - target: {fileID: 7863030186549923548, guid: 8ac138568b74bc2459e8636de387c38d,
+        type: 3}
+      propertyPath: _optionsPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 4412297447003418713, guid: 0ca41170164fd904caed2e7556508eed,
+        type: 3}
+    - target: {fileID: 7863030186549923548, guid: 8ac138568b74bc2459e8636de387c38d,
+        type: 3}
+      propertyPath: _optionsPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 5609667961778162477, guid: f6f2e4ae87d7df44fb3adeb16f7e9c62,
+        type: 3}
     - target: {fileID: 7863030186549923548, guid: 8ac138568b74bc2459e8636de387c38d,
         type: 3}
       propertyPath: _destinationTradingInventoryMenu
@@ -24412,6 +24441,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7173458307756626742, guid: d1bd33a89ade07949b59dc509ddcfac7,
         type: 3}
+    - target: {fileID: 7173458307756626742, guid: d1bd33a89ade07949b59dc509ddcfac7,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173458307756626742, guid: d1bd33a89ade07949b59dc509ddcfac7,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"turnColors","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":2,"$rcontent":[{"$id":1,"$type":"TurnPhase,
+        Assembly-CSharp",2},{"$id":2,"$type":"TurnPhase, Assembly-CSharp",2}]},"remove_keys":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173458307756626742, guid: d1bd33a89ade07949b59dc509ddcfac7,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"turnColors.{2es}","value":{"$id":0,"$type":"UnityEngine.Color,
+        UnityEngine.CoreModule",0.8117647,0.4,0.4745098,1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173458307756626742, guid: d1bd33a89ade07949b59dc509ddcfac7,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1bd33a89ade07949b59dc509ddcfac7, type: 3}
 --- !u!1001 &5875583990575037575
