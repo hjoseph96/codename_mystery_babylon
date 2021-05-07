@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("rot",["Function"],[["Rotate",,[["Horse",,,,0,"File:Core/Map/Animation/Horse.cs:Horse.Rotate","CSharpClass:Horse:Rotate"],["Unit",,,,0,"File:Core/Units/All_Units/Unit.cs:Unit.Rotate","CSharpClass:Unit:Rotate"]]]]);

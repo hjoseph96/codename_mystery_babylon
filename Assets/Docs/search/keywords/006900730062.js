@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("isb",["Property"],[["IsBroken",,[["Weapon",,,,0,"File:Core/Items/Weapon.cs:Weapon.IsBroken","CSharpClass:Weapon:IsBroken"]]]]);

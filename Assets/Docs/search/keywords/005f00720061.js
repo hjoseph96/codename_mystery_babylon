@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_ra",["Variable"],[["_range",,[["CellHighlighter",,,,0,"File:Core/Map/UI/CellHighlighter.cs:CellHighlighter._range","CSharpClass:CellHighlighter:_range"]]],["_ratio",,[["DependOnOtherStatEffect",,,,0,"File:Core/Units/Stats/Stat.cs:DependOnOtherStatEffect._ratio","CSharpClass:DependOnOtherStatEffect:_ratio"]]]]);

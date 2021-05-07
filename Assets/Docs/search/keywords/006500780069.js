@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("exi",["Function"],[["ExitRestrictedMode",,[["GridCursor",,,,0,"File:Core/Map/UI/GridCursor.cs:GridCursor.ExitRestrictedMode","CSharpClass:GridCursor:ExitRestrictedMode"]]]]);

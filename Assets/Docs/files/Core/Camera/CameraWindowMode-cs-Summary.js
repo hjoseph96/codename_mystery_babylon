@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:Core/Camera/CameraWindowMode.cs","CameraWindowMode.cs");NDSummary.OnSummaryLoaded("File:Core/Camera/CameraWindowMode.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1,0,1,"Types","Types"],[2,0,0,"CameraWindowMode","CameraWindowMode"]]);

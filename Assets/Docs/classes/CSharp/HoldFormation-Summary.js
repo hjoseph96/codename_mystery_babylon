@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:HoldFormation","HoldFormation");NDSummary.OnSummaryLoaded("CSharpClass:HoldFormation",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[1440,0,0,"HoldFormation"],[1441,0,2,"Functions","Functions"],[1442,0,1,"Execute","Execute"],[1443,0,1,"Update","Update"]]);

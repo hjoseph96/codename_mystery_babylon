@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("isu",["Variable"],[["IsUsable",,[["ScriptableWeapon",,,,0,"File:Core/Items/ScriptableWeapon.cs:ScriptableWeapon.IsUsable","CSharpClass:ScriptableWeapon:IsUsable"],["Weapon",,,,0,"File:Core/Items/Weapon.cs:Weapon.IsUsable","CSharpClass:Weapon:IsUsable"]]]]);

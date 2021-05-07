@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_wi",["Variable"],[["_width",,[["AIFormation",,,,0,"File:Core/Units/AI_Behaviors/AIFormation.cs:AIFormation._width","CSharpClass:AIFormation:_width"]]]]);

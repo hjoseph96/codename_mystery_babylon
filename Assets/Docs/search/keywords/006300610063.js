@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("cac",["Class"],[["CachedPositions",,[[,,,,0,"File:Core/Map/Animation/Carriage/CachedPositions.cs:CachedPositions","CSharpClass:CachedPositions"]]]]);

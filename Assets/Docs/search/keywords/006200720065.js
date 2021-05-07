@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("bre",["Function"],[["Break",,[["Weapon",,,,0,"File:Core/Items/Weapon.cs:Weapon.Break","CSharpClass:Weapon:Break"]]]]);

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_ga",["Variable"],[["_gainedExp",,[["CombatManager",,,,0,"File:Core/Campaign/CombatManager.cs:CombatManager._gainedExp","CSharpClass:CombatManager:_gainedExp"]]]]);

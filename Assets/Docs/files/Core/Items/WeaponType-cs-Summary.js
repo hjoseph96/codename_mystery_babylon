@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:Core/Items/WeaponType.cs","WeaponType.cs");NDSummary.OnSummaryLoaded("File:Core/Items/WeaponType.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[467,0,1,"Types","Types"],[468,0,0,"WeaponType","WeaponType"]]);

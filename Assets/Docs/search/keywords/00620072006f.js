@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("bro",["Variable"],[["BrokenStats",,[["WeaponData",,,,0,"File:Core/Repositories/Items/ItemData.cs:WeaponData.BrokenStats","CSharpClass:WeaponData:BrokenStats"]]],["BrokenValue",,[["EditorWeaponStat",,,,0,"File:EditorClasses/EditorWeaponStat.cs:EditorWeaponStat.BrokenValue","CSharpClass:EditorWeaponStat:BrokenValue"]]]]);

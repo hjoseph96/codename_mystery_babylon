@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("sto",["Function"],[["StopBlinking",,[["EyeController",,,,0,"File:GUI/Portraits/EyeController.cs:EyeController.StopBlinking","CSharpClass:EyeController:StopBlinking"]]],["StopFollow",,[["ParabolaController",,,,0,"File:Utility/ParabolaController.cs:ParabolaController.StopFollow","CSharpClass:ParabolaController:StopFollow"]]]]);

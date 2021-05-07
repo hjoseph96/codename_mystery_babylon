@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:Portrait","Portrait");NDSummary.OnSummaryLoaded("CSharpClass:Portrait",[["C#","CSharp"]],[["Classes","Class"],["Groups","Group"],["Variables","Variable"]],[[2552,0,0,"Portrait"],[2553,0,1,"Variables","Variables"],[2554,0,2,"Default","Default"],[2555,0,2,"ImageColor","ImageColor"]]);

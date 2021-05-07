@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_ui",["Variable"],[["_uiCamera",,[["StartScreen",,,,0,"File:GUI/Start_Screen/StartScreen.cs:StartScreen._uiCamera","CSharpClass:StartScreen:_uiCamera"]]]]);

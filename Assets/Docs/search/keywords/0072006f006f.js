@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("roo",["Class"],[["RoomTransition",,[[,,,,0,"File:Core/Map/Transitions/RoomTransition.cs:RoomTransition","CSharpClass:RoomTransition"]]]]);

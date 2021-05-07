@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("isn",["Function"],[["IsNotHighlightedStairsTile",,[["CellHighlighter",,,,0,"File:Core/Map/UI/CellHighlighter.cs:CellHighlighter.IsNotHighlightedStairsTile","CSharpClass:CellHighlighter:IsNotHighlightedStairsTile"]]]]);

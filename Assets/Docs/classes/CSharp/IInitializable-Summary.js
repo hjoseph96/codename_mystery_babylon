@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:IInitializable","IInitializable");NDSummary.OnSummaryLoaded("CSharpClass:IInitializable",[["C#","CSharp"]],[["Functions","Function"],["Groups","Group"],["Interfaces","Interface"]],[[2138,0,2,"IInitializable"],[2139,0,1,"Functions","Functions"],[2140,0,0,"Init","Init"]]);

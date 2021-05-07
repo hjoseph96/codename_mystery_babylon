@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("wie",["Function"],[["WieldableWeapons",,[["Unit",,,,0,"File:Core/Units/All_Units/Unit.cs:Unit.WieldableWeapons","CSharpClass:Unit:WieldableWeapons"]]]]);

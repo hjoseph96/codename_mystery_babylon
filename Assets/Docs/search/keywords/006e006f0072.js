@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("nor",["Function","Class"],[["NormalAttackAnims",,[["Battler",,,,0,"File:Core/Units/Battlers/Battler.cs:Battler.NormalAttackAnims","CSharpClass:Battler:NormalAttackAnims"]]],["NormalHealEffect",,[[,,,,1,"File:Effects/NormalHealEffect.cs:NormalHealEffect","CSharpClass:NormalHealEffect"]]]]);

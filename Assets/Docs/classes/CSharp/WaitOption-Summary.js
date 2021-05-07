@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:WaitOption","WaitOption");NDSummary.OnSummaryLoaded("CSharpClass:WaitOption",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2285,0,0,"WaitOption"],[2286,0,2,"Functions","Functions"],[2287,0,1,"Execute","Execute"]]);

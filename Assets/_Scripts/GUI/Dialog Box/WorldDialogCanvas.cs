@@ -23,6 +23,8 @@ public class WorldDialogCanvas : CanvasManager
     private List<DialogBox> _shownDialogBoxes = new List<DialogBox>();
     public List<DialogBox> ShownDialogBoxes { get => _shownDialogBoxes; }
 
+    public bool IsTyping => _shownDialogBoxes.Any((dialogBox) => dialogBox.IsTyping);
+
 
     private bool _isShowing = false;
     public bool IsShowing { get => _isShowing; }
@@ -32,14 +34,6 @@ public class WorldDialogCanvas : CanvasManager
     {
         _canvas = GetComponent<Canvas>();
         DialogueManager.Instance.SetWorldCanvas(this);
-    }
-
-    public void Show(DialogueFragment dialogueFragment)
-    {
-        var textToDisplay = dialogueFragment.Text;
-
-
-        
     }
 
 

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("roc",["Variable"],[["rockFootsteps",,[["FootstepController",,,,0,"File:Core/Character_Controllers/FootstepController.cs:FootstepController.rockFootsteps","CSharpClass:FootstepController:rockFootsteps"]]]]);

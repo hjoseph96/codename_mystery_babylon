@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("cor",["Enumeration"],[["CornerCuttingMode",,[[,,,,0,"File:Core/Map/UI/CornerCuttingMode.cs:CornerCuttingMode"]]]]);

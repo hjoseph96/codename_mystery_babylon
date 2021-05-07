@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:Core/Items/ItemType.cs","ItemType.cs");NDSummary.OnSummaryLoaded("File:Core/Items/ItemType.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[624,0,1,"Types","Types"],[625,0,0,"ItemType","ItemType"]]);

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("exa",["Class"],[["ExampleObservable",,[[,,,,0,"File:UnityObservables/Example/ExampleObservable.cs:ExampleObservable","CSharpClass:ExampleObservable"]]]]);

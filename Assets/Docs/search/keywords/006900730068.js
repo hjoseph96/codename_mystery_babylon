@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ish",["Function"],[["IsHorizontal",,[["DirectionExtensions",,,,0,"File:Utility/DirectionExtensions.cs:DirectionExtensions.IsHorizontal","CSharpClass:DirectionExtensions:IsHorizontal"]]]]);

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("acc",["Function"],[["Accuracy",,[["Unit",,,,0,"File:Core/Units/All_Units/Unit.cs:Unit.Accuracy","CSharpClass:Unit:Accuracy"]]]]);

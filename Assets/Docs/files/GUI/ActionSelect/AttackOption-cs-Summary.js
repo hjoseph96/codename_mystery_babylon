@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:GUI/ActionSelect/AttackOption.cs","AttackOption.cs");NDSummary.OnSummaryLoaded("File:GUI/ActionSelect/AttackOption.cs",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2303,0,0,"AttackOption","AttackOption"],[2304,0,2,"Functions","AttackOption.Functions"],[2305,0,1,"Execute","AttackOption.Execute"]]);

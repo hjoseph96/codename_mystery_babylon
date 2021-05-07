@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("tal",["Function"],[["Talk",,[["AnimatedPortrait",,,,0,"File:GUI/Portraits/AnimatedPortrait.cs:AnimatedPortrait.Talk","CSharpClass:AnimatedPortrait:Talk"]]]]);

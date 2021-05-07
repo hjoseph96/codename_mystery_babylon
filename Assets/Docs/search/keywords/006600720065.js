@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("fre",["Function"],[["FreezeInput",,[["SpriteCharacterControllerExt",,,,0,"File:Core/Character_Controllers/SpriteCharacterControllerExt.cs:SpriteCharacterControllerExt.FreezeInput","CSharpClass:SpriteCharacterControllerExt:FreezeInput"]]]]);

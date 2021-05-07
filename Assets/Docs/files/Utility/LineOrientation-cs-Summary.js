@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:Utility/LineOrientation.cs","LineOrientation.cs");NDSummary.OnSummaryLoaded("File:Utility/LineOrientation.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[3435,0,1,"Types","Types"],[3436,0,0,"LineOrientation","LineOrientation"]]);

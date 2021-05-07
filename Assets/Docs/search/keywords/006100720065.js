@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("are",["Variable"],[["areaEffectWaitTime",,[["MagicEffect",,,,0,"File:Core/Units/Battlers/Magic_Users/MagicEffect.cs:MagicEffect.areaEffectWaitTime","CSharpClass:MagicEffect:areaEffectWaitTime"]]]]);

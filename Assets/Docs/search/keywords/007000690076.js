@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("piv",["Variable"],[["Pivot",,[["AIFormation",,,,0,"File:Core/Units/AI_Behaviors/AIFormation.cs:AIFormation.Pivot","CSharpClass:AIFormation:Pivot"]]]]);

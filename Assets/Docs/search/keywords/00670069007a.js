@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("giz",["Variable"],[["gizmo",,[["ParabolaController",,,,0,"File:Utility/ParabolaController.cs:ParabolaController.gizmo","CSharpClass:ParabolaController:gizmo"]]]]);

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("fac",["Property","Variable"],[["Facing",,[["Horse",,,,0,"File:Core/Map/Animation/Horse.cs:Horse.Facing","CSharpClass:Horse:Facing"]]],["FacingToDirection",,[["DirectionUtility",,,,1,"File:Utility/DirectionUtility.cs:DirectionUtility.FacingToDirection","CSharpClass:DirectionUtility:FacingToDirection"]]]]);

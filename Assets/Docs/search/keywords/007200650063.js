@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("rec",["Function","Property"],[["ReceiveDamage",,[["Battler",,,,0,"File:Core/Units/Battlers/Battler.cs:Battler.ReceiveDamage","CSharpClass:Battler:ReceiveDamage"]]],["RectTransform",,[["UICursor",,,,1,"File:GUI/UICursor.cs:UICursor.RectTransform","CSharpClass:UICursor:RectTransform"]]]]);

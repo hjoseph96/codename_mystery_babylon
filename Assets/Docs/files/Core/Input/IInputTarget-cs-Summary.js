@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:Core/Input/IInputTarget.cs","IInputTarget.cs");NDSummary.OnSummaryLoaded("File:Core/Input/IInputTarget.cs",[["C#","CSharp"]],[["Functions","Function"],["Groups","Group"],["Interfaces","Interface"]],[[387,0,2,"IInputTarget","IInputTarget"],[388,0,1,"Functions","IInputTarget.Functions"],[389,0,0,"ProcessInput","IInputTarget.ProcessInput"]]);

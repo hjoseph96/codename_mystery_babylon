@@ -11,11 +11,15 @@ public class MapDialogue : SerializedMonoBehaviour
     private List<EntityReference> _Participants;
     public List<EntityReference> Participants { get => _Participants; }
 
+    [HideInInspector]
+    public System.Action<GameObject> OnDialogueBegin;
+
 
     private ArticyReference _articyReference;
     private ArticyRef _articyRef;
     private bool _hasStarted        = false;
     private bool _isWithinTrigger   = false;
+    private GameObject _player;
 
     // Start is called before the first frame update
     void Start()
@@ -24,23 +28,28 @@ public class MapDialogue : SerializedMonoBehaviour
         _articyRef = (ArticyRef)_articyReference.GetObject<ArticyObject>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-           ActionNoticeManager.Instance.ShowNotice("To Talk");
-            _isWithinTrigger = true;
-        }
-        
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z) && !_hasStarted && _isWithinTrigger)
         {
             StartDialogue();
             ActionNoticeManager.Instance.HideNotice();
+
+            if (OnDialogueBegin != null)
+                OnDialogueBegin.Invoke(_player);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+           ActionNoticeManager.Instance.ShowNotice("To Talk");
+            _isWithinTrigger = true;
+
+            _player = other.gameObject;
+        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -48,9 +57,12 @@ public class MapDialogue : SerializedMonoBehaviour
         if (collision.tag == "Player")
         {
             ActionNoticeManager.Instance.HideNotice();
-            _isWithinTrigger = true;
+            _isWithinTrigger = false;
+            
+            _player = null;
         }
     }
+
 
     public void StartDialogue()
     {
@@ -58,5 +70,10 @@ public class MapDialogue : SerializedMonoBehaviour
         DialogueManager.Instance.Play();
 
         _hasStarted = true;
+    }
+
+    public void Reset()
+    {
+        _hasStarted = false;
     }
 }

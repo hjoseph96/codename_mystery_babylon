@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("try",["Function"],[["TryGetValueExt",,[["UnitTypeDictionaryExtensions",,,,0,"File:Utility/UnitTypeDictionaryExtensions.cs:UnitTypeDictionaryExtensions.TryGetValueExt","CSharpClass:UnitTypeDictionaryExtensions:TryGetValueExt"]]]]);

@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:TileConfigurationInfluenceZone","TileConfigurationInfluenceZone");NDSummary.OnSummaryLoaded("CSharpClass:TileConfigurationInfluenceZone",[["C#","CSharp"]],[["Classes","Class"],["Groups","Group"],["Variables","Variable"]],[[783,0,0,"TileConfigurationInfluenceZone"],[784,0,1,"Variables","Variables"],[785,0,2,"Config","Config"]]);

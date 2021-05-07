@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:GainHealth","GainHealth");NDSummary.OnSummaryLoaded("CSharpClass:GainHealth",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"],["Variables","Variable"]],[[599,0,0,"GainHealth"],[600,0,2,"Variables","Variables"],[601,0,3,"Value","Value"],[602,0,2,"Functions","Functions"],[603,0,1,"Use","Use"]]);

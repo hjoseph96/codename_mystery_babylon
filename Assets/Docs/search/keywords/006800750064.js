@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("hud",["Variable"],[["HUD",,[["Battler",,,,0,"File:Core/Units/Battlers/Battler.cs:Battler.HUD","CSharpClass:Battler:HUD"]]]]);

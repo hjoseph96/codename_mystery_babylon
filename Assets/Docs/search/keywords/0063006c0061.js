@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("cla",["Function","Property"],[["ClampInt",,[["Tazdraperm_Utility.MathUtility",,,,0,"File:Utility/Tazdraperm_Utility/MathUtility.cs:Tazdraperm_Utility.MathUtility.ClampInt","CSharpClass:Tazdraperm_Utility.MathUtility:ClampInt"]]],["Class",,[["Unit",,,,1,"File:Core/Units/All_Units/Unit.cs:Unit.Class","CSharpClass:Unit:Class"]]]]);

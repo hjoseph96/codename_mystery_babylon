@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("sea",["Class"],[["SeatedKnight",,[[,,,,0,"File:Core/Character_Controllers/SeatedKnight.cs:SeatedKnight","CSharpClass:SeatedKnight"]]]]);

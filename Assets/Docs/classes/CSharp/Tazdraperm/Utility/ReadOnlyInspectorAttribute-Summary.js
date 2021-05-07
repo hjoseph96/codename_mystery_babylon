@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:Tazdraperm.Utility.ReadOnlyInspectorAttribute","ReadOnlyInspectorAttribute");NDSummary.OnSummaryLoaded("CSharpClass:Tazdraperm.Utility.ReadOnlyInspectorAttribute",[["C#","CSharp"]],[["Classes","Class"]],[[3064,0,0,"<span class=\"Qualifier\">Tazdraperm.&#8203;Utility.</span>&#8203;ReadOnlyInspectorAttribute"]]);

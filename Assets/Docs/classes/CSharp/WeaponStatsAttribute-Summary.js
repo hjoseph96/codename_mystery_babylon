@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:WeaponStatsAttribute","WeaponStatsAttribute");NDSummary.OnSummaryLoaded("CSharpClass:WeaponStatsAttribute",[["C#","CSharp"]],[["Classes","Class"]],[[2158,0,0,"WeaponStatsAttribute"]]);

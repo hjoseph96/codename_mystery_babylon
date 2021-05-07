@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:Core/Units/Stats/UnitStat.cs",{1886:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype1886\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> UnitStat</div></div></div>"});

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("nav",["Class"],[["NavigationTile",,[[,,,,0,"File:Core/Map/Tiles/NavigationTile.cs:NavigationTile","CSharpClass:NavigationTile"]]]]);

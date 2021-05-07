@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("day",["Class"],[["DayNightFade",,[[,,,,0,"File:Core/Camera/DayNightFade.cs:DayNightFade","CSharpClass:DayNightFade"]]]]);

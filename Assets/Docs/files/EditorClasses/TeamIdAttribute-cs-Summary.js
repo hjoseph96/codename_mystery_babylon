@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:EditorClasses/TeamIdAttribute.cs","TeamIdAttribute.cs");NDSummary.OnSummaryLoaded("File:EditorClasses/TeamIdAttribute.cs",[["C#","CSharp"]],[["Classes","Class"]],[[2223,0,0,"TeamIdAttribute","TeamIdAttribute"]]);

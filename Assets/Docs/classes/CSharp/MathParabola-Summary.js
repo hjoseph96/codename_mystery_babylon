@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:MathParabola","MathParabola");NDSummary.OnSummaryLoaded("CSharpClass:MathParabola",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[3363,0,0,"MathParabola"],[3364,0,2,"Functions","Functions"],[3365,0,1,"Parabola","Parabola"],[3366,0,1,"Parabola","Parabola(2)"]]);

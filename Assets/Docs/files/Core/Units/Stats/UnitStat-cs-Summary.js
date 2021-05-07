@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:Core/Units/Stats/UnitStat.cs","UnitStat.cs");NDSummary.OnSummaryLoaded("File:Core/Units/Stats/UnitStat.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1885,0,1,"Types","Types"],[1886,0,0,"UnitStat","UnitStat"]]);

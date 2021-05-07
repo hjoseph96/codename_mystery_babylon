@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:SceneContainer","SceneContainer");NDSummary.OnSummaryLoaded("CSharpClass:SceneContainer",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2858,0,0,"SceneContainer"],[2859,0,2,"Functions","Functions"],[2860,0,1,"Disable","Disable"],[2861,0,1,"Enable","Enable"]]);

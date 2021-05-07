@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("f",["Function"],[["f",,[["ParabolaController.Parabola2D",,,,0,"File:Utility/ParabolaController.cs:ParabolaController.Parabola2D.f","CSharpClass:ParabolaController.Parabola2D:f"]]]]);

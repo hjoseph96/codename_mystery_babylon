@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("eff",["Class","Variable"],[["EffectBase",,[[,,,,0,"File:Core/Units/Stats/Stat.cs:EffectBase","CSharpClass:EffectBase"]]],["EffectType",,[["MagicEffect",,,,1,"File:Core/Units/Battlers/Magic_Users/MagicEffect.cs:MagicEffect.EffectType","CSharpClass:MagicEffect:EffectType"]]]]);

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_ne",["Variable"],[["_nextAttackQueued",,[["Magician",,,,0,"File:Core/Units/Battlers/Magic_Users/Magician.cs:Magician._nextAttackQueued","CSharpClass:Magician:_nextAttackQueued"]]]]);

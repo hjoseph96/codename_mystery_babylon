@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_ic",["Variable"],[["_icon",,[["ItemSlot",,,,0,"File:GUI/UnitInventory/ItemSlot.cs:ItemSlot._icon","CSharpClass:ItemSlot:_icon"]]],["_iconAllInOneMat",,[["ItemSlot",,,,0,"File:GUI/UnitInventory/ItemSlot.cs:ItemSlot._iconAllInOneMat","CSharpClass:ItemSlot:_iconAllInOneMat"]]]]);

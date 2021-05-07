@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_ov",["Variable"],[["_overrideTile",,[["ColliderGroupSimple",,,,0,"File:Core/Map/ColliderGroupSimple.cs:ColliderGroupSimple._overrideTile","CSharpClass:ColliderGroupSimple:_overrideTile"]]],["_overrideTilesByLayer",,[["WorldCell",,,,0,"File:Core/Map/WorldCell.cs:WorldCell._overrideTilesByLayer","CSharpClass:WorldCell:_overrideTilesByLayer"]]]]);

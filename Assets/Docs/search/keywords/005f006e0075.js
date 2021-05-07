@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_nu",["Variable"],[["_nullConfig",,[["WorldGrid",,,,0,"File:Core/Map/WorldGrid.cs:WorldGrid._nullConfig","CSharpClass:WorldGrid:_nullConfig"]]],["_nullTile",,[["WorldGrid",,,,0,"File:Core/Map/WorldGrid.cs:WorldGrid._nullTile","CSharpClass:WorldGrid:_nullTile"]]]]);

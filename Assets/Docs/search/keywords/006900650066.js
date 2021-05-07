@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ief",["Interface"],[["IEffect",,[[,,,,0,"File:Core/Units/Stats/Stat.cs:IEffect","CSharpClass:IEffect"]]]]);

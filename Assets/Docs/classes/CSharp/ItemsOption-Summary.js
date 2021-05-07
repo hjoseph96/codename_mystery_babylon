@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:ItemsOption","ItemsOption");NDSummary.OnSummaryLoaded("CSharpClass:ItemsOption",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2441,0,0,"ItemsOption"],[2442,0,2,"Functions","Functions"],[2443,0,1,"Execute","Execute"]]);

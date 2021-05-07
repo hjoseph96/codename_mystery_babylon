@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ran",["Class"],[["RangeStatDisplay",,[[,,,,0,"File:GUI/UnitInventory/ItemDetails/ItemStatDisplay/RangeStatDisplay.cs:RangeStatDisplay","CSharpClass:RangeStatDisplay"]]],["RankStatDisplay",,[[,,,,0,"File:GUI/UnitInventory/ItemDetails/ItemStatDisplay/RankStatDisplay.cs:RankStatDisplay","CSharpClass:RankStatDisplay"]]]]);

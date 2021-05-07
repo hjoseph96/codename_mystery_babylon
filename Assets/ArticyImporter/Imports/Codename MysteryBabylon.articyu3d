@@ -2520,8 +2520,8 @@
             "Text": "",
             "ExternalId": "",
             "Position": {
-              "x": 217.0,
-              "y": 225.0
+              "x": 17.0,
+              "y": 175.0
             },
             "ZIndex": 0.0,
             "Size": {
@@ -2554,6 +2554,134 @@
                 "Text": "",
                 "Id": "0x01000000000003D2",
                 "Owner": "0x01000000000003CE"
+              }
+            ]
+          }
+        },
+        {
+          "Type": "Dialogue",
+          "Properties": {
+            "TechnicalName": "Dlg_A34D2075",
+            "Id": "0x01000000000005D6",
+            "Parent": "0x0100000000000349",
+            "Attachments": [],
+            "DisplayName": "After Gate Entry",
+            "PreviewImage": {
+              "ViewBox": {
+                "x": 0.0,
+                "y": 0.0,
+                "w": 0.0,
+                "h": 0.0
+              },
+              "Mode": "FromAsset",
+              "Asset": "0x0000000000000000"
+            },
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "",
+            "ExternalId": "",
+            "Position": {
+              "x": 442.0,
+              "y": 175.0
+            },
+            "ZIndex": 1.0,
+            "Size": {
+              "w": 291.0,
+              "h": 200.0
+            },
+            "ShortId": 2739740789,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005D9",
+                "Owner": "0x01000000000005D6",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000044C",
+                    "Target": "0x0100000000000449"
+                  }
+                ]
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005DA",
+                "Owner": "0x01000000000005D6"
+              }
+            ]
+          }
+        },
+        {
+          "Type": "Dialogue",
+          "Properties": {
+            "TechnicalName": "Dlg_4D6E58A0",
+            "Id": "0x01000000000005DF",
+            "Parent": "0x0100000000000349",
+            "Attachments": [],
+            "DisplayName": "Are you new around here?",
+            "PreviewImage": {
+              "ViewBox": {
+                "x": 0.0,
+                "y": 0.0,
+                "w": 0.0,
+                "h": 0.0
+              },
+              "Mode": "FromAsset",
+              "Asset": "0x0000000000000000"
+            },
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Untitled dialogue (04)",
+            "ExternalId": "",
+            "Position": {
+              "x": 17.0,
+              "y": 625.0
+            },
+            "ZIndex": 2.0,
+            "Size": {
+              "w": 291.0,
+              "h": 200.0
+            },
+            "ShortId": 1299077280,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005E2",
+                "Owner": "0x01000000000005DF",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000005E9",
+                    "Target": "0x01000000000005E6"
+                  }
+                ]
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005E3",
+                "Owner": "0x01000000000005DF"
               }
             ]
           }
@@ -4875,7 +5003,7 @@
             "Id": "0x010000000000041B",
             "Parent": "0x01000000000003CE",
             "MenuText": "",
-            "StageDirections": "Clear, OpenFortGate",
+            "StageDirections": "OpenFortGate",
             "Speaker": "0x01000000000003CA",
             "Color": {
               "r": 0.5764706,
@@ -4915,61 +5043,6 @@
                       "b": 0.8
                     },
                     "Label": "",
-                    "TargetPin": "0x010000000000044C",
-                    "Target": "0x0100000000000449"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "Type": "DialogueFragment",
-          "Properties": {
-            "TechnicalName": "DFr_C42B55BF",
-            "Id": "0x0100000000000457",
-            "Parent": "0x01000000000003CE",
-            "MenuText": "",
-            "StageDirections": "Clear",
-            "Speaker": "0x010000000000010F",
-            "Color": {
-              "r": 0.5764706,
-              "g": 0.75686276,
-              "b": 0.8
-            },
-            "Text": "You did well to keep your anger hidden. Let's continue on, that one will face justice soon enough.",
-            "ExternalId": "",
-            "Position": {
-              "x": 4400.0,
-              "y": 275.0
-            },
-            "ZIndex": 25.0,
-            "Size": {
-              "w": 225.0,
-              "h": 200.0
-            },
-            "ShortId": 3291174335,
-            "InputPins": [
-              {
-                "Text": "",
-                "Id": "0x010000000000045A",
-                "Owner": "0x0100000000000457"
-              }
-            ],
-            "OutputPins": [
-              {
-                "Text": "",
-                "Id": "0x010000000000045B",
-                "Owner": "0x0100000000000457",
-                "Connections": [
-                  {
-                    "Color": {
-                      "a": 1.0,
-                      "r": 0.5764706,
-                      "g": 0.75686276,
-                      "b": 0.8
-                    },
-                    "Label": "",
                     "TargetPin": "0x01000000000003D2",
                     "Target": "0x01000000000003CE"
                   }
@@ -4981,9 +5054,75 @@
         {
           "Type": "DialogueFragment",
           "Properties": {
+            "TechnicalName": "DFr_2984A56C",
+            "Id": "0x01000000000005E6",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Oi! Are you new around here, lad? Don't reckon I've seen you around here before.",
+            "ExternalId": "",
+            "Position": {
+              "x": 100.0,
+              "y": 300.0
+            },
+            "ZIndex": 0.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 696558956,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005E9",
+                "Owner": "0x01000000000005E6"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005EA",
+                "Owner": "0x01000000000005E6",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000005EF",
+                    "Target": "0x01000000000005EC"
+                  },
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000005F8",
+                    "Target": "0x01000000000005F5"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
             "TechnicalName": "DFr_01E61620",
             "Id": "0x0100000000000449",
-            "Parent": "0x01000000000003CE",
+            "Parent": "0x01000000000005D6",
             "MenuText": "",
             "StageDirections": "",
             "Speaker": "0x010000000000012E",
@@ -4995,8 +5134,8 @@
             "Text": "When battle breaks out... I'm killing that one first. I'll be sure he gets the slow, painful death he deserves.",
             "ExternalId": "",
             "Position": {
-              "x": 3700.0,
-              "y": 275.0
+              "x": 586.0,
+              "y": 216.0
             },
             "ZIndex": 21.0,
             "Size": {
@@ -5036,9 +5175,64 @@
         {
           "Type": "DialogueFragment",
           "Properties": {
+            "TechnicalName": "DFr_C42B55BF",
+            "Id": "0x0100000000000457",
+            "Parent": "0x01000000000005D6",
+            "MenuText": "",
+            "StageDirections": "Clear",
+            "Speaker": "0x010000000000010F",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "You did well to keep your anger hidden. Let's continue on, that one will face justice soon enough.",
+            "ExternalId": "",
+            "Position": {
+              "x": 1286.0,
+              "y": 216.0
+            },
+            "ZIndex": 25.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 3291174335,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000045A",
+                "Owner": "0x0100000000000457"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000045B",
+                "Owner": "0x0100000000000457",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000005DA",
+                    "Target": "0x01000000000005D6"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
             "TechnicalName": "DFr_6F8E4D76",
             "Id": "0x0100000000000450",
-            "Parent": "0x01000000000003CE",
+            "Parent": "0x01000000000005D6",
             "MenuText": "",
             "StageDirections": "",
             "Speaker": "0x0100000000000127",
@@ -5050,8 +5244,8 @@
             "Text": "What a loathsome man. Are these the \"gallant\" knights that the country worships?",
             "ExternalId": "",
             "Position": {
-              "x": 4050.0,
-              "y": 275.0
+              "x": 936.0,
+              "y": 216.0
             },
             "ZIndex": 23.0,
             "Size": {
@@ -5082,6 +5276,446 @@
                     "Label": "",
                     "TargetPin": "0x010000000000045A",
                     "Target": "0x0100000000000457"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_4258B2C5",
+            "Id": "0x01000000000005EC",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "Yes, I am new to this base.",
+            "StageDirections": "",
+            "Speaker": "0x010000000000010F",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Yes, just transferred over here. Lieutenant Clark's orders. His request for reinforcements sent me here.",
+            "ExternalId": "",
+            "Position": {
+              "x": 525.0,
+              "y": 150.0
+            },
+            "ZIndex": 2.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 1113109189,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005EF",
+                "Owner": "0x01000000000005EC"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005F0",
+                "Owner": "0x01000000000005EC",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000607",
+                    "Target": "0x0100000000000604"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_D7B69804",
+            "Id": "0x01000000000005F5",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "No, I've been here for a while now.",
+            "StageDirections": "",
+            "Speaker": "0x010000000000010F",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "No, I have been assigned to this base for months now.",
+            "ExternalId": "",
+            "Position": {
+              "x": 525.0,
+              "y": 400.0
+            },
+            "ZIndex": 4.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 3619067908,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005F8",
+                "Owner": "0x01000000000005F5"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x01000000000005F9",
+                "Owner": "0x01000000000005F5",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000600",
+                    "Target": "0x01000000000005FD"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_3121A6B9",
+            "Id": "0x01000000000005FD",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x010000000000010F",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "I am usually in the vanguard with the forces currently deployed, but was told to remain back this time.",
+            "ExternalId": "",
+            "Position": {
+              "x": 900.0,
+              "y": 400.0
+            },
+            "ZIndex": 6.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 824288953,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000600",
+                "Owner": "0x01000000000005FD"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000601",
+                "Owner": "0x01000000000005FD",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000061C",
+                    "Target": "0x0100000000000619"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_D07241B7",
+            "Id": "0x0100000000000604",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "I knew it! Welcome to Fort Matthias, my boy!",
+            "ExternalId": "",
+            "Position": {
+              "x": 925.0,
+              "y": 150.0
+            },
+            "ZIndex": 8.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 3497148855,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000607",
+                "Owner": "0x0100000000000604"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000608",
+                "Owner": "0x0100000000000604",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000060E",
+                    "Target": "0x010000000000060B"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_96E5FC1F",
+            "Id": "0x010000000000060B",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "The food is rubbish, but the beer and wine more than make up for it. We'll have to get you an honorary drink.",
+            "ExternalId": "",
+            "Position": {
+              "x": 1375.0,
+              "y": 150.0
+            },
+            "ZIndex": 10.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2531654687,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000060E",
+                "Owner": "0x010000000000060B"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000060F",
+                "Owner": "0x010000000000060B",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000615",
+                    "Target": "0x0100000000000612"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_EDDD0FB5",
+            "Id": "0x0100000000000612",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Hope you're not a lightweight.",
+            "ExternalId": "",
+            "Position": {
+              "x": 1800.0,
+              "y": 150.0
+            },
+            "ZIndex": 12.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 3990687669,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000615",
+                "Owner": "0x0100000000000612"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000616",
+                "Owner": "0x0100000000000612",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000005E3",
+                    "Target": "0x01000000000005DF"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_90C9311F",
+            "Id": "0x0100000000000619",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "That so? Well, I'm usually too bloody drunk to remember everyone's face around here.",
+            "ExternalId": "",
+            "Position": {
+              "x": 1350.0,
+              "y": 400.0
+            },
+            "ZIndex": 14.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2429104415,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000061C",
+                "Owner": "0x0100000000000619"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000061D",
+                "Owner": "0x0100000000000619",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000623",
+                    "Target": "0x0100000000000620"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_56439052",
+            "Id": "0x0100000000000620",
+            "Parent": "0x01000000000005DF",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Sorry about that. Keep up the good work.",
+            "ExternalId": "",
+            "Position": {
+              "x": 1825.0,
+              "y": 400.0
+            },
+            "ZIndex": 16.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 1447268434,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000623",
+                "Owner": "0x0100000000000620"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000624",
+                "Owner": "0x0100000000000620",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000005E3",
+                    "Target": "0x01000000000005DF"
                   }
                 ]
               }
@@ -5709,7 +6343,66 @@
                         "Id": "0x010000000000041B",
                         "TechnicalName": "DFr_D71FB1B5",
                         "Type": "DialogueFragment"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "0x01000000000005DF",
+                    "TechnicalName": "Dlg_4D6E58A0",
+                    "Type": "Dialogue",
+                    "Children": [
+                      {
+                        "Id": "0x01000000000005E6",
+                        "TechnicalName": "DFr_2984A56C",
+                        "Type": "DialogueFragment"
                       },
+                      {
+                        "Id": "0x01000000000005EC",
+                        "TechnicalName": "DFr_4258B2C5",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000005F5",
+                        "TechnicalName": "DFr_D7B69804",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000005FD",
+                        "TechnicalName": "DFr_3121A6B9",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000604",
+                        "TechnicalName": "DFr_D07241B7",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000619",
+                        "TechnicalName": "DFr_90C9311F",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x010000000000060B",
+                        "TechnicalName": "DFr_96E5FC1F",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000612",
+                        "TechnicalName": "DFr_EDDD0FB5",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000620",
+                        "TechnicalName": "DFr_56439052",
+                        "Type": "DialogueFragment"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "0x01000000000005D6",
+                    "TechnicalName": "Dlg_A34D2075",
+                    "Type": "Dialogue",
+                    "Children": [
                       {
                         "Id": "0x0100000000000449",
                         "TechnicalName": "DFr_01E61620",

@@ -1,0 +1,1 @@
+﻿NDContentPage.OnToolTipsLoaded({3404:"<div class=\"NDToolTip TClass LCSharp\"><div class=\"NDClassPrototype\" id=\"NDClassPrototype3404\"><div class=\"CPEntry TClass Current\"><div class=\"CPModifiers\"><span class=\"SHKeyword\">public</span></div><div class=\"CPName\"><span class=\"Qualifier\">ParabolaController.</span>&#8203;Parabola3D</div></div></div></div>"});

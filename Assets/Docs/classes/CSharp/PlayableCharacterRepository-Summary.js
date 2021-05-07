@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:PlayableCharacterRepository","PlayableCharacterRepository");NDSummary.OnSummaryLoaded("CSharpClass:PlayableCharacterRepository",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[1314,0,0,"PlayableCharacterRepository"],[1315,0,2,"Functions","Functions"],[1316,0,1,"Write","Write"]]);

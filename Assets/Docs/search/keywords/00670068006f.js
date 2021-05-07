@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("gho",["Variable"],[["GhostColorBoost",,[["ItemSlot",,,,0,"File:GUI/UnitInventory/ItemSlot.cs:ItemSlot.GhostColorBoost","CSharpClass:ItemSlot:GhostColorBoost"]]],["GhostTransparency",,[["ItemSlot",,,,0,"File:GUI/UnitInventory/ItemSlot.cs:ItemSlot.GhostTransparency","CSharpClass:ItemSlot:GhostTransparency"]]]]);

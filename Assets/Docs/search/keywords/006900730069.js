@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("isi",["Property"],[["IsInTransition",,[["SceneLoader",,,,0,"File:Core/Map/SceneLoader.cs:SceneLoader.IsInTransition","CSharpClass:SceneLoader:IsInTransition"]]]]);

@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:RangeStatDisplay","RangeStatDisplay");NDSummary.OnSummaryLoaded("CSharpClass:RangeStatDisplay",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2673,0,0,"RangeStatDisplay"],[2674,0,2,"Functions","Functions"],[2675,0,1,"SetText","SetText"]]);

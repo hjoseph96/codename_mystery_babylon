@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("_or",["Variable"],[["_orientation",,[["DialogBox",,,,0,"File:GUI/Dialog_Box/DialogBox.cs:DialogBox._orientation","CSharpClass:DialogBox:_orientation"]]]]);

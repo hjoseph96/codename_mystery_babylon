@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +31,9 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
 
     private WorldDialogCanvas _worldCanvas;
-    public WorldDialogCanvas WorldCanvas { get => _worldCanvas; }
+    [ShowInInspector] public WorldDialogCanvas WorldCanvas { get => _worldCanvas; }
+
+    [SerializeField] private DialogueChoiceGUI _dialogueChoiceGUI;
 
     private ArticyFlowPlayer _flowPlayer;
     private ArticyReference _articyRef;
@@ -41,8 +44,13 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     private DialogType _dialogType;
     public DialogType DialogType { get => _dialogType; }
 
+    public bool IsTyping => _currentPortraitDialogBoxes.Any((dialogBox) => dialogBox.IsTyping) || _worldCanvas.IsTyping;
+
     private MapDialogue _currentMapDialog;
 
+    private bool _multipleChoice = false;
+    private bool _dialogIsFinished = true;
+    
 
     // Currently Shown Portrait Boxes, max of 2 (Left and Right corners of Canvas)
     private List<DialogBox> _currentPortraitDialogBoxes = new List<DialogBox>();
@@ -66,16 +74,8 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         var chapterDialogue = chapterDialogueObj as Dialogue;
 
         _chapter = new ArticyChapter(chapterDialogue);
-
-        // _flowPlayer.startOn = (ArticyRef)chapterDialogue;
-
     }
 
-    private void Start()
-    {
-        //_dialogType = DialogType.Portrait;
-        //_flowPlayer.Play();
-    }
 
     public void OnFlowPlayerPaused(IFlowObject aObject)
     {
@@ -88,58 +88,71 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         var objWithText = aObject as IObjectWithText;
         if (objWithText != null)
         {
+            _dialogIsFinished = false;
+
+            var dialogFrament = objWithText as DialogueFragment;
+
             if (DialogType == DialogType.Portrait)
                 ShowDialogBox(objWithText);
             else if (DialogType == DialogType.Map && objWithText is DialogueFragment)
-            {
-                var dialogueFragment = objWithText as DialogueFragment;
-
-                var stageDirections = ParseStageDirections(dialogueFragment.StageDirections);
-                
-                _worldCanvas.ClearDialogBoxes();
-
-                var articyEntity = dialogueFragment.Speaker as Articy.Codename_Mysterybabylon.Entity;
-
-                var matchingParticipants = _currentMapDialog.Participants.Where((entityReference) => entityReference.EntityName == articyEntity.DisplayName);
-
-                if (matchingParticipants.Count() == 0)
-                    throw new System.Exception($"[DialogManager] There's no participant matching the DisplayName: {articyEntity.DisplayName}...");
-
-                var entityRef = matchingParticipants.First();
-
-                // TODO: Figure out how to have many instances of the Same Articy Entity speak to each other (when they have the same name)
-
-
-                var dialogBox = _worldCanvas.GetDialogBox(entityRef);
-                dialogBox.OnDialogueDisplayComplete = null;
-                dialogBox.OnDialogueDisplayComplete += delegate ()
-                {
-                    dialogBox.HideNextButton();
-                    _flowPlayer.Play();
-                };
-
-                dialogBox.SetText(dialogueFragment.Text);
-
-                dialogBox.ShowNextText();
-            }
-                
+                ShowMapDialogBoxes(objWithText);
         }
     }
 
     public void OnBranchesUpdated(IList<Branch> aBranches)
     {
+        _dialogIsFinished = true;
+        foreach (var branch in aBranches)
+        {
+            if (branch.Target is IDialogueFragment)
+                _dialogIsFinished = false;
+        }
+
+        if (_dialogIsFinished)
+        {
+            ClearPortraitDialogBoxes();
+            _worldCanvas.ClearDialogBoxes();
+            if (_currentMapDialog != null)
+                _currentMapDialog.Reset();
+
+            Debug.Log("Breakpoint");
+        }
+
+        if (aBranches.Count > 1)
+            StartCoroutine(ShowDialogChoices(aBranches));
     }
+
+
 
     public void SetDialogueToPlay(ArticyRef dialogueRef, DialogType dialogType, MapDialogue mapDialogue)
     {
-        _dialogType = dialogType;
-        _currentMapDialog = mapDialogue;
+        _dialogType         = dialogType;
+        _currentMapDialog   = mapDialogue;
 
         _flowPlayer.startOn = dialogueRef;
     }
 
+    
     public void SetWorldCanvas(WorldDialogCanvas worldCanvas) => _worldCanvas = worldCanvas;
 
+    
+    public IEnumerator ShowDialogChoices(IList<Branch> aBranches)
+    {
+        yield return new WaitForSeconds(2f);
+
+        bool NotTyping() => IsTyping == false;
+        
+        yield return new WaitUntil(NotTyping);
+
+        _multipleChoice = true;
+
+        _dialogueChoiceGUI.OnChoiceSelected += delegate (Branch chosenBranch)
+        {
+            _flowPlayer.Play(chosenBranch);
+            _multipleChoice = false;
+        };
+        _dialogueChoiceGUI.Show(aBranches);
+    }
 
     private void ShowDialogBox(IObjectWithText textObj)
     {
@@ -164,8 +177,11 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
                 dialogBox.OnDialogueDisplayComplete = null;
                 dialogBox.OnDialogueDisplayComplete += delegate ()
                 {
-                    dialogBox.HideNextButton();
-                    _flowPlayer.Play();
+                    if (!_multipleChoice)
+                    {
+                        dialogBox.HideNextButton();
+                        _flowPlayer.Play();
+                    }
                 };
 
                 dialogBox.SetText(textToDisplay);
@@ -173,6 +189,42 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
                 dialogBox.ShowNextText();
             }
         }
+    }
+
+    private void ShowMapDialogBoxes(IObjectWithText objWithText)
+    {
+        var dialogueFragment = objWithText as DialogueFragment;
+
+        var stageDirections = ParseStageDirections(dialogueFragment.StageDirections);
+
+        _worldCanvas.ClearDialogBoxes();
+
+        var articyEntity = dialogueFragment.Speaker as Articy.Codename_Mysterybabylon.Entity;
+
+        var matchingParticipants = _currentMapDialog.Participants.Where((entityReference) => entityReference.EntityName == articyEntity.DisplayName);
+
+        if (matchingParticipants.Count() == 0)
+            throw new System.Exception($"[DialogManager] There's no participant matching the DisplayName: {articyEntity.DisplayName}...");
+
+        var entityRef = matchingParticipants.First();
+
+        // TODO: Figure out how to have many instances of the Same Articy Entity speak to each other (when they have the same name)
+
+
+        var dialogBox = _worldCanvas.GetDialogBox(entityRef);
+        dialogBox.OnDialogueDisplayComplete = null;
+        dialogBox.OnDialogueDisplayComplete += delegate ()
+        {
+            if (!_multipleChoice)
+            {
+                dialogBox.HideNextButton();
+                _flowPlayer.Play();
+            }
+        };
+
+        dialogBox.SetText(dialogueFragment.Text);
+
+        dialogBox.ShowNextText();
     }
 
 

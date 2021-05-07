@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("sna",["Function"],[["SnapToGrid",,[["GridUtility",,,,0,"File:Utility/GridUtility.cs:GridUtility.SnapToGrid","CSharpClass:GridUtility:SnapToGrid"]]]]);

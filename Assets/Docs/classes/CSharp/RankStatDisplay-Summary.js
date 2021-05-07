@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:RankStatDisplay","RankStatDisplay");NDSummary.OnSummaryLoaded("CSharpClass:RankStatDisplay",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2637,0,0,"RankStatDisplay"],[2638,0,2,"Functions","Functions"],[2639,0,1,"SetText","SetText"]]);

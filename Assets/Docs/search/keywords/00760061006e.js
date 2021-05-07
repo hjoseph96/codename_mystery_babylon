@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("van",["Function"],[["Vanguard_Destination",,[["GroupMovement",,,,0,"File:Core/Units/AI_Behaviors/GroupMovement.cs:GroupMovement.Vanguard_Destination","CSharpClass:GroupMovement:Vanguard_Destination"]]]]);

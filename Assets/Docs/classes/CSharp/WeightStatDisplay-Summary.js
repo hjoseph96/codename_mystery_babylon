@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CSharpClass:WeightStatDisplay","WeightStatDisplay");NDSummary.OnSummaryLoaded("CSharpClass:WeightStatDisplay",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2640,0,0,"WeightStatDisplay"],[2641,0,2,"Functions","Functions"],[2642,0,1,"SetText","SetText"]]);

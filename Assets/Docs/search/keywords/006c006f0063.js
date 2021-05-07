@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("loc",["Variable","Constant"],[["LocalPlayer",,[["Player",,,,0,"File:Core/Units/Factions/Player.cs:Player.LocalPlayer","CSharpClass:Player:LocalPlayer"]]],["LocalPlayerTeamId",,[["Team",,,,1,"File:Core/Units/Factions/Team.cs:Team.LocalPlayerTeamId","CSharpClass:Team:LocalPlayerTeamId"]]]]);

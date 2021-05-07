@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:Core/Units/Battlers/BattlerState.cs","BattlerState.cs");NDSummary.OnSummaryLoaded("File:Core/Units/Battlers/BattlerState.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1746,0,1,"Types","Types"],[1747,0,0,"BattlerState","BattlerState"]]);

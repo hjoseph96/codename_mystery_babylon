@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("sal",["Property","Variable"],[["SaleValue",,[["Item",,,,0,"File:Core/Items/Item.cs:Item.SaleValue","CSharpClass:Item:SaleValue"],["ScriptableItem",,,,1,"File:Core/Items/ScriptableItem.cs:ScriptableItem.SaleValue","CSharpClass:ScriptableItem:SaleValue"]]]]);

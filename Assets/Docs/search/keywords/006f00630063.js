@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("occ",["Property"],[["Occupation",,[["Entity",,,,0,"File:Core/Entities/Entity.cs:Entity.Occupation","CSharpClass:Entity:Occupation"],["PlayableCharacterData",,,,0,"File:Core/Repositories/EntityRepository/PlayableCharacterRepository.cs:PlayableCharacterData.Occupation","CSharpClass:PlayableCharacterData:Occupation"]]]]);

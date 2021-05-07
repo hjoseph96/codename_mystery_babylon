@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ste",["Variable"],[["StencilRef",,[["Unit",,,,0,"File:Core/Units/All_Units/Unit.cs:Unit.StencilRef","CSharpClass:Unit:StencilRef"],["WorldGrid",,,,0,"File:Core/Map/WorldGrid.cs:WorldGrid.StencilRef","CSharpClass:WorldGrid:StencilRef"]]]]);

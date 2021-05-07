@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("pot",["Function","Variable"],[["PotentialAttackPoints",,[["Unit",,,,0,"File:Core/Units/All_Units/Unit.cs:Unit.PotentialAttackPoints","CSharpClass:Unit:PotentialAttackPoints"]]],["PotentialThreats",,[["Unit",,,,1,"File:Core/Units/All_Units/Unit.cs:Unit.PotentialThreats","CSharpClass:Unit:PotentialThreats"]]]]);

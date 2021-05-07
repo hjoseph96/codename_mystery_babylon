@@ -91,6 +91,7 @@ public class RoomTransition : MonoBehaviour
                 cameraFade.OnTransitionEnterStarted = null;
                 cameraFade.OnTransitionEnterEnded = null;
 
+
                 camera.UpdateType = UpdateType.LateUpdate;
 
                 playerController.AllowInput();
@@ -106,4 +107,5 @@ public class RoomTransition : MonoBehaviour
         };
         cameraFade.TransitionEnter();
     }
+
 }

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("cut",["Function"],[["Cut",,[["ArrowSprite",,,,0,"File:Core/Map/UI/ArrowSprite.cs:ArrowSprite.Cut","CSharpClass:ArrowSprite:Cut"]]]]);

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("dou",["Function"],[["DoubleAttackAnims",,[["Battler",,,,0,"File:Core/Units/Battlers/Battler.cs:Battler.DoubleAttackAnims","CSharpClass:Battler:DoubleAttackAnims"]]]]);

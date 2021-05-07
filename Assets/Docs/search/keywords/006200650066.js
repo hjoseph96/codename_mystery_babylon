@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("bef",["Variable"],[["BeforeNextSceneLoad",,[["SceneLoader",,,,0,"File:Core/Map/SceneLoader.cs:SceneLoader.BeforeNextSceneLoad","CSharpClass:SceneLoader:BeforeNextSceneLoad"]]]]);

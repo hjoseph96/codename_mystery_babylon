@@ -42,6 +42,13 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Basic Properties")] 
     public GameObject BattlerPrefab;
 
+    [FoldoutGroup("Basic Properties")]
+    [SerializeField] private float _JumpDuration = 1.6f;
+
+    private bool _canJump = false;
+    [FoldoutGroup("Basic Properties"), ShowInInspector]
+    public bool CanJump { get => _canJump; }
+
     [FoldoutGroup("Animations")] 
     [SerializeField] private DirectionalAnimationSet _idleAnimation;
     
@@ -53,6 +60,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _drinkPotionAnimation;
+
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Jump;
+
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _InAir;
+    
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Landing;
 
 
     public static int MAX_LEVEL = 40;
@@ -179,7 +195,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     private AnimancerComponent _animancer;
     private Vector2 _lookDirection;
 
-    private FootstepController _footstepController;
+    private FootstepController  _footstepController;
+    private JumpController      _jumpController;
 
     // Mecanim AnimationEvent Listeners
     private AnimationEventReceiver _OnPlayFootsteps;
@@ -188,6 +205,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     private Material _allInOneMat;
     private static readonly int StencilRef = Shader.PropertyToID("_StencilRef");
+
 
     public virtual void Init()
     {
@@ -200,6 +218,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _renderer           = GetComponent<Renderer>();
         _animancer          = GetComponent<AnimancerComponent>();
         _footstepController = GetComponent<FootstepController>();
+        _jumpController     = GetComponent<JumpController>();
         Portrait            = GetComponent<Portrait>();
 
         Rotate(_startingLookDirection);
@@ -561,6 +580,37 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return cellsToNavigateToForAnAttack;
     }
 
+    public void Jump(JumpTrigger jumpTrigger)
+    {
+        AttachJumpEvents();
+
+        _jumpController.Jump(jumpTrigger);
+    }
+
+    private void AttachJumpEvents()
+    {
+        _jumpController.OnBeginJump += delegate ()
+        {
+            PlayAnimation(_Jump);
+
+            _jumpController.OnBeginJump = null;
+        };
+
+        _jumpController.UponLanding += delegate ()
+        {
+            PlayAnimation(_Landing);
+
+            _jumpController.UponLanding = null;
+        };
+
+        _jumpController.WhileInAir += delegate ()
+        {
+            PlayAnimation(_InAir);
+
+            _jumpController.WhileInAir = null;
+        };
+    }
+
 
     public bool CanAttack() => AttackableWeapons().Count > 0;
 
@@ -604,9 +654,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             otherUnit.Inventory.MoveItem(theirItem, Inventory);
         }
         else
-        {
             throw new ArgumentException("Two empty slots provided or both items not found in inventories!");
-        }
     }
 
     public IEnumerator MovementCoroutine(GridPath path)
@@ -988,7 +1036,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _OnPlayFootsteps.HandleEvent(animationEvent);
     }
 
-    private System.Action<AnimationEvent> PlayFootstepSound()
+    private Action<AnimationEvent> PlayFootstepSound()
     {
         return delegate (AnimationEvent animationEvent)
         {
