@@ -10,7 +10,7 @@ public class JumpTrigger : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D _startTrigger;
     [SerializeField] private BoxCollider2D _endTrigger;
-    
+
     // TODO: Move to SpriteCharacterCotnrollerExt
     [SerializeField] private float _jumpHeight = 2.42f;
     public PlayOnceAndDie LandingEffect;
@@ -36,12 +36,12 @@ public class JumpTrigger : MonoBehaviour
     private Unit _unit;
 
     // Start is called before the first frame update
-    private void Awake() 
+    private void Awake()
     {
         SetPositions();
         PopulateJumpPath();
 
-        if (!_startTrigger.TryGetComponent<JumpTriggerStartingPoint>(out _))   
+        if (!_startTrigger.TryGetComponent<JumpTriggerStartingPoint>(out _))
             _startTrigger.gameObject.AddComponent<JumpTriggerStartingPoint>();
     }
 
@@ -91,7 +91,7 @@ public class JumpTrigger : MonoBehaviour
         _playerController = null;
 
         ActionNoticeManager.Instance.HideNotice();
-        
+
         _canJump = false;
     }
 

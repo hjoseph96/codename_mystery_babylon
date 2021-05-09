@@ -10,9 +10,9 @@ public class ActionMenuOption : MenuOption<ActionSelectMenu>
     public void Init(ActionSelectMenu menu, Sprite normal, Sprite selected, Sprite pressed)
     {
         Menu = menu;
-        _spriteNormal   = normal;
+        _spriteNormal = normal;
         _spriteSelected = selected;
-        _spritePressed  = pressed;
+        _spritePressed = pressed;
 
         _image = GetComponent<Image>();
     }

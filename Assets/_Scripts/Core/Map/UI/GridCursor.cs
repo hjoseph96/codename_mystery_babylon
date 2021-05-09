@@ -56,6 +56,8 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
     private CellHighlighter _cellHighlighter;
     private ProCamera2D _camera;
 
+    private Unit _hoveringUnit;
+
 
     public void Init()
     {
@@ -80,6 +82,20 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
         // Move the cursor
         if (IsMoving)
             Move();
+
+        // Show & Hide Hovering Unit's health
+        var hoveringUnit = _worldGrid[GridPosition].Unit;
+        if (hoveringUnit != null)
+        {
+            _hoveringUnit = hoveringUnit;
+            _hoveringUnit.ShowHealthBar();
+        }
+        else if (_hoveringUnit != null)
+        {
+            _hoveringUnit.HideHealthBar();
+            _hoveringUnit = null;
+        }
+
     }
 
     public void ProcessInput(InputData inputData) 
@@ -94,6 +110,8 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
                     StartMovement(newPosition);
             }
         }
+
+        
         
         switch(_mode) {
             case CursorMode.Free:

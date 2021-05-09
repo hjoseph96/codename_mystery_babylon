@@ -70,6 +70,17 @@ public class AttackWeakestUnit : AttackBehavior
     private void TriggerCombat(Vector2Int targetGridPosition)
     {
         var targetUnit = WorldGrid.Instance[targetGridPosition].Unit;
+        
+        if (targetUnit is AIUnit)
+        {
+            // On Map Combat
+        }
+        else
+            TriggerCombatScene(targetUnit);
+    }
+
+    private void TriggerCombatScene(Unit targetUnit)
+    {
 
         // Attacker turns to face defender
         Vector2 defenderPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int)targetUnit.GridPosition);
@@ -91,7 +102,6 @@ public class AttackWeakestUnit : AttackBehavior
         // TODO: Put confirm sound in campaign manager
         CampaignManager.Instance.StartCombat(AIAgent, targetUnit, "");
     }
-
 
     protected int PreviewRemainingHealth(Unit unit)
     {

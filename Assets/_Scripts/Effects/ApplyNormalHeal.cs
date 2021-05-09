@@ -32,6 +32,6 @@ public class ApplyNormalHeal : MonoBehaviour
         {
             unit.IncreaseHealth(amount);
         };
-        miniHealBar.Tween(startPercentage, endPercentage);
+        miniHealBar.Tween(endPercentage);
     }
 }

@@ -215,7 +215,7 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
         {
             _Facing = _Movement;
             Play(_Walk);
-                
+
             // Snap the movement to the exact directions we have animations for.
             // When using DirectionalAnimationSets this means the character will only move up/right/down/left.
             // But DirectionalAnimationSet8s will allow diagonal movement as well.
@@ -298,7 +298,7 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
         _Movement = movement;
     }
 
-       
+
 
     /************************************************************************************************************************/
 

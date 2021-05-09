@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine;
 
-public class CombatManager : MonoBehaviour
+public class BattleSceneManager : MonoBehaviour
 {
     [FoldoutGroup("Battle Scene")]
     [ReadOnly] private Battler _friendlyBattler;
@@ -83,9 +83,9 @@ public class CombatManager : MonoBehaviour
         await SetupBattlers(attacker, defender);
 
         // State Boolean Flags
-        _beganAttacks   = false;
-        _gainedExp      = false;
-        _transitionedOut = false;
+        _beganAttacks       = false;
+        _gainedExp          = false;
+        _transitionedOut    = false;
 
         _platformOriginalPosition = _playerForeground.transform.position;
         _battleTransitionFX = BattleCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
@@ -108,7 +108,7 @@ public class CombatManager : MonoBehaviour
         if (!attacker.CanDefend())
             return battleResults;
 
-        var hitResults = await TrueRandomUtility.HitResults(attacker, defender);
+        var hitResults  = await TrueRandomUtility.HitResults(attacker, defender);
         var critResults = await TrueRandomUtility.CriticalHitResults(attacker, defender);
 
         // Merge the dictionaries
@@ -160,7 +160,12 @@ public class CombatManager : MonoBehaviour
     }
 
     private void ProcessAttackingPhase()
-    {   
+    {
+        BattleInCombatScene();
+    }
+
+    private void BattleInCombatScene()
+    {
         if (!_beganAttacks)
         {
             _attackingBattler.OnAttackComplete += delegate() {

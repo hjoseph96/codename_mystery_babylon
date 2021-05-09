@@ -14,7 +14,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     public static Transform AudioListenerTransform {
         get {
             if (Instance.BattleScene.activeSelf)
-                return Instance.CombatManager.BattleCamera.transform;
+                return Instance.BattleSceneManager.BattleCamera.transform;
             else
                 return Instance.GridCamera.transform;
         }
@@ -62,7 +62,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     [HideInInspector] public Action OnCombatReturn;
 
 
-    [HideInInspector] public CombatManager CombatManager;
+    [HideInInspector] public BattleSceneManager BattleSceneManager;
     private GridCursor _gridCursor;
 
     private TurnDisplay _turnDisplay;
@@ -97,7 +97,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
         UIManager.Instance.GridBattleCanvas.SetCamera(_gridUICamera);
 
-        CombatManager = GetComponent<CombatManager>();
+        BattleSceneManager = GetComponent<BattleSceneManager>();
 
         GridCamera.GetComponent<EventSounds>().enabled = true;
         
@@ -174,7 +174,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
                 BattleScene.SetActive(true);
                 DisableGridLighting();
 
-                CombatManager.Load(attacker, defender);
+                BattleSceneManager.Load(attacker, defender);
             };
 
             UIManager.Instance.GridBattleCanvas.Disable();
@@ -343,8 +343,6 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
                 movingAgent.PerformAction();
 
             yield return new WaitUntil(() => movingAgent.HasTakenAction);
-
-            
         }
     }
 
@@ -366,10 +364,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
             if (enemies.Count > 0)
             {
-                
-                enemies.Sort((enemyOne, enemyTwo) => enemyOne.Speed.CompareTo(enemyTwo.Speed));
-
-
+                enemies.Sort((enemyOne, enemyTwo) => enemyOne.Priority().CompareTo( enemyTwo.Priority() ));
            
                 List<AIUnit> aiAgents = new List<AIUnit>(enemies);
                 StartCoroutine(InitiateAction(aiAgents));
@@ -411,7 +406,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             var otherEnemies = OtherEnemyUnits();
             if (otherEnemies.Count > 0)
             {
-               otherEnemies.Sort((enemyOne, enemyTwo) => enemyOne.Speed.CompareTo(enemyTwo.Speed));
+               otherEnemies.Sort((enemyOne, enemyTwo) => enemyOne.Priority().CompareTo( enemyTwo.Priority() ));
 
                 List<AIUnit> aiAgents = new List<AIUnit>(otherEnemies);
                 StartCoroutine(InitiateAction(aiAgents));

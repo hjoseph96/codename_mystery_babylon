@@ -56,10 +56,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Jump;
-    
+
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _InAir;
-    
+
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Landing;
 
@@ -178,21 +178,22 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [HideInInspector] public Action<Unit> UponDeath;
     [HideInInspector] public Action<Unit> UponLevelUp;
     [HideInInspector] public Action UponJumpLanding;
+    [HideInInspector] public Action UponAttackLaunched;
 
 
     // Stat Convenience Methods
-    public int Weight       => Stats[UnitStat.Weight].ValueInt;
-    public int Strength     => Stats[UnitStat.Strength].ValueInt;
-    public int Skill        => Stats[UnitStat.Skill].ValueInt;
-    public int Resistance   => Stats[UnitStat.Resistance].ValueInt;
-    public int MaxHealth    => Stats[UnitStat.MaxHealth].ValueInt;
-    public int Magic        => Stats[UnitStat.Magic].ValueInt;
-    public int Luck         => Stats[UnitStat.Luck].ValueInt;
-    public int Defense      => Stats[UnitStat.Defense].ValueInt;
+    public int Weight => Stats[UnitStat.Weight].ValueInt;
+    public int Strength => Stats[UnitStat.Strength].ValueInt;
+    public int Skill => Stats[UnitStat.Skill].ValueInt;
+    public int Resistance => Stats[UnitStat.Resistance].ValueInt;
+    public int MaxHealth => Stats[UnitStat.MaxHealth].ValueInt;
+    public int Magic => Stats[UnitStat.Magic].ValueInt;
+    public int Luck => Stats[UnitStat.Luck].ValueInt;
+    public int Defense => Stats[UnitStat.Defense].ValueInt;
     public int Constitution => Stats[UnitStat.Constitution].ValueInt;
-    public int Speed        => Stats[UnitStat.Speed].ValueInt;
+    public int Speed => Stats[UnitStat.Speed].ValueInt;
     public int MaxMoveRange => Stats[UnitStat.Movement].ValueInt;
-    public int Morale       => Stats[UnitStat.Morale].ValueInt;
+    public int Morale => Stats[UnitStat.Morale].ValueInt;
 
 
 
@@ -208,6 +209,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     protected List<Unit> PotentialThreats = new List<Unit>();
 
     private AnimancerComponent _animancer;
+    private UnitAttackAnimations _attackAnimations;
     private Vector2 _lookDirection;
 
     private FootstepController _footstepController;
@@ -216,11 +218,14 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     // Mecanim AnimationEvent Listeners
     private AnimationEventReceiver _OnPlayFootsteps;
+    private AnimationEventReceiver _OnAttackLaunched;
 
     private Renderer _renderer;
 
     private Material _allInOneMat;
     private static readonly int StencilRef = Shader.PropertyToID("_StencilRef");
+
+    private MiniHealthBar _healthBar;
 
     public virtual void Init()
     {
@@ -237,6 +242,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _animancer          = GetComponent<AnimancerComponent>();
         _footstepController = GetComponent<FootstepController>();
         _jumpController     = GetComponent<JumpController>();
+        _attackAnimations   = GetComponent<UnitAttackAnimations>();
+        _healthBar          = GetComponentInChildren<MiniHealthBar>();
         Portrait            = GetComponent<Portrait>();
 
         Rotate(_startingLookDirection);
@@ -245,8 +252,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         PlayAnimation(_idleAnimation);
 
         _allInOneMat = GetComponent<Renderer>().material;
+        
+        EnableSilhouette();
 
-        // TODO: load from serialization
+        // TODO: load from serialization for PlayerUnits
         Inventory = new UnitInventory(this);
         foreach (var item in _startingItems)
             Inventory.AddItem(item.GetItem());
@@ -254,8 +263,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var weapons = Inventory.GetItems<Weapon>();
         if (weapons.Length > 0)
             EquipWeapon(weapons[0]);
-
-        EnableSilhouette();
 
     }
 
@@ -336,6 +343,17 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         WorldGrid.Instance[GridPosition].Unit = this;
     }
 
+    public void PlayAttackAnimation()
+    {
+        var animations = _attackAnimations.CurrentAnimation();
+
+        var clip = animations.GetClip(_lookDirection);
+
+        var state = _animancer.Play(clip);
+
+
+    }
+
     private void PlayAnimation(DirectionalAnimationSet animations, float speed = 1f)
     {
         var clip = animations.GetClip(_lookDirection);
@@ -361,6 +379,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         _hasTakenAction = false;
         RemoveInactiveShader();
     }
+
+    public void ShowHealthBar() => _healthBar.Show(this);
+    public void HideHealthBar() => _healthBar.Hide();
 
     public void Jump()
     {
@@ -749,6 +770,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
                         // Rotate
                         Rotate(direction);
+
+                        currentMovementPoints -= 1;
                     }
                     else // End movement
                     {
@@ -1081,6 +1104,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         return Mathf.Clamp(threatLevel, 0, 1f);
     }
 
+    /************************************************************************************************************************/
+    //  Status Effects
+    /************************************************************************************************************************/
+
+
     public virtual void ApplyAuras(Vector2Int origin)
     {
         var maxRadius = _unitClass.StatusEffects.Select(se => se)
@@ -1089,13 +1117,14 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         CellsWithMyEffects = GridUtility.GetCellsInRadius(GridPosition, maxRadius).ToList();
         CellsWithMyEffects.Remove(origin);
 
+        var worldGrid = WorldGrid.Instance;
         foreach (var cell in CellsWithMyEffects)
         {
-            WorldGrid.Instance[cell].OnEnterCell += ApplyEffect;
-            WorldGrid.Instance[cell].OnExitCell += RemoveEffect;
+            worldGrid[cell].OnEnterCell += ApplyEffect;
+            worldGrid[cell].OnExitCell += RemoveEffect;
 
-            if (WorldGrid.Instance[cell].Unit != null)
-                ApplyEffect(WorldGrid.Instance[cell].Unit, WorldGrid.Instance[cell].Position);
+            if (worldGrid[cell].Unit != null)
+                ApplyEffect(worldGrid[cell].Unit, worldGrid[cell].Position);
         }
     }
 
@@ -1107,13 +1136,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         CellsWithMyEffects = GridUtility.GetCellsInRadius(GridPosition, maxRadius).ToList();
         CellsWithMyEffects.Remove(origin);
 
+        var worldGrid = WorldGrid.Instance;
+
         foreach (var cell in CellsWithMyEffects)
         {
-            WorldGrid.Instance[cell].OnEnterCell -= ApplyEffect;
-            WorldGrid.Instance[cell].OnExitCell -= RemoveEffect;
+            worldGrid[cell].OnEnterCell -= ApplyEffect;
+            worldGrid[cell].OnExitCell -= RemoveEffect;
 
-            if (WorldGrid.Instance[cell].Unit != null)
-                RemoveEffect(WorldGrid.Instance[cell].Unit, WorldGrid.Instance[cell].Position);
+            if (worldGrid[cell].Unit != null)
+                RemoveEffect(worldGrid[cell].Unit, worldGrid[cell].Position);
         }
     }
 
@@ -1160,31 +1191,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
 
     protected virtual List<Vector2Int> ThreatDetectionRange() => throw new Exception("You haven't implemented ThreatLevel for me!");
-
-    /************************************************************************************************************************/
-    //  Animation Event Listeners and Logic
-    /************************************************************************************************************************/
-
-    private void PlayFootsteps(AnimationEvent animationEvent)
-    {
-        _OnPlayFootsteps.SetFunctionName("PlayFootsteps");
-        _OnPlayFootsteps.HandleEvent(animationEvent);
-    }
-
-    private System.Action<AnimationEvent> PlayFootstepSound()
-    {
-        return delegate (AnimationEvent animationEvent)
-        {
-            var currentGridPosition = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(transform.position);
-
-            var currentSortingLayer = _renderer.sortingLayerID;
-            var worldCell = WorldGrid.Instance[currentGridPosition];
-            var walkingOnSurface = worldCell.TileAtSortingLayer(currentSortingLayer).SurfaceType;
-
-            _footstepController.PlaySound(walkingOnSurface);
-        };
-    }
-
     private void CellsWithMyEffectsGizmos()
     {
         if (CellsWithMyEffects == null)
@@ -1205,4 +1211,47 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             CellsWithMyEffectsGizmos();
         }
     }
+
+    /************************************************************************************************************************/
+    //  Animation Event Listeners and Logic
+    /************************************************************************************************************************/
+
+    private void PlayFootsteps(AnimationEvent animationEvent)
+    {
+        _OnPlayFootsteps.SetFunctionName("PlayFootsteps");
+        _OnPlayFootsteps.HandleEvent(animationEvent);
+    }
+
+    private Action<AnimationEvent> PlayFootstepSound()
+    {
+        return delegate (AnimationEvent animationEvent)
+        {
+            var currentGridPosition = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(transform.position);
+
+            var currentSortingLayer = _renderer.sortingLayerID;
+            var worldCell = WorldGrid.Instance[currentGridPosition];
+            var walkingOnSurface = worldCell.TileAtSortingLayer(currentSortingLayer).SurfaceType;
+
+            _footstepController.PlaySound(walkingOnSurface);
+        };
+    }
+
+    private void LaunchAttack(AnimationEvent animationEvent)
+    {
+        _OnAttackLaunched.SetFunctionName("LaunchAttack");
+        _OnAttackLaunched.HandleEvent(animationEvent);
+    }
+
+    private Action<AnimationEvent> InvokeAttackEvent()
+    {
+        return delegate (AnimationEvent animationEvent)
+        {
+            if (UponAttackLaunched != null)
+            {
+                UponAttackLaunched.Invoke();
+                UponAttackLaunched = null;
+            }
+        };
+    }
+
 }

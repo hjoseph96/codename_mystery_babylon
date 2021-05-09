@@ -64,8 +64,6 @@ public class AIUnit : Unit
         {
             _hasDecidedAction = true;
 
-            //group.PreferredGroupPosition()
-
             _decideAction.PerformAction();
         }
     }
