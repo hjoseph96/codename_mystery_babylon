@@ -29,11 +29,8 @@ public class OnMapCombat : MonoBehaviour
             }
             else if (OnCombatComplete != null)
             {
-                attacker.UponAttackLaunched = null;
-                defender.UponAttackLaunched = null;
-                attacker.UponAttackComplete = null;
-                defender.UponAttackComplete = null;
-
+                attacker.ClearOnMapBattlEvents();
+                defender.ClearOnMapBattlEvents();
 
                 OnCombatComplete.Invoke();
                 OnCombatComplete = null;

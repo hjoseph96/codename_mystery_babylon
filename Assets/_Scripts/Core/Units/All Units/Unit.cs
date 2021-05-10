@@ -68,6 +68,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [SerializeField] private DirectionalAnimationSet _Landing;
 
 
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Damage;
+
+
     public static int MAX_LEVEL = 40;
     [FoldoutGroup("Base Stats")]
     [SerializeField] private int _level;
@@ -367,6 +371,12 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         if (animations == _walkAnimation || animations == _runAnimation)
             _OnPlayFootsteps.Set(state, PlayFootstepSound());
+
+        if (animations == _Damage)
+            state.Events.OnEnd += delegate ()
+            {
+                SetIdle();
+            };
     }
 
     public virtual void TookAction()
@@ -1143,7 +1153,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public void PlayAttackAnimation(Unit target)
     {
         var originalOrder = OrderInLayer;
-        _renderer.sortingOrder = target.OrderInLayer + 1;
+
+        if (_facingDirection != Direction.Down)
+            _renderer.sortingOrder = target.OrderInLayer + 1;
 
         var animations = _attackAnimations.CurrentAnimation();
 
@@ -1164,6 +1176,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public void TakeDamage(int damage)
     {
+        PlayAnimation(_Damage);
+
         _flasher.Flash(Color.red, 1f, 1f, true);
 
         var currentHealthPercentage = (float)Mathf.Max(CurrentHealth - damage, 0) / MaxHealth;
@@ -1291,6 +1305,15 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
 
         isDodging = false;
+    }
+
+    public void ClearOnMapBattlEvents()
+    {
+        UponAttackLaunched      = null;
+        UponAttackAnimationEnd  = null;
+        UponAttackComplete      = null;
+        UponDodgeComplete       = null;
+        UponDamageCalcComplete  = null;
     }
 
     /************************************************************************************************************************/
