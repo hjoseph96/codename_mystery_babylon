@@ -60,6 +60,12 @@ public class AIUnit : Unit
 
     private void Update()
     {
+        if (isDodging)
+            StartCoroutine(DodgeMovement());
+
+        if (isDying)
+            StartCoroutine(DeathFade());
+
         if (IsTakingAction && !_hasDecidedAction)
         {
             _hasDecidedAction = true;

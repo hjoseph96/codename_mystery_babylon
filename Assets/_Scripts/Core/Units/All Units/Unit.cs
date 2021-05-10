@@ -11,6 +11,10 @@ using Sirenix.Serialization;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AnimancerComponent))]
+[RequireComponent(typeof(SpriteFlashTool))]
+[RequireComponent(typeof(FootstepController))]
+[RequireComponent(typeof(UnitAttackAnimations))]
 public class Unit : SerializedMonoBehaviour, IInitializable
 {
     [FoldoutGroup("Basic Properties")]
@@ -178,7 +182,13 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [HideInInspector] public Action<Unit> UponDeath;
     [HideInInspector] public Action<Unit> UponLevelUp;
     [HideInInspector] public Action UponJumpLanding;
+
+    // On Map Battle Systemm events
     [HideInInspector] public Action UponAttackLaunched;
+    [HideInInspector] public Action UponAttackAnimationEnd;
+    [HideInInspector] public Action UponAttackComplete;
+    [HideInInspector] public Action UponDodgeComplete;
+    [HideInInspector] public Action UponDamageCalcComplete;
 
 
     // Stat Convenience Methods
@@ -201,31 +211,38 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public bool IsLocalPlayerUnit => Player == Player.LocalPlayer;
 
     public int SortingLayerId => _renderer.sortingLayerID;
+    public int OrderInLayer => _renderer.sortingOrder;
 
 
     protected virtual Player Player { get; }
     protected Battler Battler;
     protected bool isMoving;
     protected List<Unit> PotentialThreats = new List<Unit>();
+    private Vector2 _lookDirection;
+    private Direction _facingDirection;
 
     private AnimancerComponent _animancer;
-    private UnitAttackAnimations _attackAnimations;
-    private Vector2 _lookDirection;
+    private SpriteFlashTool _flasher;
 
     private FootstepController _footstepController;
     private JumpController _jumpController;
     private JumpTrigger _jumpTrigger;
+    private MiniHealthBar _healthBar;
+    private UnitAttackAnimations _attackAnimations;
 
     // Mecanim AnimationEvent Listeners
     private AnimationEventReceiver _OnPlayFootsteps;
     private AnimationEventReceiver _OnAttackLaunched;
 
-    private Renderer _renderer;
+    private SpriteRenderer _renderer;
 
     private Material _allInOneMat;
     private static readonly int StencilRef = Shader.PropertyToID("_StencilRef");
 
-    private MiniHealthBar _healthBar;
+    private Vector2 _dodgePosition;
+    private Vector2 _dodgeReturnPosition;
+    protected bool isDodging = false;
+    protected bool isDying = false;
 
     public virtual void Init()
     {
@@ -238,12 +255,13 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         InitStats();
 
-        _renderer           = GetComponent<Renderer>();
+        _renderer           = GetComponent<SpriteRenderer>();
         _animancer          = GetComponent<AnimancerComponent>();
         _footstepController = GetComponent<FootstepController>();
         _jumpController     = GetComponent<JumpController>();
         _attackAnimations   = GetComponent<UnitAttackAnimations>();
         _healthBar          = GetComponentInChildren<MiniHealthBar>();
+        _flasher            = GetComponent<SpriteFlashTool>();
         Portrait            = GetComponent<Portrait>();
 
         Rotate(_startingLookDirection);
@@ -266,15 +284,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     }
 
-    public void EnableSilhouette()
-    {
-        _allInOneMat.SetInt(StencilRef, 1);
-    }
+    
 
-    public void DisableSilhouette()
-    {
-        _allInOneMat.SetInt(StencilRef, 2);
-    }
+    public void EnableSilhouette() => _allInOneMat.SetInt(StencilRef, 1);
+
+    public void DisableSilhouette() => _allInOneMat.SetInt(StencilRef, 2);
 
     private void InitStats()
     {
@@ -343,16 +357,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         WorldGrid.Instance[GridPosition].Unit = this;
     }
 
-    public void PlayAttackAnimation()
-    {
-        var animations = _attackAnimations.CurrentAnimation();
-
-        var clip = animations.GetClip(_lookDirection);
-
-        var state = _animancer.Play(clip);
-
-
-    }
 
     private void PlayAnimation(DirectionalAnimationSet animations, float speed = 1f)
     {
@@ -378,6 +382,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         _hasTakenAction = false;
         RemoveInactiveShader();
+        currentMovementPoints = MaxMoveRange;
     }
 
     public void ShowHealthBar() => _healthBar.Show(this);
@@ -829,9 +834,10 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     public bool IsPlaying => Application.IsPlaying(this);
 
 
-    // =====================
-    // || Battle Formulas ||
-    // =====================
+    /************************************************************************************************************************/
+    //  Battle Formulas
+    /************************************************************************************************************************/
+
 
     public int AttackDamage(Weapon weapon)
     {
@@ -950,6 +956,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
             return accuracy;
         }
     }
+
+    /************************************************************************************************************************/
+    //  AI Decision Making Metrics
+    /************************************************************************************************************************/
+
 
     // Where int == Player.TeamId
     protected Dictionary<int, List<Unit>> ThreateningUnits()
@@ -1102,6 +1113,181 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
 
         return Mathf.Clamp(threatLevel, 0, 1f);
+    }
+
+    /************************************************************************************************************************/
+    //  On Map Combat
+    /************************************************************************************************************************/
+
+
+    public void AttackOnMap(Unit defender)
+    {
+        // End Attack if Unit cannot Attack
+        if (!CanAttack(defender))
+            if (UponAttackComplete != null)
+            {
+                UponAttackComplete.Invoke();
+                return;
+            }
+
+        var directionToLook = DirectionUtility.GetDirection(transform.position, defender.transform.position);
+        Rotate(directionToLook);
+
+        directionToLook = DirectionUtility.GetDirection(defender.transform.position, transform.position);
+        defender.Rotate(directionToLook);
+        defender.SetIdle();
+
+        PlayAttackAnimation(defender);
+    }
+
+    public void PlayAttackAnimation(Unit target)
+    {
+        var originalOrder = OrderInLayer;
+        _renderer.sortingOrder = target.OrderInLayer + 1;
+
+        var animations = _attackAnimations.CurrentAnimation();
+
+        var clip = animations.GetClip(_lookDirection);
+        var state = _animancer.Play(clip);
+
+        _OnAttackLaunched.Set(state, InvokeAttackEvent());
+
+        if (UponAttackAnimationEnd != null)
+        {
+            _renderer.sortingOrder = originalOrder;
+            state.Events.OnEnd += UponAttackAnimationEnd;
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _flasher.Flash(Color.red, 1f, 1f, true);
+
+        var currentHealthPercentage = (float)Mathf.Max(CurrentHealth - damage, 0) / MaxHealth;
+
+        _healthBar.OnComplete += delegate ()
+        {
+            UponDeath += delegate (Unit deadSelf)
+            {
+                isDying = true;
+            };
+            DecreaseHealth(damage);
+
+            if (UponDamageCalcComplete != null && IsAlive)
+            {
+                UponDamageCalcComplete.Invoke();
+                UponDamageCalcComplete = null;
+            }
+        };
+        _healthBar.Tween(currentHealthPercentage);
+    }
+
+    //Fade Out and Destroy for now -- until looted corpses
+    protected IEnumerator DeathFade()
+    {
+        // TODO: Implement On Map dead bloody corpses for looting;
+
+        var fadeColor = _renderer.color;
+
+        var startedFadingTime = Time.time;
+        var endTime = startedFadingTime + 2.5f;
+
+        var opacity = Mathf.SmoothStep(0, 1, 2.5f * Time.smoothDeltaTime);
+        fadeColor.a = opacity;
+        _renderer.color = fadeColor;
+
+        bool HasFaded() => fadeColor.a < 0.04;
+
+        yield return new WaitUntil(HasFaded);
+
+        if (this is AIUnit)
+        {
+            var aiUnit = this as AIUnit;
+            if (aiUnit.group != null)
+                aiUnit.group.RemoveMember(aiUnit);
+        }
+        WorldGrid.Instance[GridPosition].Unit = null;
+        CampaignManager.Instance.RemoveUnit(this);
+        Destroy(this);
+
+        if (UponDamageCalcComplete != null)
+        {
+            UponDamageCalcComplete.Invoke();
+            UponDamageCalcComplete = null;
+        }
+
+        isDying = false;
+    }
+
+    public void DodgeAttack(Unit attacker)
+    {
+        _facingDirection = DirectionUtility.GetDirection(transform.position, attacker.transform.position);
+
+        _dodgeReturnPosition = transform.position;
+        _dodgePosition = transform.position;
+
+        switch (_facingDirection)
+        {
+            case Direction.Right:
+                _dodgePosition.x -= 1f;
+                break;
+            case Direction.Left:
+                _dodgePosition.x += 1f;
+                break;
+            case Direction.Up:
+                _dodgePosition.y -= .1f;
+                break;
+            case Direction.Down:
+                _dodgePosition.y += 1f;
+                break;
+        }
+
+        isDodging = true;
+    }
+
+    protected IEnumerator DodgeMovement()
+    {
+        var supportedDirections = new List<Direction> { Direction.Left, Direction.Down, Direction.Right, Direction.Up };
+        if (!supportedDirections.Contains(_facingDirection))
+            throw new Exception($"[Unit] Tried to start DodgeMovement, but supplied unsupported facingDirection: {_facingDirection}");
+
+        
+
+        var reachedTargetPosition = false;
+
+        transform.position = Vector2.Lerp(transform.position, _dodgePosition, 4f * Time.smoothDeltaTime);
+
+        var distanceToDodgePoint = Vector2.Distance(transform.position, _dodgePosition);
+        if (distanceToDodgePoint < 0.1f)
+            reachedTargetPosition = true;
+
+
+        bool HasReachTargetPosition() => reachedTargetPosition;
+
+        yield return new WaitUntil(HasReachTargetPosition);
+
+        var hasReturnedToPosition = false;
+
+        transform.position = Vector2.Lerp(_dodgePosition, _dodgeReturnPosition, 4.6f * Time.smoothDeltaTime);
+        var distanceToOriginalPosition = Vector2.Distance(transform.position, _dodgeReturnPosition);
+        if (distanceToOriginalPosition < 0.99f)
+        {
+            hasReturnedToPosition = true;
+            transform.position = _dodgeReturnPosition;
+        }
+
+        bool HasReturned() => hasReturnedToPosition;
+
+        yield return new WaitUntil(HasReturned);
+
+
+        if (UponDodgeComplete != null)
+        {
+            UponDodgeComplete.Invoke();
+            UponDodgeComplete = null;
+        }
+
+        isDodging = false;
     }
 
     /************************************************************************************************************************/

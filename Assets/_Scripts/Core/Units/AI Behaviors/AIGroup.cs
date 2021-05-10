@@ -66,6 +66,11 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
 
     }
 
+    public void RemoveMember(AIUnit groupMember)
+    {
+        if (_groupMembers.Contains(groupMember))
+            _groupMembers.Remove(groupMember);
+    }
 
     public List<Vector2Int> MoveRange()
     {
@@ -131,7 +136,7 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
     public void SetFormation()
     {
         if (TargetCell == null)
-            throw new System.Exception($"TargetCell for {this.name}[AIGroup] ");
+            throw new Exception($"TargetCell for {this.name}[AIGroup] ");
 
         for (int i = 0; i < CurrentFormation.Width; i++)
         {
@@ -257,6 +262,7 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
             position++;
         }
     }
+
 
     public void DrawFormationGizmos()
     {

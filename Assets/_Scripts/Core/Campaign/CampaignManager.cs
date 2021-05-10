@@ -154,6 +154,8 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
         _allUnits.Remove(unit);
         _unitsByTeam[unit.TeamId].Remove(unit);
+
+        WorldGrid.Instance[unit.GridPosition].Unit = null;
         Destroy(unit.gameObject);
 
         if (GridCamera.GetCameraTarget(unit.transform) != null)
@@ -342,6 +344,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             if (!movingAgent.IsTakingAction)
                 movingAgent.PerformAction();
 
+            // Wait until Unit Dies or HasTakenAction 
             yield return new WaitUntil(() => movingAgent.HasTakenAction);
         }
     }

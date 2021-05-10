@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class AttackWeakestUnit : AttackBehavior
 {
+    private bool _checkedAtkPoints = false;
+
+    private Dictionary<Vector2Int, List<Vector2Int>> _attackPoints = new Dictionary<Vector2Int, List<Vector2Int>>();
 
     public override void Execute() => executionState = AIBehaviorState.Executing;
     
@@ -13,12 +16,16 @@ public class AttackWeakestUnit : AttackBehavior
     {
         if (ExecutionState == AIBehaviorState.Executing)
         {
-            var attackPoints = AIAgent.CellsWhereICanAttackFrom();
+            if (!_checkedAtkPoints)
+            {
+                _attackPoints = AIAgent.CellsWhereICanAttackFrom();
+                _checkedAtkPoints = true;
+            }
             var sightedEnemies = AIAgent.EnemiesWithinSight();
 
-            if (attackPoints.Count > 0)
+            if (_attackPoints.Count > 0)
             {
-                var attackTargets = attackPoints.Keys.ToList();
+                var attackTargets = _attackPoints.Keys.ToList();
 
                 // If there's more than one attack target, choose the one who will get closer to death
                 if (attackTargets.Count > 1)
@@ -33,7 +40,7 @@ public class AttackWeakestUnit : AttackBehavior
                     );
 
                 var unitWhoWillTakeMostDamage = attackTargets[0];
-                var targetAtkPoints = attackPoints[unitWhoWillTakeMostDamage];
+                var targetAtkPoints = _attackPoints[unitWhoWillTakeMostDamage];
 
                 var targetCell = AIAgent.FindClosestCellTo(targetAtkPoints[0]);
 
@@ -57,10 +64,9 @@ public class AttackWeakestUnit : AttackBehavior
             }
             else
             {
-
                 executionState = AIBehaviorState.Complete;
                 AIAgent.TookAction();
-
+                _checkedAtkPoints = false;
             }
 
         }
@@ -73,7 +79,12 @@ public class AttackWeakestUnit : AttackBehavior
         
         if (targetUnit is AIUnit)
         {
-            // On Map Combat
+            OnMapCombat.OnCombatComplete += delegate ()
+            {
+                AIAgent.TookAction();
+                _checkedAtkPoints = false;
+            };
+            OnMapCombat.BeginCombat(AIAgent, targetUnit);
         }
         else
             TriggerCombatScene(targetUnit);
@@ -97,6 +108,7 @@ public class AttackWeakestUnit : AttackBehavior
         {
             // When we're back to the map, mark that the AI took action.
             AIAgent.TookAction();
+            _checkedAtkPoints = false;
         };
 
         // TODO: Put confirm sound in campaign manager

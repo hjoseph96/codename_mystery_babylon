@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 96538123705970480}
   - component: {fileID: 7467164663974598494}
   m_Layer: 0
-  m_Name: MiniHealthBar (Player)
+  m_Name: MiniHealthBar (Enemy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,9 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3941c8d82180afd4e940ce390d032d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barfill: {fileID: 151998547091177658}
+  _barFill: {fileID: 151998547091177658}
   _duration: 1.9
-  _destructionWaitDuration: 1.5
 --- !u!1 &7070119523124128898
 GameObject:
   m_ObjectHideFlags: 0
