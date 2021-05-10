@@ -70,6 +70,9 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
     {
         if (_groupMembers.Contains(groupMember))
             _groupMembers.Remove(groupMember);
+
+        if (_groupMembers.Count == 0)
+            Destroy(this);
     }
 
     public List<Vector2Int> MoveRange()

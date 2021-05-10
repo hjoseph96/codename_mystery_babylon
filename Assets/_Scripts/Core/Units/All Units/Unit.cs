@@ -1154,8 +1154,11 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
         if (UponAttackAnimationEnd != null)
         {
-            _renderer.sortingOrder = originalOrder;
-            state.Events.OnEnd += UponAttackAnimationEnd;
+            state.Events.OnEnd += delegate ()
+            {
+                UponAttackAnimationEnd.Invoke();
+                _renderer.sortingOrder = originalOrder;
+            };
         }
     }
 
