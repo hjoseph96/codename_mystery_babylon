@@ -27,8 +27,11 @@ public class DialogueChoiceGUI : MonoBehaviour
 
             dialogOption.OnChoiceSelected += delegate (Branch chosenBranch)
            {
-               OnChoiceSelected.Invoke(chosenBranch);
-               OnChoiceSelected = null;
+               if (OnChoiceSelected != null)
+               {
+                   OnChoiceSelected.Invoke(chosenBranch);
+                   OnChoiceSelected = null;
+               }
 
                this.SetActive(false);
            };

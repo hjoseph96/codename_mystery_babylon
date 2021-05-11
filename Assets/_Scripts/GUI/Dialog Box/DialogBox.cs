@@ -174,7 +174,7 @@ public class DialogBox : MonoBehaviour
             _textAnimatorPlayer.onTextShowed.AddListener(_currentPortrait.SetNeutral);
         }
 
-        _textAnimatorPlayer.onTypewriterStart.AddListener(BeginTyping);
+        BeginTyping();
         _textAnimatorPlayer.onTextShowed.AddListener(EndTyping);
     }
 

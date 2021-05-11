@@ -186,8 +186,17 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         }
     }
 
-    private void DisableGridLighting() => LightingManager2D.Get().cameraSettings[0].renderMode = CameraSettings.RenderMode.Disabled;
-    private void EnableGridLighting() => LightingManager2D.Get().cameraSettings[0].renderMode = CameraSettings.RenderMode.Draw;
+    private void DisableGridLighting()
+    {
+        var cameraPreset = LightingManager2D.Get().cameraSettings[0].GetBufferIndex(0);
+        cameraPreset.renderMode = CameraBufferPreset.RenderMode.Disabled;
+    }
+
+    private void EnableGridLighting()
+    {
+        var cameraPreset = LightingManager2D.Get().cameraSettings[0].GetBufferIndex(0);
+        cameraPreset.renderMode = CameraBufferPreset.RenderMode.Draw;
+    }
 
     // Come back to Grid Map Scene
     public void SwitchToMap(Unit attacker, Unit defender)

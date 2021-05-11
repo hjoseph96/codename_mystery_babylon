@@ -5,8 +5,8 @@
     "set_IncludedNodes": "Settings, Project, GlobalVariables, ObjectDefinitions, Packages, ScriptMethods, Hierarchy, Assets",
     "set_UseScriptSupport": "True",
     "ExportVersion": "1.2",
-    "ObjectDefinitionsHash": "6CC01CF6B9A9C33A738A748CE0588BB0D7EE807861559C06492CED0CF02D5683",
-    "ScriptFragmentsHash": "0000000000"
+    "ObjectDefinitionsHash": "3D119E3A2C31F945188E3D92CE50F6C66932924D11E32842E1195ADB91CB1C43",
+    "ScriptFragmentsHash": "2885939353"
   },
   "Project": {
     "Name": "Codename: MysteryBabylon",
@@ -14,7 +14,20 @@
     "Guid": "9a383ed9-c5ce-40c0-9655-d25754a0e480",
     "TechnicalName": "Codename_Mysterybabylon"
   },
-  "GlobalVariables": [],
+  "GlobalVariables": [
+    {
+      "Namespace": "Ch1FortInfiltration",
+      "Description": "",
+      "Variables": [
+        {
+          "Variable": "isNewToTheFort",
+          "Type": "Boolean",
+          "Value": "False",
+          "Description": "Does NPC think Artur is a new recruit"
+        }
+      ]
+    }
+  ],
   "ObjectDefinitions": [
     {
       "Type": "Point",
@@ -2648,8 +2661,8 @@
             "Text": "Untitled dialogue (04)",
             "ExternalId": "",
             "Position": {
-              "x": 17.0,
-              "y": 625.0
+              "x": -158.0,
+              "y": 600.0
             },
             "ZIndex": 2.0,
             "Size": {
@@ -2682,6 +2695,70 @@
                 "Text": "",
                 "Id": "0x01000000000005E3",
                 "Owner": "0x01000000000005DF"
+              }
+            ]
+          }
+        },
+        {
+          "Type": "Dialogue",
+          "Properties": {
+            "TechnicalName": "Dlg_E0C99151",
+            "Id": "0x010000000000064C",
+            "Parent": "0x0100000000000349",
+            "Attachments": [],
+            "DisplayName": "Follow Up Chat (After Asking if you're new)",
+            "PreviewImage": {
+              "ViewBox": {
+                "x": 0.0,
+                "y": 0.0,
+                "w": 0.0,
+                "h": 0.0
+              },
+              "Mode": "FromAsset",
+              "Asset": "0x0000000000000000"
+            },
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "",
+            "ExternalId": "",
+            "Position": {
+              "x": -158.0,
+              "y": 850.0
+            },
+            "ZIndex": 3.0,
+            "Size": {
+              "w": 291.0,
+              "h": 200.0
+            },
+            "ShortId": 3771306321,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000064F",
+                "Owner": "0x010000000000064C",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000654",
+                    "Target": "0x0100000000000652"
+                  }
+                ]
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000650",
+                "Owner": "0x010000000000064C"
               }
             ]
           }
@@ -5263,8 +5340,8 @@
                       "b": 0.8
                     },
                     "Label": "",
-                    "TargetPin": "0x01000000000005EF",
-                    "Target": "0x01000000000005EC"
+                    "TargetPin": "0x01000000000005F8",
+                    "Target": "0x01000000000005F5"
                   },
                   {
                     "Color": {
@@ -5274,8 +5351,8 @@
                       "b": 0.8
                     },
                     "Label": "",
-                    "TargetPin": "0x01000000000005F8",
-                    "Target": "0x01000000000005F5"
+                    "TargetPin": "0x0100000000000648",
+                    "Target": "0x0100000000000646"
                   }
                 ]
               }
@@ -5299,8 +5376,8 @@
             "Text": "Yes, just transferred over here. Lieutenant Clark's orders. His request for reinforcements sent me here.",
             "ExternalId": "",
             "Position": {
-              "x": 625.0,
-              "y": 175.0
+              "x": 950.0,
+              "y": 150.0
             },
             "ZIndex": 2.0,
             "Size": {
@@ -5464,8 +5541,8 @@
             "Text": "I knew it! Welcome to Fort Matthias, my boy!",
             "ExternalId": "",
             "Position": {
-              "x": 1025.0,
-              "y": 175.0
+              "x": 1350.0,
+              "y": 150.0
             },
             "ZIndex": 8.0,
             "Size": {
@@ -5519,8 +5596,8 @@
             "Text": "The food is rubbish, but the beer and wine more than make up for it. We'll have to get you an honorary drink.",
             "ExternalId": "",
             "Position": {
-              "x": 1475.0,
-              "y": 175.0
+              "x": 1800.0,
+              "y": 150.0
             },
             "ZIndex": 10.0,
             "Size": {
@@ -5574,8 +5651,8 @@
             "Text": "Hope you're not a lightweight.",
             "ExternalId": "",
             "Position": {
-              "x": 1900.0,
-              "y": 175.0
+              "x": 2225.0,
+              "y": 150.0
             },
             "ZIndex": 12.0,
             "Size": {
@@ -5716,6 +5793,517 @@
                     "Label": "",
                     "TargetPin": "0x01000000000005E3",
                     "Target": "0x01000000000005DF"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_22C4D451",
+            "Id": "0x0100000000000658",
+            "Parent": "0x010000000000064C",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "I'll come find you later on for that drink, boy!",
+            "ExternalId": "",
+            "Position": {
+              "x": 375.0,
+              "y": 250.0
+            },
+            "ZIndex": 2.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 583324753,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000065B",
+                "Owner": "0x0100000000000658"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000065C",
+                "Owner": "0x0100000000000658",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000668",
+                    "Target": "0x0100000000000665"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_8D4FD216",
+            "Id": "0x010000000000065D",
+            "Parent": "0x010000000000064C",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "How bad do you have to mess up to get booted from the vanguard?",
+            "ExternalId": "",
+            "Position": {
+              "x": 375.0,
+              "y": 600.0
+            },
+            "ZIndex": 3.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2370818582,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000660",
+                "Owner": "0x010000000000065D"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000661",
+                "Owner": "0x010000000000065D",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000677",
+                    "Target": "0x0100000000000674"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_7FC77D97",
+            "Id": "0x0100000000000665",
+            "Parent": "0x010000000000064C",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "I make it my business to break in the new recruits.",
+            "ExternalId": "",
+            "Position": {
+              "x": 750.0,
+              "y": 250.0
+            },
+            "ZIndex": 6.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2143780247,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000668",
+                "Owner": "0x0100000000000665"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000669",
+                "Owner": "0x0100000000000665",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000066F",
+                    "Target": "0x010000000000066C"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_68A83DCE",
+            "Id": "0x010000000000066C",
+            "Parent": "0x010000000000064C",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "Ahaha!",
+            "ExternalId": "",
+            "Position": {
+              "x": 1125.0,
+              "y": 250.0
+            },
+            "ZIndex": 8.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 1755856334,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000066F",
+                "Owner": "0x010000000000066C"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000670",
+                "Owner": "0x010000000000066C",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000650",
+                    "Target": "0x010000000000064C"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_FAF2208A",
+            "Id": "0x0100000000000674",
+            "Parent": "0x010000000000064C",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "You should count yourself lucky to be stuck with us.",
+            "ExternalId": "",
+            "Position": {
+              "x": 750.0,
+              "y": 600.0
+            },
+            "ZIndex": 10.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 4210172042,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000677",
+                "Owner": "0x0100000000000674"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000678",
+                "Owner": "0x0100000000000674",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000067E",
+                    "Target": "0x010000000000067B"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_97A9A162",
+            "Id": "0x010000000000067B",
+            "Parent": "0x010000000000064C",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "I cannot think of any worse cunts than those arrogant bastards in the vanguard.",
+            "ExternalId": "",
+            "Position": {
+              "x": 1125.0,
+              "y": 600.0
+            },
+            "ZIndex": 12.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 2544476514,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000067E",
+                "Owner": "0x010000000000067B"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x010000000000067F",
+                "Owner": "0x010000000000067B",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000685",
+                    "Target": "0x0100000000000682"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "DialogueFragment",
+          "Properties": {
+            "TechnicalName": "DFr_C91B401E",
+            "Id": "0x0100000000000682",
+            "Parent": "0x010000000000064C",
+            "MenuText": "",
+            "StageDirections": "",
+            "Speaker": "0x01000000000003CA",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "Text": "The reserve forces are much better company.",
+            "ExternalId": "",
+            "Position": {
+              "x": 1500.0,
+              "y": 600.0
+            },
+            "ZIndex": 14.0,
+            "Size": {
+              "w": 225.0,
+              "h": 200.0
+            },
+            "ShortId": 3374006302,
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000685",
+                "Owner": "0x0100000000000682"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000686",
+                "Owner": "0x0100000000000682",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000650",
+                    "Target": "0x010000000000064C"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "Condition",
+          "Properties": {
+            "TechnicalName": "Cnd_8F172E54",
+            "Id": "0x0100000000000652",
+            "Parent": "0x010000000000064C",
+            "DisplayName": "Ch1FortInfiltration.isNewToTheFort = ...",
+            "Text": "",
+            "ExternalId": "",
+            "Position": {
+              "x": -50.0,
+              "y": 475.0
+            },
+            "ZIndex": 0.0,
+            "Size": {
+              "w": 225.0,
+              "h": 100.0
+            },
+            "ShortId": 2400661076,
+            "Expression": "Ch1FortInfiltration.isNewToTheFort == true",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000654",
+                "Owner": "0x0100000000000652"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000655",
+                "Owner": "0x0100000000000652",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x010000000000065B",
+                    "Target": "0x0100000000000658"
+                  }
+                ]
+              },
+              {
+                "Text": "",
+                "Id": "0x0100000000000656",
+                "Owner": "0x0100000000000652",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x0100000000000660",
+                    "Target": "0x010000000000065D"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "Type": "Instruction",
+          "Properties": {
+            "TechnicalName": "Ins_84A2CF83",
+            "Id": "0x0100000000000646",
+            "Parent": "0x01000000000005DF",
+            "DisplayName": "Ch1FortInfiltration.isNewToTheFort = ...",
+            "Text": "",
+            "ExternalId": "",
+            "Position": {
+              "x": 575.0,
+              "y": 225.0
+            },
+            "ZIndex": 20.0,
+            "Size": {
+              "w": 225.0,
+              "h": 100.0
+            },
+            "ShortId": 2225262467,
+            "Expression": "Ch1FortInfiltration.isNewToTheFort = true",
+            "Color": {
+              "r": 0.5764706,
+              "g": 0.75686276,
+              "b": 0.8
+            },
+            "InputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000648",
+                "Owner": "0x0100000000000646"
+              }
+            ],
+            "OutputPins": [
+              {
+                "Text": "",
+                "Id": "0x0100000000000649",
+                "Owner": "0x0100000000000646",
+                "Connections": [
+                  {
+                    "Color": {
+                      "a": 1.0,
+                      "r": 0.5764706,
+                      "g": 0.75686276,
+                      "b": 0.8
+                    },
+                    "Label": "",
+                    "TargetPin": "0x01000000000005EF",
+                    "Target": "0x01000000000005EC"
                   }
                 ]
               }
@@ -6267,7 +6855,14 @@
       {
         "Id": "0x030000002B4F4C54",
         "TechnicalName": "GlobalVariables",
-        "Type": "GlobalVariables"
+        "Type": "GlobalVariables",
+        "Children": [
+          {
+            "Id": "0x0100000000000643",
+            "TechnicalName": "",
+            "Type": "VariableSet"
+          }
+        ]
       },
       {
         "Id": "0x0300000043CE43F7",
@@ -6284,6 +6879,110 @@
                 "TechnicalName": "Dlg_C15084DA",
                 "Type": "Dialogue",
                 "Children": [
+                  {
+                    "Id": "0x01000000000005DF",
+                    "TechnicalName": "Dlg_4D6E58A0",
+                    "Type": "Dialogue",
+                    "Children": [
+                      {
+                        "Id": "0x01000000000005E6",
+                        "TechnicalName": "DFr_2984A56C",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000646",
+                        "TechnicalName": "Ins_84A2CF83",
+                        "Type": "Instruction"
+                      },
+                      {
+                        "Id": "0x01000000000005F5",
+                        "TechnicalName": "DFr_D7B69804",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000005EC",
+                        "TechnicalName": "DFr_4258B2C5",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x01000000000005FD",
+                        "TechnicalName": "DFr_3121A6B9",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000604",
+                        "TechnicalName": "DFr_D07241B7",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000619",
+                        "TechnicalName": "DFr_90C9311F",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x010000000000060B",
+                        "TechnicalName": "DFr_96E5FC1F",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000620",
+                        "TechnicalName": "DFr_56439052",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000612",
+                        "TechnicalName": "DFr_EDDD0FB5",
+                        "Type": "DialogueFragment"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": "0x010000000000064C",
+                    "TechnicalName": "Dlg_E0C99151",
+                    "Type": "Dialogue",
+                    "Children": [
+                      {
+                        "Id": "0x0100000000000652",
+                        "TechnicalName": "Cnd_8F172E54",
+                        "Type": "Condition"
+                      },
+                      {
+                        "Id": "0x0100000000000658",
+                        "TechnicalName": "DFr_22C4D451",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x010000000000065D",
+                        "TechnicalName": "DFr_8D4FD216",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000665",
+                        "TechnicalName": "DFr_7FC77D97",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000674",
+                        "TechnicalName": "DFr_FAF2208A",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x010000000000066C",
+                        "TechnicalName": "DFr_68A83DCE",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x010000000000067B",
+                        "TechnicalName": "DFr_97A9A162",
+                        "Type": "DialogueFragment"
+                      },
+                      {
+                        "Id": "0x0100000000000682",
+                        "TechnicalName": "DFr_C91B401E",
+                        "Type": "DialogueFragment"
+                      }
+                    ]
+                  },
                   {
                     "Id": "0x01000000000003CE",
                     "TechnicalName": "Dlg_F47B283B",
@@ -6342,58 +7041,6 @@
                       {
                         "Id": "0x010000000000041B",
                         "TechnicalName": "DFr_D71FB1B5",
-                        "Type": "DialogueFragment"
-                      }
-                    ]
-                  },
-                  {
-                    "Id": "0x01000000000005DF",
-                    "TechnicalName": "Dlg_4D6E58A0",
-                    "Type": "Dialogue",
-                    "Children": [
-                      {
-                        "Id": "0x01000000000005E6",
-                        "TechnicalName": "DFr_2984A56C",
-                        "Type": "DialogueFragment"
-                      },
-                      {
-                        "Id": "0x01000000000005EC",
-                        "TechnicalName": "DFr_4258B2C5",
-                        "Type": "DialogueFragment"
-                      },
-                      {
-                        "Id": "0x01000000000005F5",
-                        "TechnicalName": "DFr_D7B69804",
-                        "Type": "DialogueFragment"
-                      },
-                      {
-                        "Id": "0x01000000000005FD",
-                        "TechnicalName": "DFr_3121A6B9",
-                        "Type": "DialogueFragment"
-                      },
-                      {
-                        "Id": "0x0100000000000604",
-                        "TechnicalName": "DFr_D07241B7",
-                        "Type": "DialogueFragment"
-                      },
-                      {
-                        "Id": "0x0100000000000619",
-                        "TechnicalName": "DFr_90C9311F",
-                        "Type": "DialogueFragment"
-                      },
-                      {
-                        "Id": "0x010000000000060B",
-                        "TechnicalName": "DFr_96E5FC1F",
-                        "Type": "DialogueFragment"
-                      },
-                      {
-                        "Id": "0x0100000000000612",
-                        "TechnicalName": "DFr_EDDD0FB5",
-                        "Type": "DialogueFragment"
-                      },
-                      {
-                        "Id": "0x0100000000000620",
-                        "TechnicalName": "DFr_56439052",
                         "Type": "DialogueFragment"
                       }
                     ]

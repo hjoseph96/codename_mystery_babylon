@@ -75,10 +75,7 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
 
     private JumpController _jumpController;
 
-    private JumpTrigger _jumpTrigger;
     private float _startedJumpTime;
-    private Vector2 _jumpDestination;
-    private bool _reachedJumpApex = false;
     private bool _spawnedLandingEffect = false;
 
     private Vector2 _autoMoveTarget = Vector2.negativeInfinity;
@@ -158,6 +155,8 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
         _jumpController.UponLanding += delegate ()
         {
             Play(_Landing);
+            _state = ControllerState.Ground;
+
 
             _jumpController.UponLanding = null;
         };

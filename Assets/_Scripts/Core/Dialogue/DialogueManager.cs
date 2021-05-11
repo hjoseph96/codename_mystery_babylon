@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,19 +45,25 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     private DialogType _dialogType;
     public DialogType DialogType { get => _dialogType; }
 
+    public bool IsDialogShown =>  _currentPortraitDialogBoxes.Count > 0 || _worldCanvas.ShownDialogBoxes.Count > 0;
+
     public bool IsTyping => _currentPortraitDialogBoxes.Any((dialogBox) => dialogBox.IsTyping) || _worldCanvas.IsTyping;
 
     private MapDialogue _currentMapDialog;
 
     private bool _multipleChoice = false;
     private bool _dialogIsFinished = true;
+    public bool DialogIsfinished { get => _dialogIsFinished; }
     
 
     // Currently Shown Portrait Boxes, max of 2 (Left and Right corners of Canvas)
     private List<DialogBox> _currentPortraitDialogBoxes = new List<DialogBox>();
 
-    [Button("Play")]
-    public void Play() => _flowPlayer.Play();
+    private bool _isLastFragment = false;
+
+    [HideInInspector] public Action OnDialogueComplete;
+
+    public void Play() => _flowPlayer.Play(-99);
 
     // Start is called before the first frame update
     public void Init()
@@ -69,7 +76,7 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         var chapterDialogueObj = _articyRef.GetObject<ArticyObject>();
 
         if (chapterDialogueObj is Dialogue == false)
-            throw new System.Exception("[DialogueManager] Assigned ArticyRef is not a Dialogue...");
+            throw new Exception("[DialogueManager] Assigned ArticyRef is not a Dialogue...");
 
         var chapterDialogue = chapterDialogueObj as Dialogue;
 
@@ -79,18 +86,19 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
     public void OnFlowPlayerPaused(IFlowObject aObject)
     {
-        if (aObject is IDialogue)
+        if (aObject is IDialogue || aObject is IInstruction)
         {
             _flowPlayer.Play();
             return;
         }
 
+        if (aObject is IOutputPin)
+            EndDialogSequence();
+
         var objWithText = aObject as IObjectWithText;
         if (objWithText != null)
         {
             _dialogIsFinished = false;
-
-            var dialogFrament = objWithText as DialogueFragment;
 
             if (DialogType == DialogType.Portrait)
                 ShowDialogBox(objWithText);
@@ -102,20 +110,17 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     public void OnBranchesUpdated(IList<Branch> aBranches)
     {
         _dialogIsFinished = true;
+
         foreach (var branch in aBranches)
         {
             if (branch.Target is IDialogueFragment)
                 _dialogIsFinished = false;
-        }
+            else if (branch.Target is IOutputPin)
+            {
+                _dialogIsFinished = false;
+                _isLastFragment = true;
+            }
 
-        if (_dialogIsFinished)
-        {
-            ClearPortraitDialogBoxes();
-            _worldCanvas.ClearDialogBoxes();
-            if (_currentMapDialog != null)
-                _currentMapDialog.Reset();
-
-            Debug.Log("Breakpoint");
         }
 
         if (aBranches.Count > 1)
@@ -123,13 +128,27 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     }
 
 
+    private void EndDialogSequence()
+    {
+        _isLastFragment = false;
 
-    public void SetDialogueToPlay(ArticyRef dialogueRef, DialogType dialogType, MapDialogue mapDialogue)
+        ClearPortraitDialogBoxes();
+        _worldCanvas.ClearDialogBoxes();
+
+        if (_currentMapDialog != null)
+            _currentMapDialog.Reset();
+
+        if (OnDialogueComplete != null)
+            OnDialogueComplete.Invoke();
+    }
+
+
+    public void SetDialogueToPlay(ArticyObject dialogueRef, DialogType dialogType, MapDialogue mapDialogue)
     {
         _dialogType         = dialogType;
         _currentMapDialog   = mapDialogue;
 
-        _flowPlayer.startOn = dialogueRef;
+        _flowPlayer.StartOn = dialogueRef;
     }
 
     
@@ -138,11 +157,11 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     
     public IEnumerator ShowDialogChoices(IList<Branch> aBranches)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSecondsRealtime(2f);
 
-        bool NotTyping() => IsTyping == false;
-        
-        yield return new WaitUntil(NotTyping);
+        yield return new WaitUntil(() => IsDialogShown);
+
+        yield return new WaitUntil(() => !IsTyping);
 
         _multipleChoice = true;
 
@@ -204,7 +223,7 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         var matchingParticipants = _currentMapDialog.Participants.Where((entityReference) => entityReference.EntityName == articyEntity.DisplayName);
 
         if (matchingParticipants.Count() == 0)
-            throw new System.Exception($"[DialogManager] There's no participant matching the DisplayName: {articyEntity.DisplayName}...");
+            throw new Exception($"[DialogManager] There's no participant matching the DisplayName: {articyEntity.DisplayName}...");
 
         var entityRef = matchingParticipants.First();
 
@@ -263,13 +282,13 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
                 return SpawnPortraitDialogBox(portrait, Direction.Right);
 
 
-        throw new System.Exception("[DialogueManager] Unable to find a Dialog Box to spawn or update...");
+        throw new Exception("[DialogueManager] Unable to find a Dialog Box to spawn or update...");
     }
 
     private DialogBox SpawnPortraitDialogBox(AnimatedPortrait portrait, Direction directionToSpawn)
     {
         if (directionToSpawn != Direction.Left && directionToSpawn != Direction.Right)
-            throw new System.Exception($"[DialogManager] Given Direction: '{directionToSpawn}' is invalid. Only Direction.Left or Direction.Left is allowed.");
+            throw new Exception($"[DialogManager] Given Direction: '{directionToSpawn}' is invalid. Only Direction.Left or Direction.Left is allowed.");
 
         var dialogCanvas = UIManager.Instance.GridBattleCanvas;
 

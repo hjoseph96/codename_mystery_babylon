@@ -15,17 +15,18 @@ public class MapDialogue : SerializedMonoBehaviour
     public System.Action<GameObject> OnDialogueBegin;
 
 
-    private ArticyReference _articyReference;
-    private ArticyRef _articyRef;
+    private ArticyDataContainer _articyData;
     private bool _hasStarted        = false;
     private bool _isWithinTrigger   = false;
     private GameObject _player;
 
+    private int _currentDialogIndex = 0;
+    private ArticyObject _currentDialogue;
     // Start is called before the first frame update
     void Start()
     {
-        _articyReference = GetComponent<ArticyReference>();
-        _articyRef = (ArticyRef)_articyReference.GetObject<ArticyObject>();
+        _articyData = GetComponent<ArticyDataContainer>();
+        _currentDialogue = _articyData.References[_currentDialogIndex];
     }
 
     private void Update()
@@ -66,14 +67,21 @@ public class MapDialogue : SerializedMonoBehaviour
 
     public void StartDialogue()
     {
-        DialogueManager.Instance.SetDialogueToPlay(_articyRef, DialogType.Map, this);
+        DialogueManager.Instance.OnDialogueComplete += delegate ()
+        {
+            if (_articyData.References.Count - 1 > _currentDialogIndex)
+            {
+                _currentDialogIndex++;
+                _currentDialogue = _articyData.References[_currentDialogIndex];
+                
+                DialogueManager.Instance.OnDialogueComplete = null;
+            }
+        };
+        DialogueManager.Instance.SetDialogueToPlay(_currentDialogue, DialogType.Map, this);
         DialogueManager.Instance.Play();
 
         _hasStarted = true;
     }
 
-    public void Reset()
-    {
-        _hasStarted = false;
-    }
+    public void Reset() => _hasStarted = false;
 }

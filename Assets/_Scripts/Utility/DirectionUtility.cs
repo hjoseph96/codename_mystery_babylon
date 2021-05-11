@@ -31,8 +31,20 @@ public class DirectionUtility
 
     public static Vector2 GetFacing(Vector3 currentPosition, Vector3 targetDirection)
     {
+        var horizontal = false;
+        var vertical = false;
+        
         var difference = currentPosition - targetDirection;
+        Vector2 rawFacing = difference;
+
+        if (Mathf.Abs(rawFacing.x) > Mathf.Abs(rawFacing.y))
+            horizontal = true;
+
+        if (Mathf.Abs(rawFacing.y) > Mathf.Abs(rawFacing.x))
+            vertical = true;
+
         var facing = new Vector2(Mathf.Clamp(difference.x, -1, 1), Mathf.Clamp(difference.y, -1, 1));
+
 
         if (facing.x < 0 && facing.x != -1)
             facing.x = -1;
@@ -45,6 +57,12 @@ public class DirectionUtility
 
         if (facing.y > 0 && facing.y != 1)
             facing.y = 1;
+
+        if (horizontal)
+            facing.y = 0;
+
+        if (vertical)
+            facing.x = 0;
 
         return facing;
     }

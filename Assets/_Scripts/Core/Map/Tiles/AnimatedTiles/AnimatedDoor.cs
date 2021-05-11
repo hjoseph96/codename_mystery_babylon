@@ -117,6 +117,7 @@ public class AnimatedDoor : GridAnimatedTile
     private void OpenAnimationEvent()
     {
         _colliderGroup.Revert();
+        tileCollider.enabled = false;
 
         if (_changeSortingLayerUponOpening)
             spriteRenderer.sortingLayerName = _openSortingLayer;
@@ -128,6 +129,7 @@ public class AnimatedDoor : GridAnimatedTile
     private void CloseAnimationEvent()
     {
         _colliderGroup.Apply();
+        tileCollider.enabled = true;
 
         if (_changeSortingLayerUponClosing)
             spriteRenderer.sortingLayerName = _closedSortingLayer;

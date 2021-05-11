@@ -1154,7 +1154,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     {
         var originalOrder = OrderInLayer;
 
-        if (_facingDirection != Direction.Down)
+        var lookingDown = _lookDirection.y < 0;
+        if (!lookingDown)
             _renderer.sortingOrder = target.OrderInLayer + 1;
 
         var animations = _attackAnimations.CurrentAnimation();
