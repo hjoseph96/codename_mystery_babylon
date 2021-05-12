@@ -67,7 +67,6 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Landing;
 
-
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Damage;
 

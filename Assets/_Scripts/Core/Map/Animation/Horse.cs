@@ -17,21 +17,34 @@ public enum HorseColor
 
 public class Horse : MonoBehaviour
 {
+    [FoldoutGroup("Basic Information")]
     [SerializeField]
     private HorseColor _color;
     public HorseColor Color { get => _color; }
 
+    [FoldoutGroup("Basic Information")]
+    [SerializeField]
+    private GameObject _harnessStrap;
+    
+    [FoldoutGroup("Animations")]
     [SerializeField]
     private DirectionalAnimationSet _horseIdles;
-    
+
+    [FoldoutGroup("Animations")]
     [SerializeField]
     private DirectionalAnimationSet _horseWalks;
-    
+
+    [FoldoutGroup("Animations")]
     [SerializeField]
     private DirectionalAnimationSet _horseRuns;
 
+    [FoldoutGroup("Colliders")]
     [SerializeField]
-    private GameObject _harnessStrap;
+    private Collider2D _horizontalCollider;
+
+    [FoldoutGroup("Colliders")]
+    [SerializeField]
+    private Collider2D _verticalCollider;
 
 
 
@@ -124,11 +137,37 @@ public class Horse : MonoBehaviour
 
     public void LookAt(Vector2 position) => _Facing = position - (Vector2)transform.position;
 
-    public void Rotate(Direction direction) => LookAt((Vector2)transform.position + direction.ToVector());
+    public void Rotate(Direction direction)
+    {
+        var horizontalDirections = new List<Direction> { Direction.Left, Direction.Right };
+        var verticalDirections = new List<Direction> { Direction.Up, Direction.Down };
+        
+        if (horizontalDirections.Contains(direction))
+        {
+            _horizontalCollider.enabled = true;
+            _verticalCollider.enabled = false;
+        }
 
+        if (verticalDirections.Contains(direction))
+        {
+            _verticalCollider.enabled = true;
+            _horizontalCollider.enabled = false;
+        }
 
-    public void HideHarnessStrap() => _harnessStrap.SetActive(false);
-    public void ShowHarnessStrap() => _harnessStrap.SetActive(true);
+        LookAt((Vector2)transform.position + direction.ToVector());
+    }
+
+    public void HideHarnessStrap()
+    {
+        if (_harnessStrap != null)
+            _harnessStrap.SetActive(false);
+    }
+
+    public void ShowHarnessStrap()
+    {
+        if (_harnessStrap != null)
+            _harnessStrap.SetActive(true);
+    }
 
     public void SetOrderInLayer(int orderInLayer) => _renderer.sortingOrder = orderInLayer;
 

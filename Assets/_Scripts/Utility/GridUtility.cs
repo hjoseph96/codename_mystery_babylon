@@ -829,6 +829,79 @@ public static class GridUtility
     }
 
     /// <summary>
+    /// Finds path for unit between 2 points using A*
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="goal"></param>
+    /// <param name="maxCost">Optional max pathfinding depth</param>
+    /// <returns></returns>
+    public static GridPath FindPath(int sortingLayerID, Vector2Int start, Vector2Int goal, int maxCost = int.MaxValue)
+    {
+        var capacity = ((Mathf.Abs(goal.x - start.x) + 1) * (Mathf.Abs(goal.y - start.y) + 1)) >> 1;
+        var frontier = new PriorityQueue<Vector2Int>(capacity);
+        var runningCost = new Dictionary<Vector2Int, float>(capacity);
+        var cameFrom = new Dictionary<Vector2Int, Vector2Int>(capacity);
+
+        if (!WorldGrid.Instance.PointInGrid(goal))
+            return null;
+
+        frontier.Enqueue(start, 0f);
+        runningCost[start] = 0f;
+
+        // We use classic A*
+        while (frontier.Length > 0)
+        {
+            var currentPosition = frontier.Dequeue();
+
+
+            var currentCost = runningCost[currentPosition];
+            var offsets = GetNeighboursOffsets(sortingLayerID, currentPosition);
+            // Reached Goal
+            if (currentPosition == goal)
+            {
+                var path = RestorePath(start, currentPosition, cameFrom);
+                var travelCost = runningCost[currentPosition];
+                var gridPath = new GridPath(path, travelCost);
+                return gridPath;
+            }
+
+            for (var i = 0; i < offsets.Length; i++)
+            {
+                var offset = offsets[i];
+                var neighbourPosition = currentPosition + offset;
+
+                // Check if not out of bounds
+                if (!WorldGrid.Instance.PointInGrid(neighbourPosition))
+                    continue;
+
+
+                // Check if cell free
+                var otherUnit = WorldGrid.Instance[neighbourPosition].Unit;
+                if (otherUnit != null)
+                    continue;
+
+                var neighbourCost = 1;
+                var newCost = currentCost + neighbourCost;
+                if (newCost > maxCost || runningCost.TryGetValue(neighbourPosition, out var oldCost) && newCost > oldCost)
+                    continue;
+
+                runningCost[neighbourPosition] = newCost;
+                cameFrom[neighbourPosition] = currentPosition;
+
+                var heuristic = ManhattanHeuristicWithInverseTieBreaks(neighbourPosition, goal);
+                var priority = newCost + heuristic;
+
+                if (frontier.Contains(neighbourPosition))
+                    frontier[neighbourPosition] = priority;
+                else
+                    frontier.Enqueue(neighbourPosition, priority);
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Finds path for unit from its current position to goal
     /// </summary>
     /// <param name="unit"></param>

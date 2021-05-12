@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ public class CarriageController : SerializedMonoBehaviour
 
 
     [FoldoutGroup("Animations"), SerializeField, ValueDropdown("ValidDirections")]
-    private Direction startingLookDirection;
+    private Direction _startingLookDirection;
 
     private List<Direction> ValidDirections = new List<Direction>
     {
@@ -53,6 +54,11 @@ public class CarriageController : SerializedMonoBehaviour
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _CarriageMoving;
 
+    [FoldoutGroup("Colliders")]
+    [SerializeField] private GameObject _horizontalColliders;
+    [FoldoutGroup("Colliders")]
+    [SerializeField] private GameObject _verticalColliders;
+
     [FoldoutGroup("Audio"), SerializeField, SoundGroup]
     private string _movingSound;
 
@@ -67,18 +73,32 @@ public class CarriageController : SerializedMonoBehaviour
     private List<GameObject> _horseHolders = new List<GameObject>();
     public List<GameObject> WoodenHorseHolders { get => _horseHolders; }
 
+    private SpriteRenderer _renderer;
     private TimeSynchronisationGroup _MovementSynchronisation;
     private DirectionalAnimationSet _CurrentAnimationSet;
     private AnimancerComponent _animancer;
     private Vector2 _Movement;
     private Vector2 _Facing = Vector2.down;
 
+    [SerializeField]
+    private Vector2 _movementTarget = Vector2.zero;
+
+    [SerializeField]
+    private bool _isRunning = false;
+    private bool _isMoving = false;
+    private bool _hasPathBeenSet = false;
+    public Vector2Int GridPosition { get; private set; }
+
     private List<CachedPositions> _spritePositions = new List<CachedPositions>();
+
+    [HideInInspector] public Action OnFinishedMoving;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        _renderer = GetComponent<SpriteRenderer>();
+
         foreach (var horse in GetComponentsInChildren<Horse>())
             _horses.Add(horse);
 
@@ -88,7 +108,12 @@ public class CarriageController : SerializedMonoBehaviour
         foreach (var cachedPosition in GetComponentsInChildren<CachedPositions>())
             _spritePositions.Add(cachedPosition);
 
+        LookAt(_startingLookDirection);
+
         Play(_CarriageIdles);
+        MakeHorsesIdle();
+
+        GridPosition = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(transform.position);
     }
 
     // Update is called once per frame
@@ -97,6 +122,7 @@ public class CarriageController : SerializedMonoBehaviour
         switch (ControlMode)
         {
             case CarriageControlMode.Auto:
+                HandleAutoMovement();
                 break;
             case CarriageControlMode.Player:
                 HandlePlayerMovement();
@@ -110,7 +136,6 @@ public class CarriageController : SerializedMonoBehaviour
 
         // Store the current time.
         _MovementSynchronisation.StoreTime(_CurrentAnimationSet);
-
 
         var directionalClip = animations.GetClip(_Facing);
         if (!_animancer.IsPlayingClip(directionalClip))
@@ -139,8 +164,8 @@ public class CarriageController : SerializedMonoBehaviour
 
             var speed       = _walkSpeed;
             var animSpeed   = 1f;
-            var isRunning   = Input.GetButton("Fire3"); // Left Shift by default.
-            if (isRunning)
+            _isRunning   = Input.GetButton("Fire3"); // Left Shift by default.
+            if (_isRunning)
             {
                 speed       = _runSpeed;
                 animSpeed   = _runAnimationSpeed;
@@ -148,8 +173,6 @@ public class CarriageController : SerializedMonoBehaviour
             }
             else
                 MakeHorsesWalk();
-
-
 
             transform.Translate(_Movement.normalized * speed * Time.deltaTime);
 
@@ -161,9 +184,124 @@ public class CarriageController : SerializedMonoBehaviour
         }
     }
 
+    private void HandleAutoMovement()
+    {
+        if (_movementTarget != Vector2.zero)
+        {
+            if (!_hasPathBeenSet)
+            {
+
+                var targetCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(_movementTarget);
+                var path = GridUtility.FindPath(_renderer.sortingLayerID, GridPosition, targetCell);
+                StartCoroutine(MovementCoroutine(path));
+
+                _hasPathBeenSet = true;
+            }
+        }
+    }
+
+    public IEnumerator MovementCoroutine(GridPath path)
+    {
+        var nextPathGridPosition = GridPosition;
+        var nextPathPosition = transform.position;
+        var reachedGoal = false;
+
+        var goal = path.Goal;
+
+
+        if (WorldGrid.Instance[GridPosition].Unit != null)
+            WorldGrid.Instance[GridPosition].Unit = null;
+
+
+        DirectionalAnimationSet moveAnimation = _CarriageMoving;
+
+        _isMoving = true;
+        while (!reachedGoal)
+        {
+            var speed = _walkSpeed * Time.deltaTime;
+            var animSpeed = 1f;
+            if (_isRunning)
+            {
+                speed       = _runSpeed * Time.deltaTime;
+                animSpeed = _runAnimationSpeed;
+                MakeHorsesRun(_runAnimationSpeed);
+            }
+            else
+                MakeHorsesWalk();
+
+            if (!_animancer.IsPlaying(moveAnimation.GetClip(_Facing)))
+                Play(moveAnimation, animSpeed);
+
+            while (speed > 0.0001f)
+            {
+                speed = MoveTo(nextPathPosition, speed);
+                if (speed > 0.0001f)
+                {
+                    if (path.Length > 0)
+                    {
+                        // Get new destination position and direction
+                        var newGridPosition = path.Pop();
+                        var direction = GridUtility.GetDirection(nextPathGridPosition, newGridPosition, true);
+
+                        nextPathPosition = WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)newGridPosition);
+                        nextPathGridPosition = newGridPosition;
+
+                        // Rotate
+                        LookAt(direction);
+                    }
+                    else // End movement
+                    {
+                        reachedGoal = true;
+
+                        break;
+                    }
+                }
+            }
+
+            yield return new WaitForEndOfFrame();
+
+        }
+
+        Play(_CarriageIdles);
+        MakeHorsesIdle();
+
+        GridPosition = goal;
+
+
+        _isMoving = false;
+
+        if (OnFinishedMoving != null)
+            OnFinishedMoving.Invoke();
+
+    }
+
+    private float MoveTo(Vector2 goal, float speed)
+    {
+        if (speed <= 0.0001f)
+            return 0;
+
+        var distance = (transform.position - (Vector3)goal).magnitude;
+        if (distance <= speed)
+        {
+            // Move to destination instantly
+            transform.position = goal;
+            speed -= distance;
+        }
+        else
+        {
+            var moveVector = ((Vector3)goal - transform.position).normalized * speed;
+            transform.Translate(moveVector);
+            speed = 0;
+        }
+
+        return speed;
+    }
+
     private void SwapPositionForFacing()
     {
         var cachedPositions = GetCachedPositionsByDirection();
+
+        SetColliders();
 
         var horseHolders    = _horseHolders;
 
@@ -174,10 +312,31 @@ public class CarriageController : SerializedMonoBehaviour
             foreach (var horseBar in horseBarPositions)
                 horseBar.SetActive(false);
 
-        if (_Movement == Direction.Up.ToVector())
-            SetHorsesOrderInLayer(20);
+        SetHorsesInPosition(horsePositions);
+
+        if (horseBarPositions.Count() > 0)
+            SetHorseBarsInPosition(horseBarPositions.First());
         else
-            SetHorsesOrderInLayer(24);
+            HideHorseHolders();
+
+    }
+
+    private void LookAt(Direction direction)
+    {
+        _Facing = direction.ToVector();
+
+        var cachedPositions = GetCachedPositionsByDirection(direction);
+        SetColliders();
+
+
+        var horseHolders = _horseHolders;
+
+        var horsePositions = cachedPositions.Where((positions) => positions.GroupName == "Horses").First();
+        var horseBarPositions = cachedPositions.Where((positions) => positions.GroupName == "Horse Bars");
+
+        if (horseBarPositions.Count() == 0)
+            foreach (var horseBar in horseBarPositions)
+                horseBar.SetActive(false);
 
         SetHorsesInPosition(horsePositions);
 
@@ -186,13 +345,21 @@ public class CarriageController : SerializedMonoBehaviour
         else
             HideHorseHolders();
 
-
     }
 
-    private void SetHorsesOrderInLayer(int orderInLayer)
+    private void SetColliders()
     {
-        foreach (var horse in _horses)
-            horse.SetOrderInLayer(orderInLayer);
+        if (_Facing.x > 0 || _Facing.x < 0)
+        {
+            _horizontalColliders.SetActive(true);
+            _verticalColliders.SetActive(false);
+        }
+
+        if (_Facing.y > 0 || _Facing.y < 0)
+        {
+            _verticalColliders.SetActive(true);
+            _horizontalColliders.SetActive(false);
+        }
     }
 
     private void SetHorsesInPosition(CachedPositions cache)
@@ -210,6 +377,11 @@ public class CarriageController : SerializedMonoBehaviour
             horse.Rotate(cache.Direction);
             horse.PlayCurrentAnimSet();
             horse.SetActive(true);
+
+            if (_Facing.y > 0 || _Facing.y < 0)
+                horse.HideHarnessStrap();
+            else
+                horse.ShowHarnessStrap();
 
             movedHorses.Add(horse);
         }
@@ -254,6 +426,25 @@ public class CarriageController : SerializedMonoBehaviour
             return _spritePositions.Where((pos) => pos.Direction == Direction.Down).ToList();
         
         if (_Movement == Direction.Right.ToVector())
+            return _spritePositions.Where((pos) => pos.Direction == Direction.Right).ToList();
+
+        return cachedPositions;
+    }
+
+    private List<CachedPositions> GetCachedPositionsByDirection(Direction direction)
+    {
+        var cachedPositions = new List<CachedPositions>();
+
+        if (direction == Direction.Left)
+            return _spritePositions.Where((pos) => pos.Direction == Direction.Left).ToList();
+
+        if (direction == Direction.Up)
+            return _spritePositions.Where((pos) => pos.Direction == Direction.Up).ToList();
+
+        if (direction == Direction.Down)
+            return _spritePositions.Where((pos) => pos.Direction == Direction.Down).ToList();
+
+        if (direction == Direction.Right)
             return _spritePositions.Where((pos) => pos.Direction == Direction.Right).ToList();
 
         return cachedPositions;
