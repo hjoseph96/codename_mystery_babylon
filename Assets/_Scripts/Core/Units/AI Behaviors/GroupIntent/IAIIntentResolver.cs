@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ public enum AIGroupIntention
 
 public abstract class IAIIntentResolver
 {
+    
     public virtual RelativePosition Resolve(AIGroup group)
     {
         switch (group.GroupTrait)
@@ -37,16 +39,17 @@ public abstract class IAIIntentResolver
 
     protected virtual List<Unit> GetTargetUnitsByIntention(AIGroup group)
     {
+        var leader = group.GetLeader() as AIUnit;
         switch (group.GroupIntention)
         {
             case AIGroupIntention.AgainstPlayer:
-                return group.Members[0].Enemies().Select(e => e).Where(e => e.IsLocalPlayerUnit).ToList();
+                return leader.Enemies().Select(e => e).Where(e => e.IsLocalPlayerUnit).ToList();
 
             case AIGroupIntention.AgainstOtherEnemies:
-                return group.Members[0].Enemies().Select(e => e).Where(e => !e.IsLocalPlayerUnit).ToList();
+                return leader.Enemies().Select(e => e).Where(e => !e.IsLocalPlayerUnit).ToList();
             default:
             case AIGroupIntention.AgainstAll:
-                return group.Members[0].Enemies();
+                return leader.Enemies();
         }
     }
 

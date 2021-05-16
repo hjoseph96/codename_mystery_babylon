@@ -18,6 +18,10 @@ using Sirenix.Serialization;
 public class Unit : SerializedMonoBehaviour, IInitializable
 {
     [FoldoutGroup("Basic Properties")]
+    [SerializeField] private bool _isInCombat;
+    public bool IsInCombat { get => _isInCombat; }
+
+    [FoldoutGroup("Basic Properties")]
     [SerializeField] private string _name;
     public string Name => _name;
 
@@ -25,6 +29,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [DistinctUnitType]
     public UnitType UnitType;
 
+    
     [FoldoutGroup("Basic Properties")]
     [SerializeField] private float _walkSpeed = 4f;
     public float WalkSpeed { get => _walkSpeed; }
@@ -172,6 +177,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [FoldoutGroup("Game Status")]
     public bool CanJump { get => _canJump; }
 
+    private bool _hasAttacked = false;
+    public bool HasAttacked { get => _hasAttacked; }
+
 
     public virtual Vector2Int PreferredDestination { get => GridPosition; }
 
@@ -186,12 +194,14 @@ public class Unit : SerializedMonoBehaviour, IInitializable
     [HideInInspector] public Action<Unit> UponLevelUp;
     [HideInInspector] public Action UponJumpLanding;
 
-    // On Map Battle Systemm events
+    // On Map Battle System events
     [HideInInspector] public Action UponAttackLaunched;
     [HideInInspector] public Action UponAttackAnimationEnd;
     [HideInInspector] public Action UponAttackComplete;
     [HideInInspector] public Action UponDodgeComplete;
     [HideInInspector] public Action UponDamageCalcComplete;
+
+    [HideInInspector] public Action UponHealComplete;
 
 
     // Stat Convenience Methods
@@ -249,23 +259,25 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public virtual void Init()
     {
-        _gridPosition = GridUtility.SnapToGrid(this);
-        WorldGrid.Instance[GridPosition].Unit = this;
-
+        if (IsInCombat)
+        {
+            _gridPosition = GridUtility.SnapToGrid(this);
+            WorldGrid.Instance[GridPosition].Unit = this;
+        }
 
         _unitClass = UnitClass.GetUnitClass();
         _unitClass.StatusEffects.ForEach((se) => { se.SetOwnerName(Name); });
 
         InitStats();
 
-        _renderer           = GetComponent<SpriteRenderer>();
-        _animancer          = GetComponent<AnimancerComponent>();
+        _renderer = GetComponent<SpriteRenderer>();
+        _animancer = GetComponent<AnimancerComponent>();
         _footstepController = GetComponent<FootstepController>();
-        _jumpController     = GetComponent<JumpController>();
-        _attackAnimations   = GetComponent<UnitAttackAnimations>();
-        _healthBar          = GetComponentInChildren<MiniHealthBar>();
-        _flasher            = GetComponent<SpriteFlashTool>();
-        Portrait            = GetComponent<Portrait>();
+        _jumpController = GetComponent<JumpController>();
+        _attackAnimations = GetComponent<UnitAttackAnimations>();
+        _healthBar = GetComponentInChildren<MiniHealthBar>();
+        _flasher = GetComponent<SpriteFlashTool>();
+        Portrait = GetComponent<Portrait>();
 
         Rotate(_startingLookDirection);
         _initialGridPosition = new KeyValuePair<Vector2Int, Vector2>(GridPosition, _lookDirection);
@@ -273,7 +285,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         PlayAnimation(_idleAnimation);
 
         _allInOneMat = GetComponent<Renderer>().material;
-        
+
         EnableSilhouette();
 
         // TODO: load from serialization for PlayerUnits
@@ -287,7 +299,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     }
 
-    
+
 
     public void EnableSilhouette() => _allInOneMat.SetInt(StencilRef, 1);
 
@@ -328,6 +340,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         // Move back to Start instantly
         this.transform.position = WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)InitialGridPosition.Key);
 
+        currentMovementPoints = MaxMoveRange;
         // Reset Original Look Direction
         LookAt(InitialGridPosition.Value);
         SetIdle();
@@ -393,6 +406,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         RemoveInactiveShader();
         currentMovementPoints = MaxMoveRange;
     }
+
+    public void AllowAttack() => _hasAttacked = false;
 
     public void ShowHealthBar() => _healthBar.Show(this);
     public void HideHealthBar() => _healthBar.Hide();
@@ -737,6 +752,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public IEnumerator MovementCoroutine(GridPath path)
     {
+        if (path.Length == 0)
+            yield break;
+
         var nextPathGridPosition = GridPosition;
         var nextPathPosition = transform.position;
         var reachedGoal = false;
@@ -833,6 +851,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         else
         {
             var moveVector = ((Vector3)goal - transform.position).normalized * speed;
+
+            moveVector = _walkAnimation.Snap(moveVector);
+
             transform.Translate(moveVector);
             speed = 0;
         }
@@ -1115,10 +1136,44 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         {
             var threateningWeapons = unit.AttackableWeapons(false);
             var mostDangerousWeapon = threateningWeapons.Keys.First((weapon) => threateningWeapons[weapon].Contains(GridPosition) == true);
-            var attackPreview = unit.PreviewAttack(this, mostDangerousWeapon);
-            var accuracyAsDecimal = (float)attackPreview["ACCURACY"] / 100;
 
-            threatLevel += (accuracyAsDecimal * (1 - (CurrentHealth - attackPreview["ATK_DMG"]) / CurrentHealth));
+            float accuracyAsDecimal = 0;
+            int damage = 0;
+            if (mostDangerousWeapon != null)
+            {
+                var attackPreview = unit.PreviewAttack(this, mostDangerousWeapon);
+                accuracyAsDecimal = (float)attackPreview["ACCURACY"] / 100;
+                damage = attackPreview["ATK_DMG"];
+            }
+
+            threatLevel += (accuracyAsDecimal * (1 - (CurrentHealth - damage) / CurrentHealth));
+        }
+
+        return Mathf.Clamp(threatLevel, 0, 1f);
+    }
+
+    public float ThreatLevelAtPosition(Vector2Int newPosition)
+    {
+        float threatLevel = 0;
+
+        SetPotentialThreats();
+        var threatCount = PotentialThreats.Count;
+
+        foreach (Unit unit in PotentialThreats)
+        {
+            var threateningWeapons = unit.AttackableWeapons(false);
+            var mostDangerousWeapon = threateningWeapons.Keys.FirstOrDefault((weapon) => threateningWeapons[weapon].Contains(newPosition) == true);
+
+            float accuracyAsDecimal = 0;
+            int damage = 0;
+            if (mostDangerousWeapon != null)
+            {
+                var attackPreview = unit.PreviewAttack(this, mostDangerousWeapon);
+                accuracyAsDecimal = (float)attackPreview["ACCURACY"] / 100;
+                damage = attackPreview["ATK_DMG"];
+            }
+
+            threatLevel += (accuracyAsDecimal * (1 - (CurrentHealth - damage) / CurrentHealth));
         }
 
         return Mathf.Clamp(threatLevel, 0, 1f);
@@ -1131,6 +1186,8 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
     public void AttackOnMap(Unit defender)
     {
+        _hasAttacked = true;
+
         // End Attack if Unit cannot Attack
         if (!CanAttack(defender))
             if (UponAttackComplete != null)
@@ -1163,7 +1220,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         var state = _animancer.Play(clip);
 
         _OnAttackLaunched.Set(state, InvokeAttackEvent());
-
+        
         if (UponAttackAnimationEnd != null)
         {
             state.Events.OnEnd += delegate ()
@@ -1174,7 +1231,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Unit attacker)
     {
         PlayAnimation(_Damage);
 
@@ -1192,6 +1249,9 @@ public class Unit : SerializedMonoBehaviour, IInitializable
 
             if (UponDamageCalcComplete != null && IsAlive)
             {
+                if (attacker.UponAttackComplete != null)
+                    attacker.UponAttackComplete.Invoke();
+
                 UponDamageCalcComplete.Invoke();
                 UponDamageCalcComplete = null;
             }
@@ -1268,7 +1328,7 @@ public class Unit : SerializedMonoBehaviour, IInitializable
         if (!supportedDirections.Contains(_facingDirection))
             throw new Exception($"[Unit] Tried to start DodgeMovement, but supplied unsupported facingDirection: {_facingDirection}");
 
-        
+
 
         var reachedTargetPosition = false;
 

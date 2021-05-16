@@ -4,8 +4,9 @@ using UnityEngine;
 
 using Animancer;
 using Sirenix.OdinInspector;
+using System;
 
-public class SeatedKnight : MonoBehaviour
+public class SeatedKnight : MonoBehaviour, ISpeakableEntity
 {
     [SerializeField] private bool _wearingHelmet;
 
@@ -24,7 +25,7 @@ public class SeatedKnight : MonoBehaviour
 
     // Helmetless
     [FoldoutGroup("Animations")]
-    [Header("Helmentless")]
+    [Header("Helmetless")]
     [SerializeField] private DirectionalAnimationSet _Sitting_Helmetless;
     [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Sitting_Helmetless_Turn_Head_Down;
@@ -39,6 +40,11 @@ public class SeatedKnight : MonoBehaviour
     [InfoBox("Only Left, Right, Up and Down are supported"), ShowIf("InvalidDirection")]
     [SerializeField]
     public Direction _startingDirection;
+
+    /// <summary>
+    /// Note: player must have SpriteCharacterControllerExt as of current iteration
+    /// </summary>
+    private GameObject player;
 
     private bool InvalidDirection()
     {
@@ -65,12 +71,24 @@ public class SeatedKnight : MonoBehaviour
         _attachedDialogue.OnDialogueBegin += delegate (GameObject speakingTo)
        {
            LookAt(speakingTo.transform.position);
+           if (speakingTo.CompareTag("Player"))
+           {
+               player = speakingTo;
+               player.GetComponent<SpriteCharacterControllerExt>().OnPositionChanged += UpdateFacing;
+           }
        };
+        _attachedDialogue.OnDialogueEnd += ResetFacing;
 
         if (_wearingHelmet)
             Play(_Sitting);
         else
             Play(_Sitting_Helmetless);
+    }
+
+    private void OnDestroy()
+    {
+        if (_attachedDialogue != null)
+            _attachedDialogue.OnDialogueEnd -= ResetFacing;
     }
 
 
@@ -124,5 +142,40 @@ public class SeatedKnight : MonoBehaviour
         }
 
         throw new System.Exception($"[SeatedKnight] Cannot find Turning Head Animations for Direction: {_facingDirection}");
+    }
+
+    /// <summary>
+    /// Resets the head facing of this object to the default position prior to talking.
+    /// </summary>
+    private void ResetFacing()
+    {
+        if (player != null)
+        {
+            player.GetComponent<SpriteCharacterControllerExt>().OnPositionChanged -= UpdateFacing;
+            player = null;
+        }
+        _Facing = DirectionUtility.DirectionToFacing[_startingDirection];
+        Play(TurningHeadAnimations());
+    }
+
+
+    /// <summary>
+    /// Updates the facing to face the player when moving, could be updated to face NPC characters too by removing the tag check.
+    /// </summary>
+    /// <param name="pos"></param>
+    private void UpdateFacing(Vector3 pos)
+    {
+        var newFacing = DirectionUtility.GetFacing(transform.position, new Vector3(pos.x, pos.y, 0));
+
+        if (newFacing == _Facing) 
+            return;
+
+        _Facing = newFacing;
+        Play(TurningHeadAnimations());
+    }
+
+    public BubblePositionController.EntityInfo GetEntityInfo()
+    {
+        return new BubblePositionController.EntityInfo { facingDirection = DirectionUtility.FacingToDirection[_Facing], mounted = false, sitting = true };
     }
 }

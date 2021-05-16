@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6132050965176205033}
   - component: {fileID: 7415341208456424452}
+  - component: {fileID: 7841948719770498538}
   - component: {fileID: 7207350470642483470}
   - component: {fileID: 4324937292807418949}
-  - component: {fileID: 7841948719770498538}
   m_Layer: 5
   m_Name: Animated Portrait (Artur)
   m_TagString: Untagged
@@ -48,6 +48,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137530502685666574}
   m_CullTransparentMesh: 1
+--- !u!114 &7841948719770498538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137530502685666574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba7253f979c8104c8de116b3b9682a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Artur
+  _defaultColor: {r: 0.81960785, g: 0.8, b: 0.8, a: 1}
+  _nightModeColor: {r: 0.67058825, g: 0.6313726, b: 0.6313726, a: 1}
 --- !u!114 &7207350470642483470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,19 +112,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7841948719770498538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1137530502685666574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dba7253f979c8104c8de116b3b9682a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Artur
 --- !u!1 &8840806704239533012
 GameObject:
   m_ObjectHideFlags: 0

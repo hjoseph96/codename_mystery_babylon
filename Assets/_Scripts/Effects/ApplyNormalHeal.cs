@@ -31,6 +31,9 @@ public class ApplyNormalHeal : MonoBehaviour
         miniHealBar.OnComplete += delegate ()
         {
             unit.IncreaseHealth(amount);
+            
+            if (unit.UponHealComplete != null)
+                unit.UponHealComplete.Invoke();
         };
         miniHealBar.Tween(endPercentage);
     }

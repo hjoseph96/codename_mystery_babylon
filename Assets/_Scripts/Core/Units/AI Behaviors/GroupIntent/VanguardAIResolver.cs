@@ -12,7 +12,7 @@ public class VanguardAIResolver : IAIIntentResolver
         RelativePosition closestEnemy = paths
             .OrderBy(path => path.Path.Length).First();
 
-        group.PreferredGroupPosition.Position = ApplyMovementMode(group, closestEnemy.Path.GetPointInPath(.5f));
+        group.PreferredGroupPosition.Position = ApplyMovementMode(group, closestEnemy.GetPointInPathOrDefault(.5f));
         group.PreferredGroupPosition.Target = closestEnemy.Position;
         return group.PreferredGroupPosition;
     }
@@ -24,7 +24,7 @@ public class VanguardAIResolver : IAIIntentResolver
         RelativePosition closestEnemy = paths
             .OrderBy(path => path.Path.Length).First();
 
-        group.PreferredGroupPosition.Position = ApplyMovementMode(group, closestEnemy.Path.GetPointInPath(.05f));
+        group.PreferredGroupPosition.Position = ApplyMovementMode(group, closestEnemy.GetPointInPathOrDefault(.05f));
         group.PreferredGroupPosition.Target = closestEnemy.Position;
         return group.PreferredGroupPosition;
     }

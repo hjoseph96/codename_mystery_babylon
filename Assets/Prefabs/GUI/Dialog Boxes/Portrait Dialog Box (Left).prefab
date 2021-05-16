@@ -155,11 +155,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1125b5181a31b468748a2a70d11ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 3156886979955721354}
-  _textAnimatorPlayer: {fileID: 5900851202767528709}
+  DefaultColor: {r: 0.7490196, g: 0.6745098, b: 0.6745098, a: 1}
+  NightModeColor: {r: 0.7490196, g: 0.7176471, b: 0.7176471, a: 1}
   _name: {fileID: 4612077483219164399}
   _zButton: {fileID: 2028404994776227916}
   _portraitSpawnPoint: {fileID: 326578606431233433}
+  _dialogBubble: {fileID: 2615533776928556701}
   _orientation: 1
 --- !u!1 &2600979013581006523
 GameObject:
@@ -219,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9056604, g: 0.89284444, b: 0.89284444, a: 1}
+  m_Color: {r: 0.8980392, g: 0.80784315, b: 0.80784315, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -246,6 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7825717264737588035}
   - component: {fileID: 2704222765500516461}
+  - component: {fileID: 2147939223523046400}
   - component: {fileID: 3156886979955721354}
   - component: {fileID: 7163892384821117835}
   - component: {fileID: 5900851202767528709}
@@ -283,6 +285,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3037751118427058077}
   m_CullTransparentMesh: 1
+--- !u!114 &2147939223523046400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3037751118427058077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d219fd4245ce7564cba4584c95dd844d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3156886979955721354
 MonoBehaviour:
   m_ObjectHideFlags: 0

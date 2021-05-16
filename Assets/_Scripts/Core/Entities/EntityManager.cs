@@ -21,6 +21,9 @@ public class EntityManager : SerializedMonoBehaviour, IInitializable
     [OdinSerialize, ShowInInspector]
     public List<NonPlayableCharacter> NonPlayableCharacters { get; private set; }
 
+    private List<EntityReference> _entityReferences = new List<EntityReference>();
+    public List<EntityReference> EntityReferences { get => _entityReferences; }
+
     public void Init()
     {
         Instance = this;
@@ -88,6 +91,21 @@ public class EntityManager : SerializedMonoBehaviour, IInitializable
             throw new System.Exception($"[EntityManager] There's no PlayableCharacter named: {name}");
 
         return matchingCharacter;
+    }
+
+    public void AddEntityReference(EntityReference entityRef)
+    {
+        _entityReferences.Add(entityRef);
+    }
+
+    public EntityReference GetEntityRef(string name, EntityType entityType)
+    {
+        var matchingEntity = EntityReferences.Where((entityRef) => entityRef.EntityType == entityType && entityRef.EntityName == name);
+
+        if (matchingEntity.Count() > 0)
+            return matchingEntity.First();
+        else
+            throw new System.Exception($"[EntityManager] There's no {entityType} named {name}");
     }
 
 

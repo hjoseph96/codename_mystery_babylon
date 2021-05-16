@@ -38,6 +38,10 @@ GameObject:
   - component: {fileID: 6297651794846048276}
   - component: {fileID: -5275584161848332569}
   - component: {fileID: 8878186093024637040}
+  - component: {fileID: -7338846220862098282}
+  - component: {fileID: -444557200175241950}
+  - component: {fileID: 478235751934433672}
+  - component: {fileID: 602639531260572381}
   m_Layer: 0
   m_Name: gregor
   m_TagString: Untagged
@@ -7455,19 +7459,19 @@ MonoBehaviour:
   m_ColorRenderer: {fileID: 7111056112544569370}
   directionSprites:
   - body:
-    - {fileID: 21300000, guid: 6fcf538a4bd09f34fbf1a4d87dd703e8, type: 3}
-    - {fileID: 21300000, guid: 53e161b9d52f3ae41b52a04ab0f28f97, type: 3}
-    - {fileID: 21300000, guid: 8393656b39bdf154b953955cba1cf284, type: 3}
-    - {fileID: 21300000, guid: bd74d2fb4669cd94a9cca7a6f75fa3fa, type: 3}
-    - {fileID: 21300000, guid: c7526ecc4b82ad0409664bd8a29df3eb, type: 3}
-    - {fileID: 21300000, guid: 1ac2b212615d6184e9b24ed5944cb17d, type: 3}
-    - {fileID: 21300000, guid: 125e051421ced324d843f1f4b333f333, type: 3}
-    - {fileID: 21300000, guid: cf71fbfdcb9cf4e4f8866a30c1a1fd07, type: 3}
-    - {fileID: 21300000, guid: d68c7e5673a3b4045a1024f73fd5383e, type: 3}
-    - {fileID: 21300000, guid: 9334670ad4dc1584e9b2cf60e9c0d6d7, type: 3}
-    - {fileID: 21300000, guid: bcff27d3f60eb7643ab44eac75db725d, type: 3}
-    - {fileID: 21300000, guid: 52c542e1bf7375b4e8456b2e293beae3, type: 3}
-    - {fileID: 21300000, guid: fc41dac53f077fc4680114aaa7315c5a, type: 3}
+    - {fileID: 21300000, guid: 93a4c63ed641c3e499dcf1ab944792e0, type: 3}
+    - {fileID: 21300000, guid: e54efc9e1b3f80044ae6a22deb3be20c, type: 3}
+    - {fileID: 21300000, guid: 0d877e8202a669f42861c11ee6c38c04, type: 3}
+    - {fileID: 21300000, guid: 45df7d0c24116444893c7ce199ef2d66, type: 3}
+    - {fileID: 21300000, guid: 2e1da62e74707be4eb6e7b59685579b0, type: 3}
+    - {fileID: 21300000, guid: 3baa524405bd7d545b7f7e99e8a080f8, type: 3}
+    - {fileID: 21300000, guid: 51aeab4142ac66a4cab4eb6dda969d4a, type: 3}
+    - {fileID: 21300000, guid: d99f414498affc94dac2b84fb5e4f265, type: 3}
+    - {fileID: 21300000, guid: fb2e75eb888a8be4bbd04bd7a0e6fe57, type: 3}
+    - {fileID: 21300000, guid: 645a7ea069da5cf43912741f3b4f0b1f, type: 3}
+    - {fileID: 21300000, guid: baaec408a5845b640837fbcaecb6f322, type: 3}
+    - {fileID: 21300000, guid: 268d15f4e65afa4419476ed02c25e9ba, type: 3}
+    - {fileID: 21300000, guid: 77ff352130198d945b30e45e7ddf919f, type: 3}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -11605,20 +11609,36 @@ MonoBehaviour:
   m_ColorRenderer: {fileID: 7111056112544569370}
   directionSprites:
   - body:
-    - {fileID: 21300000, guid: 544dd32fde14f044f83c3480510cea2a, type: 3}
-    - {fileID: 21300000, guid: 956aaeac1de437442af4f644b58947c9, type: 3}
-    - {fileID: 21300000, guid: cbf44d2f3890df84bac5bb0cd441c672, type: 3}
-    - {fileID: 21300000, guid: 9bb7ef7bcb6c5f943bb458ce7e49a3eb, type: 3}
-    - {fileID: 21300000, guid: a8376362d36c0c34d854e8bc1fab33a1, type: 3}
-    - {fileID: 21300000, guid: ad2c3880ec7c1c14eae74f9a906f3c12, type: 3}
-    - {fileID: 21300000, guid: 427971041cd48cd42a6ab57614f4ea87, type: 3}
-    - {fileID: 21300000, guid: b4a4a79491af51844951997ad3846af2, type: 3}
-    - {fileID: 21300000, guid: 4a39db9a88ab67b40830707cb2c42052, type: 3}
-    - {fileID: 21300000, guid: f73e3d244c04a414298016ce56d1e4fb, type: 3}
-    - {fileID: 21300000, guid: 5060e624579050b49939fe3d2f07cde8, type: 3}
-    - {fileID: 21300000, guid: 1d9b0aa7ee9d7f447a1d0080f2925b4a, type: 3}
-    - {fileID: 21300000, guid: f1235a173e6b63a4f99d11e1fe1234ea, type: 3}
-    - {fileID: 21300000, guid: 3b9fbf3406e63cb4baa013b9d41a0932, type: 3}
+    - {fileID: 21300000, guid: ddab0e3e17db3ed44990c38978379d2e, type: 3}
+    - {fileID: 21300000, guid: bd61252e28d2c7e43adfbb9c299d74de, type: 3}
+    - {fileID: 21300000, guid: e544e6a598914a84b805d2cdfc6f4507, type: 3}
+    - {fileID: 21300000, guid: 96853818845c1d948b45872205dd58e5, type: 3}
+    - {fileID: 21300000, guid: 18fee8169329d9d4e9a77cd01537c3a4, type: 3}
+    - {fileID: 21300000, guid: d80fdb836e416e54ebf514c122701df0, type: 3}
+    - {fileID: 21300000, guid: e9ca7012adae4464581084db4954532c, type: 3}
+    - {fileID: 21300000, guid: 87dcb7446263e0a4c9788ca6e9871387, type: 3}
+    - {fileID: 21300000, guid: c5c6aa33f7e8d754e8fa1a6df0fc3605, type: 3}
+    - {fileID: 21300000, guid: 340d03e563067e24e8cc8c396f52a76d, type: 3}
+    - {fileID: 21300000, guid: 4d7274dc110888b49a9d74d4a74f8db7, type: 3}
+    - {fileID: 21300000, guid: 6111a5fd2ceee474785dd7b6a247f846, type: 3}
+    - {fileID: 21300000, guid: 2cb531490e89f414190dc5b6194ac0b9, type: 3}
+    - {fileID: 21300000, guid: 7d5a591f42ac41545b673bad1718b8d1, type: 3}
+    - {fileID: 21300000, guid: 67aff6853bd7f13439b5b0079d2547fb, type: 3}
+    - {fileID: 21300000, guid: 918521b80959148489faec3ed6221e48, type: 3}
+    - {fileID: 21300000, guid: 5df9b0b9ce65f4143bf4710042491559, type: 3}
+    - {fileID: 21300000, guid: 988ad5778833f8e488184991eee631c6, type: 3}
+    - {fileID: 21300000, guid: 404ff53363ab2ae4e913f675945f247d, type: 3}
+    - {fileID: 21300000, guid: 1c37de022a5b213419b8539d2bafd813, type: 3}
+    - {fileID: 21300000, guid: 53a37622e14bcc444b64cf85798b4e1c, type: 3}
+    - {fileID: 21300000, guid: 891ec531986950c4e9676c8a6d5ca4c1, type: 3}
+    - {fileID: 21300000, guid: 776fd413cc590ea44870b84190c66b75, type: 3}
+    - {fileID: 21300000, guid: 273890dc4d631ea40ad09ae4f0e899e3, type: 3}
+    - {fileID: 21300000, guid: e7c6dba3e2f46eb4381cb7600bed1465, type: 3}
+    - {fileID: 21300000, guid: 5cafd8b09bc20014fb6bd6fb18c8b374, type: 3}
+    - {fileID: 21300000, guid: aecd422b86de047428318303d22a4fa3, type: 3}
+    - {fileID: 21300000, guid: fde6b3d4e56820b4bbeedb0e16ca18d1, type: 3}
+    - {fileID: 21300000, guid: 15328d459cb71f747abd59067c5a29dc, type: 3}
+    - {fileID: 21300000, guid: 512eb660f93baa247a918e1ae436416b, type: 3}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -11634,7 +11654,39 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -11664,6 +11716,22 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -11679,7 +11747,39 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -11709,6 +11809,22 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -11724,7 +11840,39 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -11754,6 +11902,22 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -11769,7 +11933,39 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -12317,19 +12513,19 @@ MonoBehaviour:
   m_ColorRenderer: {fileID: 7111056112544569370}
   directionSprites:
   - body:
-    - {fileID: 21300000, guid: 9e3cd0ea6b5508041b1050beb57d6288, type: 3}
-    - {fileID: 21300000, guid: cc2d2ffc576540449aa9feabb68cdeee, type: 3}
-    - {fileID: 21300000, guid: 55b5343a6d9eb094f8a89f7cd3b17e34, type: 3}
-    - {fileID: 21300000, guid: 18803ebe553f1ee468d534b6535b606b, type: 3}
-    - {fileID: 21300000, guid: 30ad10dee8add4540a72be0ee4e3cf99, type: 3}
-    - {fileID: 21300000, guid: 0b17ba81022757b43bbaf4762cc70f82, type: 3}
-    - {fileID: 21300000, guid: 4275b4c182817404786c0ae124bd161c, type: 3}
-    - {fileID: 21300000, guid: 75c4fb3504b704b40aad04dfcd8827f3, type: 3}
-    - {fileID: 21300000, guid: 31512ab9355741346a260fa1724d4c30, type: 3}
-    - {fileID: 21300000, guid: c04faa461fd57a74b8559e3a6ce906f4, type: 3}
-    - {fileID: 21300000, guid: 3ec3113a9b4dd6749b6641d28c4140df, type: 3}
-    - {fileID: 21300000, guid: 6da94f8d303bbf44c9bf2620c2d60663, type: 3}
-    - {fileID: 21300000, guid: 88de6ba0ebbcbb743b3ef8974339e226, type: 3}
+    - {fileID: 21300000, guid: a4e448a8de5f8fe4fbb29ecd63a564dd, type: 3}
+    - {fileID: 21300000, guid: a1e3edabd81f5a443bef917e5dc27d08, type: 3}
+    - {fileID: 21300000, guid: e265c322ba4d4754e822caddc00753be, type: 3}
+    - {fileID: 21300000, guid: b698f2d46707a304a971e28d0ba59810, type: 3}
+    - {fileID: 21300000, guid: ca03d8c45deb13648ab99f647845dacf, type: 3}
+    - {fileID: 21300000, guid: f979ddc530191c6409f06b9cf69de76a, type: 3}
+    - {fileID: 21300000, guid: 59ee93248ccd0734fae0ea54a3de46f8, type: 3}
+    - {fileID: 21300000, guid: ff5469da6013b2849976a3c4bbc9410b, type: 3}
+    - {fileID: 21300000, guid: 3afc7e64219997643ac62cf1785f2d0f, type: 3}
+    - {fileID: 21300000, guid: 3bff237072eeebe468de456596596edd, type: 3}
+    - {fileID: 21300000, guid: b32555304e7a04048882240677921c92, type: 3}
+    - {fileID: 21300000, guid: ee04c4ad981818448b72642ae132b4c7, type: 3}
+    - {fileID: 21300000, guid: a042b2f9c6e0b8546a585d1c62894c35, type: 3}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -12507,19 +12703,19 @@ MonoBehaviour:
   m_ColorRenderer: {fileID: 7111056112544569370}
   directionSprites:
   - body:
-    - {fileID: 21300000, guid: ed6c9463db6224d4d9c818e3ba3b8f30, type: 3}
-    - {fileID: 21300000, guid: f748a49e8b0dc8f41a5e82d14cffc6ca, type: 3}
-    - {fileID: 21300000, guid: a298ccb4eb5db734b9b6e47bc78c8096, type: 3}
-    - {fileID: 21300000, guid: 7c30d1606225fff479a53e210111611b, type: 3}
-    - {fileID: 21300000, guid: 216691cb56bf13d46b6d23a96d10c8cc, type: 3}
-    - {fileID: 21300000, guid: f9358e3ee3e6d074d96cae5cf9011753, type: 3}
-    - {fileID: 21300000, guid: dfccbfd96ab3b3c49ae9572f5faa4ad4, type: 3}
-    - {fileID: 21300000, guid: 4c5fddd9f5b206a49bbe3d50a80cbed0, type: 3}
-    - {fileID: 21300000, guid: 25f1657628f6ebb4d94a148791ede187, type: 3}
-    - {fileID: 21300000, guid: 6625bc88a48d9a445a5111873ab0a994, type: 3}
-    - {fileID: 21300000, guid: aeffd4fd745fd6547ac1b27c56af44bf, type: 3}
-    - {fileID: 21300000, guid: 7403b5c7fd912f245b04be0b23c8aca5, type: 3}
-    - {fileID: 21300000, guid: 37fa66e57600322439a32d3c8dd8f210, type: 3}
+    - {fileID: 21300000, guid: 3894d9dd631cb384eb30afe0f36b2ef7, type: 3}
+    - {fileID: 21300000, guid: 5b0a203be7e44574da35a45a58ac518e, type: 3}
+    - {fileID: 21300000, guid: 0620236ba7d91e148a7c09565ce25ffe, type: 3}
+    - {fileID: 21300000, guid: 0493f006fa75bfa42a8c53937fd96fb7, type: 3}
+    - {fileID: 21300000, guid: 3c635d7801f2ef84ca7fec99359e6728, type: 3}
+    - {fileID: 21300000, guid: 19ef62e96a96dc54ab414f29cea0a75f, type: 3}
+    - {fileID: 21300000, guid: 3d549689a40796443a2e23f5df11add5, type: 3}
+    - {fileID: 21300000, guid: 08e03f27e7a84d545adc96410e7e6b4c, type: 3}
+    - {fileID: 21300000, guid: 6ceea075fa506b04999211062d49fc60, type: 3}
+    - {fileID: 21300000, guid: 6796b70542031894186fca26114ded51, type: 3}
+    - {fileID: 21300000, guid: 63da5a16ffff730489b73d0377778917, type: 3}
+    - {fileID: 21300000, guid: fb42d2ac172089a418610ddea9d02ef9, type: 3}
+    - {fileID: 21300000, guid: 74e6148af1a4a684b87578bdafc468c4, type: 3}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -13199,12 +13395,21 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 7c3bcd705f52ff249b5bab726065a530, type: 3}
     - {fileID: 21300000, guid: 933c8d2c142da2b4b9146e19dce04e8f, type: 3}
     - {fileID: 21300000, guid: 79323bcf660458c4f8d1ffd620e4a535, type: 3}
+    - {fileID: 21300000, guid: d05fa2a21b0059d4aa04f110e1683059, type: 3}
+    - {fileID: 21300000, guid: cadc7200a53ff62489f8bccfc09eef70, type: 3}
+    - {fileID: 21300000, guid: 74ada11eab188f346a021fa065f1852b, type: 3}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13214,12 +13419,21 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13229,12 +13443,21 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13244,12 +13467,21 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13290,7 +13522,228 @@ MonoBehaviour:
     - {fileID: 21300000, guid: f5d2b2035698ec2408c94b2363f9d57a, type: 3}
     - {fileID: 21300000, guid: 16ebe19b44541154088d9b068cea7c2a, type: 3}
     - {fileID: 21300000, guid: aa150d7d531563a458dff0dfd1dda192, type: 3}
-    - {fileID: 21300000, guid: 62bc81b337af3e04c90913defc9f10cc, type: 3}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+--- !u!114 &-7338846220862098282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010845449846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c839478035ba545ab921961d8693fff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnimationName: Penelope_crit
+  m_IdleAnimationName: 
+  m_AnimationDuration: 1
+  m_NextAnimationDelay: 0
+  m_AnimationFrameEvents: 
+  m_AnimationTimeEvents: []
+  m_BodyRenderer: {fileID: 649055539814125925}
+  m_ShadowRenderer: {fileID: 1997942661456977229}
+  m_ColorRenderer: {fileID: 7111056112544569370}
+  directionSprites:
+  - body:
+    - {fileID: 21300000, guid: d56232370f727fc47845e7d913b331ca, type: 3}
+    - {fileID: 21300000, guid: 5262bb00dfd78454d9bebd522a0d741f, type: 3}
+    - {fileID: 21300000, guid: 20a0a3d798036e84181778944c7ba7a4, type: 3}
+    - {fileID: 21300000, guid: 9ec210a812272aa4199c39275c59ac38, type: 3}
+    - {fileID: 21300000, guid: 8f8385dbc89c2994ba0b61cd5d2f0ecf, type: 3}
+    - {fileID: 21300000, guid: af58d05ba73ef484a8c9f3b5032cf4f7, type: 3}
+    - {fileID: 21300000, guid: 42566c51f97d1ce429f686bb68206ae9, type: 3}
+    - {fileID: 21300000, guid: 2ae4e6e6975fb0748ae1c9bfe5e9165e, type: 3}
+    - {fileID: 21300000, guid: 7b57620347498354087d40b40d78340a, type: 3}
+    - {fileID: 21300000, guid: 1a77f72c3bb29ff4a84a423dc15384d6, type: 3}
+    - {fileID: 21300000, guid: d6988ce1da61ce3419396af589eafd59, type: 3}
+    - {fileID: 21300000, guid: 908b7192d7641ad4897aa2a159c747ab, type: 3}
+    - {fileID: 21300000, guid: 1273fb1ae51481947b80e6dafcd96064, type: 3}
+    - {fileID: 21300000, guid: 55b7d457812959d44a9e160c8c33b92f, type: 3}
+    - {fileID: 21300000, guid: 7ffa85d24ce4d7e469c648df37d43a84, type: 3}
+    - {fileID: 21300000, guid: 553f364be6381d542918547620894e22, type: 3}
+    - {fileID: 21300000, guid: 929205d7b5f10ae4982f6ea022dc5fe5, type: 3}
+    - {fileID: 21300000, guid: 4a8f35ced98aa7e40b55482e5b8cb48a, type: 3}
+    - {fileID: 21300000, guid: 52e7751114689e54bae08dcb5b26482e, type: 3}
+    - {fileID: 21300000, guid: 97c7e7b8100ba374bafc284ead0ee54a, type: 3}
+    - {fileID: 21300000, guid: bd729c3ae382f22459f4b1ae4b4f5532, type: 3}
+    - {fileID: 21300000, guid: 3d2897de57d5a0940af355d50a18e7e5, type: 3}
+    - {fileID: 21300000, guid: b16d79f48ccc0fc4c83c5424f4451592, type: 3}
+    - {fileID: 21300000, guid: a36dcae713245394ea0f64c0ae0bb3e7, type: 3}
+    - {fileID: 21300000, guid: e6002f6e3217eca44a94a0ccfbf7dbf0, type: 3}
+    - {fileID: 21300000, guid: b91d432d3a7431149bc3c55f85510374, type: 3}
+    - {fileID: 21300000, guid: ec314384342144d4bbaad06199d1dd1d, type: 3}
+    - {fileID: 21300000, guid: 9c186ad4f925e9d418d881cd1e957f3f, type: 3}
+    - {fileID: 21300000, guid: e3ac3ebf285895d458a5a26b5f7554a0, type: 3}
+    - {fileID: 21300000, guid: 1b4c349a5eba3c545b25ee0287fe0282, type: 3}
+    - {fileID: 21300000, guid: 29b4edf239dbb8345b9e2cbb10240d5d, type: 3}
+    - {fileID: 21300000, guid: 0ffd3d2e289472d44be623f68211034f, type: 3}
+    - {fileID: 21300000, guid: c5842bf1cbe29aa4aa868b6123cfb117, type: 3}
+    - {fileID: 21300000, guid: 1d61fbeb13a0fe147b64957facc05689, type: 3}
+    - {fileID: 21300000, guid: 6823a2cc998c33f45aa221c475c4277d, type: 3}
+    - {fileID: 21300000, guid: 9153cad4f6d44ab42b94e978c4a064ad, type: 3}
+    - {fileID: 21300000, guid: d2aa8f7c74635944a9f262c84cb831c5, type: 3}
+    - {fileID: 21300000, guid: ea70f4dd20432ee43bebf663b2df2a4f, type: 3}
+    - {fileID: 21300000, guid: 5efbbaefe6704de4ea8b3d5c3732505c, type: 3}
+    - {fileID: 21300000, guid: f0b23f12173813348ac72a57833749e4, type: 3}
+    - {fileID: 21300000, guid: 47f6047a2bc0e2a4e9f915a8bf22496d, type: 3}
+    - {fileID: 21300000, guid: 19b139c3874f3bb49959e572eb21c5e4, type: 3}
+    - {fileID: 21300000, guid: 7b9f4de3f0699ef43936a16854832b54, type: 3}
+    - {fileID: 21300000, guid: 13318fac4934a1e469cea64c011bf5be, type: 3}
+    - {fileID: 21300000, guid: b64f1c2bb68414e408c2f6c53ad7f750, type: 3}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -13306,7 +13759,69 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13336,6 +13851,37 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -13351,7 +13897,69 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13381,6 +13989,37 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
     - {fileID: 0}
     - {fileID: 0}
@@ -13396,7 +14035,69 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13426,7 +14127,69 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13443,6 +14206,991 @@ MonoBehaviour:
     - {fileID: 0}
     colors:
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+--- !u!114 &-444557200175241950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010845449846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c839478035ba545ab921961d8693fff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnimationName: take-off
+  m_IdleAnimationName: 
+  m_AnimationDuration: 1
+  m_NextAnimationDelay: 0
+  m_AnimationFrameEvents: 
+  m_AnimationTimeEvents: []
+  m_BodyRenderer: {fileID: 649055539814125925}
+  m_ShadowRenderer: {fileID: 1997942661456977229}
+  m_ColorRenderer: {fileID: 7111056112544569370}
+  directionSprites:
+  - body:
+    - {fileID: 21300000, guid: dd16121e7d3f5694798e94ac1c8ff686, type: 3}
+    - {fileID: 21300000, guid: a293680cd0c4bb04a9c32516781ebc0d, type: 3}
+    - {fileID: 21300000, guid: 36add257c3c78484e9d3b4fcb4839d74, type: 3}
+    - {fileID: 21300000, guid: b1a62132c2a4c2f47861d0e388bbfcaf, type: 3}
+    - {fileID: 21300000, guid: 1114820b54a840a4689b71e142cb3c77, type: 3}
+    - {fileID: 21300000, guid: a6670bdf5d15b2b4b9505dda8b19afe4, type: 3}
+    - {fileID: 21300000, guid: 8b1e49b97da9cc0468cd103194d79102, type: 3}
+    - {fileID: 21300000, guid: 520e5b99a58a448488477116b6b403b4, type: 3}
+    - {fileID: 21300000, guid: d36628fe8e8b7524b817275ddd998cd7, type: 3}
+    - {fileID: 21300000, guid: 60eff009bf5f30746b7fa7e62846fc4c, type: 3}
+    - {fileID: 21300000, guid: 7807289bc85b34d4894ba9db7f695fbe, type: 3}
+    - {fileID: 21300000, guid: a81f0362e5f3c2541b1ca9b2cf7c2b60, type: 3}
+    - {fileID: 21300000, guid: 1959a72218f3ab24a8c853944ddec185, type: 3}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+--- !u!114 &478235751934433672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010845449846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c839478035ba545ab921961d8693fff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnimationName: attack5
+  m_IdleAnimationName: 
+  m_AnimationDuration: 1
+  m_NextAnimationDelay: 0
+  m_AnimationFrameEvents: 
+  m_AnimationTimeEvents: []
+  m_BodyRenderer: {fileID: 649055539814125925}
+  m_ShadowRenderer: {fileID: 1997942661456977229}
+  m_ColorRenderer: {fileID: 7111056112544569370}
+  directionSprites:
+  - body:
+    - {fileID: 21300000, guid: 2cf2276d71b32f6468b8f3fdf41bb476, type: 3}
+    - {fileID: 21300000, guid: e44d8de8a2cd2e24f96b893073c1b1a6, type: 3}
+    - {fileID: 21300000, guid: 98ccbe3da12833f4890a3f3d7c97fe74, type: 3}
+    - {fileID: 21300000, guid: 9bebda5eccbaa45468700052a90a861e, type: 3}
+    - {fileID: 21300000, guid: 5ed4ed9b1678a974eb2ae016317c997a, type: 3}
+    - {fileID: 21300000, guid: 9fcdcabc029799348b4130696f137630, type: 3}
+    - {fileID: 21300000, guid: c29df315697f9614f999b0f8b62a09b1, type: 3}
+    - {fileID: 21300000, guid: ebe3792686392b14eb5a8adef43b137f, type: 3}
+    - {fileID: 21300000, guid: 01eb84ebefa22064a8cdd8b91c4958ac, type: 3}
+    - {fileID: 21300000, guid: b3b5ecad1be975d44b6edcb1a2c722e1, type: 3}
+    - {fileID: 21300000, guid: 2bb186cd866f8d7498b76a0f121c26d1, type: 3}
+    - {fileID: 21300000, guid: 03456a77ebe0cda41ac4cf9b6f6dd84b, type: 3}
+    - {fileID: 21300000, guid: 958876f4520d3704dae4bb075ca47e26, type: 3}
+    - {fileID: 21300000, guid: 67b071a43832c4343977384d14ae3737, type: 3}
+    - {fileID: 21300000, guid: f440a76f81e593840a67c677e42fa639, type: 3}
+    - {fileID: 21300000, guid: 709ba406fe5edd44d8dfcc0e60c91c9c, type: 3}
+    - {fileID: 21300000, guid: 296baa05d52b5d74fbcdded397121881, type: 3}
+    - {fileID: 21300000, guid: a22c2277b7f599d4395b0a952bfe4649, type: 3}
+    - {fileID: 21300000, guid: 8ed06b145d3379c49b98b5e6c062ff81, type: 3}
+    - {fileID: 21300000, guid: e581d0c0a2974c4428109bb6b2c02b7b, type: 3}
+    - {fileID: 21300000, guid: f6446fd146f7dee4bb97d24a04393046, type: 3}
+    - {fileID: 21300000, guid: dfe19e18ee5b41946835f0f66eb405a5, type: 3}
+    - {fileID: 21300000, guid: ceedfa862745c6c45a7ac72921fac3e3, type: 3}
+    - {fileID: 21300000, guid: 2166cdb702469ae489ad41f3ec3bee75, type: 3}
+    - {fileID: 21300000, guid: 73143dafdf146314ba3ae4e42db2aaf8, type: 3}
+    - {fileID: 21300000, guid: 535f0a3b26f92b048b083d0bee1f4f7f, type: 3}
+    - {fileID: 21300000, guid: 7a9f90a0a54e1ca4fa16633a7c12e08d, type: 3}
+    - {fileID: 21300000, guid: c7a5b4811ea946a43b81924fe9d6342e, type: 3}
+    - {fileID: 21300000, guid: 602d63b96d94d654aa463240f15735ca, type: 3}
+    - {fileID: 21300000, guid: 8308e67c215e48542be2758e03080d30, type: 3}
+    - {fileID: 21300000, guid: 5a039385589679c41aafa48c95232ee7, type: 3}
+    - {fileID: 21300000, guid: a003027f95bc98849acb986f28f8ee55, type: 3}
+    - {fileID: 21300000, guid: 40dd815e7a334584180d3fae22ab27bb, type: 3}
+    - {fileID: 21300000, guid: 8d824ac0fb05ee942a303abd70459fe6, type: 3}
+    - {fileID: 21300000, guid: f922901a1502bd240b407f45ae29668b, type: 3}
+    - {fileID: 21300000, guid: c190f61d27bc5004eaa59b95d078f162, type: 3}
+    - {fileID: 21300000, guid: 41bef71c2ec3ce44b8742b5c329081c9, type: 3}
+    - {fileID: 21300000, guid: be4d4c0e54f05c94fad8f0750a4acc49, type: 3}
+    - {fileID: 21300000, guid: 123a3e78a47389d4684d5af2c28fc287, type: 3}
+    - {fileID: 21300000, guid: 7b8c89bd699f436469fa3a802deb6794, type: 3}
+    - {fileID: 21300000, guid: 0d7dc866683b7064194d4e7477b4708e, type: 3}
+    - {fileID: 21300000, guid: 4c93ceb2d95fb22408b6fded92a0b340, type: 3}
+    - {fileID: 21300000, guid: 078770d33647bbd4b952b6eaa99da3b2, type: 3}
+    - {fileID: 21300000, guid: 188803ce330c24243809df81dbf48f5d, type: 3}
+    - {fileID: 21300000, guid: 36bc7290502e80749908df144a273b79, type: 3}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+--- !u!114 &602639531260572381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010845449846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c839478035ba545ab921961d8693fff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnimationName: Start Blocking
+  m_IdleAnimationName: 
+  m_AnimationDuration: 1
+  m_NextAnimationDelay: 0
+  m_AnimationFrameEvents: 
+  m_AnimationTimeEvents: []
+  m_BodyRenderer: {fileID: 649055539814125925}
+  m_ShadowRenderer: {fileID: 1997942661456977229}
+  m_ColorRenderer: {fileID: 7111056112544569370}
+  directionSprites:
+  - body:
+    - {fileID: 21300000, guid: 0db73028cf54415429cf10acb47dc508, type: 3}
+    - {fileID: 21300000, guid: 678ccefc955d59c4ba0a915e85552e3a, type: 3}
+    - {fileID: 21300000, guid: 76ad21f5ebb28fe4fa4993e08396838f, type: 3}
+    - {fileID: 21300000, guid: 57398d46205e849459d89a3e0a34d42a, type: 3}
+    - {fileID: 21300000, guid: dbe7bec945381734784e3bcd688cfab9, type: 3}
+    - {fileID: 21300000, guid: 611f95efdb638244db3921fdf318bd24, type: 3}
+    - {fileID: 21300000, guid: c1f5b842a62d7054293f1329591f9c13, type: 3}
+    - {fileID: 21300000, guid: c68ec39efe037f24583665bb849548db, type: 3}
+    - {fileID: 21300000, guid: 653dc1bb23744d441afa8aff5bfb98b9, type: 3}
+    - {fileID: 21300000, guid: aedcac91460ef48498d5c04d5c048f9e, type: 3}
+    - {fileID: 21300000, guid: 2884ebcc86986ed4c977329b50493c9e, type: 3}
+    - {fileID: 21300000, guid: dcd860104cdacc942b8f3486e2691295, type: 3}
+    - {fileID: 21300000, guid: 639baf96edaffea4b87b9da00e95046f, type: 3}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - body:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shadows:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    colors:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -13609,12 +15357,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 544dd32fde14f044f83c3480510cea2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f8ee592033cbb3a4ba5418405cda1bbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.47, y: 2.93}
+  m_Size: {x: 0.8, y: 1.53}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

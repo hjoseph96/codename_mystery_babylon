@@ -11,8 +11,10 @@ using Com.LuisPedroFonseca.ProCamera2D;
 public class CampaignManager : SerializedMonoBehaviour, IInitializable
 {
     public static CampaignManager Instance;
-    public static Transform AudioListenerTransform {
-        get {
+    public static Transform AudioListenerTransform
+    {
+        get
+        {
             if (Instance.BattleScene.activeSelf)
                 return Instance.BattleSceneManager.BattleCamera.transform;
             else
@@ -27,7 +29,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     [SerializeField]
     private bool _displayPhaseOnStart = false;
 
-    
+
     public Vector2Int PlayerDestination;
 
     private int _turn;
@@ -42,9 +44,9 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
     private List<Unit> _allUnits = new List<Unit>();
     [FoldoutGroup("Game State")]
-    [ShowInInspector] public List<Unit> AllUnits {  get { return _allUnits; } }
+    [ShowInInspector] public List<Unit> AllUnits { get { return _allUnits; } }
 
-    
+
     [FoldoutGroup("Cameras")]
     public ProCamera2D GridCamera;
     [FoldoutGroup("Cameras")]
@@ -70,11 +72,11 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
     // Phase Boolean Flags
     private bool _beganPlayerPhase = false;
-    private bool _beganEnemyPhase       = false;
-    private bool _beganOtherEnemyPhase  = false;
-    private bool _beganAllyPhase        = false;
-    private bool _beganNeutralPhase     = false;
-    private bool _initiatedCombat       = false;
+    private bool _beganEnemyPhase = false;
+    private bool _beganOtherEnemyPhase = false;
+    private bool _beganAllyPhase = false;
+    private bool _beganNeutralPhase = false;
+    private bool _initiatedCombat = false;
 
     private Dictionary<int, List<Unit>> _unitsByTeam = new Dictionary<int, List<Unit>> {
         { Player.LocalPlayer.TeamId, new List<Unit>() },
@@ -100,12 +102,12 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         BattleSceneManager = GetComponent<BattleSceneManager>();
 
         GridCamera.GetComponent<EventSounds>().enabled = true;
-        
+
         _gridTransitionFX = GridCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
 
         if (!SceneLoader.Instance.DontShowCamera)
             _gridTransitionFX.TransitionEnter();
-        
+
         BattleScene.SetActive(false);
 
         ToggleCamera(_gridUICamera);
@@ -124,7 +126,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
         if (_displayPhaseOnStart)
             displayPhase = true;
-        
+
         if (displayPhase)
         {
             Action displayComplete = delegate ()
@@ -134,11 +136,12 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             };
 
             DisplayPhase(displayComplete);
-        } else
+        }
+        else
         {
             _turnDisplay.Show(_turn);
             _gridCursor.SetFreeMode();
-        }    
+        }
     }
 
     public void AddUnit(Unit unit)
@@ -155,6 +158,18 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         _allUnits.Remove(unit);
         _unitsByTeam[unit.TeamId].Remove(unit);
 
+        var aiUnit = unit as AIUnit;
+        if (aiUnit != null && aiUnit.group != null)
+        {
+            aiUnit.group.Members.Remove(aiUnit);
+            if (aiUnit.group.Members.Count == 0)
+            {
+                aiUnit.group.TryAssignCollaboratorToMyRole();
+                Destroy(aiUnit.group.gameObject);
+            } 
+        } 
+
+
         WorldGrid.Instance[unit.GridPosition].Unit = null;
         Destroy(unit.gameObject);
 
@@ -169,7 +184,8 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         {
             _initiatedCombat = true;
 
-            _gridTransitionFX.OnTransitionExitEnded += async delegate () {
+            _gridTransitionFX.OnTransitionExitEnded += async delegate ()
+            {
                 await new WaitForSeconds(1.6f);
 
                 GridScene.SetActive(false);
@@ -220,7 +236,8 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         GridCamera.SetActive(true);
         ToggleCamera(_gridUICamera);
 
-        _gridTransitionFX.OnTransitionEnterEnded += delegate() {
+        _gridTransitionFX.OnTransitionEnterEnded += delegate ()
+        {
             OnCombatReturn.Invoke();
             _initiatedCombat = false;
         };
@@ -238,7 +255,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
     private void CombatLoop()
     {
-        switch(_phase)
+        switch (_phase)
         {
             case TurnPhase.Player:
                 ProcessPlayerPhase();
@@ -262,7 +279,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     {
         if (_phase == TurnPhase.Player)
             _gridCursor.SetLockedMode();
-    
+
 
         if (callback != null)
         {
@@ -277,19 +294,19 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         }
 
         callback();
-       // _phaseDisplay.Show(_phase);
+        // _phaseDisplay.Show(_phase);
     }
 
     private void NextTurn()
     {
         _turn += 1;
-        
-        _beganPlayerPhase   = false;
-        _beganEnemyPhase    = false;
-        _beganOtherEnemyPhase   = false;
-        _beganAllyPhase         = false;
-        _beganNeutralPhase      = false;
-        
+
+        _beganPlayerPhase = false;
+        _beganEnemyPhase = false;
+        _beganOtherEnemyPhase = false;
+        _beganAllyPhase = false;
+        _beganNeutralPhase = false;
+
         _phase = TurnPhase.Player;
     }
 
@@ -297,7 +314,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     {
         var players = PlayerUnits();
 
-        
+
         // We use unique display logic on the first turn. From then on, we'll display like this.
         Action phaseDisplayComplete = delegate ()
         {
@@ -308,14 +325,15 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             _gridCursor.SetFreeMode();
 
             // Set position for player units to rewind to.
-            foreach(PlayerUnit player in players)
+            foreach (PlayerUnit player in players)
                 player.SetInitialPosition();
 
             _beganPlayerPhase = true;
         };
 
-        if (Turn > 1 && !_phaseDisplay.IsDisplaying && !_beganPlayerPhase) {
-           // _phaseDisplay.SetActive(true);
+        if (Turn > 1 && !_phaseDisplay.IsDisplaying && !_beganPlayerPhase)
+        {
+            // _phaseDisplay.SetActive(true);
             DisplayPhase(phaseDisplayComplete);
         }
 
@@ -326,7 +344,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         {
             _gridCursor.SetActive(false);
             _phase = TurnPhase.Enemy;
-            
+
             if (players[0].Enemies().Count > 0)
                 UpdateGroupsPreferredPositions(players[0].Enemies());
 
@@ -376,20 +394,20 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
             if (enemies.Count > 0)
             {
-                enemies.Sort((enemyOne, enemyTwo) => enemyOne.Priority().CompareTo( enemyTwo.Priority() ));
-           
+                enemies.Sort((enemyOne, enemyTwo) => enemyOne.Priority().CompareTo(enemyTwo.Priority()));
+
                 List<AIUnit> aiAgents = new List<AIUnit>(enemies);
                 StartCoroutine(InitiateAction(aiAgents));
-                
+
                 bool finishedMoving = enemies.All(enemy => enemy.HasTakenAction);
 
                 if (finishedMoving)
                 {
                     _phase = TurnPhase.OtherEnemy;
                     _phaseDisplay.OnDisplayComplete -= phaseDisplayComplete;
-                    
 
-                    foreach(EnemyUnit enemy in enemies)
+
+                    foreach (EnemyUnit enemy in enemies)
                         enemy.AllowAction();
                 }
             }
@@ -418,7 +436,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
             var otherEnemies = OtherEnemyUnits();
             if (otherEnemies.Count > 0)
             {
-               otherEnemies.Sort((enemyOne, enemyTwo) => enemyOne.Priority().CompareTo( enemyTwo.Priority() ));
+                otherEnemies.Sort((enemyOne, enemyTwo) => enemyOne.Priority().CompareTo(enemyTwo.Priority()));
 
                 List<AIUnit> aiAgents = new List<AIUnit>(otherEnemies);
                 StartCoroutine(InitiateAction(aiAgents));
@@ -436,12 +454,12 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
                 }
 
             }
-            else if(GridScene.activeSelf)
+            else if (GridScene.activeSelf)
             {
                 _phase = TurnPhase.Ally;
                 _phaseDisplay.OnDisplayComplete -= phaseDisplayComplete;
             }
-            
+
         }
     }
 
@@ -483,7 +501,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     {
         var playerUnits = new List<PlayerUnit>();
 
-        foreach(Unit unit in UnitsByTeam[Player.LocalPlayer.TeamId])
+        foreach (Unit unit in UnitsByTeam[Player.LocalPlayer.TeamId])
         {
             if (unit is PlayerUnit)
                 playerUnits.Add(unit as PlayerUnit);
@@ -498,7 +516,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
     {
         var enemyUnits = new List<EnemyUnit>();
 
-        foreach(Unit unit in UnitsByTeam[Player.Enemy.TeamId])
+        foreach (Unit unit in UnitsByTeam[Player.Enemy.TeamId])
         {
             if (unit is EnemyUnit)
                 enemyUnits.Add(unit as EnemyUnit);
@@ -556,7 +574,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
 
     private void SetAllUnitsIdle()
     {
-        foreach(Unit unit in _allUnits)
+        foreach (Unit unit in _allUnits)
             unit.SetIdle();
     }
 
@@ -568,7 +586,7 @@ public class CampaignManager : SerializedMonoBehaviour, IInitializable
         foreach (Unit unit in AllUnits)
             unit.SetInitialPosition();
     }
-    
+
     private void ToggleCamera(Camera camera)
     {
         camera.gameObject.SetActive(false);

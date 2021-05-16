@@ -23,9 +23,18 @@ public class DirectionUtility
     public static Direction GetDirection(Vector3 currentPosition, Vector3 targetDirection)
     {
         var facing = GetFacing(currentPosition, targetDirection);
+        return FacingToDirection[facing];
+    }
 
-        Debug.Log($"Facing: {facing}");
+    /// <summary>
+    /// A helper method for getting left or right direction for Speech Bubbles
+    /// </summary>
+    public static Direction GetHorizontalDirection(Vector3 currentPosition, Vector3 targetDirection)
+    {
+        if (currentPosition.x == targetDirection.x)
+            return Direction.Left;
 
+        var facing = GetFacing(new Vector3(targetDirection.x, 0, 0), new Vector3(currentPosition.x, 0, 0));
         return FacingToDirection[facing];
     }
 

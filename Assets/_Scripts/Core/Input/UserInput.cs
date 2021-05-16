@@ -60,6 +60,8 @@ public class UserInput : MonoBehaviour, IInitializable
         {
             if (Input.GetKeyDown(keyCode))
             {
+                if (keyCode == KeyCode.Z)
+                    Debug.Log("Z Pressed in user Input");
                 _inputData.KeyCode = keyCode;
                 _inputData.KeyState = KeyState.Down;
                 break;

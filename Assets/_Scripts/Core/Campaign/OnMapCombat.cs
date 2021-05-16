@@ -15,7 +15,22 @@ public class OnMapCombat : MonoBehaviour
     {
         attacker.UponAttackComplete += async delegate ()
         {
-            if (defender != null && defender.IsAlive)
+            OnCombatComplete += delegate ()
+            {
+                attacker.AllowAttack();
+                defender.AllowAttack();
+
+                attacker.TookAction();
+            };
+
+            if (attacker.HasAttacked && defender.HasAttacked)
+            {
+                attacker.ClearOnMapBattlEvents();
+                defender.ClearOnMapBattlEvents();
+
+                OnCombatComplete.Invoke();
+                OnCombatComplete = null;
+            } else if (defender != null && defender.IsAlive)
             {
                 defender.UponAttackComplete += OnCombatComplete;
 
@@ -27,14 +42,7 @@ public class OnMapCombat : MonoBehaviour
 
                 defender.AttackOnMap(attacker);
             }
-            else if (OnCombatComplete != null)
-            {
-                attacker.ClearOnMapBattlEvents();
-                defender.ClearOnMapBattlEvents();
 
-                OnCombatComplete.Invoke();
-                OnCombatComplete = null;
-            }
         };
 
         defender.UponDodgeComplete += attacker.UponAttackComplete;
@@ -45,6 +53,8 @@ public class OnMapCombat : MonoBehaviour
         
 
         attacker.AttackOnMap(defender);
+
+        
     }
 
     private static async Task<bool> ProcessAttack(Unit attacker, Unit defender)
@@ -73,7 +83,7 @@ public class OnMapCombat : MonoBehaviour
                 var isCritical = attackerPreview["CRITICAL"];
                 var attack = new Attack(attacker, atkLanded, isCritical);
 
-                defender.TakeDamage(attack.Damage(defender));
+                defender.TakeDamage(attack.Damage(defender), attacker);
             }
 
             if (atkCount == 2)
@@ -89,7 +99,7 @@ public class OnMapCombat : MonoBehaviour
                 var isCritical = attackerPreview["CRIT_SECOND_HIT"];
                 var attack = new Attack(attacker, atkLanded, isCritical);
 
-                defender.TakeDamage(attack.Damage(defender));
+                defender.TakeDamage(attack.Damage(defender), attacker);
             }
         };
 

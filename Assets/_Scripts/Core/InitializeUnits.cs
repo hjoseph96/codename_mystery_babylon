@@ -4,13 +4,18 @@ public class InitializeUnits : MonoBehaviour, IInitializable
 {
     public void Init()
     {
+        var campaignManager = CampaignManager.Instance;
+        
         foreach (var unit in FindObjectsOfType<Unit>())
         {
             unit.Init();
-            CampaignManager.Instance.AddUnit(unit);
+
+            if (campaignManager != null)
+                campaignManager.AddUnit(unit);
         }
 
-        foreach (var unit in CampaignManager.Instance.AllUnits)
-            unit.ApplyAuras(unit.GridPosition);
+        if (campaignManager != null)
+            foreach (var unit in CampaignManager.Instance.AllUnits)
+                unit.ApplyAuras(unit.GridPosition);
     }
 }

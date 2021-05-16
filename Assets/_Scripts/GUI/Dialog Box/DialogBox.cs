@@ -1,20 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+
 using UnityEngine;
+using UnityEngine.UI;
 
 using Sirenix.OdinInspector;
-using Febucci.UI;
 using TMPro;
 
 public class DialogBox : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private TextAnimatorPlayer _textAnimatorPlayer;
+
+    [SerializeField] private Color DefaultColor   = new Color(229, 206, 206, 255);
+    [SerializeField] private Color NightModeColor = new Color(178, 170, 170, 255);
+
+    private TypewritingText _typewritingText;
+
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private GameObject _zButton;
     [SerializeField] private Transform _portraitSpawnPoint;
+    [SerializeField] private Image _dialogBubble;
+
     [SerializeField, ValueDropdown("LeftOrRight")] private Direction _orientation;
     private List<Direction> LeftOrRight() => new List<Direction> { Direction.Left, Direction.Right };
 
@@ -33,9 +38,11 @@ public class DialogBox : MonoBehaviour
     private readonly List<string> _texts = new List<string>();
     private int _currentTextIndex;
 
-    
     private void Start()
     {
+        if (_typewritingText == null)
+            _typewritingText = GetComponentInChildren<TypewritingText>();
+
         UpdateListeners();
 
         _zButton.SetActive(false);
@@ -46,17 +53,28 @@ public class DialogBox : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if (IsTyping)
-                _textAnimatorPlayer.SkipTypewriter();
+                _typewritingText.SetRevealSpeed(3.5f);
             else if (_currentTextIndex < _texts.Count)
                 ShowNextText();
             else if (OnDialogueDisplayComplete != null)
             {
                 // Fire event signaling the end of this dialogue fragment.
                 OnDialogueDisplayComplete.Invoke();
-            }
-                
+            }       
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            if (IsTyping)
+                _typewritingText.SkipText();
+
+        if (Input.GetKeyUp(KeyCode.Z))
+            if (IsTyping)
+                _typewritingText.SetRevealSpeed(1f);
     }
+
+    public void SetDefaultColor() => _dialogBubble.color = DefaultColor;
+
+    public void SetNightModeColor() => _dialogBubble.color = NightModeColor;
 
     /// <summary>
     /// Set text, split it and show the first part using typewriter
@@ -64,9 +82,10 @@ public class DialogBox : MonoBehaviour
     /// <param name="text"></param>
     public void SetText(string text)
     {
-        Split(text);
+        if (_typewritingText == null)
+            _typewritingText = GetComponentInChildren<TypewritingText>();
 
-        _currentTextIndex = 0;
+        _typewritingText.SetText(text);
     }
 
     public void HideNextButton() => _zButton.SetActive(false);
@@ -77,6 +96,9 @@ public class DialogBox : MonoBehaviour
     /// <param name="portrait"></param>
     public void SetActivePortrait(AnimatedPortrait portrait)
     {
+        if (_typewritingText == null)
+            _typewritingText = GetComponentInChildren<TypewritingText>();
+
         if (CurrentPortrait != null)
             Destroy(CurrentPortrait.gameObject);
 
@@ -102,80 +124,24 @@ public class DialogBox : MonoBehaviour
         _name.text = entityReference.EntityName;
     }
 
-    // Split text and store the result in _texts List
-    private bool Split(string text)
-    {
-        _texts.Clear();
-
-        _text.text = Regex.Replace(text, "<.*?>", string.Empty);
-        _text.ForceMeshUpdate();
-        if (!_text.isTextOverflowing)
-        {
-            _texts.Add(text);
-            return false;
-        }
-
-        var sb = new StringBuilder(text);
-        sb.Replace(". ", ".$$$")
-            .Replace("! ", "!$$$")
-            .Replace("? ", "?$$$")
-            .Replace(": ", ":$$$")
-            .Replace("; ", ";$$$")
-            .Replace("… ", "…$$$")
-            .Replace("\r\n", "\r\n$$$")
-            .Replace("\r", "\r$$$")
-            .Replace("\n", "\n$$$");
-
-        var sentences = sb.ToString().Split(new[] { "$$$" }, StringSplitOptions.RemoveEmptyEntries);
-
-        sb.Clear();
-
-        foreach (var s in sentences)
-        {
-            var lastText = sb.ToString();
-
-            sb.Append(s);
-            _text.text = Regex.Replace(sb.ToString(), "<.*?>", string.Empty);
-            _text.ForceMeshUpdate();
-
-            if (_text.isTextOverflowing)
-            {
-                _texts.Add(lastText);
-                _text.text = s;
-
-                sb.Clear();
-                sb.Append(s);
-            }
-        }
-
-        if (!string.IsNullOrEmpty(_text.text))
-            _texts.Add(sb.ToString());
-
-        _text.text = string.Empty;
-
-        return true;
-    }
-
+    
     public void ShowNextText()
     {
         this.SetActive(true);
-        _textAnimatorPlayer.ShowText(_texts[_currentTextIndex++]);
+        _typewritingText.ShowNextText();
     }
 
     // Clear listeners and add new ones
     private void UpdateListeners()
     {
-        _textAnimatorPlayer.onTypewriterStart.RemoveAllListeners();
-        _textAnimatorPlayer.onTextShowed.RemoveAllListeners();
+        _typewritingText.RemoveTypewriterEvents();
 
         if (_currentPortrait != null)
-        {
-            _textAnimatorPlayer.onTypewriterStart.AddListener(_currentPortrait.Talk);
-            _textAnimatorPlayer.onTextShowed.AddListener(_currentPortrait.SetNeutral);
-        }
+            _typewritingText.AttachPortraitEvents(_currentPortrait.Talk, _currentPortrait.SetNeutral);
 
-        BeginTyping();
-        _textAnimatorPlayer.onTextShowed.AddListener(EndTyping);
+        _typewritingText.AttachOnStartTypingEvent(BeginTyping);
+
+        _typewritingText.AttachOnTextShowedEvent(EndTyping);
     }
 
     // Callback for onTypewriterStart

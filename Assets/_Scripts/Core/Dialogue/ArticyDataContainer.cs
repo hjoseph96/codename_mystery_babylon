@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using Articy.Codename_Mysterybabylon;
 using Articy.Unity;
 
@@ -30,8 +29,8 @@ public class ArticyDataContainer : SerializedMonoBehaviour
         return objNames;
     }
 
-    [SerializeField, ReadOnly, PropertyOrder(101)]
-    private List<string> _dialogueDisplayNames;
+    [SerializeField, PropertyOrder(101)]
+    public List<string> _dialogueDisplayNames;
 
     private List<ArticyObject> _references = new List<ArticyObject>();
     public List<ArticyObject> References { get => _references; }
@@ -42,10 +41,13 @@ public class ArticyDataContainer : SerializedMonoBehaviour
 
         foreach (var displayName in _dialogueDisplayNames)
         {
-            var matchingDialogue = dialogues.Where((d) => d.DisplayName == displayName).First();
-            _references.Add(matchingDialogue);
+            var matchingDialogue = dialogues.Where((d) => d.DisplayName == displayName);
+            
+            if (matchingDialogue.Count() > 0)
+                _references.Add(matchingDialogue.First());
+            else
+                Debug.LogWarning("Matching Dialogue Count is 0, determine error");
         }
-
     }
 
 }

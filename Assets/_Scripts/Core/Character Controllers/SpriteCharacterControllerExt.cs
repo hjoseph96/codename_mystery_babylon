@@ -3,6 +3,7 @@
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using DarkTonic.MasterAudio;
@@ -32,33 +33,73 @@ public enum AutoMovementType
 /// https://kybernetik.com.au/animancer/api/Animancer.Examples.DirectionalSprites/SpriteCharacterController
 /// 
 [AddComponentMenu("Directional Sprites - Sprite Character Controller")]
-public sealed class SpriteCharacterControllerExt : MonoBehaviour
+public sealed class SpriteCharacterControllerExt : MonoBehaviour, ISpeakableEntity
 {
+    [FoldoutGroup("Basic Information")]
+    [SerializeField]
     private ControllerState _state;
     public ControllerState State { get => _state; }
-
+    
+    [FoldoutGroup("Basic Information")]
+    [SerializeField]
     private AutoMovementType _autoMovement;
     public AutoMovementType AutoMovement { get => _autoMovement; }
 
     /************************************************************************************************************************/
 
-    [FoldoutGroup("Physics")]
+    [FoldoutGroup("Basic Information")]
     [SerializeField] private CapsuleCollider2D _Collider;
+    [FoldoutGroup("Basic Information")]
     [SerializeField] private Rigidbody2D _Rigidbody;
+    [FoldoutGroup("Basic Information")]
     [SerializeField] private float _WalkSpeed = 1;
+    [FoldoutGroup("Basic Information")]
     [SerializeField] private float _RunSpeed = 2;
+    [FoldoutGroup("Basic Information")]
     [SerializeField] private float _JumpDuration = 1.6f;
+    [FoldoutGroup("Basic Information")]
+    [SerializeField] private bool _isSeated;
+    public bool IsSeated { get => _isSeated; }
+    [FoldoutGroup("Animations"), SerializeField, ValueDropdown("ValidDirections")]
+    private Direction _startingLookDirection;
+
+    private List<Direction> ValidDirections = new List<Direction>
+    {
+        Direction.Down,
+        Direction.Left,
+        Direction.Up,
+        Direction.Right
+    };
 
     [FoldoutGroup("Animations")]
+    [SerializeField, ReadOnly] private Vector2 _Facing = Vector2.down;
+    [FoldoutGroup("Animations")]
     [SerializeField] private AnimancerComponent _Animancer;
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Idle;
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Walk;
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Run;
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Push;
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Jump;
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _InAir;
+    [FoldoutGroup("Animations")]
     [SerializeField] private DirectionalAnimationSet _Landing;
-    [SerializeField] private Vector2 _Facing = Vector2.down;
+    [FoldoutGroup("Animations")]
+    [Header("Seated")]
+    [SerializeField] private DirectionalAnimationSet _Sitting;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Sitting_Turn_Head_Down;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Sitting_Turn_Head_Left;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Sitting_Turn_Head_Right;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Sitting_Turn_Head_Up;
 
     [HideInInspector] public Action OnAutoMoveComplete;
 
@@ -80,14 +121,24 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
 
     private Vector2 _autoMoveTarget = Vector2.negativeInfinity;
 
+    /// <summary>
+    /// Used to update dialogue bubbles and animations to face player position 
+    /// </summary>
+    public Action<Vector3> OnPositionChanged; 
+
     /************************************************************************************************************************/
 
     private Unit _unit;
 
     private void Awake()
     {
-        _unit = GetComponent<Unit>();
-        _jumpController = GetComponent<JumpController>();
+        _unit               = GetComponent<Unit>();
+        _jumpController     = GetComponent<JumpController>();
+        _renderer           = GetComponent<SpriteRenderer>();
+        _footstepController = GetComponent<FootstepController>();
+
+        if (IsSeated)
+            _Collider.enabled = false;
     }
 
     private void Start()
@@ -95,13 +146,12 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
         transform.parent = null;
         DontDestroyOnLoad(this.gameObject);
 
-        _state = ControllerState.Ground;
+        if (_state != ControllerState.AutoMovement)
+            _state = ControllerState.Ground;
 
-        _renderer = GetComponent<SpriteRenderer>();
-        _footstepController = GetComponent<FootstepController>();
         _MovementSynchronisation = new TimeSynchronisationGroup(_Animancer) { _Walk, _Run, _Jump, _InAir, _Push };
 
-        Play(_Idle);
+        _Facing = DirectionUtility.DirectionToFacing[_startingLookDirection];
     }
 
     /************************************************************************************************************************/
@@ -123,6 +173,16 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
         }
     }
 
+     public void SetAutoMode()   => _state = ControllerState.AutoMovement;
+
+    public void StopSitting()   => _isSeated = false;
+
+    public void SetMoveTarget(Transform moveTarget) => _autoMoveTarget = moveTarget.position;
+
+    public void Rotate(Direction direction) => _Facing = direction.ToVector();
+
+    public void SetIdle() => Play(_Idle);
+
     public void FreezeInput()
     {
         _Movement = Vector2.zero;
@@ -132,8 +192,10 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
 
     public void AllowInput()
     {
-        Play(_Idle);
+        _Collider.enabled = true;
         _state = ControllerState.Ground;
+        
+        Play(_Idle);
     }
 
     public void Jump(JumpTrigger jumpTrigger)
@@ -189,31 +251,34 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
                 var pos = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(transform.position);
                 var cell = WorldGrid.Instance[pos];
                 if (cell.IsStairs(_unit))
-                {
-                    if (cell.GetStairsOrientation(_unit) == StairsOrientation.LeftToRight)
-                        _Movement.y = _Movement.x;
-                    else
-                        _Movement.y = -_Movement.x;
-                }
+                    _Movement.y = _Movement.x;
             }
 
             _Movement = Vector2.ClampMagnitude(_Movement, 1);
+
+            OnPositionChanged?.Invoke(transform.position);
         }
         else
-            Play(_Idle);
+        {
+            if (IsSeated)
+                Play(_Sitting);
+            else
+                Play(_Idle);
+        }
     }
 
     private void HandleAutoMovement()
     {
         if (_autoMoveTarget == Vector2.negativeInfinity)
-            throw new Exception("You have entered ControllerState.AutoMovement but somehow haven't set a valid point to travel to...");
+            return;
 
-        var reachedDestination = Vector2.Distance(transform.position, _autoMoveTarget) < 0.1;
+        var distanceToTarget = Vector2.Distance(transform.position, _autoMoveTarget);
+        var reachedDestination = distanceToTarget < 0.1;
 
         if (_Movement != Vector2.zero && !reachedDestination)
         {
             _Facing = _Movement;
-            Play(_Walk);
+             Play(_Walk);
 
             // Snap the movement to the exact directions we have animations for.
             // When using DirectionalAnimationSets this means the character will only move up/right/down/left.
@@ -238,7 +303,12 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
         }
         else
         {
-            Play(_Idle);
+            _Movement = Vector2.zero;
+
+            if (IsSeated)
+                Play(_Sitting);
+            else
+                Play(_Idle);
 
             if (reachedDestination)
                 if (OnAutoMoveComplete != null)
@@ -388,6 +458,12 @@ public sealed class SpriteCharacterControllerExt : MonoBehaviour
             return;
 
         AnimancerUtilities.EditModePlay(_Animancer, _Idle.GetClip(_Facing), false);
+    }
+
+    public BubblePositionController.EntityInfo GetEntityInfo()
+    {
+        //TODO: Determine standing/sitting/mounted based on what current animation branch is, or other checks
+        return new BubblePositionController.EntityInfo { facingDirection = DirectionUtility.FacingToDirection[_Facing], mounted = false, sitting = false };
     }
 
     /************************************************************************************************************************/

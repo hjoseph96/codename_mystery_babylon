@@ -37,7 +37,7 @@ public class WorldDialogCanvas : CanvasManager
     }
 
 
-    public DialogBox GetDialogBox(EntityReference entityReference)
+    public DialogBox GetDialogBox(EntityReference entityReference, EntityReference speakingToReference)
     {
         // TODO: We need to switch to checking for a GUID based on Entity.
         // IE: a cutscene where two "Garrisoned Knights" are talking to each other
@@ -54,8 +54,7 @@ public class WorldDialogCanvas : CanvasManager
         if (ShownDialogBoxes.Contains(existingSpeakerDialogBox))
             return existingSpeakerDialogBox;
         else
-            return SpawnDialogBox(entityReference, Direction.Left);
-
+            return SpawnDialogBox(entityReference, DirectionUtility.GetHorizontalDirection(speakingToReference.transform.position, entityReference.transform.position));
 
         throw new System.Exception("[DialogueManager] Unable to find a Dialog Box to spawn or update...");
     }
@@ -74,20 +73,13 @@ public class WorldDialogCanvas : CanvasManager
         if (directionToSpawn != Direction.Left && directionToSpawn != Direction.Right)
             throw new System.Exception($"[DialogManager] Given Direction: '{directionToSpawn}' is invalid. Only Direction.Left or Direction.Left is allowed.");
 
-        var renderer = entityRef.GetComponent<Renderer>();
-        var topPoint = renderer.bounds.max;
-
-        var spawnPoint = new Vector3(
-            topPoint.x - 4.32f,
-            topPoint.y + 1,
-            topPoint.z
-            );
+        Vector3 spawnPoint = entityRef.GetSpeechBubblePos(directionToSpawn);
 
         var boxPrefab = _leftDialogBoxPrefab;
 
         if (directionToSpawn == Direction.Right)
         {
-            spawnPoint.x += 10;
+            //spawnPoint.x += 5;
             boxPrefab = _rightDialogBoxPrefab;
         }
 
@@ -101,7 +93,6 @@ public class WorldDialogCanvas : CanvasManager
         newDialogBox.SetSpeaker(entityRef);
 
         _shownDialogBoxes.Add(newDialogBox);
-
 
         return newDialogBox;
     }

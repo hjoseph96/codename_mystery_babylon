@@ -106,6 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2474146685123943038}
   - component: {fileID: 2474146685123943026}
+  - component: {fileID: 1711063543622499794}
   - component: {fileID: 2474146685123943027}
   - component: {fileID: 2474146685123943024}
   - component: {fileID: 2474146685123943025}
@@ -143,6 +144,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2474146685123943039}
   m_CullTransparentMesh: 1
+--- !u!114 &1711063543622499794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2474146685123943039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d219fd4245ce7564cba4584c95dd844d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2474146685123943027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +576,7 @@ GameObject:
   - component: {fileID: 2474146685451645000}
   - component: {fileID: 2474146685451645003}
   m_Layer: 5
-  m_Name: Dialog Box (Left)
+  m_Name: Dialog Box (Left) -- Night Mode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -601,11 +614,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1125b5181a31b468748a2a70d11ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 2474146685123943027}
-  _textAnimatorPlayer: {fileID: 2474146685123943025}
+  DefaultColor: {r: 0.7490196, g: 0.6745098, b: 0.6745098, a: 1}
+  NightModeColor: {r: 0.7490196, g: 0.7176471, b: 0.7176471, a: 1}
   _name: {fileID: 2474146685388584848}
   _zButton: {fileID: 2474146684682379818}
   _portraitSpawnPoint: {fileID: 0}
+  _dialogBubble: {fileID: 2474146685259291447}
   _orientation: 1
 --- !u!1 &2474146685965743070
 GameObject:

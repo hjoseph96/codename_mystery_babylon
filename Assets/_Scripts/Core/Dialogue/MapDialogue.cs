@@ -14,6 +14,8 @@ public class MapDialogue : SerializedMonoBehaviour
     [HideInInspector]
     public System.Action<GameObject> OnDialogueBegin;
 
+    [HideInInspector]
+    public System.Action OnDialogueEnd;
 
     private ArticyDataContainer _articyData;
     private bool _hasStarted        = false;
@@ -33,6 +35,8 @@ public class MapDialogue : SerializedMonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z) && !_hasStarted && _isWithinTrigger)
         {
+            Debug.Log("Starting Dialogue Z pressed");
+
             StartDialogue();
             ActionNoticeManager.Instance.HideNotice();
 
@@ -76,6 +80,9 @@ public class MapDialogue : SerializedMonoBehaviour
                 
                 DialogueManager.Instance.OnDialogueComplete = null;
             }
+
+            if (_isWithinTrigger)
+                ActionNoticeManager.Instance.ShowNotice("To Talk");
         };
         DialogueManager.Instance.SetDialogueToPlay(_currentDialogue, DialogType.Map, this);
         DialogueManager.Instance.Play();
@@ -83,5 +90,9 @@ public class MapDialogue : SerializedMonoBehaviour
         _hasStarted = true;
     }
 
-    public void Reset() => _hasStarted = false;
+    public void Reset() 
+    {
+        _hasStarted = false;
+        OnDialogueEnd?.Invoke();
+    }
 }

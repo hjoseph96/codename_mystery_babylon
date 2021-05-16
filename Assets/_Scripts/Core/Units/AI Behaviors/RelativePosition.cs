@@ -31,4 +31,12 @@ public class RelativePosition
 
     }
 
+    public Vector2Int GetPointInPathOrDefault(float normalizedDistance)
+    {
+        if (Position == Target)
+            return Position;
+
+        return Path.GetPointInPath(normalizedDistance);
+    }
+
 }

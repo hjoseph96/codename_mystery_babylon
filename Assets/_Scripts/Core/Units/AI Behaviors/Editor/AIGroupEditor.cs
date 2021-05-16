@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[CanEditMultipleObjects]
 [CustomEditor(typeof(AIGroup))]
 public class AIGroupEditor : Editor
 {
@@ -39,6 +40,8 @@ public class AIGroupEditor : Editor
         EditorGUILayout.PropertyField(_groupTrait);
         EditorGUILayout.PropertyField(_groupIntention);
         EditorGUILayout.PropertyField(_collaboratorGroup);
+
+        
         serializedObject.ApplyModifiedProperties();
     }
 

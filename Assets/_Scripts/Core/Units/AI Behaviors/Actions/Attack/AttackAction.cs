@@ -15,11 +15,11 @@ public class AttackAction : BaseAction
 
     public override void Perform(IContext context)
     {
-        if (AIAgent.CanAttackLeader())
-        {
-            Debug.Log("IMPLEMENT AttackLeader AIBehavior...");
-            return;
-        }
+        //if (AIAgent.CanAttackLeader())
+        //{
+        //    Debug.Log("IMPLEMENT AttackLeader AIBehavior...");
+        //    return;
+        //}
 
         _attackStrategies["AttackWeakestUnit"].Execute();
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HoldFormation : GroupBehavior
 {
+    private GridPath _path;
+
     public override void Execute() => executionState = AIBehaviorState.Executing;
    
     // Update is called once per frame
@@ -12,10 +14,14 @@ public class HoldFormation : GroupBehavior
         if (executionState == AIBehaviorState.Executing)
         {
 
-
-            
             var destination = AIAgent.FindClosestCellTo(AIAgent.group.PreferredGroupPosition.Position + AIAgent.MyCellInFormation());
-            var movePath = AIAgent.MovePath(destination);
+            _path = AIAgent.MovePath(destination);
+
+            if (_path.Length == 0)   // Already In Position
+            {
+                executionState = AIBehaviorState.Complete;
+                AIAgent.TookAction();
+            }
 
             AIAgent.OnFinishedMoving = null;
 
@@ -28,10 +34,20 @@ public class HoldFormation : GroupBehavior
             if (!AIAgent.MovedThisTurn)
             {
                 AIAgent.SetMovedThisTurn();
-                StartCoroutine(AIAgent.MovementCoroutine(movePath));
+                StartCoroutine(AIAgent.MovementCoroutine(_path));
             }
         }
     }
 
-    
+    protected virtual void OnDrawGizmos()
+    {
+        var worldGrid = WorldGrid.Instance;
+        if (Application.isPlaying && worldGrid != null && _path != null)
+        {
+            foreach(var cell in _path.Path())
+                Gizmos.DrawCube(worldGrid.Grid.GetCellCenterWorld((Vector3Int)cell), Vector3.one);
+
+        }
+    }
+
 }

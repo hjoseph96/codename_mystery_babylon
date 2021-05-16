@@ -82,9 +82,10 @@ public class AIUnit : Unit
         {
             for (int j = 0; j < formationGrid.Height; j++)
             {
-                if (formationGrid[i, j] == positionInGroup)
+                var formationPoint = formationGrid[i, j];
+                if (formationPoint == positionInGroup)
                 {
-                    return new Vector2Int(i, j) - group.CurrentFormation.Pivot;
+                    return group.RotateFormationToTarget(new Vector2Int(i, j) - group.CurrentFormation.Pivot, group.CurrentFormation.Pivot);
                 }
             }
         }
@@ -307,9 +308,10 @@ public class AIUnit : Unit
         {
             float distanceToGroup = GridUtility.GetBoxDistance(GridPosition, group.PreferredGroupPosition.Position);
             float distanceToClosestEnemy = GridUtility.GetBoxDistance(GridPosition, closestEnemy.GridPosition);
-
+            
             var shouldAttack = Mathf.Clamp01((distanceToClosestEnemy / distanceToGroup) / 2);
-            return (NeedToHeal() + (1 - shouldAttack)) / 2;
+            //return (NeedToHeal() + (1 - shouldAttack)) / 2;
+            return (ThreatLevelAtPosition(group.PreferredGroupPosition.Position) - NeedToHeal() / 2);
         }
         else
             return NeedToRetreat();

@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AttackWeakestUnit : AttackBehavior
 {
@@ -25,48 +26,34 @@ public class AttackWeakestUnit : AttackBehavior
 
             if (_attackPoints.Count > 0)
             {
-                var attackTargets = _attackPoints.Keys.ToList();
-
-                // If there's more than one attack target, choose the one who will get closer to death
-                if (attackTargets.Count > 1)
-                    attackTargets.Sort(
-                        delegate (Vector2Int cellOne, Vector2Int cellTwo)
-                        {
-                            var unitOne = WorldGrid.Instance[cellOne].Unit;
-                            var unitTwo = WorldGrid.Instance[cellTwo].Unit;
-
-                            return PreviewRemainingHealth(unitOne).CompareTo(PreviewRemainingHealth(unitTwo));
-                        }
-                    );
-
-                var unitWhoWillTakeMostDamage = attackTargets[0];
+                var unitWhoWillTakeMostDamage = GetWeakestEnemy(_attackPoints.Keys.ToList());
                 var targetAtkPoints = _attackPoints[unitWhoWillTakeMostDamage];
 
                 var targetCell = AIAgent.FindClosestCellTo(targetAtkPoints[0]);
 
                 // Create path to nearest neighnor
-                var movePath = AIAgent.MovePath(targetCell);
-
-
-                AIAgent.OnFinishedMoving = null;
-                // Post Move logic: face each other and trigger combat. attach event to end this AI's turn in the current phase.
-                AIAgent.OnFinishedMoving += delegate ()
+                Move(targetCell, () =>
+                    {
+                        TriggerCombat(unitWhoWillTakeMostDamage);
+                        executionState = AIBehaviorState.Complete;
+                    });
+            }
+            else if(sightedEnemies.Count > 0 )
+            {
+                var weakestEnemyPos = GetWeakestEnemy(sightedEnemies.Select(e => e.GridPosition).ToList());
+                Move(weakestEnemyPos, () =>
                 {
-                    TriggerCombat(unitWhoWillTakeMostDamage);
+                    AIAgent.TookAction();
+                    _checkedAtkPoints = false;
                     executionState = AIBehaviorState.Complete;
-                };
-
-                if (!AIAgent.MovedThisTurn)
-                {
-                    AIAgent.SetMovedThisTurn();
-                    StartCoroutine(AIAgent.MovementCoroutine(movePath));
-                }
+                });
+                
             }
             else
             {
-                executionState = AIBehaviorState.Complete;
                 AIAgent.TookAction();
                 _checkedAtkPoints = false;
+                executionState = AIBehaviorState.Complete;
             }
 
         }
@@ -126,4 +113,49 @@ public class AttackWeakestUnit : AttackBehavior
         return Mathf.Clamp(unit.CurrentHealth - damageDealt, 0, unit.Class.MaxStats[UnitStat.MaxHealth]);
     }
 
+    protected Vector2Int GetWeakestEnemy(List<Vector2Int> enemies)
+    {
+        var attackTargets = enemies;
+
+
+        // TODO: Find out why someitmes, we get attack targets who are null...
+        var missingUnits = attackTargets.Where((atkTarget) => WorldGrid.Instance[atkTarget].Unit == null);
+        foreach (var unit in missingUnits)
+            attackTargets.Remove(unit);
+
+
+        // If there's more than one attack target, choose the one who will get closer to death
+        if (attackTargets.Count > 1)
+            attackTargets.Sort(
+                delegate (Vector2Int cellOne, Vector2Int cellTwo)
+                {
+                    var unitOne = WorldGrid.Instance[cellOne].Unit;
+                    var unitTwo = WorldGrid.Instance[cellTwo].Unit;
+
+                    return PreviewRemainingHealth(unitOne).CompareTo(PreviewRemainingHealth(unitTwo));
+                }
+            );
+
+        return attackTargets[0];
+    }
+
+    protected void Move(Vector2Int targetCell, Action OnFinishedMoving)
+    {
+        var movePath = AIAgent.MovePath(targetCell);
+
+
+        AIAgent.OnFinishedMoving = null;
+        // Post Move logic: face each other and trigger combat. attach event to end this AI's turn in the current phase.
+        AIAgent.OnFinishedMoving += delegate ()
+        {
+            OnFinishedMoving?.Invoke();
+        };
+
+        if (!AIAgent.MovedThisTurn)
+        {
+            AIAgent.SetMovedThisTurn();
+            
+            StartCoroutine(AIAgent.MovementCoroutine(movePath));
+        }
+    }
 }
