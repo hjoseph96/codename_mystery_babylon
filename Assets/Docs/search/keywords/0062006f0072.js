@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("bor",["Property"],[["BornIn",,[["Entity",,,,0,"File:Core/Entities/Entity.cs:Entity.BornIn","CSharpClass:Entity:BornIn"],["PlayableCharacterData",,,,0,"File:Core/Repositories/EntityRepository/PlayableCharacterRepository.cs:PlayableCharacterData.BornIn","CSharpClass:PlayableCharacterData:BornIn"]]]]);

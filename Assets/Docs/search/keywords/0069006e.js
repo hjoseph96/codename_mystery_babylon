@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("in",["Variable"],[["In",,[["DirectionPair",,,,0,"File:Core/Map/UI/DirectionPair.cs:DirectionPair.In","CSharpClass:DirectionPair:In"]]]]);

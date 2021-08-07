@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Tazdraperm.Utility;
 using UnityEngine;
+using UnityEngine.Profiling;
 
-
-public static class GridUtility
+public class GridUtility
 {
     public const int MaxAttackRange = 6;
     public static readonly Vector2Int[][] AttackPositions;
@@ -166,6 +167,10 @@ public static class GridUtility
         return DirectionExtensions.FromVector(offset, allowDiagonalOutput);
     }
 
+    #region Debug Variables
+    public List<Vector2Int> gizmosCells = new List<Vector2Int>();
+    #endregion
+
     /// <summary>
     /// Used to get an array of neighbour offsets for a specific point in grid with respect of stairs<br/>
     /// For non-stairs tile with non-stairs neighbours result is an array of fours cardinal directions<br/>
@@ -217,7 +222,12 @@ public static class GridUtility
         foreach (Vector2Int offset in offsets)
         {
             var neighbor = gridPosition + offset;
-            if (WorldGrid.Instance.PointInGrid(neighbor))
+
+            var worldCell = WorldGrid.Instance[neighbor];
+            // Hardcode in Ground Units -- TODO: remove when doing flying units;
+            var travelCost = worldCell.GetTravelCost(sortingLayerId, UnitType.Ground);
+
+            if (WorldGrid.Instance.PointInGrid(neighbor) && travelCost != -1)
                 neighbors.Add(gridPosition + offset);
         }
 
@@ -297,7 +307,7 @@ public static class GridUtility
 
 
                 // Check if can move
-                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unit) && !fullRadiusMode)
+                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unit.SortingLayerId, unit.UnitType) && !fullRadiusMode)
                     continue;
 
                 // We can not pass through enemy units
@@ -307,7 +317,7 @@ public static class GridUtility
                     if (otherUnit.IsEnemy(unit) && !fullRadiusMode && !includeEnemy)
                         continue;
 
-                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unit);
+                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unit.SortingLayerId, unit.UnitType);
                 var newCost = movementCost[currentPosition] + neighbourCost;
 
                 //// If new cost if more than we can move
@@ -462,7 +472,6 @@ public static class GridUtility
     public static HashSet<Vector2Int> GetReachableCellNeighbours(Vector2Int targetCell, int radius, Unit unit)
     {
         var start = targetCell;
-        var unitType = unit.UnitType;
 
         var queue = new Queue<Vector2Int>();
         var isolatedCells = new HashSet<Vector2Int>();
@@ -493,7 +502,7 @@ public static class GridUtility
 
 
                 // Check if can move
-                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unit))
+                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unit.SortingLayerId, unit.UnitType))
                     continue;
 
                 // We can not attack from a position that has a unit already there
@@ -501,7 +510,7 @@ public static class GridUtility
                 if (otherUnit != null)
                     continue;
 
-                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unit);
+                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unit.SortingLayerId, unit.UnitType);
                 var newCost = movementCost[currentPosition] + neighbourCost;
 
                 // If new cost if more than we can move
@@ -618,8 +627,8 @@ public static class GridUtility
                     if (!result.Contains(position) &&
                         !reachableCells.Contains(position) &&
                         WorldGrid.Instance.PointInGrid(position) &&
-                        WorldGrid.Instance[position].Unit != null && WorldGrid.Instance[position].Unit.IsEnemy(unit) &&
-                        CanAttack(position))
+                        WorldGrid.Instance[position].Unit != null && WorldGrid.Instance[position].Unit.IsEnemy(unit) && WorldGrid.Instance[position].Unit.Incapacitated == false &&
+                        CanAttack(position) && WorldGrid.Instance[position].Unit.IsAlive && WorldGrid.Instance[position].Unit.IsDying == false)
 
                         result.Add(position);
                 }
@@ -684,7 +693,7 @@ public static class GridUtility
 
 
                 // Check if can move
-                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unit) && !fullRadiusMode)
+                if (!_worldGrid[currentPosition].CanMove(neighbourPosition, unit.SortingLayerId, unit.UnitType) && !fullRadiusMode)
                     continue;
 
                 // We can not pass through enemy units
@@ -694,7 +703,7 @@ public static class GridUtility
                 //    if (otherUnit.IsEnemy(unit) && !fullRadiusMode && !includeEnemy)
                 //        continue;
 
-                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unit);
+                var neighbourCost = _worldGrid[currentPosition].GetTravelCost(neighbourPosition, unit.SortingLayerId, unit.UnitType);
                 var newCost = movementCost[currentPosition] + neighbourCost;
 
                 // If new cost if more than we can move
@@ -759,13 +768,12 @@ public static class GridUtility
     public static GridPath FindPath(Unit unit, Vector2Int start, Vector2Int goal, int maxCost = int.MaxValue)
     {
         var unitType = unit.UnitType;
-
         var capacity = ((Mathf.Abs(goal.x - start.x) + 1) * (Mathf.Abs(goal.y - start.y) + 1)) >> 1;
         var frontier = new PriorityQueue<Vector2Int>(capacity);
         var runningCost = new Dictionary<Vector2Int, float>(capacity);
         var cameFrom = new Dictionary<Vector2Int, Vector2Int>(capacity);
 
-        if (!WorldGrid.Instance.PointInGrid(goal) || !WorldGrid.Instance[goal].IsPassable(unit))
+        if (!WorldGrid.Instance.PointInGrid(goal) || !WorldGrid.Instance[goal].IsPassable(unit.SortingLayerId, unit.UnitType))
             return null;
 
         frontier.Enqueue(start, 0f);
@@ -804,10 +812,10 @@ public static class GridUtility
                     continue;
 
                 // Check if can move
-                if (!WorldGrid.Instance[currentPosition].CanMove(neighbourPosition, unit))
+                if (!WorldGrid.Instance[currentPosition].CanMove(neighbourPosition, unit.SortingLayerId, unit.UnitType))
                     continue;
 
-                var neighbourCost = WorldGrid.Instance[currentPosition].GetTravelCost(neighbourPosition, unit);
+                var neighbourCost = WorldGrid.Instance[currentPosition].GetTravelCost(neighbourPosition, unit.SortingLayerId, unit.UnitType);
                 var newCost = currentCost + neighbourCost;
                 if (newCost > maxCost || runningCost.TryGetValue(neighbourPosition, out var oldCost) && newCost > oldCost)
                     continue;
@@ -828,6 +836,7 @@ public static class GridUtility
         return null;
     }
 
+
     /// <summary>
     /// Finds path for unit between 2 points using A*
     /// </summary>
@@ -835,7 +844,7 @@ public static class GridUtility
     /// <param name="goal"></param>
     /// <param name="maxCost">Optional max pathfinding depth</param>
     /// <returns></returns>
-    public static GridPath FindPath(int sortingLayerID, Vector2Int start, Vector2Int goal, int maxCost = int.MaxValue)
+    public static GridPath FindPath(int sortingLayerID, Vector2Int start, Vector2Int goal, bool includeUnitOccupiedCells = false, int maxCost = int.MaxValue)
     {
         var capacity = ((Mathf.Abs(goal.x - start.x) + 1) * (Mathf.Abs(goal.y - start.y) + 1)) >> 1;
         var frontier = new PriorityQueue<Vector2Int>(capacity);
@@ -853,6 +862,91 @@ public static class GridUtility
         {
             var currentPosition = frontier.Dequeue();
 
+            var currentCost = runningCost[currentPosition];
+            var offsets = GetNeighboursOffsets(sortingLayerID, currentPosition);
+
+            // Reached Goal
+            if (currentPosition == goal)
+            {
+                var path = RestorePath(start, currentPosition, cameFrom);
+                var travelCost = runningCost[currentPosition];
+                var gridPath = new GridPath(path, travelCost);
+                return gridPath;
+            }
+
+            for (var i = 0; i < offsets.Length; i++)
+            {
+                var offset = offsets[i];
+                var neighbourPosition = currentPosition + offset;
+
+                // Check if not out of bounds
+                if (!WorldGrid.Instance.PointInGrid(neighbourPosition))
+                {
+                    continue;
+                }
+
+                // Check if tile is marked as impassible by other means (Scripted colliders etc)
+                if (!WorldGrid.Instance[currentPosition].CanMove(WorldGrid.Instance[neighbourPosition], sortingLayerID, UnitType.Ground))
+                {
+                    continue;
+                }
+
+                // Check if cell free
+                var otherUnit = WorldGrid.Instance[neighbourPosition].Unit;
+                if (includeUnitOccupiedCells && otherUnit != null)
+                {
+                    continue;
+                }
+
+                var neighbourCost = 1;
+                var newCost = currentCost + neighbourCost;
+                if (newCost > maxCost || runningCost.TryGetValue(neighbourPosition, out var oldCost) && newCost > oldCost)
+                {
+                    continue;
+                }
+
+                runningCost[neighbourPosition] = newCost;
+                cameFrom[neighbourPosition] = currentPosition;
+
+                var heuristic = ManhattanHeuristicWithInverseTieBreaks(neighbourPosition, goal);
+                var priority = newCost + heuristic;
+
+                if (frontier.Contains(neighbourPosition))
+                    frontier[neighbourPosition] = priority;
+                else
+                    frontier.Enqueue(neighbourPosition, priority);
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Debug version of find path. Used to visualize the path finding process in real time.
+    /// Use the list GizmosCells to fetch the data at a given time.
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="goal"></param>
+    /// <param name="maxCost">Optional max pathfinding depth</param>>
+    public System.Collections.IEnumerator Debug_FindPath(int sortingLayerID, Vector2Int start, Vector2Int goal, int maxCost = int.MaxValue)
+    {
+        var capacity = ((Mathf.Abs(goal.x - start.x) + 1) * (Mathf.Abs(goal.y - start.y) + 1)) >> 1;
+        var frontier = new PriorityQueue<Vector2Int>(capacity);
+        var runningCost = new Dictionary<Vector2Int, float>(capacity);
+        var cameFrom = new Dictionary<Vector2Int, Vector2Int>(capacity);
+
+        if (!WorldGrid.Instance.PointInGrid(goal))
+            yield break;
+
+        frontier.Enqueue(start, 0f);
+        runningCost[start] = 0f;
+        gizmosCells = new List<Vector2Int>();
+        // We use classic A*
+        while (frontier.Length > 0)
+        {
+            var currentPosition = frontier.Dequeue();
+            gizmosCells.Add(currentPosition);
+            yield return new WaitForEndOfFrame();
 
             var currentCost = runningCost[currentPosition];
             var offsets = GetNeighboursOffsets(sortingLayerID, currentPosition);
@@ -862,7 +956,7 @@ public static class GridUtility
                 var path = RestorePath(start, currentPosition, cameFrom);
                 var travelCost = runningCost[currentPosition];
                 var gridPath = new GridPath(path, travelCost);
-                return gridPath;
+                yield break;
             }
 
             for (var i = 0; i < offsets.Length; i++)
@@ -898,7 +992,25 @@ public static class GridUtility
             }
         }
 
-        return null;
+        yield return null;
+    }
+
+    public static Vector2Int FindClosestNeighbor(int sortingLayerId, Vector2Int currentCell, Vector2Int targetCell)
+    {
+        var neighbors = GetNeighbours(sortingLayerId, targetCell);
+
+        if (neighbors.Count == 0)
+            throw new Exception($"[GridUtility] There are no available neighbors for cell: {targetCell.x}, {targetCell.y}");
+
+        neighbors.Sort(delegate (Vector2Int neighborOne, Vector2Int neighborTwo)
+        {
+            var firstDistance = GetBoxDistance(currentCell, neighborOne);
+            var secondDistance = GetBoxDistance(currentCell, neighborTwo);
+
+            return firstDistance.CompareTo(secondDistance);
+        });
+
+        return neighbors[0];
     }
 
     /// <summary>
@@ -963,6 +1075,8 @@ public static class GridUtility
 
         return true;
     }
+
+
 
     /// <summary>
     /// Checks if there's a line of sight between two points. Takes tiles LOS and Height properties into account

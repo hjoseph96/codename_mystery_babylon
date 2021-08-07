@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_to",["Variable"],[["_totalMovementTime",,[["GridCursor",,,,0,"File:Core/Map/UI/GridCursor.cs:GridCursor._totalMovementTime","CSharpClass:GridCursor:_totalMovementTime"],["UICursor",,,,0,"File:GUI/UICursor.cs:UICursor._totalMovementTime","CSharpClass:UICursor:_totalMovementTime"]]]]);

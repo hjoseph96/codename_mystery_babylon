@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("tog",["Function"],[["ToggleCamera",,[["CampaignManager",,,,0,"File:Core/Campaign/CampaignManager.cs:CampaignManager.ToggleCamera","CSharpClass:CampaignManager:ToggleCamera"]]]]);

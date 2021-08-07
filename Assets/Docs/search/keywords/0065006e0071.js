@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("enq",["Function"],[["Enqueue",,[["Tazdraperm.Utility.PriorityQueue",,,,0,"File:Utility/Tazdraperm_Utility/PriorityQueue.cs:Tazdraperm.Utility.PriorityQueue.Enqueue","CSharpClass:Tazdraperm.Utility.PriorityQueue:Enqueue"]]]]);

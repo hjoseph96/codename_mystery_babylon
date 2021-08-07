@@ -1,11 +1,606 @@
-fileFormatVersion: 2
-guid: df7388df1882bf24099ba17ad8f7d780
-MonoImporter:
-  externalObjects: {}
-  serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2020 Kybernetik //
+
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Sirenix.OdinInspector;
+using DarkTonic.MasterAudio;
+
+using Animancer;
+
+public enum ControllerState
+{
+    Ground,
+    AutoMovement,
+    Jumping,
+    InTransition
+}
+
+public enum AutoMovementType
+{
+    None,
+    Walk,
+    Run
+}
+
+/// <summary>
+/// A more complex version of the <see cref="SpriteMovementController"/> which adds running and pushing animations
+/// as well as the ability to actually move around.
+/// </summary>
+/// <example><see href="https://kybernetik.com.au/animancer/docs/examples/directional-sprites/character-controller">Character Controller</see></example>
+/// https://kybernetik.com.au/animancer/api/Animancer.Examples.DirectionalSprites/SpriteCharacterController
+/// 
+[AddComponentMenu("Directional Sprites - Sprite Character Controller")]
+public sealed class SpriteCharacterControllerExt : MonoBehaviour, ISpeakableEntity
+{
+    [FoldoutGroup("Basic Information")]
+    [SerializeField]
+    private ControllerState _state;
+
+    [FoldoutGroup("Basic Information")]
+    [SerializeField]
+    private AutoMovementType _autoMovement;
+    public AutoMovementType AutoMovement { get => _autoMovement; }
+
+    /************************************************************************************************************************/
+
+    [FoldoutGroup("Basic Information")]
+    [SerializeField] private CapsuleCollider2D _Collider;
+    [FoldoutGroup("Basic Information")]
+    [SerializeField] private Rigidbody2D _Rigidbody;
+    [FoldoutGroup("Basic Information")]
+    [SerializeField] private float _WalkSpeed = 1;
+    [FoldoutGroup("Basic Information")]
+    [SerializeField] private float _RunSpeed = 2;
+    [FoldoutGroup("Basic Information")]
+    [SerializeField] private float _JumpDuration = 1.6f;
+    [FoldoutGroup("Basic Information")]
+    [SerializeField] private bool _isSeated;
+    public bool IsSeated { get => _isSeated; }
+    [FoldoutGroup("Animations"), SerializeField, ValueDropdown("ValidDirections")]
+    private Direction _startingLookDirection;
+
+    private List<Direction> ValidDirections = new List<Direction>
+    {
+        Direction.Down,
+        Direction.Left,
+        Direction.Up,
+        Direction.Right
+    };
+
+    [FoldoutGroup("Animations")]
+    [SerializeField, ReadOnly] private Vector2 _Facing = Vector2.down;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private AnimancerComponent _Animancer;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Idle;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Walk;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Run;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Push;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Jump;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _InAir;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Landing;
+    [FoldoutGroup("Animations")]
+    [Header("Seated")]
+    [SerializeField] private DirectionalAnimationSet _Sitting;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Sitting_Turn_Head_Down;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Sitting_Turn_Head_Left;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Sitting_Turn_Head_Right;
+    [FoldoutGroup("Animations")]
+    [SerializeField] private DirectionalAnimationSet _Sitting_Turn_Head_Up;
+
+    [HideInInspector] public Action OnAutoMoveComplete;
+
+    private Vector2 _Movement;
+    private SpriteRenderer _renderer;
+    private DirectionalAnimationSet _CurrentAnimationSet;
+    private TimeSynchronisationGroup _MovementSynchronisation;
+    private FootstepController _footstepController;
+
+    // Mecanim AnimationEvent Listeners
+    private AnimationEventReceiver _OnPlayFootsteps;
+    private AnimationEventReceiver _OnBeganJumping;
+
+
+    private JumpController _jumpController;
+
+    private float _startedJumpTime;
+    private bool _spawnedLandingEffect = false;
+
+    private Vector2 _autoMoveTarget = Vector2.negativeInfinity;
+    private GridPath _autoMovePath;
+
+    /// <summary>
+    /// Used to update dialogue bubbles and animations to face player position 
+    /// </summary>
+    public Action<Vector3> OnPositionChanged;
+
+    /// <summary>
+    /// Called when on Running is begun, or ended.
+    /// </summary>
+    public Action<bool> OnRunningSet;
+
+    /************************************************************************************************************************/
+
+    private Unit _unit;
+
+    private void Awake()
+    {
+        _unit = GetComponent<Unit>();
+        _jumpController = GetComponent<JumpController>();
+        _renderer = GetComponent<SpriteRenderer>();
+        _footstepController = GetComponent<FootstepController>();
+
+        if (IsSeated)
+            _Collider.enabled = false;
+
+    }
+
+    private void Start()
+    {
+        transform.parent = null;
+        DontDestroyOnLoad(this.gameObject);
+
+        if (_state != ControllerState.AutoMovement)
+            _state = ControllerState.Ground;
+
+        _MovementSynchronisation = new TimeSynchronisationGroup(_Animancer) { _Walk, _Run, _Jump, _InAir, _Push };
+
+        _Facing = DirectionUtility.DirectionToFacing[_startingLookDirection];
+    }
+
+    /************************************************************************************************************************/
+
+    private void Update()
+    {
+        switch (_state)
+        {
+            case ControllerState.Ground:
+                HandleGroundMovement();
+                break;
+            case ControllerState.Jumping:
+                break;
+            case ControllerState.AutoMovement:
+                HandleAutoMovement();
+                break;
+            case ControllerState.InTransition:
+                break;
+        }
+    }
+
+	    public BubblePositionController.EntityInfo GetEntityInfo()
+    {
+        //TODO: Determine standing/sitting/mounted based on what current animation branch is, or other checks
+        return new BubblePositionController.EntityInfo { facingDirection = DirectionUtility.FacingToDirection[_Facing], mounted = false, sitting = _isSeated };
+    }
+	
+    public void SetAutoMode()   => _state = ControllerState.AutoMovement;
+    public void SetAutoMode() => _state = ControllerState.AutoMovement;
+
+
+
+
+    public void SetAutoMode()   => _state = ControllerState.AutoMovement;
+
+    public void StopSitting() => _isSeated = false;
+
+    public void Rotate(Direction direction) => _Facing = direction.ToVector();
+
+    public void SetIdle() => Play(_Idle);
+
+    public void FreezeInput()
+    {
+        _Movement = Vector2.zero;
+        Play(_Idle);
+        _state = ControllerState.InTransition;
+    }
+
+    public void AllowInput()
+    {
+        _Collider.enabled = true;
+        _state = ControllerState.Ground;
+
+        Play(_Idle);
+    }
+
+    public void WalkTo(Vector2 worldPosition)
+    {
+        _state = ControllerState.AutoMovement;
+
+        _autoMoveTarget = worldPosition;
+
+        var currentCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(this.transform.position);
+        var goalCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(worldPosition);
+
+        _autoMovePath = GridUtility.FindPath(_renderer.sortingLayerID, currentCell, goalCell);
+
+        StartCoroutine(AutoMovementCoroutine());
+    }
+
+    public void WalkTo(Vector2Int gridPosition)
+    {
+        _state = ControllerState.AutoMovement;
+
+        _autoMoveTarget = gridPosition;
+
+        var currentCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(this.transform.position);
+        var goalCell = gridPosition;
+
+        _autoMovePath = GridUtility.FindPath(_renderer.sortingLayerID, currentCell, goalCell);
+
+        StartCoroutine(AutoMovementCoroutine());
+    }
+
+    public IEnumerator WalkToCoroutine(Vector2Int gridPosition)
+    {
+        _state = ControllerState.AutoMovement;
+
+        _autoMoveTarget = gridPosition;
+
+        var currentCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(this.transform.position);
+        var goalCell = gridPosition;
+
+        _autoMovePath = GridUtility.FindPath(_renderer.sortingLayerID, currentCell, goalCell);
+
+        yield return AutoMovementCoroutine();
+    }
+
+    public IEnumerator WalkToCoroutine(Vector2 worldPosition)
+    {
+        _state = ControllerState.AutoMovement;
+
+        _autoMoveTarget = worldPosition;
+
+        var currentCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(this.transform.position);
+        var goalCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(worldPosition);
+
+
+        _autoMovePath = GridUtility.FindPath(_renderer.sortingLayerID, currentCell, goalCell);
+
+        yield return AutoMovementCoroutine();
+    }
+
+
+    public void Jump(JumpTrigger jumpTrigger)
+    {
+        AttachJumpEvents();
+        _jumpController.Jump(jumpTrigger);
+    }
+
+    private void AttachJumpEvents()
+    {
+        _jumpController.OnBeginJump += delegate ()
+        {
+            Play(_Jump);
+            _state = ControllerState.InTransition;
+
+            _jumpController.OnBeginJump = null;
+        };
+
+        _jumpController.UponLanding += delegate ()
+        {
+            Play(_Landing);
+            _state = ControllerState.Ground;
+
+
+            _jumpController.UponLanding = null;
+        };
+
+        _jumpController.WhileInAir += delegate ()
+        {
+            Play(_InAir);
+
+            _jumpController.WhileInAir = null;
+        };
+    }
+
+
+    private void HandleGroundMovement()
+    {
+        _Movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (_Movement != Vector2.zero)
+        {
+            _Facing = _Movement;
+            UpdateMovementState();
+
+            // Snap the movement to the exact directions we have animations for.
+            // When using DirectionalAnimationSets this means the character will only move up/right/down/left.
+            // But DirectionalAnimationSet8s will allow diagonal movement as well.
+            _Movement = _CurrentAnimationSet.Snap(_Movement);
+
+            // If we are moving horizontally
+            if (Mathf.Abs(_Movement.y) <= 0.001f)
+            {
+                var pos = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(transform.position);
+                var cell = WorldGrid.Instance[pos];
+                if (cell.IsStairs(_unit.SortingLayerId))
+                    _Movement.y = _Movement.x;
+            }
+
+            _Movement = Vector2.ClampMagnitude(_Movement, 1);
+
+            OnPositionChanged?.Invoke(transform.position);
+        }
+        else
+        {
+            if (IsSeated)
+                Play(_Sitting);
+            else
+                Play(_Idle);
+
+            OnRunningSet?.Invoke(false);
+        }
+    }
+
+    private void HandleAutoMovement()
+    {
+        if (_autoMovePath == null || _autoMovePath.Length == 0)
+        {
+            if (IsSeated)
+                Play(_Sitting);
+            else
+                Play(_Idle);
+        }
+    }
+
+    private IEnumerator AutoMovementCoroutine(bool running = false)
+    {
+        if (_autoMovePath.Length == 0)
+            yield break;
+
+        var currentGridPosition = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(this.transform.position);
+        var nextPathGridPosition = currentGridPosition;
+        var nextPathPosition = transform.position;
+        var reachedGoal = false;
+
+        var origin = currentGridPosition;
+        var goal = _autoMovePath.Goal;
+
+
+        DirectionalAnimationSet moveAnimation = _Walk;
+
+        while (!reachedGoal)
+        {
+            var speed = _WalkSpeed * Time.deltaTime;
+
+            if (running) // Left Shift by default.
+            {
+                moveAnimation = _Run;
+                speed = _RunSpeed * Time.deltaTime;
+            }
+            else
+                moveAnimation = _Walk;
+
+            if (!_Animancer.IsPlaying(moveAnimation.GetClip(_Facing)))
+                Play(moveAnimation);
+
+            while (speed > 0.0001f)
+            {
+                speed = MoveTo(nextPathPosition, speed);
+                if (speed > 0.0001f)
+                {
+                    if (_autoMovePath.Length > 0)
+                    {
+                        // Get new destination position and direction
+                        var newGridPosition = _autoMovePath.Pop();
+                        var direction = GridUtility.GetDirection(nextPathGridPosition, newGridPosition, true);
+
+                        nextPathPosition = WorldGrid.Instance.Grid.GetCellCenterWorld((Vector3Int)newGridPosition);
+                        nextPathGridPosition = newGridPosition;
+
+                        // Rotate
+                        Rotate(direction);
+                    }
+                    else // End movement
+                    {
+                        reachedGoal = true;
+                        break;
+                    }
+                }
+            }
+
+            yield return new WaitForEndOfFrame();
+
+        }
+
+        if (IsSeated)
+            Play(_Sitting);
+        else
+            Play(_Idle);
+
+        if (OnAutoMoveComplete != null)
+        {
+            OnAutoMoveComplete.Invoke();
+            OnAutoMoveComplete = null;
+        }
+    }
+
+    public float MoveTo(Vector2 goal, float speed)
+    {
+        if (speed <= 0.0001f)
+        {
+            return 0;
+        }
+
+        var distance = (transform.position - (Vector3)goal).magnitude;
+        if (distance <= speed)
+        {
+            // Move to destination instantly
+            transform.position = goal;
+            speed -= distance;
+        }
+        else
+        {
+            _Movement = ((Vector3)goal - transform.position).normalized * speed;
+
+            _Movement = _Walk.Snap(_Movement);
+
+            transform.Translate(_Movement);
+            speed = 0;
+        }
+
+        return speed;
+    }
+
+    public void MoveTo(Vector2 worldPosition, bool shouldBeRunning = false)
+    {
+        _state = ControllerState.AutoMovement;
+
+        _autoMoveTarget = worldPosition;
+
+        var currentCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(this.transform.position);
+        var goalCell = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(worldPosition);
+
+        _autoMovePath = GridUtility.FindPath(_renderer.sortingLayerID, currentCell, goalCell);
+
+        StartCoroutine(AutoMovementCoroutine(shouldBeRunning));
+    }
+
+    /************************************************************************************************************************/
+
+    private void Play(DirectionalAnimationSet animations)
+    {
+        // Store the current time.
+        _MovementSynchronisation.StoreTime(_CurrentAnimationSet);
+
+        _CurrentAnimationSet = animations;
+
+        var directionalClip = animations.GetClip(_Facing);
+        if (!_Animancer.IsPlayingClip(directionalClip))
+        {
+            var state = _Animancer.Play(directionalClip);
+
+            if (animations == _Walk || animations == _Run)
+                _OnPlayFootsteps.Set(state, PlayFootstepSound());
+
+            if (animations == _Jump)
+                _OnBeganJumping.Set(state, TriggerJumpingState());
+
+            if (animations == _Landing)
+                state.Events.OnEnd = delegate ()
+                {
+                    _state = ControllerState.Ground;
+                    _spawnedLandingEffect = false;
+                };
+
+            // If the new animation is in the synchronisation group, give it the same time the previous animation had.
+            _MovementSynchronisation.SyncTime(_CurrentAnimationSet);
+        }
+    }
+
+
+    /************************************************************************************************************************/
+
+    // Pre-allocate an array of contact points so Unity doesn't need to allocate a new one every time we call
+    // _Collider.GetContacts. This example will never have more than 4 contact points, but you might consider a
+    // higher number in a real game. Even a large number like 64 would be better than making new ones every time.
+    private static readonly ContactPoint2D[] Contacts = new ContactPoint2D[4];
+
+    private void UpdateMovementState()
+    {
+        /*var contactCount = _Collider.GetContacts(Contacts);
+        for (int i = 0; i < contactCount; i++)
+        {
+            // If we are moving directly towards an object (or within 30 degrees of it), we are pushing it.
+            if (Vector2.Angle(Contacts[i].normal, _Movement) > 180 - 30)
+            {
+                Play(_Push);
+                return;
+            }
+        }*/
+
+        var isRunning = Input.GetButton("Fire3"); // Left Shift by default.
+        OnRunningSet?.Invoke(isRunning);
+        Play(isRunning ? _Run : _Walk);
+    }
+
+    /************************************************************************************************************************/
+
+    private void FixedUpdate()
+    {
+        // Determine the desired speed based on the current animation. 
+        var speed = _CurrentAnimationSet == _Run ? _RunSpeed : _WalkSpeed;
+        _Rigidbody.velocity = _Movement * speed;
+    }
+
+    /************************************************************************************************************************/
+    //  Animation Event Listeners and Logic
+    /************************************************************************************************************************/
+
+    private void PlayFootsteps(AnimationEvent animationEvent)
+    {
+        _OnPlayFootsteps.SetFunctionName("PlayFootsteps");
+        _OnPlayFootsteps.HandleEvent(animationEvent);
+    }
+
+    private Action<AnimationEvent> PlayFootstepSound()
+    {
+        return delegate (AnimationEvent animationEvent)
+        {
+            var currentGridPosition = (Vector2Int)WorldGrid.Instance.Grid.WorldToCell(transform.position);
+
+            var currentSortingLayer = _renderer.sortingLayerID;
+            var worldCell = WorldGrid.Instance[currentGridPosition];
+            var walkingOnSurface = worldCell.TileAtSortingLayer(currentSortingLayer).SurfaceType;
+
+            _footstepController.PlaySound(walkingOnSurface);
+        };
+    }
+
+    private void BeganJumping(AnimationEvent animationEvent)
+    {
+        _OnBeganJumping.SetFunctionName("BeganJumping");
+        _OnBeganJumping.HandleEvent(animationEvent);
+    }
+
+    private Action<AnimationEvent> TriggerJumpingState()
+    {
+        return delegate (AnimationEvent animationEvent)
+        {
+            _startedJumpTime = Time.time;
+            _state = ControllerState.Jumping;
+        };
+    }
+
+    private void OnDrawGizmos()
+    {
+
+    }
+
+    /************************************************************************************************************************/
+#if UNITY_EDITOR
+    /************************************************************************************************************************/
+
+    /// <summary>[Editor-Only]
+    /// Sets the character's starting sprite in Edit Mode so you can see it while working in the scene.
+    /// </summary>
+    /// <remarks>
+    /// Called by the Unity Editor in Edit Mode whenever an instance of this script is loaded or a value is changed
+    /// in the Inspector.
+    /// </remarks>
+    private void OnValidate()
+    {
+        if (_Idle == null)
+            return;
+
+        AnimancerUtilities.EditModePlay(_Animancer, _Idle.GetClip(_Facing), false);
+    }
+
+
+
+    /************************************************************************************************************************/
+#endif
+    /************************************************************************************************************************/
+}

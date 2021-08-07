@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("ico",["Property","Variable"],[["Icon",,[["Item",,,,0,"File:Core/Items/Item.cs:Item.Icon","CSharpClass:Item:Icon"],["ItemData",,,,1,"File:Core/Repositories/Items/ItemData.cs:ItemData.Icon","CSharpClass:ItemData:Icon"],["ScriptableItem",,,,1,"File:Core/Items/ScriptableItem.cs:ScriptableItem.Icon","CSharpClass:ScriptableItem:Icon"]]]]);

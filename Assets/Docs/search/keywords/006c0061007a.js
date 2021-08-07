@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("laz",["Function"],[["LazyInit",,[["ColliderGroupTilemap",,,,0,"File:Core/Map/ColliderGroupTilemap.cs:ColliderGroupTilemap.LazyInit","CSharpClass:ColliderGroupTilemap:LazyInit"]]]]);

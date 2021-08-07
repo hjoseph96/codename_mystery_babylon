@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("tai",["Property"],[["Tail",,[["ArrowPath",,,,0,"File:Core/Map/UI/ArrowPath.cs:ArrowPath.Tail","CSharpClass:ArrowPath:Tail"]]]]);

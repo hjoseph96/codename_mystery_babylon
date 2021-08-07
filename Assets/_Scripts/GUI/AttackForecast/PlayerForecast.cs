@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerForecast : MonoBehaviour
 {
-    public float moveAmount;
+    [SerializeField] private Image _portrait;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private TextMeshProUGUI _health;
     [SerializeField] private TextMeshProUGUI _damage;
@@ -16,6 +16,8 @@ public class PlayerForecast : MonoBehaviour
     public void Populate(Unit unit, Unit enemyUnit, Weapon selectedWeapon)
     {
         _name.SetText(unit.Name);
+
+        _portrait.sprite = unit.Portrait.Default;
 
         Dictionary<string, int> preview = unit.PreviewAttack(enemyUnit, selectedWeapon);
         _health.SetText($"{unit.CurrentHealth}");

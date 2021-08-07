@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("det",["Class"],[["DetectAnimationEnd",,[[,,,,0,"File:Utility/DetectAnimationEnd.cs:DetectAnimationEnd","CSharpClass:DetectAnimationEnd"]]]]);

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("ait",["Class"],[["AITarget",,[[,,,,0,"File:Core/Units/AI_Behaviors/AITarget.cs:AITarget","CSharpClass:AITarget"]]],["AITeamManager",,[[,,,,0,"File:Core/Units/AI_Behaviors/AITeamManager.cs:AITeamManager","CSharpClass:AITeamManager"]]]]);

@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Core/Items/MagicType.cs","MagicType.cs");NDSummary.OnSummaryLoaded("File:Core/Items/MagicType.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[597,0,1,"Types","Types"],[598,0,0,"MagicType","MagicType"]]);

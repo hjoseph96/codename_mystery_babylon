@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:EditorStat","EditorStat");NDSummary.OnSummaryLoaded("CSharpClass:EditorStat",[["C#","CSharp"]],[["Groups","Group"],["Structs","Struct"],["Variables","Variable"]],[[1936,0,1,"EditorStat"],[1937,0,0,"Variables","Variables"],[1938,0,2,"Value","Value"],[1939,0,2,"GrowthRate","GrowthRate"]]);

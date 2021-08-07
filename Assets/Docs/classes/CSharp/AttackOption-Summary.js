@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:AttackOption","AttackOption");NDSummary.OnSummaryLoaded("CSharpClass:AttackOption",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2303,0,0,"AttackOption"],[2304,0,2,"Functions","Functions"],[2305,0,1,"Execute","Execute"]]);

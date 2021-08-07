@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:ScriptableAction","ScriptableAction");NDSummary.OnSummaryLoaded("CSharpClass:ScriptableAction",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[576,0,0,"ScriptableAction"],[577,0,2,"Functions","Functions"],[578,0,1,"Use","Use"]]);

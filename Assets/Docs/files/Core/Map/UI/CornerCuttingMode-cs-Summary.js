@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Core/Map/UI/CornerCuttingMode.cs","CornerCuttingMode.cs");NDSummary.OnSummaryLoaded("File:Core/Map/UI/CornerCuttingMode.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1067,0,1,"Types","Types"],[1068,0,0,"CornerCuttingMode","CornerCuttingMode"]]);

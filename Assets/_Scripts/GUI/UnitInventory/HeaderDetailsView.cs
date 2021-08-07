@@ -14,9 +14,25 @@ public class HeaderDetailsView : MonoBehaviour
     public void Populate(Unit unit)
     {
         _unitName.SetText(unit.Name);
-        _unitLevel.SetText($"{unit.Level}");
         _unitHealth.SetText($"{unit.CurrentHealth}/{unit.MaxHealth}");
+        _unitLevel.SetText($"{unit.Level}");
         _unitClass.SetText($"{unit.Class.Title}");
         _unitPortrait.sprite = unit.Portrait.Default;
+    }
+
+    public void PopulateSmall(Unit unit)
+    {
+        _unitName.SetText(unit.Name);
+        _unitClass.SetText($"{unit.Class.Title}");
+    }
+
+    public void MakeSmall()
+    {
+
+    }
+
+    public void MakeLarge()
+    {
+
     }
 }

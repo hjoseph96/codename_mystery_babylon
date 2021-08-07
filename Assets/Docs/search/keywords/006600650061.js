@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("fea",["Property"],[["Fears",,[["PlayableCharacter",,,,0,"File:Core/Entities/PlayableCharacter.cs:PlayableCharacter.Fears","CSharpClass:PlayableCharacter:Fears"],["PlayableCharacterData",,,,0,"File:Core/Repositories/EntityRepository/PlayableCharacterRepository.cs:PlayableCharacterData.Fears","CSharpClass:PlayableCharacterData:Fears"]]]]);

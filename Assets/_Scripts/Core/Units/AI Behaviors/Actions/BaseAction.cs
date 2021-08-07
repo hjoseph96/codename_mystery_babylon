@@ -14,7 +14,7 @@ public class BaseAction : MonoBehaviour, IAction
     public virtual void Perform(IContext context) => throw new System.Exception("You didn't implement Perform() for this IAction!!");
 
     // Start is called before the first frame update
-    void Awake()
+    protected virtual void Awake()
     {
         AIAgent = GetComponentInParent<AIUnit>();
         _behaviorList = GetComponentInParent<BehaviorList>();

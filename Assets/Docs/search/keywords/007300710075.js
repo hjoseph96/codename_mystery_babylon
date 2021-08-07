@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("squ",["Function"],[["Squint",,[["EyeController",,,,0,"File:GUI/Portraits/EyeController.cs:EyeController.Squint","CSharpClass:EyeController:Squint"]]]]);

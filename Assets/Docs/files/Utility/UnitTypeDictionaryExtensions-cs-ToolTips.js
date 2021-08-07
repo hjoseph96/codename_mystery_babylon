@@ -1,1 +1,0 @@
-﻿NDContentPage.OnToolTipsLoaded({1955:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype1955\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHMetadata\">[Flags]</span></div><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> UnitType</div></div></div>"});

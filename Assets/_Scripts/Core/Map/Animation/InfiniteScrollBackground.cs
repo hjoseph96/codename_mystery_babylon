@@ -41,7 +41,7 @@ public class InfiniteScrollBackground : MonoBehaviour, IInitializable
         {
             transform.Translate(Vector3.left * scrollSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, endPosition) < 0.1f)
+            if (Vector3.Distance(transform.position, endPosition) <= 1f)
                 transform.position = startPosition;
         }
     }

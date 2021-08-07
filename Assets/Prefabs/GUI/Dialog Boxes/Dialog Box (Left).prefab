@@ -188,8 +188,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282338185
-  m_fontColor: {r: 0.5377358, g: 0.293645, b: 0.24603951, a: 1}
+    rgba: 4279572567
+  m_fontColor: {r: 0.34117648, g: 0.09411765, b: 0.08235294, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -206,19 +206,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
-  m_fontSizeBase: 0.3
+  m_fontSize: 0.34
+  m_fontSizeBase: 0.34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 8
   m_fontSizeMax: 19.7
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -4.44
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 15.32
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: df918ec14abb61241952454b746bef6e, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -615,12 +615,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultColor: {r: 0.7490196, g: 0.6745098, b: 0.6745098, a: 0.9843137}
-  NightModeColor: {r: 0.7490196, g: 0.7176471, b: 0.7176471, a: 1}
+  NightModeColor: {r: 0.6509804, g: 0.5529412, b: 0.5529412, a: 1}
   _name: {fileID: 2474146685388584848}
   _zButton: {fileID: 2474146684682379818}
   _portraitSpawnPoint: {fileID: 0}
   _dialogBubble: {fileID: 2474146685259291447}
-  _orientation: 1
+  direction: 1
 --- !u!1 &2474146685965743070
 GameObject:
   m_ObjectHideFlags: 0

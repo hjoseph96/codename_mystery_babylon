@@ -48,13 +48,15 @@ public class WorldDialogCanvas : CanvasManager
 
         // First -- Check if there's already a DialogBox for this Speaker
 
+
+
         var existingSpeakerDialogBox = GetDialogBoxBySpeaker(entityReference);
 
         // Canvas updating is not as fast as we clear the List -- Check the list
         if (ShownDialogBoxes.Contains(existingSpeakerDialogBox))
             return existingSpeakerDialogBox;
         else
-            return SpawnDialogBox(entityReference, DirectionUtility.GetHorizontalDirection(speakingToReference.transform.position, entityReference.transform.position));
+            return SpawnDialogBox(entityReference, speakingToReference.transform);
 
         throw new System.Exception("[DialogueManager] Unable to find a Dialog Box to spawn or update...");
     }
@@ -68,20 +70,20 @@ public class WorldDialogCanvas : CanvasManager
         return null;
     }
 
-    public DialogBox SpawnDialogBox(EntityReference entityRef, Direction directionToSpawn)
+    public DialogBox SpawnDialogBox(EntityReference entityRef, Transform speakingToTransform)
     {
+        Direction directionToSpawn = DirectionUtility.GetHorizontalDirection(speakingToTransform.position, entityRef.transform.position);
+        
         if (directionToSpawn != Direction.Left && directionToSpawn != Direction.Right)
             throw new System.Exception($"[DialogManager] Given Direction: '{directionToSpawn}' is invalid. Only Direction.Left or Direction.Left is allowed.");
 
-        Vector3 spawnPoint = entityRef.GetSpeechBubblePos(directionToSpawn);
+        var transform = entityRef.GetSpeechBubblePos(directionToSpawn);
+        Vector3 spawnPoint = transform.position;
 
         var boxPrefab = _leftDialogBoxPrefab;
 
         if (directionToSpawn == Direction.Right)
-        {
-            //spawnPoint.x += 5;
             boxPrefab = _rightDialogBoxPrefab;
-        }
 
         var newDialogBox = Instantiate(
                 boxPrefab.gameObject,
@@ -90,24 +92,13 @@ public class WorldDialogCanvas : CanvasManager
                 _canvas.transform
             ).GetComponent<DialogBox>();
 
-        newDialogBox.SetSpeaker(entityRef);
+        newDialogBox.SetSpeakerGender(entityRef.AssignedEntity.Gender);
+        newDialogBox.SetSpeaker(entityRef, transform, speakingToTransform);
 
         _shownDialogBoxes.Add(newDialogBox);
 
         return newDialogBox;
     }
-
-
-    private List<System.Guid> ShownGUIDs()
-    {
-        var guids = new List<System.Guid>();
-
-        foreach (var dialogBox in ShownDialogBoxes)
-            guids.Add(dialogBox.Speaker.GUID);
-
-        return guids;
-    }
-
 
     public void ClearDialogBoxes()
     {

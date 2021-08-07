@@ -17,7 +17,14 @@ public abstract class Menu : SerializedMonoBehaviour, IInputTarget
     [SoundGroup] public string ConfirmSound;
     [SoundGroup] public string BackSound;
 
-    private bool _isInitialized;
+    protected bool _isInitialized;
+    protected bool _zeroed = true;
+    protected bool _loopedInput = false;
+    protected const float _defaultLoopSpeed = .2f;
+    protected float _currentLoopSpeed = _defaultLoopSpeed;
+    protected float _maxLoopSpeed = .01f;
+    protected float _timeToIncreasePerLoop = .03f;
+    protected float _currentTime = 0f;
 
     private void Start()
     {
@@ -26,12 +33,12 @@ public abstract class Menu : SerializedMonoBehaviour, IInputTarget
     }
 
     // Reset menu state and hide, call OnClose, show PreviousMenu if it is set
-    public void Close()
+    public virtual void Close()
     {
         ResetAndHide();
         OnClose();
 
-        if ((PreviousMenu as object) != null)
+        if (PreviousMenu != null)
             PreviousMenu.Activate();
     }
 
@@ -46,14 +53,14 @@ public abstract class Menu : SerializedMonoBehaviour, IInputTarget
         Deactivate();
     }
 
-    public void Activate()
+    public virtual void Activate()
     {
         _isInitialized = true;
         gameObject.SetActive(true);
         UserInput.Instance.InputTarget = this;
     }
 
-    public void Deactivate()
+    public virtual void Deactivate()
     {
         gameObject.SetActive(false);
         UserInput.Instance.InputTarget = null;
@@ -62,7 +69,10 @@ public abstract class Menu : SerializedMonoBehaviour, IInputTarget
     // Selects specific option
     public void SelectOption(MenuOption option)
     {
-        if ((SelectedOption as object) != null)
+        // Skip doing anything if we are still on the same option.
+        if (option == SelectedOption)
+            return;
+        if (SelectedOption != null)
             SelectedOption.SetNormal();
 
         SelectedOption = option;
@@ -72,19 +82,24 @@ public abstract class Menu : SerializedMonoBehaviour, IInputTarget
             SelectedOption.SetSelected();
     }
 
-    public void PressOption(MenuOption option)
+    protected virtual void PressOption(MenuOption option)
     {
         if ((SelectedOption as object) != null)
             SelectedOption.SetPressed();
     }
 
+    /// <summary>
+    /// When overriding this input from Menu, ensure the _zeroed section is utilized
+    /// <br>Either from calling base.ProcessInput() or taking the first if statements using _zeroed</br>
+    /// </summary>
+    /// <param name="input"></param>
     public virtual void ProcessInput(InputData input)
     {
-        if (input.MovementVector != Vector2Int.zero)
-            SelectOption(MoveSelection(input.MovementVector));
+        HandleDirectionalMovement(input);
 
         switch (input.KeyCode)
         {
+            case KeyCode.RightArrow:
             case KeyCode.Z:
                 if (input.KeyState == KeyState.Down)
                 {
@@ -106,6 +121,37 @@ public abstract class Menu : SerializedMonoBehaviour, IInputTarget
                 MasterAudio.PlaySound3DFollowTransform(BackSound, CampaignManager.AudioListenerTransform);
                 Close();
                 break;
+        }
+    }
+
+    protected virtual void HandleDirectionalMovement(InputData input)
+    {
+        if (input.MovementVector != Vector2Int.zero)
+        {
+            _currentTime += Time.deltaTime;
+            if (_currentTime >= _currentLoopSpeed)
+            {
+                _currentTime -= _currentLoopSpeed;
+                _loopedInput = true;
+
+                if (_currentLoopSpeed > _maxLoopSpeed)
+                {
+                    _currentLoopSpeed -= _timeToIncreasePerLoop;
+                }
+            }
+        }
+        if (_zeroed || _loopedInput)
+        {
+            SelectOption(MoveSelection(input.MovementVector));
+            _zeroed = false;
+            _loopedInput = false;
+        }
+
+        if (!_zeroed && input.MovementVector == Vector2Int.zero)
+        {
+            _zeroed = true;
+            _currentLoopSpeed = _defaultLoopSpeed;
+            _currentTime = 0f;
         }
     }
 

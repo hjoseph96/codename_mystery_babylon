@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_ce",["Variable"],[["_cellHighlighter",,[["GridCursor",,,,0,"File:Core/Map/UI/GridCursor.cs:GridCursor._cellHighlighter","CSharpClass:GridCursor:_cellHighlighter"]]],["_center",,[["CellHighlighter",,,,0,"File:Core/Map/UI/CellHighlighter.cs:CellHighlighter._center","CSharpClass:CellHighlighter:_center"]]]]);

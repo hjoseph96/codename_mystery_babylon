@@ -57,7 +57,6 @@ public class SceneLoader : MonoBehaviour, IInitializable
 
                 if (entryPoint != null)
                 {
-                    entryPoint.Init();
 
                     // Set the active scene to the first scene additively loaded!
                     // Meaning this is where gameobjects will be instantiated, GetComponent will look, etc.
@@ -71,13 +70,28 @@ public class SceneLoader : MonoBehaviour, IInitializable
 
                         _activeSceneSet = true;
                     }
+
+                    entryPoint.Init();
                 }
             }
 
         }
     }
+    private void PlacePlayers()
+    {
+        var spawnPoint = FindObjectOfType<PlayerSpawnPoint>();
 
-    public IEnumerator LoadScene(string sceneName, bool transitionMode = false)
+        if (spawnPoint != null)
+        {
+            var players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+            players.Add(GameObject.FindGameObjectWithTag("Main Player"));
+
+            foreach (var p in players)
+                p.transform.position = spawnPoint.transform.position;
+        }
+    }
+
+    public IEnumerator LoadScene(string sceneName)
     {
         AsyncOperation asyncLoad;
         if (!_currentScene.Equals(default(KeyValuePair<string, SceneContainer>)))
@@ -94,8 +108,6 @@ public class SceneLoader : MonoBehaviour, IInitializable
 
         while (asyncLoad.progress < 0.9f)
         {
-            Debug.Log($"Loading Scene Progress: {asyncLoad.progress}");
-
             yield return null;
         }
 
@@ -106,6 +118,10 @@ public class SceneLoader : MonoBehaviour, IInitializable
 
         asyncLoad.completed += delegate (AsyncOperation load)
         {
+            SceneManager.SetActiveScene(loadedScene);
+
+            PlacePlayers();
+
             var sceneContainer = FindObjectsOfType<SceneContainer>().Last();
             _currentScene = new KeyValuePair<string, SceneContainer>(sceneName, sceneContainer);
 
@@ -126,6 +142,7 @@ public class SceneLoader : MonoBehaviour, IInitializable
         };
 
         asyncLoad.allowSceneActivation = true;
+
     }
 
 
@@ -145,14 +162,13 @@ public class SceneLoader : MonoBehaviour, IInitializable
     private IEnumerator MapTransition(string sceneName, Action onTransitionExitFinished, string transitionSound)
     {
         if (!GetSceneNamesInBuild().Contains(sceneName))
-            throw new Exception($"Scene: #{sceneName} is not in File --> Build Settings or is not checked...");
+            throw new Exception($"Scene: {sceneName} is not in File --> Build Settings or is not checked...");
 
-        var camera = ProCamera2D.Instance;
+        var camera = Camera.main.GetComponent<ProCamera2D>();
         var cameraFade = camera.GetComponent<ProCamera2DTransitionsFX>();
 
 
         // Keep black screen alive during transition
-        camera.transform.parent = null;
         DontDestroyOnLoad(camera);
 
         // Turn off UI
@@ -167,11 +183,10 @@ public class SceneLoader : MonoBehaviour, IInitializable
         
         yield return MasterAudio.PlaySound3DAtTransformAndWaitUntilFinished(transitionSound, CampaignManager.AudioListenerTransform);
 
+        Destroy(camera.gameObject);
+
         OnSceneLoaded += delegate ()
         {
-            // Destroy Camera from Past Scene
-            Destroy(camera.gameObject);
-
             if (onTransitionExitFinished != null)
                 onTransitionExitFinished.Invoke();
         };

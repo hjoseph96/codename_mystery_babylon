@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: heal
-  m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
+  m_Shader: {fileID: 4800000, guid: 89fbcbdeea2b450d93ee3682bf89e329, type: 3}
   m_ShaderKeywords: ATLAS_ON ETC1_EXTERNAL_ALPHA GLOW_ON PIXELATE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -164,6 +164,7 @@ Material:
     - _ShineLocation: 0.5
     - _ShineRotate: 0
     - _ShineWidth: 0.1
+    - _StencilRef: 2
     - _TextureScrollXSpeed: 1
     - _TextureScrollYSpeed: 0
     - _TwistUvAmount: 1

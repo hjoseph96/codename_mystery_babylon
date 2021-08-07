@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:AIFormationFactory","AIFormationFactory");NDSummary.OnSummaryLoaded("CSharpClass:AIFormationFactory",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[1620,0,0,"AIFormationFactory"],[1621,0,2,"Functions","Functions"],[1622,0,1,"GetFormation","GetFormation"]]);

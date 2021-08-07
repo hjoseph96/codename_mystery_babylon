@@ -1,45 +1,52 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
-using Sirenix.OdinInspector;
+using UnityEngine.UI;
 
 public class MiniHealthBar : MonoBehaviour
 {
-    [SerializeField] private Transform _barFill;
     [SerializeField] private float _duration;
-
-    private SpriteFlashTool _flasher;
-    private bool _flashed = false;
-
+    public Image healthBarFill;
+    public Image healthBarHighlight;
     private bool  _isTweening = false;
     private float _startTime;
     private float _startingPercentage;
     private float _targetPercentage;
 
-    private Action _destroySelf;
-
-
     [HideInInspector] public Action OnComplete;
+    private bool _flashed;
+    private bool _flashReverse;
+    private float _flashDuration = 0.125f;
 
+    private void Awake()
+    {
+        //healthBarFill.material = new Material(healthBarFill.material);
+    }
 
     public void Show(Unit unit)
     {
-        if (!this.IsActive())
-        {
-            var targetPercentage = unit.CurrentHealth / unit.MaxHealth;
-            _barFill.localScale = new Vector3(targetPercentage, 1, 1);
+        var targetPercentage = (float)unit.CurrentHealth / unit.MaxHealth;
 
-            this.SetActive(true);
-        }
+        healthBarFill.fillAmount = targetPercentage;
+        healthBarHighlight.fillAmount = targetPercentage;
+
+        gameObject.SetActive(true);
     }
 
-    public void Hide() => this.SetActive(false);
+    public void Refresh(Unit u) 
+    { 
+        healthBarFill.fillAmount = u.CurrentHealth / u.MaxHealth;
+        Hide();
+    }
+
+    public void Hide() => gameObject.SetActive(false);
 
     void Start()
     {
-        this.SetActive(false);
-        _flasher = _barFill.GetComponent<SpriteFlashTool>();
+        healthBarFill.material.SetFloat("_HitEffectBlend", 0);
+        healthBarFill.material.DisableKeyword("HITEFFECT_ON");
+        _startingPercentage = healthBarFill.fillAmount;
+        gameObject.SetActive(false);
     }
 
     void Update()
@@ -51,22 +58,18 @@ public class MiniHealthBar : MonoBehaviour
 
     public void Tween(float targetPercentage) 
     {
-        // Attach Internal Finished Event
-        _destroySelf += delegate ()
-        {
-            StartCoroutine(WaitAndDeactivate());
-        };
-
+        gameObject.SetActive(true);
         // Set Percentages & change initial fill amount
         _targetPercentage   = targetPercentage;
-        _startingPercentage = _barFill.localScale.x;
-        _barFill.localScale = new Vector3(_startingPercentage, 1, 1);
 
         // Set active and start Tweening
-        this.SetActive(true);
 
         _startTime = Time.time;
         _isTweening = true;
+        _flashed = false;
+
+        healthBarHighlight.gameObject.SetActive(true);
+        healthBarHighlight.material.EnableKeyword("HITEFFECT_ON");
     }
 
 
@@ -76,35 +79,59 @@ public class MiniHealthBar : MonoBehaviour
         if (_targetPercentage == _startingPercentage)
             return;
 
-
         // Flash the HP Bar once
         if (!_flashed)
         {
-            _flashed = true;
-            _flasher.Flash();
+            float flashTime;
+
+            if (_flashReverse)
+            {
+                flashTime = (Time.time - _startTime - _flashDuration) / _flashDuration;
+                healthBarFill.material.SetFloat("_HitEffectBlend", Mathf.SmoothStep(1, 0, flashTime));
+
+                if(healthBarFill.material.GetFloat("_HitEffectBlend") == 0)
+                {
+                    _flashed = true;
+                    healthBarHighlight.gameObject.SetActive(false);
+                    healthBarFill.material.DisableKeyword("HITEFFECT_ON");
+                }
+            }
+            else
+            {
+                flashTime = (Time.time - _startTime) / _flashDuration;
+                healthBarFill.material.SetFloat("_HitEffectBlend", Mathf.SmoothStep(0, 1, flashTime));
+
+                if (healthBarFill.material.GetFloat("_HitEffectBlend") == 1)
+                {
+                    _flashReverse = true;
+                }
+            }
         }
 
         // Tween to target fill amount
         float t = (Time.time - _startTime) / _duration;
         float currentfill = Mathf.SmoothStep(_startingPercentage, _targetPercentage, t);
-        _barFill.localScale = new Vector3(currentfill, 1, 1);
+        healthBarFill.fillAmount = currentfill;
 
 
         // End the tween once it reached it's target
-        if (_barFill.localScale.x == _targetPercentage)
+        if (healthBarFill.fillAmount == _targetPercentage)
         {
             _isTweening = false;
-            _destroySelf.Invoke();
+            _startingPercentage = _targetPercentage;
+            StartCoroutine(WaitAndDeactivate());
         }
     }
 
     IEnumerator WaitAndDeactivate()
     {
         yield return new WaitForSecondsRealtime(2f);
-
-        this.SetActive(false);
+        gameObject.SetActive(false);
 
         if (OnComplete != null)
+        {
             OnComplete.Invoke();
+            OnComplete = null;
+        }
     }
 }

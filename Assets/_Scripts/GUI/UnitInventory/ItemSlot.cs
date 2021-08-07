@@ -2,12 +2,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class is a base, and should not be used as a component directly
+/// </summary>
 [RequireComponent(typeof(Image))]
-public class ItemSlot : MenuOption<UnitInventoryMenu>
+public class ItemSlot : MenuOption<Menu>
 {
-    [SerializeField] private Image _icon;
-    [SerializeField] private TextMeshProUGUI _title, _durability;
-    [SerializeField] private GameObject _equippedIcon;
+    [SerializeField] protected Image _icon;
+    [SerializeField] protected TextMeshProUGUI _title, _durability;
+    [SerializeField] protected GameObject _equippedIcon;
 
 
     public bool IsEmpty => Item == null;
@@ -28,41 +31,31 @@ public class ItemSlot : MenuOption<UnitInventoryMenu>
 
         image.material = _allInOneMat;
         _icon.material = _iconAllInOneMat;
+    }
 
+    private void Start()
+    {
         Menu = GetComponentInParent<UnitInventoryMenu>();
     }
 
-    public void Populate(Item item)
+    public virtual void Populate(Item item)
     {
         Item = item;
 
         _icon.sprite = item.Icon;
         _icon.Show();
-        
         _title.text = item.Name;
-
-        // TODO: Use overloads, this is a TEMPORARY solution!
-        if (item is Weapon weapon)
-        {
-            if (weapon.CurrentDurability < 0)
-                _durability.text = "---";
-            else
-                _durability.SetText("{0}/{1}", weapon.CurrentDurability, weapon.MaxDurability);
-        }
-        else
-            _durability.SetText("None");
 
         if (item.IsEquipped)
             ShowEquippedIcon();
     }
 
-    public void Clear()
+    public virtual void Clear()
     {
         Item = null;
 
         _icon.sprite = null;
         _icon.Hide();
-
         _title.text = "";
         _durability.text = "";
 
@@ -71,8 +64,7 @@ public class ItemSlot : MenuOption<UnitInventoryMenu>
 
     public override void Execute()
     {
-        if (!IsEmpty)
-            Menu.SelectItemSlot();
+        Debug.Log("Execute is not set up to display anything, ensure child class overrides Execute!");
     }
 
     public override void SetSelected()

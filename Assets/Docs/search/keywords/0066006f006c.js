@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("fol",["Function"],[["FollowParabola",,[["ParabolaController",,,,0,"File:Utility/ParabolaController.cs:ParabolaController.FollowParabola","CSharpClass:ParabolaController:FollowParabola"]]]]);

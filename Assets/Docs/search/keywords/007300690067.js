@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("sig",["Function"],[["SightedEnemies",,[["AIGroup",,,,0,"File:Core/Units/AI_Behaviors/AIGroup.cs:AIGroup.SightedEnemies","CSharpClass:AIGroup:SightedEnemies"]]]]);

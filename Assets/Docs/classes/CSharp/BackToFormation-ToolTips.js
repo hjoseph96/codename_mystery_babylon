@@ -1,1 +1,0 @@
-﻿NDContentPage.OnToolTipsLoaded({1565:"<div class=\"NDToolTip TClass LCSharp\"><div class=\"NDClassPrototype\" id=\"NDClassPrototype1565\"><div class=\"CPEntry TClass Current\"><div class=\"CPModifiers\"><span class=\"SHKeyword\">public</span></div><div class=\"CPName\">RetreatToFarthestAlly</div></div></div></div>"});

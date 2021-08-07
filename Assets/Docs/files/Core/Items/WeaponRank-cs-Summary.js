@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Core/Items/WeaponRank.cs","WeaponRank.cs");NDSummary.OnSummaryLoaded("File:Core/Items/WeaponRank.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[469,0,1,"Types","Types"],[470,0,0,"WeaponRank","WeaponRank"]]);

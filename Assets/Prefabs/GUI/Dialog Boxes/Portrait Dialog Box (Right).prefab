@@ -251,7 +251,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -493, y: 53}
+  m_AnchoredPosition: {x: -493, y: -99}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4842677869829104046
@@ -319,7 +319,7 @@ MonoBehaviour:
   _zButton: {fileID: 946315057789841018}
   _portraitSpawnPoint: {fileID: 8869329904048162033}
   _dialogBubble: {fileID: 4504484640471646540}
-  _orientation: 3
+  direction: 3
 --- !u!1 &6718077692998999137
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4282338185
-  m_fontColor: {r: 0.5377358, g: 0.293645, b: 0.24603951, a: 1}
+  m_fontColor: {r: 0.48235294, g: 0.21176471, b: 0.11764706, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 12.63
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

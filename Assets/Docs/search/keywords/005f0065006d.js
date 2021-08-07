@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_em",["Variable"],[["_emergeOffsets",,[["MapTransition",,,,0,"File:Core/Map/Transitions/MapTransition.cs:MapTransition._emergeOffsets","CSharpClass:MapTransition:_emergeOffsets"],["RoomTransition",,,,0,"File:Core/Map/Transitions/RoomTransition.cs:RoomTransition._emergeOffsets","CSharpClass:RoomTransition:_emergeOffsets"]]]]);

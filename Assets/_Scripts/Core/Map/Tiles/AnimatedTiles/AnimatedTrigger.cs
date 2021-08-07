@@ -19,6 +19,8 @@ public class AnimatedTrigger : MonoBehaviour
 
     [ValueDropdown("GetTagList")]
     public List<string> tagsToScanFor;
+
+    public GameObject FoundObject { get; private set; }
     
     #if UNITY_EDITOR
     private List<string> GetTagList()
@@ -36,12 +38,16 @@ public class AnimatedTrigger : MonoBehaviour
     {
         if (tagsToScanFor.Contains("Any"))
         {
+            FoundObject = collision.gameObject;
             _isWithinTrigger = true;
             return;
         }
 
         if (tagsToScanFor.Contains(collision.tag))
+        {
+            FoundObject = collision.gameObject;
             _isWithinTrigger = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

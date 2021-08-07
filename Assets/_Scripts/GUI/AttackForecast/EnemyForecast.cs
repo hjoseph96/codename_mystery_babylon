@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyForecast : MonoBehaviour
 {
+    [SerializeField] private Image _portrait;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private TextMeshProUGUI _health;
     [SerializeField] private TextMeshProUGUI _weaponName;
@@ -13,10 +14,17 @@ public class EnemyForecast : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _hitChance;
     [SerializeField] private TextMeshProUGUI _critChance;
     [SerializeField] private TextMeshProUGUI _multiAttack;
+
+    private Unit _enemyUnit;
+    private Unit _playerUnit;
     
     public void Populate(Unit unit, Unit playerUnit)
     {
+        _enemyUnit = unit;
+        _playerUnit = playerUnit;
+
         _name.SetText(unit.Name);
+        _portrait.sprite = unit.Portrait.Default;
 
         if (unit.EquippedWeapon != null)
         {
@@ -30,6 +38,7 @@ public class EnemyForecast : MonoBehaviour
             invisibleColor.a = 0;
             _weaponIcon.color = invisibleColor;
         }
+        
 
         Dictionary<string, int> preview = unit.PreviewAttack(playerUnit, unit.EquippedWeapon);
         _health.SetText($"{unit.CurrentHealth}");
@@ -46,7 +55,7 @@ public class EnemyForecast : MonoBehaviour
     {
         string displayString;
 
-        if (value >= 0)
+        if (_enemyUnit.CanAttack(_playerUnit))
         {
             displayString = $"{value}";
             if (percentage) displayString += "%";

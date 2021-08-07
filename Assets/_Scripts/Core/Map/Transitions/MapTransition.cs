@@ -26,11 +26,14 @@ public class MapTransition : MonoBehaviour
         return scenes;
     }
 
-    public Vector2Int CellToLandIn;
 
     [SoundGroup, SerializeField] private string _transitionSound;
 
-    public Direction EmergeFromDirection;
+    [SerializeField] private bool _shouldEmerge;
+    
+    [ShowIf("_shouldEmerge")] public Vector2Int CellToLandIn;
+
+    [ShowIf("_shouldEmerge")] public Direction EmergeFromDirection;
 
     private Dictionary<Direction, Vector2Int> _emergeOffsets = new Dictionary<Direction, Vector2Int> {
         { Direction.Up, new Vector2Int(0, 1) },
@@ -39,12 +42,12 @@ public class MapTransition : MonoBehaviour
         { Direction.Right, new Vector2Int(1, 0) },
     };
 
-    [SerializeField] private bool _isDoor;
+    [ShowIf("_shouldEmerge"), SerializeField] private bool _isDoor;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && !SceneLoader.Instance.IsInTransition)
+        if (collision.tag == "Main Player" && !SceneLoader.Instance.IsInTransition)
         {
             var playerController = collision.GetComponent<SpriteCharacterControllerExt>();
             playerController.FreezeInput();
@@ -53,30 +56,31 @@ public class MapTransition : MonoBehaviour
             {
                 var worldGrid = WorldGrid.Instance;
 
-                var emergeFromCell = CellToLandIn + _emergeOffsets[EmergeFromDirection];
-                
+
                 AnimatedDoor door = null;
-                if (_isDoor)
+                ProCamera2D camera = ProCamera2D.Instance;
+
+                if (_shouldEmerge)
                 {
-                    door = worldGrid.FindDoor(emergeFromCell);
-                    door.SetOpenImmediate();
+                    var emergeFromCell = CellToLandIn + _emergeOffsets[EmergeFromDirection];
+                    
+                    if (_isDoor)
+                    {
+                        door = worldGrid.FindDoor(emergeFromCell);
+                        door.SetOpenImmediate();
+                    }
+
+                    worldGrid.PlaceGameObject(playerController.gameObject, emergeFromCell);
+                
+                    camera.UpdateType = UpdateType.ManualUpdate;
+
+                    // Manually Move ProCamera2D
+                    camera.RemoveAllCameraTargets();
+                    camera.AddCameraTarget(playerController.transform);
+                    camera.Move(999999f);
+
                 }
 
-                worldGrid.PlaceGameObject(playerController.gameObject, emergeFromCell);
-                
-                var camera = ProCamera2D.Instance;
-
-                camera.UpdateType = UpdateType.ManualUpdate;
-
-                // Manually Move ProCamera2D
-                camera.RemoveAllCameraTargets();
-                camera.AddCameraTarget(playerController.transform);
-                camera.Move(999999f);
-
-                // Destroy any pre-existing Players in the scene
-                foreach (var controller in FindObjectsOfType<SpriteCharacterControllerExt>())
-                    if (controller != playerController)
-                        Destroy(controller.gameObject);
 
                 var cameraFade = camera.GetComponent<ProCamera2DTransitionsFX>();
 
@@ -84,7 +88,9 @@ public class MapTransition : MonoBehaviour
                 cameraFade.OnTransitionEnterEnded += delegate ()
                 {
                     var targetWorldPosition = worldGrid.Grid.GetCellCenterWorld((Vector3Int)CellToLandIn);
-                    SceneLoader.Instance.SetDebugMoveTarget(targetWorldPosition);
+
+                    if (_shouldEmerge)
+                        SceneLoader.Instance.SetDebugMoveTarget(targetWorldPosition);
 
 
                     if (uiCamera != null)
@@ -94,20 +100,26 @@ public class MapTransition : MonoBehaviour
                         uiCamera.enabled = true;
                     }
 
-                    playerController.OnAutoMoveComplete += delegate ()
+                    if (_shouldEmerge)
                     {
-                        if (_isDoor && door != null)
-                            door.Close();
+                        playerController.OnAutoMoveComplete += delegate ()
+                        {
+                            if (_isDoor && door != null)
+                                door.Close();
 
-                        SceneLoader.Instance.ClearDebugMoveTarget();
+                            SceneLoader.Instance.ClearDebugMoveTarget();
+                            SceneLoader.Instance.SetTransitionComplete();
+
+                            camera.UpdateType = UpdateType.LateUpdate;
+
+                            playerController.AllowInput();
+                        };
+
+                        playerController.MoveTo(targetWorldPosition);
+                    } else
+                    {
                         SceneLoader.Instance.SetTransitionComplete();
-
-                        camera.UpdateType = UpdateType.LateUpdate;
-
-                        playerController.AllowInput();
-                    };
-
-                    playerController.WalkTo(targetWorldPosition);
+                    }
                 };
 
                 cameraFade.TransitionEnter();

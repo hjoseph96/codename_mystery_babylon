@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ using Articy.Codename_Mysterybabylon;
 
 using Sirenix.Serialization;
 using Sirenix.OdinInspector;
+using System;
 
 public class EntityManager : SerializedMonoBehaviour, IInitializable
 {
@@ -32,15 +34,35 @@ public class EntityManager : SerializedMonoBehaviour, IInitializable
         PopulateNonPlayableCharacters();
     }
 
+    public List<PlayerUnit> PlayerUnits()
+    {
+        var players = new List<PlayerUnit>(FindObjectsOfType<PlayerUnit>());
+        
+        foreach (var player in players)
+            if (player.Class == null)
+                player.Init();
+
+        return players;
+    }
 
     public PlayableCharacter GetPlayableCharacterByName(string name)
     {
         var matchingCharacter = PlayableCharacters.Where((character) => character.Name == name).First();
 
         if (matchingCharacter == null)
-            throw new System.Exception($"[EntityManager] There's no PlayableCharacter named: {name}");
+            throw new Exception($"[EntityManager] There's no PlayableCharacter named: {name}");
 
         return matchingCharacter;
+    }
+
+    public static List<string> GetAllEntityNames()
+    {
+        var names = new List<string>();
+
+        foreach (var entity in ArticyDatabase.GetAllOfType<Entity>())
+            names.Add(entity.Name);
+
+        return names;
     }
 
     public static List<string> GetAllPlayableCharacterNames()
@@ -88,14 +110,21 @@ public class EntityManager : SerializedMonoBehaviour, IInitializable
         var matchingCharacter = NonPlayableCharacters.Where((character) => character.Name == name).First();
 
         if (matchingCharacter == null)
-            throw new System.Exception($"[EntityManager] There's no PlayableCharacter named: {name}");
+            throw new Exception($"[EntityManager] There's no PlayableCharacter named: {name}");
 
         return matchingCharacter;
     }
 
     public void AddEntityReference(EntityReference entityRef)
     {
-        _entityReferences.Add(entityRef);
+        if (!_entityReferences.Contains(entityRef))
+            _entityReferences.Add(entityRef);
+    }
+
+    public void RemoveEntityReference(EntityReference entityRef)
+    {
+        if (_entityReferences.Contains(entityRef))
+            _entityReferences.Remove(entityRef);
     }
 
     public EntityReference GetEntityRef(string name, EntityType entityType)
@@ -105,8 +134,40 @@ public class EntityManager : SerializedMonoBehaviour, IInitializable
         if (matchingEntity.Count() > 0)
             return matchingEntity.First();
         else
-            throw new System.Exception($"[EntityManager] There's no {entityType} named {name}");
+            throw new Exception($"[EntityManager] There's no {entityType} named {name}");
     }
+
+    public EntityReference GetEntityRef(string techName)
+    {
+        var result = techName.ToLower();
+        if (techName.Count(s => s == '_') > 1)
+        {
+            var regex = new Regex("_");
+            result = regex.Replace(techName, " ", 1).ToLower();
+        }
+
+        var matchingEntity = EntityReferences.Where((entityRef) => entityRef.EntityTechnicalName == result);
+
+        if (matchingEntity.Count() > 0)
+        {
+            var entityRef = matchingEntity.First();
+            
+            return entityRef;
+        }
+        else
+            throw new Exception($"[EntityManager] There's no entity with technical name {techName}");
+    }
+
+    public EntityReference GetEntityRefNullable(string techName)
+    {
+        var matchingEntity = EntityReferences.Where((entityRef) => entityRef.EntityTechnicalName == techName.ToLower());
+
+       if (matchingEntity.Count() > 0)
+            return matchingEntity.FirstOrDefault();
+        else
+            throw new Exception($"[EntityManager] There's no entity with technical name {techName}");
+    }
+
 
 
     private void PopulatePlayableCharacters()

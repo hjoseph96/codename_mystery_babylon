@@ -2,6 +2,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using Tazdraperm.Utility;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -109,15 +110,17 @@ public class WorldGrid : SerializedMonoBehaviour, IInitializable
         if (!PointInGrid(gridPosition))
             throw new System.Exception($"Given GridPositon: [{gridPosition.x}, {gridPosition.y}] is not a valid point in WorldGrid...");
 
-        var worldCell = this[gridPosition];
-
+        var worldCell = this[gridPosition];        
         var placementPoint = Grid.GetCellCenterWorld((Vector3Int)gridPosition);
 
         objectToPlace.transform.position = placementPoint;
 
         var unit = objectToPlace.GetComponent<Unit>();
         if (unit != null)
+        {
             worldCell.Unit = unit;
+            unit.SetGridPosition(gridPosition);
+        }
     }
 
     public AnimatedDoor FindDoor(Vector2Int gridPosition)

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("non",["Class","Property"],[["NonPlayableCharacter",,[[,,,,0,"File:Core/Entities/NonPlayableCharacter.cs:NonPlayableCharacter","CSharpClass:NonPlayableCharacter"]]],["NonPlayableCharacters",,[["EntityManager",,,,1,"File:Core/Entities/EntityManager.cs:EntityManager.NonPlayableCharacters","CSharpClass:EntityManager:NonPlayableCharacters"]]]]);

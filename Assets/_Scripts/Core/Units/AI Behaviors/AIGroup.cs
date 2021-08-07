@@ -46,13 +46,31 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
 
     private void Start()
     {
+        Init();
+    }
+    
+    public void Init()
+    {
         MovementMode = AIGroupMovementMode.TightFormation;
         InitGroupRolesPriority();
         InitIntentResolver();
 
+
         var agentsInGroup = new List<AIUnit>(GetComponentsInChildren<AIUnit>());
+
+        foreach (var unit in agentsInGroup)
+            unit.Init();
+
         _groupMembers = agentsInGroup.OrderByDescending((member) => member.Priority()).ToList();
-        Init();
+
+        int position = 1;
+        foreach (var member in Members)
+        {
+            member.group = this;
+            member.positionInGroup = position;
+            position++;
+        }
+
         if (SightedEnemies().Count > 0)
         {
             var firstSightedEnemy = SightedEnemies()[0];
@@ -65,7 +83,6 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         CurrentFormation = FormationsDB.Instance.Get(_formationNames[SelectedFormationIndex]);
 
         FlankGuards = new Dictionary<AIGroup, Vector2Int>();
-
     }
 
     public void RemoveMember(AIUnit groupMember)
@@ -79,7 +96,12 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
 
     public Unit GetLeader()
     {
-        return Members.Select(m => m).Where(m => m.IsLeader).First();
+        var leaders = Members.Select(m => m).Where(m => m.IsLeader);
+        
+        if (leaders.Count() == 0)
+            return Members[0];
+
+        return leaders.First();
     }
 
 
@@ -274,7 +296,8 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
                 FlankGuards.Remove(nearestFlank);
 
                 nearestFlank.CollaboratorGroup = null;
-                nearestFlank.GroupRole = AIGroupRole.Vanguard;
+                nearestFlank.ChangeRole(AIGroupRole.Vanguard);
+                
 
                 foreach (var item in FlankGuards)
                     item.Key.CollaboratorGroup = nearestFlank;
@@ -288,21 +311,22 @@ public class AIGroup : MonoBehaviour, IComparable<AIGroup>
         
     }
 
-    private void Init()
+    public void ChangeRole(AIGroupRole role)
     {
-        int position = 1;
-        foreach (var member in Members)
-        {
-            member.group = this;
-            member.positionInGroup = position;
-            position++;
-        }
+        GroupRole = role;
+        InitIntentResolver();
+    }
+
+    public void AssignNewLeaderBeside(Unit member)
+    {
+        member.IsLeader = false;
+        Members.Select(m => m).Where(m => m != member).ToList()[UnityEngine.Random.Range(0, Members.Count - 1)].IsLeader = true;
     }
 
 
     public void DrawFormationGizmos()
     {
-        if (!Application.isPlaying)
+        if (!Application.isPlaying || CampaignManager.Instance == null || PreferredGroupPosition == null)
             return;
 
         var worldGrid = WorldGrid.Instance;

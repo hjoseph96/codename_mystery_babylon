@@ -47,6 +47,7 @@ public class AIGroupEditor : Editor
 
     private void OnFormationDataChanged()
     {
-        _target._formationNames = FormationsDB.Instance.GetNames();
+        if (Application.IsPlaying(this))
+            _target._formationNames = FormationsDB.Instance.GetNames();
     }
 }

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("iin",["Interface"],[["IInitializable",,[[,,,,0,"File:Core/EntryPoint.cs:IInitializable","CSharpClass:IInitializable"]]],["IInputTarget",,[[,,,,0,"File:Core/Input/IInputTarget.cs:IInputTarget","CSharpClass:IInputTarget"]]]]);

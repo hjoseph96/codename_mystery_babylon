@@ -11,7 +11,7 @@ public class ItemActionsMenuOption : MenuOption<ItemActionsMenu>
 
     protected Unit Unit;
     protected Item Item;
-    protected ItemSlot ItemSlot;
+    protected InventoryItemSlot ItemSlot;
     protected ItemActionsMenu ParentMenu;
 
     protected int SelectedSlotIndex => ParentMenu.AllItemSlots.IndexOf(ItemSlot); 
@@ -31,7 +31,7 @@ public class ItemActionsMenuOption : MenuOption<ItemActionsMenu>
         _textMeshPro.text = Name;
     }
 
-    public void SetData(Unit unit, Item item, ItemSlot itemSlot, ItemActionsMenu parentMenu) 
+    public void SetData(Unit unit, Item item, InventoryItemSlot itemSlot, ItemActionsMenu parentMenu) 
     {
         Unit = unit;
         Item = item;
@@ -126,8 +126,8 @@ public class ItemActionsMenu : Menu
 
     private Unit _selectedUnit;
     private Item _selectedItem;
-    private ItemSlot _selectedItemSlot;
-    public List<ItemSlot> AllItemSlots { get; private set; }
+    private InventoryItemSlot _selectedItemSlot;
+    public List<InventoryItemSlot> AllItemSlots { get; private set; }
 
     private int _selectedOptionIndex;
 
@@ -135,13 +135,15 @@ public class ItemActionsMenu : Menu
     private float _lastInputTime;
     private readonly float _inputCooldown = 0.15f;
 
-    public void Show(Unit unit, Item item, ItemSlot itemSlot, List<ItemSlot> allItemSlots)
+    public void Show(Unit unit, Item item, InventoryItemSlot itemSlot, List<InventoryItemSlot> allItemSlots)
     {
+        ResetState();
         _selectedUnit = unit;
         _selectedItem = item;
         _selectedItemSlot = itemSlot;
         AllItemSlots = allItemSlots;
 
+        // TODO: Mounted units checks If we still want to be able to open the inventory, but just not use the items in the inventory after moving with a mounted unit, we need to expand this code here to allow that
         foreach (var option in item.GetUIOptions())
             AddOption(option);
 

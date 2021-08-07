@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Core/Map/UI/CursorMode.cs","CursorMode.cs");NDSummary.OnSummaryLoaded("File:Core/Map/UI/CursorMode.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1291,0,1,"Types","Types"],[1292,0,0,"CursorMode","CursorMode"]]);

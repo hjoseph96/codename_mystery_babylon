@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_hp",["Variable"],[["_hpRemaining",,[["BattleHUD",,,,0,"File:GUI/BattleHUD/BattleHUD.cs:BattleHUD._hpRemaining","CSharpClass:BattleHUD:_hpRemaining"]]]]);

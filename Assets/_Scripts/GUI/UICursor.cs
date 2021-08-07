@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UICursor : MonoBehaviour
 {
@@ -12,6 +14,14 @@ public class UICursor : MonoBehaviour
     private RectTransform RectTransform => transform as RectTransform;
     private Vector3 _destination;
     private float _movementStartTime;
+
+    public Action<bool> UponMove;
+    public Image cursorImage;
+
+    private void Awake()
+    {
+        cursorImage = GetComponentInChildren<Image>();
+    }
 
     private void OnEnable()
     {
@@ -35,6 +45,7 @@ public class UICursor : MonoBehaviour
         IsMoving = true;
         _destination = destination;
         _movementStartTime = Time.time;
+        UponMove?.Invoke(instant);
     }
 
     private void Move()

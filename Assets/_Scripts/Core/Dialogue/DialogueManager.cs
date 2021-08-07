@@ -9,6 +9,7 @@ using Articy.Unity;
 using Articy.Unity.Interfaces;
 using Articy.Codename_Mysterybabylon;
 
+using Com.LuisPedroFonseca.ProCamera2D;
 
 
 public enum DialogType
@@ -26,7 +27,7 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     [FoldoutGroup("Dialog Box Prefabs")]
     [Header("Dialog Boxes with Portrait")]
     [SerializeField] private DialogBox _leftPortraitDialogBoxPrefab;
-    
+
     [FoldoutGroup("Dialog Box Prefabs")]
     [SerializeField] private DialogBox _rightPortraitDialogBoxPrefab;
 
@@ -39,19 +40,17 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     [SerializeField] private DialogueChoiceGUI _dialogueChoiceGUI;
 
     private ArticyFlowPlayer _flowPlayer;
-    private ArticyReference _articyRef;
-
-    private ArticyChapter _chapter;
-    public ArticyChapter Chapter { get => _chapter; }
+  
 
     private DialogType _dialogType;
     public DialogType DialogType { get => _dialogType; }
 
-    public bool IsDialogShown =>  _currentPortraitDialogBoxes.Count > 0 || _worldCanvas.ShownDialogBoxes.Count > 0;
+    public bool IsDialogShown => _currentPortraitDialogBoxes.Count > 0 || _worldCanvas.ShownDialogBoxes.Count > 0;
 
     public bool IsTyping => _currentPortraitDialogBoxes.Any((dialogBox) => dialogBox.IsTyping) || _worldCanvas.IsTyping;
 
     private MapDialogue _currentMapDialog;
+    public MapDialogue CurrentMapDialog { get => _currentMapDialog; }
 
     private bool _multipleChoice = false;
 
@@ -60,6 +59,9 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
 
     [HideInInspector] public Action OnDialogueComplete;
+    public bool IsRunningAnAction { get; private set; }
+
+    public bool IsPlaying { get; private set; }
 
     public void Play() => _flowPlayer.Play(-99);
 
@@ -69,25 +71,50 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         Instance = this;
 
         _flowPlayer = GetComponent<ArticyFlowPlayer>();
-        _articyRef  = GetComponent<ArticyReference>();
-
-        var chapterDialogueObj = _articyRef.GetObject<ArticyObject>();
-
-        if (chapterDialogueObj is Dialogue == false)
-            throw new Exception("[DialogueManager] Assigned ArticyRef is not a Dialogue...");
-
-        var chapterDialogue = chapterDialogueObj as Dialogue;
-
-        _chapter = new ArticyChapter(chapterDialogue);
     }
 
 
     public void OnFlowPlayerPaused(IFlowObject aObject)
     {
+       StartCoroutine(OnFlowPlayerPausedCoroutine(aObject));
+    }
+
+    public EntityReference FetchEntityById(int entity_id)
+    {
+        if (_currentMapDialog == null)
+            throw new Exception($"[DialogueManager] You attempted to get an EntityReference by ID, but there's no current MapDialogue attached!");
+
+        return _currentMapDialog.GetEntityByID(entity_id);
+    }
+
+    private void AssignParticipants(Dialogue dialogue)
+    {
+        foreach (var fragment in dialogue.Children)
+        {
+            if (fragment is DialogueFragment)
+            {
+                var dialogueFragment = fragment as DialogueFragment;
+
+                if (dialogueFragment.Speaker != null)
+                {
+                    var participant = EntityManager.Instance.GetEntityRef(dialogueFragment.Speaker.TechnicalName);
+                    CurrentMapDialog.AddParticipant(participant);
+                }
+            }
+        }
+    }
+
+    private IEnumerator OnFlowPlayerPausedCoroutine(IFlowObject aObject)
+    {
         if (aObject is IDialogue || aObject is IInstruction)
         {
+            // Get Participants from articy data
+            var dialogue = aObject as Dialogue;
+            if (CurrentMapDialog != null && dialogue != null)
+                AssignParticipants(dialogue);
+
             _flowPlayer.Play();
-            return;
+            yield break;
         }
 
         if (aObject is IOutputPin)
@@ -96,8 +123,20 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         var objWithText = aObject as IObjectWithText;
         if (objWithText != null)
         {
+            if (objWithText.Text[0] == '$')
+            {
+                IsRunningAnAction = true;
+                yield return DialogueActionParser.TryRunAction(objWithText.Text, delegate()
+                {
+                    IsRunningAnAction = false;
+                    
+                    _flowPlayer.Play();
+                });
+                yield break;
+            }
+            
             if (DialogType == DialogType.Portrait)
-                ShowDialogBox(objWithText);
+                ShowPortraitDialogBox(objWithText);
             else if (DialogType == DialogType.Map && objWithText is DialogueFragment)
                 ShowMapDialogBoxes(objWithText);
         }
@@ -120,8 +159,10 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         if (_currentMapDialog != null)
             _currentMapDialog.Reset();
 
-        if (OnDialogueComplete != null)
-            OnDialogueComplete.Invoke();
+        IsPlaying = false;
+
+        OnDialogueComplete?.Invoke();
+        OnDialogueComplete = null;
     }
 
 
@@ -129,23 +170,23 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
     {
         _dialogType = dialogType;
 
-        
+
         if (mapDialogue != null)
             _currentMapDialog = mapDialogue;
 
+        IsPlaying = true;
 
         _flowPlayer.StartOn = dialogueRef;
     }
 
-    
+
     public void SetWorldCanvas(WorldDialogCanvas worldCanvas) => _worldCanvas = worldCanvas;
 
-    
+
     // TODO: Fix the wait time issue when pressing z skipping this hold
     public IEnumerator ShowDialogChoices(IList<Branch> aBranches)
     {
         yield return new WaitUntil(() => IsDialogShown);
-
         yield return new WaitUntil(() => !IsTyping);
 
         _multipleChoice = true;
@@ -158,7 +199,7 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         _dialogueChoiceGUI.Show(aBranches);
     }
 
-    private void ShowDialogBox(IObjectWithText textObj)
+    private void ShowPortraitDialogBox(IObjectWithText textObj)
     {
         var entityManager = EntityManager.Instance;
 
@@ -177,7 +218,7 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
                 var articyCharacterTemplate = dialogueFragment.Speaker as DefaultMainCharacterTemplate;
                 var playableCharacter = entityManager.GetPlayableCharacterByName(articyCharacterTemplate.DisplayName);
 
-                var dialogBox = GetPortraitDialogBox(playableCharacter.Name, playableCharacter.Portrait);
+                var dialogBox = GetPortraitDialogBox(playableCharacter.Name, playableCharacter);
                 dialogBox.OnDialogueDisplayComplete = null;
                 dialogBox.OnDialogueDisplayComplete += delegate ()
                 {
@@ -189,14 +230,36 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
                 };
 
                 dialogBox.SetText(textToDisplay);
-
+                dialogBox.Activate();
                 dialogBox.ShowNextText();
             }
         }
     }
 
+    private void ToggleWorldUICamera()
+    {
+        var childCameras = ProCamera2D.Instance.GetComponentsInChildren<Camera>();
+        foreach(var camera in childCameras)
+        {
+            if (camera.gameObject.tag == "World Space UI Camera")
+            {
+                camera.enabled = false;
+                camera.enabled = true;
+            }
+        }
+    }
+
+    public IEnumerator ClearMapDialogBoxes()
+    {
+        _worldCanvas.ClearDialogBoxes();
+
+        yield return new WaitUntil(() => _worldCanvas.ShownDialogBoxes.Count == 0);
+    }
+
     private void ShowMapDialogBoxes(IObjectWithText objWithText)
     {
+        ToggleWorldUICamera();
+
         var dialogueFragment = objWithText as DialogueFragment;
 
         var stageDirections = ParseStageDirections(dialogueFragment.StageDirections);
@@ -205,13 +268,18 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
         var articyEntity = dialogueFragment.Speaker as Articy.Codename_Mysterybabylon.Entity;
 
-        var matchingParticipants = _currentMapDialog.Participants.Where((entityReference) => entityReference.EntityName == articyEntity.DisplayName);
-        var secondRefParticipant = _currentMapDialog.Participants.Where((entityReference) => entityReference.EntityName != articyEntity.DisplayName);
+        var matchingParticipants = CurrentMapDialog.Participants.Where((entityReference) => entityReference.EntityName == articyEntity.DisplayName);
+        var secondRefParticipant = CurrentMapDialog.Participants.Where((entityReference) => entityReference.EntityName != articyEntity.DisplayName);
 
         if (matchingParticipants.Count() == 0)
             throw new Exception($"[DialogManager] There's no participant matching the DisplayName: {articyEntity.DisplayName}...");
 
-        var entityRef = matchingParticipants.First();
+        string finalText = dialogueFragment.Text;
+        Dictionary<string, object> results = DialogueAttributesParser.GetEntityInstanceSpeaker(dialogueFragment.Text, out finalText);
+        var entityRef = results.ContainsKey("entity_id") ? results["entity_id"] as EntityReference : matchingParticipants.First();
+
+
+
         EntityReference secondRef;
         if (secondRefParticipant.Count() > 0)
             secondRef = secondRefParticipant.First();
@@ -221,6 +289,19 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
         // TODO: Figure out how to have many instances of the Same Articy Entity speak to each other (when they have the same name)
         DialogBox dialogBox = _worldCanvas.GetDialogBox(entityRef, secondRef);
 
+        DialogueStep(dialogBox);
+
+        dialogBox.SetText(finalText);
+
+        dialogBox.ShowNextText();
+    }
+
+    /// <summary>
+    /// Used to call the initialization of a dialogue box for subscribing and setting night mode
+    /// </summary>
+    /// <param name="dialogBox"></param>
+    private void DialogueStep(DialogBox dialogBox)
+    {
         if (_nightMode)
             dialogBox.SetNightModeColor();
 
@@ -233,14 +314,9 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
                 _flowPlayer.Play();
             }
         };
-
-        dialogBox.SetText(dialogueFragment.Text);
-
-        dialogBox.ShowNextText();
     }
 
-
-    private DialogBox GetPortraitDialogBox(string speakerName, AnimatedPortrait portrait)
+    private DialogBox GetPortraitDialogBox(string speakerName, Entity entity)
     {
         var dialogCanvas = UIManager.Instance.GridBattleCanvas;
         var portraitBoxes = dialogCanvas.GetPortraitDialogBoxes();
@@ -259,26 +335,38 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
         // Canvas updating is not as fast as we clear the List -- Check the list
         if (_currentPortraitDialogBoxes.Contains(existingSpeakerDialogBox))
+        {
+            if (_currentPortraitDialogBoxes.Count == 2)
+                _currentPortraitDialogBoxes.Where((box) => box != existingSpeakerDialogBox).First().Deactivate();
+
             return existingSpeakerDialogBox;
+        }
 
         if (_currentPortraitDialogBoxes.Count == 2)
         {
             var dialogBox = portraitBoxes[Direction.Left];
-            dialogBox.SetActivePortrait(portrait);
+
+            _currentPortraitDialogBoxes.Where((box) => box != dialogBox).First().Deactivate();
+
+            dialogBox.SetSpeakerGender(entity.Gender);
+            dialogBox.SetActivePortrait(entity.Portrait);
+
             return dialogBox;
         }
 
         if (_currentPortraitDialogBoxes.Count == 0)
-            return SpawnPortraitDialogBox(portrait, Direction.Left);
-        else
-            if (_currentPortraitDialogBoxes.Count == 1)
-                return SpawnPortraitDialogBox(portrait, Direction.Right);
+            return SpawnPortraitDialogBox(entity, Direction.Left);
+        else if (_currentPortraitDialogBoxes.Count == 1)
+        {
+            _currentPortraitDialogBoxes[0].Deactivate();
+            return SpawnPortraitDialogBox(entity, Direction.Right);
+        }
 
 
         throw new Exception("[DialogueManager] Unable to find a Dialog Box to spawn or update...");
     }
 
-    private DialogBox SpawnPortraitDialogBox(AnimatedPortrait portrait, Direction directionToSpawn)
+    private DialogBox SpawnPortraitDialogBox(Entity entity, Direction directionToSpawn)
     {
         if (directionToSpawn != Direction.Left && directionToSpawn != Direction.Right)
             throw new Exception($"[DialogManager] Given Direction: '{directionToSpawn}' is invalid. Only Direction.Left or Direction.Left is allowed.");
@@ -307,12 +395,13 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
         if (_nightMode)
         {
-            portrait.SetNightModeColor();
+            entity.Portrait.SetNightModeColor();
             newPortraitDialogBox.SetNightModeColor();
         }
-        
-        newPortraitDialogBox.SetActivePortrait(portrait);
 
+        newPortraitDialogBox.SetSpeakerGender(entity.Gender);
+
+        newPortraitDialogBox.SetActivePortrait(entity.Portrait);
 
         _currentPortraitDialogBoxes.Add(newPortraitDialogBox);
 
@@ -338,10 +427,10 @@ public class DialogueManager : SerializedMonoBehaviour, IInitializable, IArticyF
 
     private void ClearPortraitDialogBoxes()
     {
-        foreach(var dialogBox in _currentPortraitDialogBoxes)
+        foreach (var dialogBox in _currentPortraitDialogBoxes)
             Destroy(dialogBox.gameObject);
 
-         _currentPortraitDialogBoxes = new List<DialogBox>();
+        _currentPortraitDialogBoxes = new List<DialogBox>();
     }
 
     private List<string> ParseStageDirections(string stageDirections)

@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Crosstales.TrueRandom;
 using UnityEngine;
 
 public enum StatCalculationMode
@@ -59,30 +58,43 @@ public class Stat
         GrowthRate = growthRate;
     }
 
-    public async Task<int> Grow(int times = 1)
+    public IEnumerator Grow(int times = 1)
     {
-        var result = 0;
         for (var i = 0; i < times; i++)
         {
             var rate = GrowthRate / 100;
             var guaranteeGrowth = Mathf.FloorToInt(rate);
             RawValue += guaranteeGrowth;
-            result += guaranteeGrowth;
 
-#if UNITY_EDITOR
-            var chance = UnityEngine.Random.value;
-#else
-            float chance = await TrueRandomUtility.RollDice();
-            chance /= 100.0f;
-#endif
+            yield return BattleUtility.RollDice();
+            float chance = BattleUtility.RNGNumber;
+
             if (chance <= Mathf.Repeat(rate, 1.0f))
             {
                 RawValue += 1;
-                result++;
             }
         }
+        yield return null;
+    }
 
-        return result;
+    public void GrowPlain(int times = 1)
+    {
+        for (var i = 0; i < times; i++)
+        {
+            var rate = GrowthRate / 100;
+            var guaranteeGrowth = Mathf.FloorToInt(rate);
+            RawValue += guaranteeGrowth;
+
+            //yield return BattleUtility.RollDice();
+            //float chance = BattleUtility.RNGNumber;
+            float chance = UnityEngine.Random.Range(0, 100);
+            chance /= 100.0f;
+
+            if (chance <= Mathf.Repeat(rate, 1.0f))
+            {
+                RawValue += 1;
+            }
+        }
     }
 
     public Stat AddEffect(IEffect effect)

@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:EditorWeaponStat","EditorWeaponStat");NDSummary.OnSummaryLoaded("CSharpClass:EditorWeaponStat",[["C#","CSharp"]],[["Groups","Group"],["Structs","Struct"],["Variables","Variable"]],[[2229,0,1,"EditorWeaponStat"],[2230,0,0,"Variables","Variables"],[2231,0,2,"BaseValue","BaseValue"],[2232,0,2,"BrokenValue","BrokenValue"]]);

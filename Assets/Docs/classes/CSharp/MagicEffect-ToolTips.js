@@ -1,1 +1,0 @@
-﻿NDContentPage.OnToolTipsLoaded({1749:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype1749\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> MagicEffectType</div></div></div>"});

@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:DamageStatDisplay","DamageStatDisplay");NDSummary.OnSummaryLoaded("CSharpClass:DamageStatDisplay",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2703,0,0,"DamageStatDisplay"],[2704,0,2,"Functions","Functions"],[2705,0,1,"SetText","SetText"]]);

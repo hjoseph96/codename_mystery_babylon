@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("mas",["Variable"],[["MaskTex",,[["CellHighlighter",,,,0,"File:Core/Map/UI/CellHighlighter.cs:CellHighlighter.MaskTex","CSharpClass:CellHighlighter:MaskTex"]]]]);

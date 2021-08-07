@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("tag",["Variable"],[["tagsToScanFor",,[["AnimatedTrigger",,,,0,"File:Core/Map/Tiles/AnimatedTiles/AnimatedTrigger.cs:AnimatedTrigger.tagsToScanFor","CSharpClass:AnimatedTrigger:tagsToScanFor"]]]]);

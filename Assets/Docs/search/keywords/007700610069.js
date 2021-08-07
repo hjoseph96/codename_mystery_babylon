@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("wai",["Function","Class"],[["WaitBeforeHittingTarget",,[["MagicEffect",,,,0,"File:Core/Units/Battlers/Magic_Users/MagicEffect.cs:MagicEffect.WaitBeforeHittingTarget","CSharpClass:MagicEffect:WaitBeforeHittingTarget"]]],["WaitOption",,[[,,,,1,"File:GUI/ActionSelect/WaitOption.cs:WaitOption","CSharpClass:WaitOption"]]]]);

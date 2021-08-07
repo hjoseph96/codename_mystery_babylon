@@ -6,17 +6,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-using Febucci.UI;
 using TMPro;
+using Febucci.UI;
+using DarkTonic.MasterAudio;
+
+using Articy.Codename_Mysterybabylon;
 
 public class TypewritingText : MonoBehaviour
 {
     private TextMeshProUGUI _text;
     private TextAnimatorPlayer _textAnimatorPlayer;
+    private Sex _speakerGender;
 
-    private readonly List<string> _texts = new List<string>();
+    private List<string> _texts = new List<string>();
+    public List<string> Texts { get => _texts;  }
     private int _currentTextIndex;
-
+    public int CurrentTextIndex { get => _currentTextIndex; }
 
     private void Awake()
     {
@@ -35,11 +40,13 @@ public class TypewritingText : MonoBehaviour
         _currentTextIndex = 0;
     }
 
+    public void SetSpeakerGender(Sex gender) => _speakerGender = gender;
 
     public void RemoveTypewriterEvents()
     {
         _textAnimatorPlayer.onTypewriterStart.RemoveAllListeners();
         _textAnimatorPlayer.onTextShowed.RemoveAllListeners();
+        _textAnimatorPlayer.onCharacterVisible.RemoveAllListeners();
     }
 
 
@@ -51,13 +58,43 @@ public class TypewritingText : MonoBehaviour
 
     public void AttachOnTextShowedEvent(UnityAction onTextShowed) => _textAnimatorPlayer.onTextShowed.AddListener(onTextShowed);
 
-    public void AttachOnStartTypingEvent(UnityAction onTextShowed) => _textAnimatorPlayer.onTypewriterStart.AddListener(onTextShowed);
+    public void AttachOnStartTypingEvent(UnityAction onTextStart) => _textAnimatorPlayer.onTypewriterStart.AddListener(onTextStart);
+
+
+    public void AttachTextRevealSoundEvent( Action onCharVisible = null )
+    {
+        _textAnimatorPlayer.onCharacterVisible.AddListener(delegate (char characterShown)
+        {
+            if (characterShown != ' ')
+            {
+                if (_speakerGender == Sex.Male)
+                    MasterAudio.PlaySound3DFollowTransform("character_reveal_male", CampaignManager.AudioListenerTransform);
+                else if (_speakerGender == Sex.Female)
+                    MasterAudio.PlaySound3DFollowTransform("character_reveal_female", CampaignManager.AudioListenerTransform);
+            }
+
+            if (onCharVisible != null)
+                onCharVisible.Invoke();
+        });
+
+        _textAnimatorPlayer.onTextShowed.AddListener(delegate ()
+        {
+            MasterAudio.PlaySound3DFollowTransform("text_complete", CampaignManager.AudioListenerTransform);
+        });
+    }
 
     public void SkipText() => _textAnimatorPlayer.SkipTypewriter();
 
     public void SetRevealSpeed(float speed) => _textAnimatorPlayer.SetTypewriterSpeed(speed);
 
-
+    /// <summary>
+    /// used to return the text currently on the typewriter 
+    /// </summary>
+    /// <returns></returns>
+    public TextData GetText()
+    {
+        return new TextData() { _currentIndex = _currentTextIndex, texts = _texts };
+    }
 
     // Split text and store the result in _texts List
     private bool Split(string text)
@@ -112,4 +149,16 @@ public class TypewritingText : MonoBehaviour
 
         return true;
     }
+    public void SetText(TextData data)
+    {
+        _texts = data.texts;
+        _currentTextIndex = data._currentIndex;
+    }
+
+    public struct TextData
+    {
+        public int _currentIndex;
+        public List<string> texts;
+    }
+
 }

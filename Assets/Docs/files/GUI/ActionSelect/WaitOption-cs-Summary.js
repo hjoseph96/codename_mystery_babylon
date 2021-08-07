@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:GUI/ActionSelect/WaitOption.cs","WaitOption.cs");NDSummary.OnSummaryLoaded("File:GUI/ActionSelect/WaitOption.cs",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2285,0,0,"WaitOption","WaitOption"],[2286,0,2,"Functions","WaitOption.Functions"],[2287,0,1,"Execute","WaitOption.Execute"]]);

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("but",["Variable"],[["ButtonType",,[["ActionButton",,,,0,"File:GUI/ActionNotice/ActionButton.cs:ActionButton.ButtonType","CSharpClass:ActionButton:ButtonType"]]]]);

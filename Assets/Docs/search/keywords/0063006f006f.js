@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("coo",["Function"],[["CooldownAndDestroy",,[["MagicEffect",,,,0,"File:Core/Units/Battlers/Magic_Users/MagicEffect.cs:MagicEffect.CooldownAndDestroy","CSharpClass:MagicEffect:CooldownAndDestroy"]]]]);

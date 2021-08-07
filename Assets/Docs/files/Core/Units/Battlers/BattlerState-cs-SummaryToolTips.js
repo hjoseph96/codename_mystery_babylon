@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Units/Battlers/BattlerState.cs",{1747:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype1747\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> BattlerState</div></div></div>"});

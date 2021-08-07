@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("toi",["Variable","Function"],[["ToInit",,[["EntryPoint",,,,0,"File:Core/EntryPoint.cs:EntryPoint.ToInit","CSharpClass:EntryPoint:ToInit"]]],["ToInt",,[["Tazdraperm.Utility.BoolExtensions",,,,1,"File:Utility/Tazdraperm_Utility/BoolExtensions.cs:Tazdraperm.Utility.BoolExtensions.ToInt","CSharpClass:Tazdraperm.Utility.BoolExtensions:ToInt"]]]]);

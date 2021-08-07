@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_zb",["Variable"],[["_zButton",,[["DialogBox",,,,0,"File:GUI/Dialog_Box/DialogBox.cs:DialogBox._zButton","CSharpClass:DialogBox:_zButton"]]]]);

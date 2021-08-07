@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("gua",["Class"],[["GuardFlank",,[[,,,,0,"File:Core/Units/AI_Behaviors/Behaviors/Group/GuardFlank.cs:GuardFlank","CSharpClass:GuardFlank"]]]]);

@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Core/Map/Direction.cs","Direction.cs");NDSummary.OnSummaryLoaded("File:Core/Map/Direction.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1251,0,1,"Types","Types"],[1252,0,0,"Direction","Direction"]]);

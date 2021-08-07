@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Items/MagicType.cs",{598:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype598\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> MagicType</div></div></div>"});

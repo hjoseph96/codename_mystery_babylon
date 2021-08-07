@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("swa",["Function"],[["SwapPositionForFacing",,[["CarriageController",,,,0,"File:Core/Map/Animation/Carriage/CarriageController.cs:CarriageController.SwapPositionForFacing","CSharpClass:CarriageController:SwapPositionForFacing"]]]]);

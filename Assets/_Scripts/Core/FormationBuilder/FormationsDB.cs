@@ -4,10 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityObservables;
 
+# if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [Serializable]
 [CreateAssetMenu(fileName = "Enemy Formations", menuName = "ScriptableObjects/Formations")]
@@ -18,8 +20,9 @@ public class FormationsDB : ScriptableObject, IInitializable
     private void AddFormation()
     {
         Formations.Add(new AIFormation());
+    #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
-
+    #endif
     }
 
     public void Init()
@@ -47,7 +50,10 @@ public class FormationsDB : ScriptableObject, IInitializable
         Formations.Remove(formation);
         Formations.Add(formation);
         //EditorUtility.SetDirty(this);
+
+    #if UNITY_EDITOR
         Undo.RecordObject(this, "Saving formations");
+    #endif
     }
 
 }

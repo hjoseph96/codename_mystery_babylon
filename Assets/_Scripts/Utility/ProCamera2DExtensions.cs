@@ -23,17 +23,18 @@ public static class ProCamera2DExtensions
         DynamicCameraWindow.SetMode(mode);
     }
 
-    public static bool TargetInCameraWindow(this ProCamera2D camera, float extraSize = 0.5f)
+    public static bool TargetInCameraWindow(this ProCamera2D camera, float extraSize = 5f)
     {
         if (CameraWindow == null)
         {
             CameraWindow = camera.GetComponent<ProCamera2DCameraWindow>();
         }
 
+        var isWithinCamera = CameraWindow.CameraWindowRectInWorldCoords.Expand(extraSize)
+            .Contains(camera.CameraTargets[0].TargetPosition);
+
         // CameraWindow.CameraWindowRectInWorldCoords <-- This is modified source code!! Move this to an override class for ProCamera2DCameraWindow
         // OR ELSE IT WILL BREAK WITH EVERY PACKAGE UPDATE
-        return CameraWindow.CameraWindowRectInWorldCoords
-            .Expand(extraSize)
-            .Contains(camera.CameraTargets[0].TargetPosition);
+        return isWithinCamera;
     }
 }

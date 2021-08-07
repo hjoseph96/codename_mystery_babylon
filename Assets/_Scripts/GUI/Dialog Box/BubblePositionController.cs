@@ -12,8 +12,9 @@ public class BubblePositionController : MonoBehaviour
     public List<Transform> sitting;
     public List<Transform> mounted;
     public List<Transform> standing;
+    public Transform emotionBubbleSpawn;
 
-    public Vector3 GetSpeechBubblePos(EntityInfo entityInfo, Direction direction)
+    public Transform GetSpeechBubblePos(EntityInfo entityInfo, Direction direction)
     {
         if (entityInfo.sitting)
             return GetPos(sitting, GetDirection(direction, entityInfo.facingDirection));
@@ -23,21 +24,21 @@ public class BubblePositionController : MonoBehaviour
             return GetPos(standing, GetDirection(direction, entityInfo.facingDirection));
     }
 
-    public Vector3 GetPos(List<Transform> transforms, Direction facingDirection)
+    public Transform GetPos(List<Transform> transforms, Direction facingDirection)
     {
         if (transforms.Count < 2)
         {
             Debug.Log("Transform List is missing items");
-            return Vector3.zero;
+            return null;
         }
         if (facingDirection == Direction.Left)
-            return transforms[0].position;
+            return transforms[0];
         else if (facingDirection == Direction.Right)
-            return transforms[1].position;
+            return transforms[1];
         else
         {
             Debug.Log("Facing Direction is neither left, nor right, returning left");
-            return transforms[0].position;
+            return transforms[0];
         }
     }
 
@@ -47,7 +48,6 @@ public class BubblePositionController : MonoBehaviour
     {
         public Direction facingDirection;
         public bool mounted;
-        public bool sitting;
-        // else assume standing
+        public bool sitting; // else assume standing
     }
 }

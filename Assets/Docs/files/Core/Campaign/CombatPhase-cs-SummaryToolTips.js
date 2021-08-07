@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Campaign/CombatPhase.cs",{86:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype86\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> CombatPhase</div></div></div>"});

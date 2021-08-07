@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Units/AI_Behaviors/AITarget.cs",{1544:"<div class=\"NDToolTip TClass LCSharp\"><div class=\"NDClassPrototype\" id=\"NDClassPrototype1544\"><div class=\"CPEntry TClass Current\"><div class=\"CPModifiers\"><span class=\"SHKeyword\">public</span></div><div class=\"CPName\">AITarget</div></div></div></div>"});

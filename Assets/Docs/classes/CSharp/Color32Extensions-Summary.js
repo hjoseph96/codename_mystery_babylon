@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:Color32Extensions","Color32Extensions");NDSummary.OnSummaryLoaded("CSharpClass:Color32Extensions",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[3538,0,0,"Color32Extensions"],[3539,0,2,"Functions","Functions"],[3540,0,1,"EqualsTo","EqualsTo"]]);

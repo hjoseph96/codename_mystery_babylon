@@ -6,82 +6,42 @@ using Sirenix.OdinInspector;
 
 using Articy.Unity;
 using Articy.Codename_Mysterybabylon;
+
 using Com.LuisPedroFonseca.ProCamera2D;
 
 public class CutsceneManager : SerializedMonoBehaviour, IInitializable
 {
-    public static CutsceneManager Instance;
-
-    [SerializeField] private bool _playOnStart;
-
-    [ValueDropdown("ArticyObjectNames"), SerializeField]
-    private string _currentDialogue;
-    public string CurrentDialogue { get => _currentDialogue; }
-    
-    private Transform _moveTarget;
-
-    private List<string> ArticyObjectNames()
-    {
-        var objNames = new List<string>();
-        var objects = ArticyDatabase.GetAllOfType<Dialogue>();
-
-        foreach (var obj in objects)
-            objNames.Add(obj.DisplayName);
-
-        return objNames;
-    }
+    public static CutsceneManager Instance;   
 
     public void Init()
     {
         Instance = this;
-
-        if (_playOnStart)
-            StartCutscene();
     }
 
-    public void StartCutscene()
+    public void StartCutscene(Cutscene cutscene)
     {
         var dialogues = ArticyDatabase.GetAllOfType<Dialogue>();
 
-        var matchingDialogue = dialogues.Where((d) => d.DisplayName == _currentDialogue).First();
+        var matchingDialogue = dialogues.Where((d) => d.DisplayName == cutscene.CurrentDialogue).First();
 
         var dialogueManager = DialogueManager.Instance;
 
+        var uiCamera = GameObject.FindGameObjectWithTag("UICamera").GetComponent<Camera>();
+        uiCamera.enabled = false;
+        uiCamera.enabled = true;
+
         dialogueManager.OnDialogueComplete += delegate ()
         {
-            StopCameraShaking();
-
-            var arturEntity = EntityManager.Instance.GetEntityRef("Artur", EntityType.PlayableCharacter);
-            var arturController = arturEntity.GetComponent<SpriteCharacterControllerExt>();
-
-            arturController.StopSitting();
-            arturController.WalkTo(_moveTarget.position);
-            arturController.OnAutoMoveComplete += delegate ()
-            {
-                arturController.Rotate(Direction.Down);
-                arturController.SetIdle();
-                arturController.AllowInput();
-            };
-
-            if (InfiniteScrollBackground.Instance != null)
-                InfiniteScrollBackground.Instance.Stop();
+            cutscene.UponCutsceneComplete?.Invoke();
+            cutscene.UponCutsceneComplete = null;
         };
 
-        dialogueManager.SetDialogueToPlay(matchingDialogue, DialogType.Portrait);
+        if (cutscene.DialogType == DialogType.Portrait)
+            dialogueManager.SetDialogueToPlay(matchingDialogue, DialogType.Portrait);
+        else if (cutscene.DialogType == DialogType.Map)
+            dialogueManager.SetDialogueToPlay(matchingDialogue, DialogType.Map, cutscene.MapDialogue);
+
         dialogueManager.Play();
     }
 
-    public void SetMoveTarget(Transform moveTarget) => _moveTarget = moveTarget;
-
-    private void StopCameraShaking()
-    {
-        var camera = ProCamera2D.Instance;
-
-        var shaker = camera.GetComponent<ProCamera2DShake>();
-        if (shaker != null)
-        {
-            shaker.StopShaking();
-             shaker.StopConstantShaking();
-        }
-    }
 }

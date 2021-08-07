@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:InitializeUnits","InitializeUnits");NDSummary.OnSummaryLoaded("CSharpClass:InitializeUnits",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[1956,0,0,"InitializeUnits"],[1957,0,2,"Functions","Functions"],[1958,0,1,"Init","Init"]]);

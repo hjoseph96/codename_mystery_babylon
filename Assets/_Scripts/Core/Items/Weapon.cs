@@ -76,6 +76,20 @@ public class Weapon : Item
         }
     }
 
+    /// <summary>
+    /// Needed to return copies of items for replacement from convoy when stacked
+    /// </summary>
+    /// <returns></returns>
+    public Weapon CopyData()
+    {
+        var weapon = new Weapon(_source);
+        weapon.CurrentDurability = CurrentDurability;
+        weapon.amount = 1;
+        if (weapon.CurrentDurability == 0)
+            weapon.Break();
+        return weapon;
+    }
+
     public void Use(int times = 1)
     {
         CurrentDurability = Mathf.Max(CurrentDurability - times, 0);
@@ -120,6 +134,8 @@ public class Weapon : Item
     {
         if (IsEquipped)
             Unit.UnequipWeapon();
+        
+        base.Drop();
     }
 
     public override void UseItem()

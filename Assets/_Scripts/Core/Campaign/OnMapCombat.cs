@@ -1,75 +1,77 @@
 using System;
 using System.Linq;
-
 using System.Threading.Tasks;
+using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 using Sirenix.OdinInspector;
 
 public class OnMapCombat : MonoBehaviour
 {
-    [HideInInspector] public static Action OnCombatComplete;
+    [ShowInInspector] public static Action OnCombatComplete;
 
-    public static async void BeginCombat(Unit attacker, Unit defender)
+    public static IEnumerator BeginCombat(Unit attacker, Unit defender)
     {
-        attacker.UponAttackComplete += async delegate ()
+
+        defender.UponAttackComplete += delegate ()
         {
-            OnCombatComplete += delegate ()
+            defender.WaitForReaction(attacker, delegate ()
             {
-                attacker.AllowAttack();
-                defender.AllowAttack();
+                attacker.ClearOnMapBattleEvents();
+                defender.ClearOnMapBattleEvents();
 
                 attacker.TookAction();
-            };
-
-            if (attacker.HasAttacked && defender.HasAttacked)
-            {
-                attacker.ClearOnMapBattlEvents();
-                defender.ClearOnMapBattlEvents();
-
-                OnCombatComplete.Invoke();
+                
+                OnCombatComplete?.Invoke();
                 OnCombatComplete = null;
-            } else if (defender != null && defender.IsAlive)
+            });
+        };
+
+        attacker.UponDodgeComplete += defender.UponAttackComplete;
+
+
+        attacker.UponAttackComplete += delegate ()
+        {
+            if (!defender.IsDying)
             {
-                defender.UponAttackComplete += OnCombatComplete;
+                Debug.Log("Defender is attacking!");
+                Debug.Log("Defender is attacking and processing attack");
+                defender.StartCoroutine(OnMapCombat.ProcessAttack(defender, attacker));
+            }
+            else
+            {
+                attacker.WaitForReaction(defender, delegate()
+                {
+                    defender.ClearOnMapBattleEvents();
+                    attacker.ClearOnMapBattleEvents();
 
-                attacker.UponDodgeComplete += defender.UponAttackComplete;
-
-                attacker.UponDamageCalcComplete += defender.UponAttackComplete;
-
-                await ProcessAttack(defender, attacker);
-
-                defender.AttackOnMap(attacker);
+                    attacker.TookAction();
+                });
             }
 
         };
 
-        defender.UponDodgeComplete += attacker.UponAttackComplete;
-
-        defender.UponDamageCalcComplete += attacker.UponAttackComplete;
-
-        await ProcessAttack(attacker, defender);
-        
-
-        attacker.AttackOnMap(defender);
-
-        
+        yield return ProcessAttack(attacker, defender);
     }
 
-    private static async Task<bool> ProcessAttack(Unit attacker, Unit defender)
+    private static IEnumerator ProcessAttack(Unit attacker, Unit defender)
     {
-        var attackerPreview = await BattleResults(attacker, defender);
+        Debug.Log("Before getting battle results!");
+
+        yield return BattleUtility.CalculateBattleResults(attacker, defender);
+
+        var attackerPreview = BattleUtility.BattleResults;
+
         var atkCount = 1;
-        attacker.UponAttackAnimationEnd += delegate ()
-        {
-            if (attackerPreview["DOUBLE_ATTACK"])
-                atkCount++;
-            else
-                attacker.SetIdle();
-        };
+
+        Debug.Log("Processing Attack.");
         attacker.UponAttackLaunched += delegate ()
         {
+            Debug.Log($"Attacker: [{attacker.gameObject.name}] launched an attack! ATK Count: {atkCount}");
+
+
             if (atkCount == 1)
             {
                 var atkLanded = attackerPreview["HIT"];
@@ -77,13 +79,16 @@ public class OnMapCombat : MonoBehaviour
                 if (!atkLanded)
                 {
                     defender.DodgeAttack(attacker);
+                    Debug.Log($"Defender: [{defender.gameObject.name}] dodged!");
                     return;
                 }
 
                 var isCritical = attackerPreview["CRITICAL"];
                 var attack = new Attack(attacker, atkLanded, isCritical);
+                defender.TakeDamage(attack.Damage(defender), isCritical);
 
-                defender.TakeDamage(attack.Damage(defender), attacker);
+                Debug.Log($"Defender: [{defender.gameObject.name}] took damage...");
+
             }
 
             if (atkCount == 2)
@@ -99,27 +104,23 @@ public class OnMapCombat : MonoBehaviour
                 var isCritical = attackerPreview["CRIT_SECOND_HIT"];
                 var attack = new Attack(attacker, atkLanded, isCritical);
 
-                defender.TakeDamage(attack.Damage(defender), attacker);
+                defender.TakeDamage(attack.Damage(defender), isCritical);
             }
         };
 
-        return true;
-    }
+        attacker.UponAttackAnimationEnd += delegate ()
+        {
+            if (attackerPreview["DOUBLE_ATTACK"])
+                atkCount++;
+            else
+            {
+                attacker.SetIdle();
 
-    public static async Task<Dictionary<string, bool>> BattleResults(Unit attacker, Unit defender)
-    {
-        Dictionary<string, bool> battleResults = new Dictionary<string, bool>();
+                attacker.UponAttackComplete?.Invoke();
+            }
 
-        // If the attacking cannot defend himself, return empty
-        if (!attacker.CanDefend())
-            return battleResults;
+        };
 
-        var hitResults = await TrueRandomUtility.HitResults(attacker, defender);
-        var critResults = await TrueRandomUtility.CriticalHitResults(attacker, defender);
-
-        // Merge the dictionaries
-        return hitResults.Concat(critResults)
-            .ToLookup(x => x.Key, x => x.Value)
-            .ToDictionary(x => x.Key, g => g.First());
+        attacker.AttackOnMap(defender);
     }
 }

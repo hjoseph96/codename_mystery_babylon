@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_ed",["Variable"],[["_editor",,[["ColliderGroupBase",,,,0,"File:Core/Map/ColliderGroupSimple.cs:ColliderGroupBase._editor","CSharpClass:ColliderGroupBase:_editor"]]]]);

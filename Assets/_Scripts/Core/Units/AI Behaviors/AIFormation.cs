@@ -19,11 +19,13 @@ public class AIFormation
     public int Height { get { return _height; } private set { _height = value; } }
     public Vector2Int Pivot;
 
+    #if UNITY_EDITOR
     [Button("Show In Builder")]
     private void ShowInBuilder()
     {
         FormationBuilderView.ShowWindow(this);
     }
+    # endif
 
     public AIFormation()
     {

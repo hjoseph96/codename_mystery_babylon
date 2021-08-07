@@ -6,18 +6,26 @@ public class DirectionUtility
 {
     public static Dictionary<Vector2, Direction> FacingToDirection = new Dictionary<Vector2, Direction>
     {
-        {new Vector2(1, 0), Direction.Left },
-        {new Vector2(-1, 0), Direction.Right },
-        {new Vector2(0, -1), Direction.Up },
-        {new Vector2(0, 1), Direction.Down },
+        {new Vector2( 1,  0), Direction.Left      },
+        {new Vector2(-1,  0), Direction.Right     },
+        {new Vector2( 0, -1), Direction.Up        },
+        {new Vector2( 0,  1), Direction.Down      },
+        {new Vector2( 1, -1), Direction.LeftUp    },
+        {new Vector2(-1, -1), Direction.RightUp   },
+        {new Vector2( 1,  1), Direction.LeftDown  },
+        {new Vector2(-1,  1), Direction.RightDown }
     };
 
     public static Dictionary<Direction, Vector2> DirectionToFacing = new Dictionary<Direction, Vector2>
     {
-        { Direction.Left, new Vector2(1, 0) },
-        { Direction.Right, new Vector2(-1, 0) },
-        { Direction.Up, new Vector2(0, 1) },
-        { Direction.Down, new Vector2(0, -1) },
+        { Direction.Left,      new Vector2( 1,  0) },
+        { Direction.Right,     new Vector2(-1,  0) },
+        { Direction.Up,        new Vector2( 0,  1) },
+        { Direction.Down,      new Vector2( 0, -1) },
+        { Direction.LeftUp,    new Vector2( 1,  1) },
+        { Direction.RightUp,   new Vector2(-1,  1) },
+        { Direction.LeftDown,  new Vector2( 1, -1) },
+        { Direction.RightDown, new Vector2(-1, -1) }
     };
 
     public static Direction GetDirection(Vector3 currentPosition, Vector3 targetDirection)

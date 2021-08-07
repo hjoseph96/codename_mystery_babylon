@@ -33,7 +33,7 @@ public class RoomTransition : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && !SceneLoader.Instance.IsInTransition)
+        if (collision.tag == "Main Player" && !SceneLoader.Instance.IsInTransition)
         {
             var playerController = collision.GetComponent<SpriteCharacterControllerExt>();
 
@@ -48,7 +48,7 @@ public class RoomTransition : MonoBehaviour
 
     private IEnumerator TransitionToDestination(SpriteCharacterControllerExt playerController)
     {
-        var camera = ProCamera2D.Instance;
+        var camera = Camera.main.GetComponent<ProCamera2D>();
         var cameraFade = camera.GetComponent<ProCamera2DTransitionsFX>();
 
         UIManager.Instance.GridBattleCanvas.Disable();
@@ -97,7 +97,7 @@ public class RoomTransition : MonoBehaviour
                 playerController.AllowInput();
             };
 
-            playerController.WalkTo(targetWorldPosition);
+            playerController.MoveTo(targetWorldPosition);
         };
 
         cameraFade.OnTransitionEnterStarted += delegate ()

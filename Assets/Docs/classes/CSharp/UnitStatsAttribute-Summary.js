@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:UnitStatsAttribute","UnitStatsAttribute");NDSummary.OnSummaryLoaded("CSharpClass:UnitStatsAttribute",[["C#","CSharp"]],[["Classes","Class"]],[[2166,0,0,"UnitStatsAttribute"]]);

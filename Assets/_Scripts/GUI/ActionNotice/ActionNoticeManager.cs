@@ -13,7 +13,7 @@ public class ActionNoticeManager : MonoBehaviour, IInitializable
         Instance = this;
     }
 
-    public void ShowNotice(string noticeText = "", ActionButtonType actionButton = ActionButtonType.Z)
+    public void ShowNotice(string noticeText = "", KeyCode actionButton = KeyCode.Z)
     {
         _actionNotice.Show(actionButton, noticeText);
     }

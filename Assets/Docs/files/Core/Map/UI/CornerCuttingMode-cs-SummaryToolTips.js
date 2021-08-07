@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Map/UI/CornerCuttingMode.cs",{1068:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype1068\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> CornerCuttingMode</div></div></div>"});

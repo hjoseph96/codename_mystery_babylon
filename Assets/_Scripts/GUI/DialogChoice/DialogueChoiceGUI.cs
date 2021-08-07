@@ -13,12 +13,16 @@ public class DialogueChoiceGUI : MonoBehaviour
     [SerializeField] private List<SingleDialogChoice> dialogGUIs;
 
     private IList<Branch> _aBranches;
+
     public void Show(IList<Branch> articyBranches)
     {
         _aBranches = articyBranches;
 
         if (_aBranches.Count > 4)
             throw new Exception($"[DialogueChoiceGUI] Too many dialogue choices given: #{articyBranches.Count}");
+
+        foreach (var choiceGUI in dialogGUIs)
+            choiceGUI.Hide();
 
         for (var i = 0; i < _aBranches.Count; i++)
         {
@@ -27,11 +31,7 @@ public class DialogueChoiceGUI : MonoBehaviour
 
             dialogOption.OnChoiceSelected += delegate (Branch chosenBranch)
            {
-               if (OnChoiceSelected != null)
-               {
-                   OnChoiceSelected.Invoke(chosenBranch);
-                   OnChoiceSelected = null;
-               }
+                OnChoiceSelected?.Invoke(chosenBranch);
 
                this.SetActive(false);
            };

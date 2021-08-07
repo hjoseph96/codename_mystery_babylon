@@ -161,7 +161,7 @@ MonoBehaviour:
   _zButton: {fileID: 2028404994776227916}
   _portraitSpawnPoint: {fileID: 326578606431233433}
   _dialogBubble: {fileID: 2615533776928556701}
-  _orientation: 1
+  direction: 1
 --- !u!1 &2600979013581006523
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,8 +274,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30, y: 1}
-  m_SizeDelta: {x: 456.6154, y: 102.5}
+  m_AnchoredPosition: {x: 11.0366, y: 1}
+  m_SizeDelta: {x: 418.6887, y: 102.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2704222765500516461
 CanvasRenderer:
@@ -317,22 +317,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'I don''t care how well this job pays, we are way in over our heads !
-
-
-    If
-    we''re caught in this place, we can kiss our guild registration goodbye...
-
-
-
-
-
-    I
-    warned you this was far too dangerous for us.
-
-
-    A regular C rank quest would
-    have sufficed, we''ve gotten too greedy!'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 860929bc60df277418ae30afe825bc5b, type: 2}
   m_sharedMaterial: {fileID: 5181315920394402249, guid: 860929bc60df277418ae30afe825bc5b,
@@ -342,8 +327,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282338185
-  m_fontColor: {r: 0.5377358, g: 0.293645, b: 0.24603951, a: 1}
+    rgba: 4280170107
+  m_fontColor: {r: 0.48235294, g: 0.21176471, b: 0.11764706, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -372,7 +357,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 12.63
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -396,7 +381,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.05517578, y: 1.8811054, z: -0.10031128, w: -1.9227219}
+  m_margin: {x: 23.649048, y: 1.8811054, z: -0.10031128, w: -1.9227219}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -541,7 +526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -899, y: 52.5}
+  m_AnchoredPosition: {x: -899, y: -106}
   m_SizeDelta: {x: 390.5, y: 462.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7158466760915156221

@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Items/ItemType.cs",{625:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype625\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> ItemType</div></div></div>"});

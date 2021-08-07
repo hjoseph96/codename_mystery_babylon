@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("cas",["Variable"],[["castingSound",,[["ScriptableWeapon",,,,0,"File:Core/Items/ScriptableWeapon.cs:ScriptableWeapon.castingSound","CSharpClass:ScriptableWeapon:castingSound"],["Weapon",,,,0,"File:Core/Items/Weapon.cs:Weapon.castingSound","CSharpClass:Weapon:castingSound"]]]]);

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("sha",["Variable"],[["ShakeIntervalRange",,[["IntermittentShaking",,,,0,"File:Core/Camera/IntermittentShaking.cs:IntermittentShaking.ShakeIntervalRange","CSharpClass:IntermittentShaking:ShakeIntervalRange"]]]]);

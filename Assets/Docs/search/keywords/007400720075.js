@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("tru",["Class","Function"],[["TrueRandomUtility",,[[,,,,0,"File:Utility/TrueRandomUtility.cs:TrueRandomUtility","CSharpClass:TrueRandomUtility"]]],["Truncate",,[["ArrowPath",,,,1,"File:Core/Map/UI/ArrowPath.cs:ArrowPath.Truncate","CSharpClass:ArrowPath:Truncate"]]]]);

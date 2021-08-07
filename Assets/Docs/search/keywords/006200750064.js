@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("bud",["Class"],[["BuddyController",,[[,,,,0,"File:Core/Character_Controllers/BuddyController.cs:BuddyController","CSharpClass:BuddyController"]]]]);

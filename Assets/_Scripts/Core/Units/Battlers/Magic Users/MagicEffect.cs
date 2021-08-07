@@ -12,34 +12,51 @@ public enum MagicEffectType {
 
 public class MagicEffect : MonoBehaviour
 {
-    public MagicEffectType EffectType;
+    [ShowInInspector] public MagicEffectType EffectType;
+    [ShowInInspector] public bool ApplyPostProcessing;
     [ShowIf("IsProjectile")] public float moveSpeed = 5f;
     [ShowIf("IsProjectile")] public GameObject hitEffect;
-    [ShowIf("IsArea")] public float areaEffectWaitTime;
-    [SoundGroupAttribute] public string movingSound;
-    [SoundGroupAttribute, ShowIf("IsProjectile")] public string hitSound;
+
+
+    private bool IsProjectile => EffectType == MagicEffectType.Projectile;
+    private bool IsArea => EffectType == MagicEffectType.Area;
+
+    [SoundGroup] public string movingSound;
+    [SoundGroup, ShowIf("IsProjectile")] public string hitSound;
     [HideInInspector] public Action OnHitTarget;
+    [HideInInspector] public Action<Battler> UponEffectActive;
 
     private bool _isActive = false;
     public bool IsActive => _isActive;
 
     private Vector3 _target;
     private Collider _collider;
-    private ParticleSystem _effect;
     private bool _startedMoving = false;
-    private bool _startedWaiting = false;
-    private bool _cooldown = false;
 
-    void Start() 
+    protected virtual void Start() 
     {
         _collider = GetComponent<Collider>();
-        _effect   = GetComponent<ParticleSystem>();
     
         // play spell sfx on spawn for area spells.
         if (EffectType == MagicEffectType.Area)
             MasterAudio.PlaySound3DFollowTransform(movingSound, CampaignManager.AudioListenerTransform);
 
         _isActive = true;
+    }
+
+    protected virtual void Update()
+    {
+        if (_startedMoving)
+            TravelToTarget();
+    }
+
+    public virtual IEnumerator PostProcessWhileActive(Battler target)
+    {
+        throw new Exception("[MagicEffect] You've enabled ApplyPostProcessing but did not override this method!");
+        /*while (IsActive)
+        {
+            // do something
+        }*/
     }
 
     public void StartMoving(Vector3 target)
@@ -58,22 +75,8 @@ public class MagicEffect : MonoBehaviour
         );
     }
 
-    private void Update()
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if (_startedMoving)
-            TravelToTarget();
-
-        if (!_startedWaiting && EffectType == MagicEffectType.Area)
-            StartCoroutine(WaitBeforeHittingTarget());
-
-        if (_cooldown)
-            CooldownAndDestroy();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (EffectType == MagicEffectType.Area)
-            _cooldown = true;
         
         _collider.enabled = false;
         Destroy(this.gameObject);
@@ -85,29 +88,15 @@ public class MagicEffect : MonoBehaviour
             MasterAudio.PlaySound3DFollowTransform(hitSound, CampaignManager.AudioListenerTransform);
         }
 
-        OnHitTarget.Invoke();
+        OnHitTarget?.Invoke();
     }
 
-    private void CooldownAndDestroy()
+    private void HitTarget()
     {
-        _cooldown = false;
+        Destroy(this.gameObject);
+        _isActive = false;
 
-        _effect.Stop();
-
-        if (_effect.particleCount == 0)
-        {
-            Destroy(this.gameObject);
-            _isActive = false;
-        }
+        OnHitTarget?.Invoke();
     }
 
-    private IEnumerator WaitBeforeHittingTarget()
-    {
-        yield return new WaitForSeconds(areaEffectWaitTime);
-
-        _collider.enabled = true;
-    }
-
-    private bool IsProjectile() => EffectType == MagicEffectType.Projectile;
-    private bool IsArea() => EffectType == MagicEffectType.Area;
 }

@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Map/UI/CursorMode.cs",{1292:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype1292\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> CursorMode</div></div></div>"});

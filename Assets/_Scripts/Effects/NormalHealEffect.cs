@@ -19,7 +19,6 @@ public class NormalHealEffect : MonoBehaviour
 
     void Awake()
     {
-
         StartCoroutine(StartFadingIn());
 
         _healAnimation.OnHaltSecondaryEffect += delegate ()
@@ -76,8 +75,6 @@ public class NormalHealEffect : MonoBehaviour
 
         float t = (Time.time - _startTime) / _fadeInDuration;
         float opacity = Mathf.SmoothStep(startingOpacity, _maxOpacity, t);
-
-        Debug.Log($"Fade In: {opacity}");
 
         color.a = opacity;
         particleSettings.startColor = color;

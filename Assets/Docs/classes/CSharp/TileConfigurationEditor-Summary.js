@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:TileConfigurationEditor","TileConfigurationEditor");NDSummary.OnSummaryLoaded("CSharpClass:TileConfigurationEditor",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2182,0,0,"TileConfigurationEditor"],[2183,0,2,"Functions","Functions"],[2184,0,1,"OnInspectorGUI","OnInspectorGUI"]]);

@@ -1,10 +1,14 @@
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Grid))]
@@ -19,7 +23,9 @@ public class ColliderGroupTilemap : ColliderGroupBase
 
     private void Update()
     {
+        #if UNITY_EDITOR
         GetComponent<TilemapRenderer>().enabled = Selection.activeGameObject == gameObject;
+        #endif
     }
 
     [Button(ButtonSizes.Large), GUIColor(0, 1, 0)]
@@ -69,7 +75,9 @@ public class ColliderGroupTilemap : ColliderGroupBase
             }
         }
 
-        EditorUtility.SetDirty(gameObject);
+        #if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+        #endif
     }
 
     public override void Apply()

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_vi",["Variable"],[["_visionRange",,[["AIUnit",,,,0,"File:Core/Units/All_Units/AIUnit.cs:AIUnit._visionRange","CSharpClass:AIUnit:_visionRange"]]]]);

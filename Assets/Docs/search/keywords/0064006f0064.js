@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("dod",["Function"],[["Dodge",,[["Battler",,,,0,"File:Core/Units/Battlers/Battler.cs:Battler.Dodge","CSharpClass:Battler:Dodge"]]],["DodgeChance",,[["Unit",,,,0,"File:Core/Units/All_Units/Unit.cs:Unit.DodgeChance","CSharpClass:Unit:DodgeChance"]]]]);

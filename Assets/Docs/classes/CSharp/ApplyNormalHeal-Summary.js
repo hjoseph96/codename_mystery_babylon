@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:ApplyNormalHeal","ApplyNormalHeal");NDSummary.OnSummaryLoaded("CSharpClass:ApplyNormalHeal",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2244,0,0,"ApplyNormalHeal"],[2245,0,2,"Functions","Functions"],[2246,0,1,"HealUnit","HealUnit"]]);

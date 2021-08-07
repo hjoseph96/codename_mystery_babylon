@@ -43,11 +43,11 @@ public class AIUnitContextFactory : SingleContextFactory
 
         //context.SetContext("Need To Resort To Default", needToResortToDefault);
 
-        Debug.Log($"Threat Level: {currentThreatLevel}");
+/*        Debug.Log($"Threat Level: {currentThreatLevel}");
         Debug.Log($"Need To Heal: {urgencyToHeal}");
         Debug.Log($"Need To Heal Ally: {urgencyToHealAlly}");
         Debug.Log($"Need To Retreat: {needToRetreat}");
-        Debug.Log($"Need To Be With Group: {needToBeWithGroup}");
+        Debug.Log($"Need To Be With Group: {needToBeWithGroup}");*/
         //Debug.Log($"Need To Resort To Default: {needToResortToDefault}");
 
         return context;

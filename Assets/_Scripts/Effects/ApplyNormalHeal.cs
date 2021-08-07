@@ -13,7 +13,7 @@ public class ApplyNormalHeal : MonoBehaviour
         var healthBarPosition = unit.transform.position;
         healthBarPosition.y -= 0.489f;
 
-        var miniHealBar = Instantiate(healthBarPrefab, healthBarPosition, Quaternion.identity).GetComponent<MiniHealthBar>();
+        var miniHealthBar = unit.HealthBar;
 
         var healEffectPosition = healthBarPosition;
         healEffectPosition.z = healEffectPrefab.transform.position.z;
@@ -25,16 +25,17 @@ public class ApplyNormalHeal : MonoBehaviour
         float startPercentage = (float)unit.CurrentHealth / unit.MaxHealth;
         float newHealthAmount = Mathf.Clamp(unit.CurrentHealth + amount, 1, unit.MaxHealth);
         float endPercentage = newHealthAmount / unit.MaxHealth;
+        
+        // Trigger health change in unit, to also update the combatText Display
+        unit.IncreaseHealth(amount);
 
-
+        miniHealthBar.OnComplete = null; // Clear Other Events
         // Actually increase the health after all the graphical displays
-        miniHealBar.OnComplete += delegate ()
+        miniHealthBar.OnComplete += delegate ()
         {
-            unit.IncreaseHealth(amount);
-            
             if (unit.UponHealComplete != null)
                 unit.UponHealComplete.Invoke();
         };
-        miniHealBar.Tween(endPercentage);
+        miniHealthBar.Tween(endPercentage);
     }
 }

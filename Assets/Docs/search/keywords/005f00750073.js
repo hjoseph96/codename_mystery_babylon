@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_us",["Variable"],[["_userInput",,[["GridCursor",,,,0,"File:Core/Map/UI/GridCursor.cs:GridCursor._userInput","CSharpClass:GridCursor:_userInput"]]],["_useTargetHeight",,[["HeightDependentZoom",,,,0,"File:Core/Camera/HeightDependentZoom.cs:HeightDependentZoom._useTargetHeight","CSharpClass:HeightDependentZoom:_useTargetHeight"]]]]);

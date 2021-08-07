@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Sirenix.OdinInspector;
+
 public class RetreatToFarthestAlly : RetreatBehavior
 {
     [ReadOnly] public new readonly AIActionType ActionType = AIActionType.Retreat;
@@ -56,7 +58,7 @@ public class RetreatToFarthestAlly : RetreatBehavior
     {
         item.UseItem();
 
-        yield return new WaitForSecondsRealtime(7f);
+        yield return new WaitForSeconds(3f);
 
         CompleteAction();
     }
@@ -69,10 +71,6 @@ public class RetreatToFarthestAlly : RetreatBehavior
     }
 
 
-
-    // Generally, you dont wanna use LINQ due to performance
-    // But, this method should only need to be called ONCE, so...
-    // meh...
 
     protected virtual Vector2Int RetreatTarget()
     {
@@ -89,6 +87,9 @@ public class RetreatToFarthestAlly : RetreatBehavior
         // Any cell in the vision range that is >= (maxDistance - 3) is far enough away to be considered
         int maxDistanceBuffer = 3;
         var potentialTargets = AIAgent.VisionRange().Where((gridPosition) => GridUtility.GetBoxDistance(gridPosition, farthestEnemy.GridPosition) >= (maxDistance - maxDistanceBuffer));
+
+        if (AIAgent.AlliesWithinSight().Count == 0)
+            return potentialTargets.ToList()[0];
 
         // Look for the farthest away Ally within sight
         var farthestAlly = AIAgent.AlliesWithinSight()

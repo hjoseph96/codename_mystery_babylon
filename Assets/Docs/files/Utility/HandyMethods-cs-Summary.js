@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Utility/HandyMethods.cs","HandyMethods.cs");NDSummary.OnSummaryLoaded("File:Utility/HandyMethods.cs",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[3472,0,0,"HandyMethods","HandyMethods"],[3473,0,2,"Functions","HandyMethods.Functions"],[3474,0,1,"HasMethod","HandyMethods.HasMethod"]]);

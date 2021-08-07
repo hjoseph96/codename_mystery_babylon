@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("ele",["Struct"],[["Elem",,[["Tazdraperm.Utility.PriorityQueue",,,,0,"File:Utility/Tazdraperm_Utility/PriorityQueue.cs:Tazdraperm.Utility.PriorityQueue.Elem","CSharpClass:Tazdraperm.Utility.PriorityQueue.Elem"]]]]);

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("myc",["Function","Variable"],[["MyCellInFormation",,[["AIUnit",,,,0,"File:Core/Units/All_Units/AIUnit.cs:AIUnit.MyCellInFormation","CSharpClass:AIUnit:MyCellInFormation"]]],["MyColor",,[["ExampleObservable",,,,1,"File:UnityObservables/Example/ExampleObservable.cs:ExampleObservable.MyColor","CSharpClass:ExampleObservable:MyColor"]]]]);

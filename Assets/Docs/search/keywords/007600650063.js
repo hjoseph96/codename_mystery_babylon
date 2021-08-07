@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("vec",["Class","Variable"],[["Vector2IntExtensions",,[[,,,,0,"File:Core/Extensions/Vector2IntExtensions.cs:Vector2IntExtensions","CSharpClass:Vector2IntExtensions"]]],["Vectors",,[["DirectionExtensions",,,,1,"File:Utility/DirectionExtensions.cs:DirectionExtensions.Vectors","CSharpClass:DirectionExtensions:Vectors"]]]]);

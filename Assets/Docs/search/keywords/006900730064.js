@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("isd",["Property"],[["IsDisplaying",,[["PhaseDisplay",,,,0,"File:GUI/Phase_Display/PhaseDisplay.cs:PhaseDisplay.IsDisplaying","CSharpClass:PhaseDisplay:IsDisplaying"]]]]);

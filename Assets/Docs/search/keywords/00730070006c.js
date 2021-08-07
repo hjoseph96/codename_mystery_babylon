@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("spl",["Function"],[["Split",,[["DialogBox",,,,0,"File:GUI/Dialog_Box/DialogBox.cs:DialogBox.Split","CSharpClass:DialogBox:Split"]]]]);

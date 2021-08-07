@@ -17,12 +17,35 @@ public enum CarriageControlMode
 
 public class CarriageController : SerializedMonoBehaviour
 {
+    [SerializeField, ValueDropdown("ValidDirections")]
+    private Direction _lookingDirection;
+    [Button("Look This Way")]
+    private void LookThisWay()
+    {
+        _renderer = GetComponent<SpriteRenderer>();
+
+        foreach (var horse in GetComponentsInChildren<Horse>())
+            _horses.Add(horse);
+
+        _animancer = GetComponent<AnimancerComponent>();
+        _MovementSynchronisation = new TimeSynchronisationGroup(_animancer) { _CarriageIdles, _CarriageMoving };
+
+        foreach (var cachedPosition in GetComponentsInChildren<CachedPositions>())
+            _spritePositions.Add(cachedPosition);
+        
+        LookAt(_lookingDirection);
+    }
+
     [FoldoutGroup("Basic Properties"), SerializeField]
     private float _walkSpeed;
     [FoldoutGroup("Basic Properties"), SerializeField]
     private float _runSpeed;
     [FoldoutGroup("Basic Properties"), SerializeField]
     private float _runAnimationSpeed = 1.5f;
+    [FoldoutGroup("Basic Properties"), SerializeField]
+    private AnimatedDoor _exteriorDoor;
+    public AnimatedDoor ExteriorDoor { get => _exteriorDoor; }
+
     [FoldoutGroup("Basic Properties"), SerializeField, HideIf("IsPlaying")]
     private CarriageControlMode _ControlMode;
     [FoldoutGroup("Basic Properties"), ShowInInspector, ShowIf("IsPlaying")]
@@ -46,7 +69,7 @@ public class CarriageController : SerializedMonoBehaviour
         { Direction.Down,   Vector2.down },
         { Direction.Left,   Vector2.left },
         { Direction.Up,     Vector2.up },
-        { Direction.Right,   Vector2.right },
+        { Direction.Right,  Vector2.right },
     };
 
     [FoldoutGroup("Animations")]
@@ -80,9 +103,8 @@ public class CarriageController : SerializedMonoBehaviour
     private Vector2 _Movement;
     private Vector2 _Facing = Vector2.down;
 
-    [SerializeField]
-    private Vector2 _movementTarget = Vector2.zero;
 
+    private Vector2 _movementTarget = Vector2.negativeInfinity;
     [SerializeField]
     private bool _isRunning = false;
     private bool _isMoving = false;
@@ -130,6 +152,20 @@ public class CarriageController : SerializedMonoBehaviour
         }
     }
 
+    public void RunTo(Vector2 movementTarget)
+    {
+        _isRunning = true;
+        _ControlMode = CarriageControlMode.Auto;
+        _movementTarget = movementTarget;
+    }
+
+    public void WalkTo(Vector2 movementTarget)
+    {
+        _isRunning = false;
+        _ControlMode = CarriageControlMode.Auto;
+        _movementTarget = movementTarget;
+    }
+
     private void Play(DirectionalAnimationSet animations, float animationSpeed = 1)
     {
         _CurrentAnimationSet = animations;
@@ -142,6 +178,23 @@ public class CarriageController : SerializedMonoBehaviour
         {
             var state = _animancer.Play(directionalClip);
             state.Speed = animationSpeed;
+
+            // Handle Flipping Door based on direction + don't show door for up/down idles
+            if (animations == _CarriageIdles)
+            {
+                if (_lookingDirection == Direction.Left || _lookingDirection == Direction.Right)
+                    _exteriorDoor.SetActive(true);
+                else
+                    _exteriorDoor.SetActive(false);
+                    
+                if (_exteriorDoor.IsActive())
+                {
+                    if (_lookingDirection == Direction.Left && _exteriorDoor.IsFlipped)
+                        _exteriorDoor.FlipX();
+                    else if (_lookingDirection == Direction.Right && !_exteriorDoor.IsFlipped)
+                        _exteriorDoor.FlipX();
+                }
+            }
 
             // If the new animation is in the synchronisation group, give it the same time the previous animation had.
             _MovementSynchronisation.SyncTime(_CurrentAnimationSet);
@@ -174,6 +227,11 @@ public class CarriageController : SerializedMonoBehaviour
             else
                 MakeHorsesWalk();
 
+            // Disable Exterior Door Sprite -- only show when idle
+
+            if (_exteriorDoor.IsActive())
+                _exteriorDoor.SetActive(false);
+
             transform.Translate(_Movement.normalized * speed * Time.deltaTime);
 
             Play(_CarriageMoving, animSpeed);
@@ -186,7 +244,7 @@ public class CarriageController : SerializedMonoBehaviour
 
     private void HandleAutoMovement()
     {
-        if (_movementTarget != Vector2.zero)
+        if (_movementTarget.x != Vector2.negativeInfinity.x && _movementTarget.y != Vector2.negativeInfinity.y)
         {
             if (!_hasPathBeenSet)
             {
@@ -197,10 +255,14 @@ public class CarriageController : SerializedMonoBehaviour
 
                 _hasPathBeenSet = true;
             }
+        } else
+        {
+            Play(_CarriageIdles);
+            MakeHorsesIdle();
         }
     }
 
-    public IEnumerator MovementCoroutine(GridPath path)
+    private IEnumerator MovementCoroutine(GridPath path)
     {
         var nextPathGridPosition = GridPosition;
         var nextPathPosition = transform.position;
@@ -216,6 +278,11 @@ public class CarriageController : SerializedMonoBehaviour
         DirectionalAnimationSet moveAnimation = _CarriageMoving;
 
         _isMoving = true;
+
+        // Disable Exterior Door Sprite -- only show when idle
+        if (_exteriorDoor.IsActive())
+            _exteriorDoor.SetActive(false);
+
         while (!reachedGoal)
         {
             var speed = _walkSpeed * Time.deltaTime;
@@ -267,8 +334,8 @@ public class CarriageController : SerializedMonoBehaviour
 
         GridPosition = goal;
 
-
         _isMoving = false;
+        _movementTarget = Vector2.negativeInfinity;
 
         if (OnFinishedMoving != null)
             OnFinishedMoving.Invoke();
@@ -331,8 +398,8 @@ public class CarriageController : SerializedMonoBehaviour
 
         var horseHolders = _horseHolders;
 
-        var horsePositions = cachedPositions.Where((positions) => positions.GroupName == "Horses").First();
-        var horseBarPositions = cachedPositions.Where((positions) => positions.GroupName == "Horse Bars");
+        var horsePositions = cachedPositions.Where((positions) => positions.name.Contains("Horses")).First();
+        var horseBarPositions = cachedPositions.Where((positions) => positions.name.Contains("Horse Bars"));
 
         if (horseBarPositions.Count() == 0)
             foreach (var horseBar in horseBarPositions)
@@ -472,12 +539,6 @@ public class CarriageController : SerializedMonoBehaviour
     {
         foreach (var holder in _horseHolders)
             holder.SetActive(false);
-    }
-
-    private void ShowHorseHolders()
-    {
-        foreach (var holder in _horseHolders)
-            holder.SetActive(true);
     }
 
     public bool IsPlaying => Application.IsPlaying(this);

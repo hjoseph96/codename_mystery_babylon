@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("mai",["Variable"],[["Main",,[["Tazdraperm.Utility.CameraUtility",,,,0,"File:Utility/Tazdraperm_Utility/CameraUtility.cs:Tazdraperm.Utility.CameraUtility.Main","CSharpClass:Tazdraperm.Utility.CameraUtility:Main"]]]]);

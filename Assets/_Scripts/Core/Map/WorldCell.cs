@@ -12,6 +12,8 @@ public class WorldCellTile
     public StairsOrientation StairsOrientation { get; set; }
     public bool IsStairs => StairsOrientation != StairsOrientation.None;
 
+    public List<OriginalTileTravelCost> originalTravelCosts = new List<OriginalTileTravelCost>();
+
     private Dictionary<UnitType, int> _travelCost = new Dictionary<UnitType, int>();
     private Dictionary<Direction, UnitType> _blockExit = new Dictionary<Direction, UnitType>();
     private Dictionary<Direction, UnitType> _blockEntrance = new Dictionary<Direction, UnitType>();
@@ -19,6 +21,12 @@ public class WorldCellTile
     public WorldCellTile(TileConfiguration tileConfig, Vector3 scale)
     {
         SetTileConfig(tileConfig, scale);
+
+        foreach (var entry in _travelCost)
+        {
+            var originalTravelCost = new OriginalTileTravelCost(entry.Key, entry.Value);
+            originalTravelCosts.Add(originalTravelCost);
+        }
     }
 
     private void SetTileConfig(TileConfiguration config, Vector3? scale = null)
@@ -83,26 +91,23 @@ public class WorldCellTile
         return -1;
     }
 
+    public void SetTravelCost(UnitType unitType, int travelCost) => _travelCost[unitType] = travelCost;
+
+    public void RevertTravelCosts()
+    {
+        _travelCost = new Dictionary<UnitType, int>();
+
+        foreach (var originalTravelCost in originalTravelCosts)
+            _travelCost.Add(originalTravelCost.UnitType, originalTravelCost.TravelCost);
+    }
+
     public bool IsPassable(UnitType unitType) => GetTravelCost(unitType) >= 0;
 
-    public bool IsPassable()
-    {
-        return IsPassable(UnitType.Unmounted) ||
-               IsPassable(UnitType.Mounted) ||
-               IsPassable(UnitType.Air);
-    }
+    public bool CanExit(Direction direction, UnitType unitType) => 
+        direction != Direction.None && !(_blockExit.TryGetValue(direction, out var blockedType) && (blockedType & unitType) == unitType);
 
-    public bool CanExit(Direction direction, UnitType unitType)
-    {
-        return direction != Direction.None && !(_blockExit.TryGetValue(direction, out var blockedType) &&
-                                                (blockedType & unitType) == unitType);
-    }
-
-    public bool CanEnter(Direction direction, UnitType unitType)
-    {
-        return direction != Direction.None && !(_blockEntrance.TryGetValue(direction, out var blockedType) &&
-                                                (blockedType & unitType) == unitType);
-    }
+    public bool CanEnter(Direction direction, UnitType unitType) => 
+        direction != Direction.None && !(_blockEntrance.TryGetValue(direction, out var blockedType) && (blockedType & unitType) == unitType);
 }
 
 
@@ -115,13 +120,15 @@ public class WorldCell
     public event Action<Unit, Vector2Int> OnEnterCell;
     public event Action<Unit, Vector2Int> OnExitCell;
 
+    private List<Unit> _deadUnits = new List<Unit>();
+
     private Unit unit;
     public Unit Unit
     {
         get { return unit; }
         set
         {
-            if (unit != null)
+            if (unit != null) 
                 OnExitCell?.Invoke(unit, Position);
 
             unit = value;
@@ -129,6 +136,28 @@ public class WorldCell
                 OnEnterCell?.Invoke(unit, Position);
         }
     }
+
+    #region Combat-Related Gameplay
+
+    // Seize Objective related
+    private bool _canBeSeized = false;
+    public bool CanBeSeized { get => _canBeSeized; }
+
+    private Unit _seizedBy;
+    public Unit SeizedBy { get => _seizedBy;  }
+
+    private List<int> _unitsAllowedToSeize = new List<int>();
+
+
+    // Escape Objective related
+    private bool _isEscapePoint = false;
+    public bool IsEscapePoint { get => _isEscapePoint; }
+    private List<int> _unitsAllowedToEscape = new List<int>();
+
+    private List<Unit> _escapees = new List<Unit>();
+    public List<Unit> Escapees { get => _escapees;  }
+    #endregion
+
 
     private readonly Dictionary<int, WorldCellTile> _tilesByLayer = new Dictionary<int, WorldCellTile>();
     private readonly Dictionary<int, WorldCellTile> _overrideTilesByLayer = new Dictionary<int, WorldCellTile>();
@@ -160,103 +189,78 @@ public class WorldCell
     public WorldCellTile TileAtSortingLayer(int sortingLayerId)
     {
         if (_overrideTilesByLayer.ContainsKey(sortingLayerId))
+        {
             return _overrideTilesByLayer[sortingLayerId];
+        }
 
         if (_tilesByLayer.ContainsKey(sortingLayerId))
+        {
             return _tilesByLayer[sortingLayerId];
+        }
 
         return WorldGrid.Instance.NullTile;
     }
 
-    public StairsOrientation GetStairsOrientation(int sortingLayerId)
+
+    public void MarkSeizeable(List<int> unitTeamsWhoCanSeize)
     {
-        return TileAtSortingLayer(sortingLayerId).StairsOrientation;
+        _canBeSeized = true;
+
+        _unitsAllowedToSeize = unitTeamsWhoCanSeize;
     }
 
-    public StairsOrientation GetStairsOrientation(Unit unit)
+    public void Seize(Unit seizingUnit)
     {
-        return GetStairsOrientation(unit.SortingLayerId);
+        if (!CanBeSeized)
+            throw new Exception($"[WorldCell] Cell Position: [{Position.x}, {Position.y}] is not seizeable!");
+
+        if (!_unitsAllowedToSeize.Contains(seizingUnit.TeamId))
+            throw new Exception($"[WorldCell] Unit: {seizingUnit.Name} is not the allowed teams to seize!");
+
+        _seizedBy = seizingUnit;
     }
 
-    public SurfaceType GetSurfaceType(int sortingLayerId)
+    public void MarkEscapable(List<int> unitTeamsAllowedToEscape)
     {
-        return TileAtSortingLayer(sortingLayerId).SurfaceType;
+        _isEscapePoint = true;
+
+        _unitsAllowedToEscape = unitTeamsAllowedToEscape;
     }
 
-    public SurfaceType GetSurfaceType(Unit unit)
+    public void Escape(Unit escapingUnit)
     {
-        return GetSurfaceType(unit.SortingLayerId);
+        if (!IsEscapePoint)
+            throw new Exception($"[WorldCell] Cell Position: [{Position.x}, {Position.y}] is not an escape point!");
+
+        if (!_unitsAllowedToEscape.Contains(escapingUnit.TeamId))
+            throw new Exception($"[WorldCell] Unit: {escapingUnit.Name} is not the allowed teams to seize!");
+
+        if (_escapees.Contains(escapingUnit))
+            throw new Exception($"[WorldCell] Unit: {escapingUnit.Name} has already escaped!");
+
+        _escapees.Add(Unit);
     }
 
-    public string GetTerrainName(int sortingLayerId)
-    {
-        return TileAtSortingLayer(sortingLayerId).TerrainName;
-    }
+    public StairsOrientation GetStairsOrientation(int sortingLayerId) => TileAtSortingLayer(sortingLayerId).StairsOrientation;
 
-    public string GetTerrainName(Unit unit)
-    {
-        return GetTerrainName(unit.SortingLayerId);
-    }
+    public SurfaceType GetSurfaceType(int sortingLayerId) => TileAtSortingLayer(sortingLayerId).SurfaceType;
 
-    public bool IsStairs(int sortingLayerId)
-    {
-        return TileAtSortingLayer(sortingLayerId).IsStairs;
-    }
+    public string GetTerrainName(int sortingLayerId) => TileAtSortingLayer(sortingLayerId).TerrainName;
 
-    public bool IsStairs(Unit unit)
-    {
-        return IsStairs(unit.SortingLayerId);
-    }
+    public bool IsStairs(int sortingLayerId) => TileAtSortingLayer(sortingLayerId).IsStairs;
 
-    public bool HasLineOfSight(int sortingLayerId)
-    {
-        return TileAtSortingLayer(sortingLayerId).HasLineOfSight;
-    }
+    public bool HasLineOfSight(int sortingLayerId) => TileAtSortingLayer(sortingLayerId).HasLineOfSight;
 
-    public bool HasLineOfSight(Unit unit)
-    {
-        return HasLineOfSight(unit.SortingLayerId);
-    }
+    /// <summary>
+    /// Returns true if the unit type can walk on this tile, and dead units on this tile is less than 2
+    /// </summary>
+    public bool IsPassable(int sortingLayerId, UnitType unitType) => TileAtSortingLayer(sortingLayerId).GetTravelCost(unitType) >= 0 && _deadUnits.Count < 2;
 
-    public bool IsPassable(int sortingLayerId, UnitType unitType)
-    {
-        return TileAtSortingLayer(sortingLayerId).GetTravelCost(unitType) >= 0;
-    }
+    public bool CanExit(Direction direction, int sortingLayerId, UnitType unitType) => TileAtSortingLayer(sortingLayerId).CanExit(direction, unitType);
 
-    public bool IsPassable(Unit unit)
-    {
-        return IsPassable(unit.SortingLayerId, unit.UnitType);
-    }
+    public bool CanEnter(Direction direction, int sortingLayerId, UnitType unitType) => TileAtSortingLayer(sortingLayerId).CanEnter(direction, unitType);
 
-    public bool CanExit(Direction direction, int sortingLayerId, UnitType unitType)
-    {
-        return TileAtSortingLayer(sortingLayerId).CanExit(direction, unitType);
-    }
-
-    public bool CanExit(Direction direction, Unit unit)
-    {
-        return CanExit(direction, unit.SortingLayerId, unit.UnitType);
-    }
-
-    public bool CanEnter(Direction direction, int sortingLayerId, UnitType unitType)
-    {
-        return TileAtSortingLayer(sortingLayerId).CanEnter(direction, unitType);
-    }
-
-    public bool CanEnter(Direction direction, Unit unit)
-    {
-        return CanEnter(direction, unit.SortingLayerId, unit.UnitType);
-    }
-
-    public int GetTravelCost(int sortingLayerId, UnitType unitType)
-    {
-        return TileAtSortingLayer(sortingLayerId).GetTravelCost(unitType);
-    }
-
-    public int GetTravelCost(Unit unit)
-    {
-        return GetTravelCost(unit.SortingLayerId, unit.UnitType);
-    }
+    public int GetTravelCost(int sortingLayerId, UnitType unitType) => TileAtSortingLayer(sortingLayerId).GetTravelCost(unitType);
 
     public int GetTravelCost(WorldCell destination, int sortingLayerId, UnitType unitType)
     {
@@ -286,11 +290,6 @@ public class WorldCell
         return bestCost + destination.GetTravelCost(sortingLayerId, unitType);
     }
 
-    public int GetTravelCost(WorldCell destination, Unit unit)
-    {
-        return GetTravelCost(destination, unit.SortingLayerId, unit.UnitType);
-    }
-
     public bool CanMove(WorldCell destination, int sortingLayerId, UnitType unitType)
     {
         var direction = GridUtility.GetDirection(Position, destination.Position, false, true);
@@ -301,18 +300,32 @@ public class WorldCell
             CanMoveCardinalDirection(direction, destination, sortingLayerId, unitType) : CanMoveDiagonalDirection(destination, sortingLayerId, unitType);
     }
 
-    public bool CanMove(WorldCell destination, Unit unit)
+    private bool CanMoveCardinalDirection(Direction direction, WorldCell destination, int sortingLayerId, UnitType unitType) => 
+        destination.IsPassable(sortingLayerId, unitType) && CanExit(direction, sortingLayerId, unitType) && destination.CanEnter(direction.Inverse(), sortingLayerId, unitType);
+
+    private bool CanMoveDiagonalDirection(WorldCell destination, int sortingLayerId, UnitType unitType) => 
+        GetTravelCost(destination, sortingLayerId, unitType) >= 0;
+
+    public void AddUnitToLootPile(Unit unit) => _deadUnits.Add(unit);
+
+    public void RemoveUnitFromLootPile(Unit unit)
     {
-        return CanMove(destination, unit.SortingLayerId, unit.UnitType);
+        for(int i = 0; i < _deadUnits.Count; i++)
+        {
+            if (_deadUnits[i] == unit)
+                _deadUnits.RemoveAt(i);
+        }
     }
 
-    private bool CanMoveCardinalDirection(Direction direction, WorldCell destination, int sortingLayerId, UnitType unitType)
+    public void DestroyCorpsesOnLootPile()
     {
-        return destination.IsPassable(sortingLayerId, unitType) && CanExit(direction, sortingLayerId, unitType) && destination.CanEnter(direction.Inverse(), sortingLayerId, unitType);
+        for(int i = 0; i < _deadUnits.Count; i++)
+        {
+            //TODO: Do whatever we want to dead units, be it destroying them, or keeping them there but removing all interactive elements 
+        }
     }
 
-    private bool CanMoveDiagonalDirection(WorldCell destination, int sortingLayerId, UnitType unitType)
-    {
-        return GetTravelCost(destination, sortingLayerId, unitType) >= 0;
-    }
+    public int LootableBodiesCount() => _deadUnits.Count;
+
+    public List<Unit> LootableBodies => _deadUnits;
 }

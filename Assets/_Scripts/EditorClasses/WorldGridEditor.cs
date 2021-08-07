@@ -14,7 +14,53 @@ using UnityEditor;
 public class WorldGridEditor : SerializedMonoBehaviour
 {
     [PropertyOrder(0)]
-    public bool EnableSelection, AutoUpdate = true;
+    public bool EnableSelection, AutoUpdate;
+
+    [PropertyOrder(0)]
+    public bool CreateGridPath = false;
+
+    [PropertyOrder(0), ShowIf("CreateGridPath"), ReadOnly]
+    private List<Vector2Int> _gridPathPositions = new List<Vector2Int>();
+    [PropertyOrder(0), ShowIf("CreateGridPath")]
+    [Button("Create Grid Path")]
+    private void AddNewGridPath()
+    {
+        var sceneContainer = FindObjectOfType<SceneContainer>();
+
+        var gridPathHolder = GameObject.Find("Created Grid Paths");
+        if (gridPathHolder == null)
+        {
+            gridPathHolder = new GameObject("Created Grid Paths");
+            gridPathHolder.transform.SetParent(sceneContainer.transform);
+
+            var newGridPath = new GameObject("New Grid Path");
+            newGridPath.transform.SetParent(gridPathHolder.transform);
+
+            var gridPathComponent = newGridPath.AddComponent<GridPathComponent>();
+
+            var positionsByOrigin = new List<Vector2Int>();
+            foreach (var pos in _gridPathPositions)
+                positionsByOrigin.Add(pos - Origin);
+
+            gridPathComponent.Path = positionsByOrigin;
+
+            _gridPathPositions.Clear();
+        } else
+        {
+            var newGridPath = new GameObject("New Grid Path");
+            newGridPath.transform.SetParent(gridPathHolder.transform);
+
+            var gridPathComponent = newGridPath.AddComponent<GridPathComponent>();
+
+            var positionsByOrigin = new List<Vector2Int>();
+            foreach (var pos in _gridPathPositions)
+                positionsByOrigin.Add(pos - Origin);
+
+            gridPathComponent.Path = positionsByOrigin;
+
+            _gridPathPositions.Clear();
+        }
+    }
 
     [FoldoutGroup("Settings"), PropertyOrder(1)]
     public bool SingleTilemapMode = true;
@@ -75,6 +121,31 @@ public class WorldGridEditor : SerializedMonoBehaviour
 
     private WorldCell[,] _worldGrid;
 
+    #region Monobehaviour
+    private void Awake()
+    {
+        Grid = GetComponent<Grid>();
+    }
+
+    private void Update()
+    {
+        if (Application.isPlaying)
+            return;
+
+        if (WorldGrid.Instance == null)
+            WorldGrid.Instance = GetComponent<WorldGrid>();
+
+        if (!AutoUpdate)
+            return;
+
+        //_influenceZones = GetComponentsInChildren<TileConfigurationInfluenceZone>();
+        if (Time.time - _lastUpdateTime < UpdateInterval)
+            return;
+
+        _lastUpdateTime = Time.time;
+        BakeWorldGridData();
+    }
+    #endregion
 
     [Button(ButtonSizes.Large), GUIColor(0, 1, 0), PropertyOrder(30)]
     public void BakeWorldGridData()
@@ -106,8 +177,11 @@ public class WorldGridEditor : SerializedMonoBehaviour
                     tileHeight = heightMap.GetTile<NavigationTile>((Vector3Int) pos).Height;
 
                 _worldGrid[i, j] = new WorldCell(new Vector2Int(i, j), tileHeight);
+                
+                
 
                 var tilemapsByLayer = Tilemaps.GetTilemapsBySortingLayer(pos);
+
                 foreach (var sortingLayerId in tilemapsByLayer.Keys)
                 {
                     var currentTilemap = tilemapsByLayer[sortingLayerId];
@@ -144,30 +218,6 @@ public class WorldGridEditor : SerializedMonoBehaviour
         //Debug.Log("Baking WorldGrid: " + (Time.realtimeSinceStartup - t) * 1000 + " ms");
     }
 
-    private void Awake()
-    {
-        Grid = GetComponent<Grid>();
-    }
-
-    private void Update()
-    {
-        if (Application.isPlaying)
-            return;
-
-        if (WorldGrid.Instance == null)
-            WorldGrid.Instance = GetComponent<WorldGrid>();
-
-        if (!AutoUpdate)
-            return;
-
-        //_influenceZones = GetComponentsInChildren<TileConfigurationInfluenceZone>();
-        if (Time.time - _lastUpdateTime < UpdateInterval)
-            return;
-
-        _lastUpdateTime = Time.time;
-        BakeWorldGridData();
-    }
-
     private IEnumerable<Tilemap> GetTilemaps() => GetComponentsInChildren<Tilemap>();
 
     private void UpdateTilemaps()
@@ -193,6 +243,7 @@ public class WorldGridEditor : SerializedMonoBehaviour
         Origin = min;
     }
 
+    #region UnityEditorOnly
     #if UNITY_EDITOR
     private void OnEnable()
     {
@@ -229,6 +280,44 @@ public class WorldGridEditor : SerializedMonoBehaviour
             Tilemaps.Add(ActiveTilemap);
         }
 
+        if (CreateGridPath)
+        {
+            var currentEvent = Event.current;
+            var currentCamera = Camera.current;
+            var mouseWorldPos= currentCamera.ScreenToWorldPoint(new Vector3(currentEvent.mousePosition.x, currentCamera.pixelHeight - currentEvent.mousePosition.y, currentCamera.nearClipPlane));
+            var tilemapPos = Grid.WorldToCell(mouseWorldPos);
+
+            var mouseGridPosition = new Vector2Int(tilemapPos.x, tilemapPos.y);
+            var control = GUIUtility.GetControlID(FocusType.Passive);
+
+            switch (currentEvent.GetTypeForControl(control))
+            {
+                case EventType.MouseDown:
+                    if (currentEvent.button == 0)
+                    {
+                        if (_gridPathPositions.Contains(mouseGridPosition))
+                            _gridPathPositions.Remove(mouseGridPosition);
+                        else
+                            _gridPathPositions.Add(mouseGridPosition);
+
+                        GUIUtility.hotControl = control;
+                        currentEvent.Use();
+                        
+                    }
+
+                    break;
+
+                case EventType.MouseUp:
+                    if (GUIUtility.hotControl == control && currentEvent.button == 0)
+                    {
+                        GUIUtility.hotControl = 0;
+                        currentEvent.Use();
+                    }
+
+                    break;
+            }
+        }
+
         if (!EnableSelection)
             return;
 
@@ -238,6 +327,8 @@ public class WorldGridEditor : SerializedMonoBehaviour
         var tilemapPosition = Grid.WorldToCell(mouseWorldPosition);
 
         _selectedGridPosition = new Vector2Int(tilemapPosition.x, tilemapPosition.y) - Origin;
+
+
 
         var controlID = GUIUtility.GetControlID(FocusType.Passive);
         switch (ev.GetTypeForControl(controlID))
@@ -455,6 +546,18 @@ public class WorldGridEditor : SerializedMonoBehaviour
             Handles.DrawWireCube(Grid.GetCellCenterWorld(tilemapPosition), Vector3.one);
         }
 
+        if (CreateGridPath)
+        {
+            var tilemapPosition = Grid.WorldToCell(mouseWorldPosition);
+            Handles.color = Color.yellow;
+            Handles.DrawWireCube(Grid.GetCellCenterWorld(tilemapPosition), Vector3.one);
+
+            foreach (var pos in _gridPathPositions)
+            {
+                Gizmos.DrawSphere(Grid.GetCellCenterWorld((Vector3Int) pos), 0.5f);
+            }
+        }
+
 
         if (DebugCollisions && colliderGroups.Length > 0)
         {
@@ -464,4 +567,6 @@ public class WorldGridEditor : SerializedMonoBehaviour
         }
     }
     #endif
+
+    #endregion
 }

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("rol",["Function"],[["RollDice",,[["TrueRandomUtility",,,,0,"File:Utility/TrueRandomUtility.cs:TrueRandomUtility.RollDice","CSharpClass:TrueRandomUtility:RollDice"]]]]);

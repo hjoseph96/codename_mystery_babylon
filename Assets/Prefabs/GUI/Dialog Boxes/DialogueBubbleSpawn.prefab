@@ -30,6 +30,36 @@ Transform:
   m_Father: {fileID: 3095038320291974518}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1446887042764816980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5571965925132220931}
+  m_Layer: 0
+  m_Name: EmotionBubble
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5571965925132220931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446887042764816980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.05, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3095038320291974518}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2302629731263976936
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +124,7 @@ Transform:
   - {fileID: 4668987132020259707}
   - {fileID: 1319287308791060928}
   - {fileID: 6101868691541577842}
+  - {fileID: 5571965925132220931}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,6 +149,7 @@ MonoBehaviour:
   standing:
   - {fileID: 1082072908318782673}
   - {fileID: 4668987132020259707}
+  emotionBubbleSpawn: {fileID: 0}
 --- !u!1 &3875821814448753590
 GameObject:
   m_ObjectHideFlags: 0

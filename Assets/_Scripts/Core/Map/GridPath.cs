@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+[Serializable]
 public class GridPath
 {
-    public int Length => _path.Count;
+    public int Length => _path != null ? _path.Count : 0;
     public Vector2Int this[int i] => _path[i];
     public Vector2Int Goal => this[Length - 1];
     public float TravelCost;
@@ -39,4 +42,6 @@ public class GridPath
     {
         return _path;
     }
+
+
 }

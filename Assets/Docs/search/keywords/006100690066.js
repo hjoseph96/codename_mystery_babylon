@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("aif",["Class"],[["AIFormation",,[[,,,,0,"File:Core/Units/AI_Behaviors/AIFormation.cs:AIFormation","CSharpClass:AIFormation"]]],["AIFormationFactory",,[[,,,,0,"File:Core/Units/AI_Behaviors/AIFormationFactory.cs:AIFormationFactory","CSharpClass:AIFormationFactory"]]]]);

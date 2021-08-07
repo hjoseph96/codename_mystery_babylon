@@ -1,0 +1,694 @@
+{
+  "CurrentSceneName": "_Road_To_Fort",
+  "PlayerPosition": {
+    "X": -45.5,
+    "Y": 7.5,
+    "Z": 0.0
+  },
+  "PlayerData": [
+    {
+      "UnitData": {
+        "UnitType": "Unmounted",
+        "WalkSpeed": 6.59,
+        "RunSpeed": 8.27,
+        "MoveAnimationSpeed": 1.0,
+        "Experience": 87,
+        "Stats": {
+          "Movement": {
+            "Base Value": 14,
+            "Growth Rate": 0
+          },
+          "MaxHealth": {
+            "Base Value": 25,
+            "Growth Rate": 60
+          },
+          "Strength": {
+            "Base Value": 12,
+            "Growth Rate": 100
+          },
+          "Speed": {
+            "Base Value": 10,
+            "Growth Rate": 50
+          },
+          "Skill": {
+            "Base Value": 18,
+            "Growth Rate": 0
+          },
+          "Magic": {
+            "Base Value": 3,
+            "Growth Rate": 25
+          },
+          "Luck": {
+            "Base Value": 8,
+            "Growth Rate": 0
+          },
+          "Resistance": {
+            "Base Value": 6,
+            "Growth Rate": 0
+          },
+          "Defense": {
+            "Base Value": 16,
+            "Growth Rate": 0
+          },
+          "Weight": {
+            "Base Value": 16,
+            "Growth Rate": 0
+          },
+          "Constitution": {
+            "Base Value": 20,
+            "Growth Rate": 0
+          },
+          "Morale": {
+            "Base Value": 0,
+            "Growth Rate": 0
+          }
+        },
+        "StatusEffects": [
+          {
+            "Type": 0,
+            "ToAlly": true,
+            "Radius": 7,
+            "values": {
+              "BonusValue": 0.4,
+              "OtherStat": 0,
+              "Ratio": 0.0
+            },
+            "CalculationMode": 0
+          }
+        ],
+        "WeaponProfiency": {
+          "Sword": "D"
+        },
+        "MagicProfiency": {},
+        "WeaponsInInventory": {
+          "0": {
+            "WeaponType": "Sword",
+            "DescriptionBroken": "A broken greatsword, no longer very useful inc ombat. A blacksmith will be able to repair it.",
+            "MeleeSound": "swosh-42",
+            "RequiredRank": "D",
+            "Weight": 18,
+            "CurrentDurability": 30,
+            "MaxDurability": 30,
+            "AttackRange": {
+              "MinRange": 1,
+              "MaxRange": 1
+            },
+            "Stats": {},
+            "BrokenStats": {},
+            "Filename": null,
+            "ItemName": "Steel Broadsword",
+            "ItemType": "Weapon",
+            "Description": "A heavy, large steel blade capable of serious damage.",
+            "Pricing": {
+              "Cost": 0,
+              "SaleValue": 0
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_13"
+            }
+          },
+          "1": {
+            "WeaponType": "Sword",
+            "DescriptionBroken": "A broken steel sword, nearly useless in battle. A blacksmith can repair it.",
+            "MeleeSound": "swosh-05",
+            "RequiredRank": "D",
+            "Weight": 8,
+            "CurrentDurability": 35,
+            "MaxDurability": 35,
+            "AttackRange": {
+              "MinRange": 1,
+              "MaxRange": 1
+            },
+            "Stats": {},
+            "BrokenStats": {},
+            "Filename": null,
+            "ItemName": "Steel Sword",
+            "ItemType": "Weapon",
+            "Description": "A durable steel sword.",
+            "Pricing": {
+              "Cost": 1000,
+              "SaleValue": 600
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_4"
+            }
+          },
+          "2": {
+            "WeaponType": "Sword",
+            "DescriptionBroken": "A broken fencing sword with no utility. Worthless in combat, must be taken to a blacksmith for repair.",
+            "MeleeSound": "swosh-11",
+            "RequiredRank": "D",
+            "Weight": 3,
+            "CurrentDurability": 25,
+            "MaxDurability": 25,
+            "AttackRange": {
+              "MinRange": 1,
+              "MaxRange": 1
+            },
+            "Stats": {},
+            "BrokenStats": {},
+            "Filename": null,
+            "ItemName": "Rapier",
+            "ItemType": "Weapon",
+            "Description": "A slim, agile fencing sword oft used by court knights in duels.",
+            "Pricing": {
+              "Cost": 0,
+              "SaleValue": 0
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_11"
+            }
+          }
+        },
+        "ConsumablesInInventory": {
+          "3": {
+            "CanHeal": true,
+            "ActionToExecute": null,
+            "CurrentDurability": 0,
+            "MaxDurability": 0,
+            "Filename": null,
+            "ItemName": "Potion",
+            "ItemType": "Consumable",
+            "Description": "A serviceable alchemical remedy for wounds in battle.",
+            "Pricing": {
+              "Cost": 200,
+              "SaleValue": 50
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_43"
+            }
+          }
+        },
+        "ValuablesInInventory": {},
+        "UnitPrefabPath": null
+      },
+      "Name": "Artur",
+      "Age": 33,
+      "Appearance": "",
+      "BornIn": "",
+      "Occupation": "Guild Leader & Swordsman",
+      "Personality": "",
+      "Gender": null,
+      "Species": "Human",
+      "Skills": [],
+      "Fears": [],
+      "InnerConflict": "",
+      "Motivation": "",
+      "FurtherDetails": null
+    },
+    {
+      "UnitData": {
+        "UnitType": "Unmounted",
+        "WalkSpeed": 6.0,
+        "RunSpeed": 7.8,
+        "MoveAnimationSpeed": 1.3,
+        "Experience": 33,
+        "Stats": {
+          "Movement": {
+            "Base Value": 12,
+            "Growth Rate": 0
+          },
+          "MaxHealth": {
+            "Base Value": 25,
+            "Growth Rate": 0
+          },
+          "Strength": {
+            "Base Value": 18,
+            "Growth Rate": 0
+          },
+          "Speed": {
+            "Base Value": 7,
+            "Growth Rate": 0
+          },
+          "Skill": {
+            "Base Value": 11,
+            "Growth Rate": 0
+          },
+          "Magic": {
+            "Base Value": 2,
+            "Growth Rate": 0
+          },
+          "Luck": {
+            "Base Value": 5,
+            "Growth Rate": 0
+          },
+          "Resistance": {
+            "Base Value": 7,
+            "Growth Rate": 0
+          },
+          "Defense": {
+            "Base Value": 15,
+            "Growth Rate": 0
+          },
+          "Weight": {
+            "Base Value": 18,
+            "Growth Rate": 0
+          },
+          "Constitution": {
+            "Base Value": 25,
+            "Growth Rate": 0
+          },
+          "Morale": {
+            "Base Value": 0,
+            "Growth Rate": 0
+          }
+        },
+        "StatusEffects": [
+          {
+            "Type": 0,
+            "ToAlly": true,
+            "Radius": 7,
+            "values": {
+              "BonusValue": 0.4,
+              "OtherStat": 0,
+              "Ratio": 0.0
+            },
+            "CalculationMode": 0
+          }
+        ],
+        "WeaponProfiency": {
+          "Sword": "B"
+        },
+        "MagicProfiency": {},
+        "WeaponsInInventory": {
+          "0": {
+            "WeaponType": "Sword",
+            "DescriptionBroken": "A broken greatsword, no longer very useful inc ombat. A blacksmith will be able to repair it.",
+            "MeleeSound": "swosh-42",
+            "RequiredRank": "D",
+            "Weight": 18,
+            "CurrentDurability": 30,
+            "MaxDurability": 30,
+            "AttackRange": {
+              "MinRange": 1,
+              "MaxRange": 1
+            },
+            "Stats": {},
+            "BrokenStats": {},
+            "Filename": null,
+            "ItemName": "Steel Broadsword",
+            "ItemType": "Weapon",
+            "Description": "A heavy, large steel blade capable of serious damage.",
+            "Pricing": {
+              "Cost": 0,
+              "SaleValue": 0
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_13"
+            }
+          }
+        },
+        "ConsumablesInInventory": {
+          "1": {
+            "CanHeal": true,
+            "ActionToExecute": null,
+            "CurrentDurability": 0,
+            "MaxDurability": 0,
+            "Filename": null,
+            "ItemName": "Potion",
+            "ItemType": "Consumable",
+            "Description": "A serviceable alchemical remedy for wounds in battle.",
+            "Pricing": {
+              "Cost": 200,
+              "SaleValue": 50
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_43"
+            }
+          },
+          "2": {
+            "CanHeal": true,
+            "ActionToExecute": null,
+            "CurrentDurability": 0,
+            "MaxDurability": 0,
+            "Filename": null,
+            "ItemName": "Potion",
+            "ItemType": "Consumable",
+            "Description": "A serviceable alchemical remedy for wounds in battle.",
+            "Pricing": {
+              "Cost": 200,
+              "SaleValue": 50
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_43"
+            }
+          }
+        },
+        "ValuablesInInventory": {},
+        "UnitPrefabPath": null
+      },
+      "Name": "Jacques",
+      "Age": 28,
+      "Appearance": "",
+      "BornIn": "",
+      "Occupation": "Swordsman",
+      "Personality": "",
+      "Gender": null,
+      "Species": "Human",
+      "Skills": [],
+      "Fears": [],
+      "InnerConflict": "",
+      "Motivation": "",
+      "FurtherDetails": null
+    },
+    {
+      "UnitData": {
+        "UnitType": "Unmounted",
+        "WalkSpeed": 5.59,
+        "RunSpeed": 8.48,
+        "MoveAnimationSpeed": 1.5,
+        "Experience": 14,
+        "Stats": {
+          "Movement": {
+            "Base Value": 16,
+            "Growth Rate": 0
+          },
+          "MaxHealth": {
+            "Base Value": 15,
+            "Growth Rate": 0
+          },
+          "Strength": {
+            "Base Value": 5,
+            "Growth Rate": 0
+          },
+          "Speed": {
+            "Base Value": 13,
+            "Growth Rate": 0
+          },
+          "Skill": {
+            "Base Value": 11,
+            "Growth Rate": 0
+          },
+          "Magic": {
+            "Base Value": 4,
+            "Growth Rate": 0
+          },
+          "Luck": {
+            "Base Value": 10,
+            "Growth Rate": 0
+          },
+          "Resistance": {
+            "Base Value": 7,
+            "Growth Rate": 0
+          },
+          "Defense": {
+            "Base Value": 8,
+            "Growth Rate": 0
+          },
+          "Weight": {
+            "Base Value": 9,
+            "Growth Rate": 0
+          },
+          "Constitution": {
+            "Base Value": 7,
+            "Growth Rate": 0
+          },
+          "Morale": {
+            "Base Value": 0,
+            "Growth Rate": 0
+          }
+        },
+        "StatusEffects": [],
+        "WeaponProfiency": {
+          "Bow": "B"
+        },
+        "MagicProfiency": {},
+        "WeaponsInInventory": {
+          "0": {
+            "WeaponType": "Bow",
+            "DescriptionBroken": "Broken custom bow",
+            "MeleeSound": "",
+            "RequiredRank": "C",
+            "Weight": 4,
+            "CurrentDurability": 35,
+            "MaxDurability": 35,
+            "AttackRange": {
+              "MinRange": 2,
+              "MaxRange": 2
+            },
+            "Stats": {},
+            "BrokenStats": {},
+            "Filename": null,
+            "ItemName": "Penelope's Bow",
+            "ItemType": "Weapon",
+            "Description": "A custom bow that was gifted to Penelope",
+            "Pricing": {
+              "Cost": 700,
+              "SaleValue": 350
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_91"
+            }
+          }
+        },
+        "ConsumablesInInventory": {
+          "1": {
+            "CanHeal": true,
+            "ActionToExecute": null,
+            "CurrentDurability": 0,
+            "MaxDurability": 0,
+            "Filename": null,
+            "ItemName": "Potion",
+            "ItemType": "Consumable",
+            "Description": "A serviceable alchemical remedy for wounds in battle.",
+            "Pricing": {
+              "Cost": 200,
+              "SaleValue": 50
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_43"
+            }
+          },
+          "2": {
+            "CanHeal": true,
+            "ActionToExecute": null,
+            "CurrentDurability": 0,
+            "MaxDurability": 0,
+            "Filename": null,
+            "ItemName": "Potion",
+            "ItemType": "Consumable",
+            "Description": "A serviceable alchemical remedy for wounds in battle.",
+            "Pricing": {
+              "Cost": 200,
+              "SaleValue": 50
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_43"
+            }
+          }
+        },
+        "ValuablesInInventory": {},
+        "UnitPrefabPath": null
+      },
+      "Name": "Penelope",
+      "Age": 21,
+      "Appearance": "",
+      "BornIn": "",
+      "Occupation": "Archer",
+      "Personality": "",
+      "Gender": null,
+      "Species": "Human",
+      "Skills": [],
+      "Fears": [],
+      "InnerConflict": "",
+      "Motivation": "",
+      "FurtherDetails": null
+    },
+    {
+      "UnitData": {
+        "UnitType": "Unmounted",
+        "WalkSpeed": 5.29,
+        "RunSpeed": 8.0,
+        "MoveAnimationSpeed": 1.6,
+        "Experience": 0,
+        "Stats": {
+          "Movement": {
+            "Base Value": 15,
+            "Growth Rate": 0
+          },
+          "MaxHealth": {
+            "Base Value": 25,
+            "Growth Rate": 0
+          },
+          "Strength": {
+            "Base Value": 4,
+            "Growth Rate": 0
+          },
+          "Speed": {
+            "Base Value": 12,
+            "Growth Rate": 0
+          },
+          "Skill": {
+            "Base Value": 10,
+            "Growth Rate": 0
+          },
+          "Magic": {
+            "Base Value": 15,
+            "Growth Rate": 0
+          },
+          "Luck": {
+            "Base Value": 8,
+            "Growth Rate": 0
+          },
+          "Resistance": {
+            "Base Value": 11,
+            "Growth Rate": 0
+          },
+          "Defense": {
+            "Base Value": 6,
+            "Growth Rate": 0
+          },
+          "Weight": {
+            "Base Value": 11,
+            "Growth Rate": 0
+          },
+          "Constitution": {
+            "Base Value": 11,
+            "Growth Rate": 0
+          },
+          "Morale": {
+            "Base Value": 0,
+            "Growth Rate": 0
+          }
+        },
+        "StatusEffects": [
+          {
+            "Type": 0,
+            "ToAlly": true,
+            "Radius": 5,
+            "values": {
+              "BonusValue": 0.15,
+              "OtherStat": 0,
+              "Ratio": 0.0
+            },
+            "CalculationMode": 0
+          },
+          {
+            "Type": 0,
+            "ToAlly": false,
+            "Radius": 10,
+            "values": {
+              "BonusValue": -0.1,
+              "OtherStat": 0,
+              "Ratio": 0.0
+            },
+            "CalculationMode": 0
+          }
+        ],
+        "WeaponProfiency": {},
+        "MagicProfiency": {
+          "Elemental": "D",
+          "Divination": "D",
+          "Ceremonial": "D",
+          "Hedge": "D"
+        },
+        "WeaponsInInventory": {
+          "0": {
+            "WeaponType": "Grimiore",
+            "DescriptionBroken": "You've exhausted usage of this spell for this battle. You need time to recharge your spiritual energy.",
+            "MeleeSound": "",
+            "RequiredRank": "D",
+            "Weight": 2,
+            "CurrentDurability": 25,
+            "MaxDurability": 25,
+            "AttackRange": {
+              "MinRange": 1,
+              "MaxRange": 2
+            },
+            "Stats": {},
+            "BrokenStats": {},
+            "Filename": null,
+            "ItemName": "Air Slash",
+            "ItemType": "Weapon",
+            "Description": "A beginner's guide to elemental magic focusing on the element of Air.",
+            "Pricing": {
+              "Cost": 1200,
+              "SaleValue": 600
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_71"
+            }
+          }
+        },
+        "ConsumablesInInventory": {
+          "1": {
+            "CanHeal": true,
+            "ActionToExecute": null,
+            "CurrentDurability": 0,
+            "MaxDurability": 0,
+            "Filename": null,
+            "ItemName": "Potion",
+            "ItemType": "Consumable",
+            "Description": "A serviceable alchemical remedy for wounds in battle.",
+            "Pricing": {
+              "Cost": 200,
+              "SaleValue": 50
+            },
+            "Icon": {
+              "AtlasPath": "Assets/_Sprites/GUI/UI Materials/Icons/assorted icons/heartamulet.spriteatlas",
+              "SpriteName": "heartamulet_43"
+            }
+          }
+        },
+        "ValuablesInInventory": {},
+        "UnitPrefabPath": null
+      },
+      "Name": "Zenovia",
+      "Age": 27,
+      "Appearance": "",
+      "BornIn": "",
+      "Occupation": "Mage",
+      "Personality": "",
+      "Gender": null,
+      "Species": "Human",
+      "Skills": [],
+      "Fears": [],
+      "InnerConflict": "",
+      "Motivation": "",
+      "FurtherDetails": null
+    },
+    {
+      "UnitData": null,
+      "Name": "Harold",
+      "Age": 28,
+      "Appearance": "",
+      "BornIn": "",
+      "Occupation": "Soldier",
+      "Personality": "",
+      "Gender": null,
+      "Species": "Human",
+      "Skills": [],
+      "Fears": [],
+      "InnerConflict": "",
+      "Motivation": "",
+      "FurtherDetails": null
+    },
+    {
+      "UnitData": null,
+      "Name": "Christian",
+      "Age": 0,
+      "Appearance": "",
+      "BornIn": "",
+      "Occupation": "",
+      "Personality": "",
+      "Gender": null,
+      "Species": "Human",
+      "Skills": [],
+      "Fears": [],
+      "InnerConflict": "",
+      "Motivation": "",
+      "FurtherDetails": null
+    }
+  ]
+}

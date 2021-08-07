@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("goa",["Property"],[["Goal",,[["GridPath",,,,0,"File:Core/Map/GridPath.cs:GridPath.Goal","CSharpClass:GridPath:Goal"]]]]);

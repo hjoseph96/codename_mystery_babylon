@@ -1,6 +1,5 @@
 using System;
-using System.Linq;
-using System.Text.RegularExpressions;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -23,7 +22,6 @@ public class Battler : SerializedMonoBehaviour
 
     protected Animator Animator;
 
-    private PostEffectMaskRenderer _pixelateShaderRenderer;
     [FoldoutGroup("Animation Overrides")]
     public Dictionary<string, int> AnimationsAsHashes = new Dictionary<string, int>();
     
@@ -41,14 +39,9 @@ public class Battler : SerializedMonoBehaviour
             AnimationsAsHashes.Add(s.state.name, Animator.StringToHash(s.state.name));
     }
     #endif
-    
-    [FoldoutGroup("Animation Overrides")]
-    [SerializeField] private Dictionary<string, float> animationRotations = new Dictionary<string, float>();
-    private float _defaultRotation;
-
 
     [FoldoutGroup("Audio")]
-    [SoundGroupAttribute] public string hitImpactSound; 
+    [SoundGroup] public string hitImpactSound; 
 
 
     private bool _readyToFight;
@@ -59,8 +52,6 @@ public class Battler : SerializedMonoBehaviour
     [ShowInInspector] public bool IsReadyToFight { get { return _readyToFight; } }
     [FoldoutGroup("Battler State")]
     [ReadOnly] protected Battler targetBattler;
-    [FoldoutGroup("Battler State")]
-    [ReadOnly] private int _timesHit = 0;
     [FoldoutGroup("Battler State")]
     [ReadOnly] public int DamageDealt;
     [FoldoutGroup("Battler State")]
@@ -75,47 +66,68 @@ public class Battler : SerializedMonoBehaviour
 
     protected bool currentlyAttacking = false;
     public bool IsFinished { get; private set; }
-    private string _previousAnim;
 
-    private List<Renderer> _renderers;
-    private bool _isDead = false;
+    protected bool isAnimating;
+    public bool IsAnimating { get => isAnimating; }
+    
+
+    protected string previousAnim;
+    protected Vector2 startingPoint;
+
+    private SpriteRenderer _renderer;
+    private Material _allInOneMat;
+
+    protected bool _isDead = false;
+    public bool IsDead { get => _isDead; }
+
+    public bool _hasDied = false;
+
     private bool _startedDissolving = false;
     private float _dissolveStartTime;
     [SerializeField] private float _dissolveSpeed = 0.68f;
 
 
-    private void Awake() =>_renderers = new List<Renderer>(GetComponentsInChildren<Renderer>());
 
-    public virtual void Setup(Unit unit, BattleHUD hud, Dictionary<string, bool> battleResults, PostEffectMask pixelShaderMask)
+    public virtual void Setup(Unit unit, BattleHUD hud, Dictionary<string, bool> battleResults)
     {
-        Unit = unit;
-        HUD = hud;
-        BattleResults = battleResults;
+        Unit            = unit;
+        HUD             = hud;
+        BattleResults   = battleResults;
 
-        _pixelateShaderRenderer = GetComponent<PostEffectMaskRenderer>();
-        _pixelateShaderRenderer.mask = pixelShaderMask;
-        _defaultRotation = transform.eulerAngles.y;
-        Animator = GetComponent<Animator>();
-        currentAttackIndex = 0;
+        Animator        = GetComponent<Animator>();
+        Animator.speed = GlobalVariables.Instance.gameSpeed;
+        _renderer       = GetComponent<SpriteRenderer>();
+        _allInOneMat    = _renderer.material;
 
         _state = BattlerState.Idle;
 
+        currentAttackIndex = 0;
         SetupAttacks();
 
         HUD.Populate(Unit);
 
+        startingPoint = transform.position;
+
         Unit.UponDeath  += delegate(Unit unit) {
             _state = BattlerState.Dead;
+            IsFinished = true;
+            OnAttackComplete?.Invoke();
         };
     }
 
     public bool Attack(Battler target)
     {
         targetBattler = target;
-        
+
+        if (isAnimating)
+        {
+            StartCoroutine(WaitUntilDoneAnimating(target));
+            return false;
+        }
+
         if (Unit.CanAttack(target.Unit))
         {
-            if (_state == BattlerState.Dead)
+            if (_state == BattlerState.Dead || target.IsDead)
                 return false;
             
             _state = BattlerState.Attacking;
@@ -124,10 +136,20 @@ public class Battler : SerializedMonoBehaviour
         } 
         else {
             if (State != BattlerState.Dead)
-                FinishFighting();
+                StartCoroutine(WaitForReaction(FinishFighting));
             
             return false;
         }
+    }
+
+    private IEnumerator WaitUntilDoneAnimating(Battler target)
+    {
+        yield return new WaitUntil(() => !isAnimating);
+
+        if (!target.IsDead)
+            Attack(target);
+        else
+            FinishFighting();
     }
 
     // Update is called once per frame
@@ -135,7 +157,8 @@ public class Battler : SerializedMonoBehaviour
     {
         if (Animator == null)
             return;
-         
+        
+
         switch(_state)
         {
             case BattlerState.Idle:
@@ -144,7 +167,7 @@ public class Battler : SerializedMonoBehaviour
                 break;
             case BattlerState.Attacking:
                 // Only attack from Idle Animation
-                if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !IsFinished)
+                if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !IsFinished && !HUD.IsCalculating)
                     ProcessAttackingState();
                 
                 break;
@@ -160,8 +183,15 @@ public class Battler : SerializedMonoBehaviour
                 ProcessDeadState();
                 break;
             default:
-                throw new System.Exception("Unsupported BattlerState: " + _state);
+                throw new Exception("Unsupported BattlerState: " + _state);
         }
+
+        var animInfo = Animator.GetCurrentAnimatorStateInfo(0);
+        if (animInfo.IsName("Idle") || animInfo.IsName("Dead"))
+            isAnimating = false;
+        else
+            isAnimating = true;
+
     }
 
     protected virtual void ProcessAttackingState()
@@ -169,29 +199,17 @@ public class Battler : SerializedMonoBehaviour
         if (!currentlyAttacking)
         {
             var attackType = GetAttackType();
-            string chosenAnimation;
 
             switch(attackType)
             {
                 case AttackType.Normal:
-                    chosenAnimation = GetAnimVariation(NormalAttackAnims());
-                    PlayAnimation(chosenAnimation);
+                    PlayAnimation("Attack");
                     currentlyAttacking = true;
 
                     break;
                 case AttackType.Critical:
-                    chosenAnimation = GetAnimVariation(CriticalAttackAnims());
-                    PlayAnimation(chosenAnimation);
+                    PlayAnimation("Critical Attack");
                     currentlyAttacking = true;
-
-                    break;
-                case AttackType.Multiple:
-                    if (!IsMultiAttacking())
-                    {
-                        chosenAnimation = GetAnimVariation(DoubleAttackAnims());
-                        PlayAnimation(chosenAnimation);
-                        currentlyAttacking = true;
-                    }
 
                     break;
             }
@@ -200,79 +218,41 @@ public class Battler : SerializedMonoBehaviour
 
     protected virtual void ProcessDeadState()
     {
-        if (!_isDead)
+        if (IsDead && !_hasDied)
         {
             PlayAnimation("Death");
-            _isDead = true;
+            _hasDied = true;
             IsFinished = false;
         }
 
         if (_startedDissolving)
         {
-            float dissolveEnd = 0.57f;
-            foreach(Renderer renderer in _renderers)
+            float t = (Time.time - _dissolveStartTime) / _dissolveSpeed;
+            var fadeAmount = Mathf.SmoothStep(0, 1, t);
+
+            _allInOneMat.SetFloat("_FadeAmount", fadeAmount);
+
+            if (fadeAmount == 1)
             {
-                float dissolveAmount = AnimationCurve.Linear(_dissolveStartTime, 0f, _dissolveStartTime + _dissolveSpeed, dissolveEnd + 0.01f).Evaluate(Time.time);
-
-                renderer.material.SetFloat("_DissolveCutoff", dissolveAmount);
-
-                if (dissolveAmount >= dissolveEnd)
-                    renderer.enabled = false;
+                _startedDissolving = false;
+                Destroy(this.gameObject);
             }
         }
-
-        if (_renderers.All(renderer => !renderer.enabled ))
-        {
-            _startedDissolving = false;
-            IsFinished = true;
-        }
     }
 
-    protected string GetAnimVariation(List<string> options)
-    {
-        var animVariations = new List<String>(options);
-        if (options.Contains(_previousAnim))    
-            animVariations.Remove(_previousAnim);
-        
-        int choice = UnityEngine.Random.Range(0, animVariations.Count -1);
-        
-        return animVariations[choice];
-    }
-
-    protected void PlayAnimation(string stateName)
+    protected virtual void PlayAnimation(string stateName, bool replay = false)
     {
         try
         {
             Animator.Play(AnimationsAsHashes[stateName]);
-            _previousAnim = stateName;
 
-            // Override Rotation for certain anims
-            if (animationRotations.Keys.Contains(stateName))
-                SetRotation(animationRotations[stateName]);
-            else if (transform.rotation.y != _defaultRotation)
-                SetRotation(_defaultRotation);
+            previousAnim = stateName;
         }
         catch (Exception e)
         {
-
-            Debug.LogError("Exception In Battler.cs > PlayAnimation with StateName " + stateName + " : " + e.Message);
+            Debug.LogError($"[Battler#{this.gameObject.name}]  PlayAnimation with StateName {stateName}: {e.Message}");
         }
        
-    }
-
-    private void SetRotation(float yRotation)
-    {
-        Vector3 newRotation = new Vector3(
-            transform.rotation.x, yRotation, transform.rotation.z
-        );
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotation), 25f * Time.smoothDeltaTime);
-    }
-
-    protected bool IsMultiAttacking()
-    {
-        var multiAttacks = DoubleAttackAnims();
-
-        return multiAttacks.Any( (anim) => Animator.GetCurrentAnimatorStateInfo(0).IsName(anim) );
     }
 
     // TODO, support multiple attacks. right now, only hardcoded supports 2, 
@@ -294,9 +274,6 @@ public class Battler : SerializedMonoBehaviour
 
     protected AttackType GetAttackType()
     {
-        if (_attacks.Count >= 2)
-            return AttackType.Multiple;
-        
         if (CurrentAttack.IsCritical)
             return AttackType.Critical;
         
@@ -305,13 +282,11 @@ public class Battler : SerializedMonoBehaviour
     
     public void HitReaction()
     {
-        var chosenAnimation = GetAnimVariation(HitReactionAnims());
-        PlayAnimation(chosenAnimation);
+        PlayAnimation("Hit Reaction", true);
         
         MasterAudio.PlaySound3DAtTransform(hitImpactSound, CampaignManager.AudioListenerTransform);
 
         _state = BattlerState.HitReaction;
-        _timesHit += 1;
     }
 
 
@@ -321,13 +296,12 @@ public class Battler : SerializedMonoBehaviour
         _state = BattlerState.Dodging;
     }
 
-    private void StartBlocking()
+    public void StartBlocking()
     {
-        PlayAnimation("Start Blocking");
+        PlayAnimation("Block");
         _state = BattlerState.Blocking;
     }
 
-    private void BlockImpact() => PlayAnimation("Block Impact");
 
     private void ReceiveDamage(int damageAmount)
     {
@@ -340,24 +314,31 @@ public class Battler : SerializedMonoBehaviour
 
     protected virtual void NextAttack()
     {
-        bool targetDead = CurrentAttack.Landed && CurrentAttack.Damage(targetBattler.Unit) > targetBattler.Unit.CurrentHealth;
+        bool targetDead = CurrentAttack.Landed && CurrentAttack.Damage(targetBattler.Unit) >= targetBattler.Unit.CurrentHealth;
         if (targetDead || currentAttackIndex == _attacks.Count - 1)
-            FinishFighting();
+        {
+            BackToIdle();
+            StartCoroutine(WaitForReaction(FinishFighting));
+        }
         else
             currentAttackIndex += 1;
         
         currentlyAttacking = false;
     }
 
+    protected IEnumerator WaitForReaction(Action onComplete)
+    {
+        yield return new WaitUntil(() => !targetBattler.IsAnimating);
+
+        onComplete?.Invoke();
+    }
+
     protected void FinishFighting()
     {
         _state = BattlerState.Idle;
-            
-        if (targetBattler.State == BattlerState.Blocking)
-            targetBattler.BackToIdle();
 
         IsFinished = true;
-        OnAttackComplete.Invoke();
+        OnAttackComplete?.Invoke();
     }
 
     protected void ProcessAttack()
@@ -371,12 +352,15 @@ public class Battler : SerializedMonoBehaviour
                 if (attackDamage <= targetBattler.Unit.CurrentHealth)
                     DamageDealt += attackDamage;
                 else
+                {
+                    targetBattler._isDead = true;
                     DamageDealt += targetBattler.Unit.CurrentHealth;
+                }
                     
                 targetBattler.ReceiveDamage(attackDamage);
             }   
             else
-                targetBattler.BlockImpact();
+                targetBattler.StartBlocking();
         }
         else
             targetBattler.Dodge();
@@ -390,6 +374,14 @@ public class Battler : SerializedMonoBehaviour
         MasterAudio.PlaySound3DFollowTransform(Unit.EquippedWeapon.MeleeSound, CampaignManager.AudioListenerTransform);
     }
 
+    private void TriggerTargetHitReaction()
+    {
+        if (CurrentAttack.Landed)
+            targetBattler.HitReaction();
+        else
+            targetBattler.Dodge();
+    }
+
     private void StartDissolving()
     {
         _startedDissolving = true;
@@ -401,67 +393,8 @@ public class Battler : SerializedMonoBehaviour
     private void BeginAttack()
     {
         currentlyAttacking = true;
-
-        var attackDamage = CurrentAttack.Damage(targetBattler.Unit);
-
-        if (attackDamage == 0)
-            targetBattler.StartBlocking();
+        
     }
     #endregion
 
-
-    // ******************************************************
-    //   Animation Variation Names                         ||
-    // ******************************************************
-
-
-    protected List<string> NormalAttackAnims()
-    {
-        var regexp = new Regex(@"^Attack \d\d");
-        var normalAttackAnimNames = new List<string>();
-
-        foreach(string animName in AnimationsAsHashes.Keys)
-            if (regexp.Match(animName).Success)
-                normalAttackAnimNames.Add(animName);
-
-        return normalAttackAnimNames;
-    }
-
-    protected List<string> CriticalAttackAnims()
-    {
-        var regexp = new Regex(@"^Critical Attack \d\d");
-        var critAttackAnimNames = new List<string>();
-
-        foreach(string animName in AnimationsAsHashes.Keys)
-            if (regexp.Match(animName).Success)
-                critAttackAnimNames.Add(animName);
-
-        return critAttackAnimNames;
-    }
-
-    
-    protected List<string> DoubleAttackAnims()
-    {
-        var regexp = new Regex(@"^Double Attack \d\d");
-        var doubleAttackAnimNames = new List<string>();
-
-        foreach(string animName in AnimationsAsHashes.Keys)
-            if (regexp.Match(animName).Success)
-                doubleAttackAnimNames.Add(animName);
-
-        return doubleAttackAnimNames;
-    }
-
-    
-    protected List<string> HitReactionAnims()
-    {
-        var regexp = new Regex(@"^Damage \d\d");
-        var hitReactionAnimNames = new List<string>();
-
-        foreach(string animName in AnimationsAsHashes.Keys)
-            if (regexp.Match(animName).Success)
-                hitReactionAnimNames.Add(animName);
-
-        return hitReactionAnimNames;
-    }
 }

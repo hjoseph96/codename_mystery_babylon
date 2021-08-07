@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:GUI/_Managers/CellHighlightCanvas.cs","CellHighlightCanvas.cs");NDSummary.OnSummaryLoaded("File:GUI/_Managers/CellHighlightCanvas.cs",[["C#","CSharp"]],[["Classes","Class"]],[[2897,0,0,"CellHighlightCanvas","CellHighlightCanvas"]]);

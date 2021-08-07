@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_du",["Variable"],[["_durability",,[["ItemSlot",,,,0,"File:GUI/UnitInventory/ItemSlot.cs:ItemSlot._durability","CSharpClass:ItemSlot:_durability"]]],["_duration",,[["MiniHealthBar",,,,0,"File:GUI/MiniHealthBar.cs:MiniHealthBar._duration","CSharpClass:MiniHealthBar:_duration"]]]]);

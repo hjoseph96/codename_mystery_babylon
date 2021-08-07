@@ -14,7 +14,7 @@ public class EntityReference : SerializedMonoBehaviour
 
     [SerializeField, ShowIf("EntityTypeAssigned"), ValueDropdown("GetEntityNames")] private string _EntityName;
     public string EntityName { get => _EntityName; }
-
+    public string EntityTechnicalName { get =>  EntityName.ToLower() + "_" + (EntityType == EntityType.PlayableCharacter ? "pc" : "npc"); }
 
     private bool EntityTypeAssigned() => _EntityType != EntityType.None;
     private List<string> GetEntityNames()
@@ -56,22 +56,23 @@ public class EntityReference : SerializedMonoBehaviour
         }
     }
 
-    public Vector3 GetSpeechBubblePos(Direction direction = Direction.None)
+    public Transform GetSpeechBubblePos(Direction direction = Direction.None)
     {
         if (GetComponent<ISpeakableEntity>() == null)
         {
             Debug.LogWarning("EntityReference has no Speakable components, but is trying to access it! Ensure a component utilizes interface *ISpeakableEntity*");
-            return Vector3.zero;
+            return null;
         }
         var entityInfo = GetComponent<ISpeakableEntity>().GetEntityInfo();
         
-        if(bubblePositionController == null)
+        if (bubblePositionController == null)
         {
             bubblePositionController = GetComponentInChildren<BubblePositionController>();
+
             if (bubblePositionController == null)
             {
                 Debug.LogWarning("Object is missing BubblePositionController, Verify object is spawned with unit/Set On Prefab");
-                return Vector3.zero;
+                return null;
             }
         }
         return bubblePositionController.GetSpeechBubblePos(entityInfo, direction);

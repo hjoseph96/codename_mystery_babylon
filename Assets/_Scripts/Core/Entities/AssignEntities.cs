@@ -11,6 +11,12 @@ public class AssignEntities : MonoBehaviour, IInitializable
             if (entityRef.AssignedEntity == null)
                 entityRef.SetEntityReference();
 
+            if (entityRef.tag == "Player" || entityRef.tag == "Main Player")
+            {
+                entityRef.transform.parent = null;
+                DontDestroyOnLoad(entityRef);
+            }
+
             EntityManager.Instance.AddEntityReference(entityRef);
         }
     }

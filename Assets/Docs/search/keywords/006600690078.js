@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("fix",["Function"],[["FixedUpdate",,[["SpriteCharacterControllerExt",,,,0,"File:Core/Character_Controllers/SpriteCharacterControllerExt.cs:SpriteCharacterControllerExt.FixedUpdate","CSharpClass:SpriteCharacterControllerExt:FixedUpdate"]]]]);

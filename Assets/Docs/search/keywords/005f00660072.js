@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_fr",["Variable"],[["_friendlyBattler",,[["CombatManager",,,,0,"File:Core/Campaign/CombatManager.cs:CombatManager._friendlyBattler","CSharpClass:CombatManager:_friendlyBattler"]]]]);

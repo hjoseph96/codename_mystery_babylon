@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using Sirenix.OdinInspector;
+
 public class HealAlly : HealBehavior
 {
     [ReadOnly] public new readonly AIActionType ActionType = AIActionType.Heal;

@@ -13,11 +13,13 @@ public class UserInput : MonoBehaviour, IInitializable
         KeyCode.E,
         KeyCode.Escape,
         KeyCode.Space,
+        KeyCode.Escape
     };
 
+    [SerializeField]
     public static UserInput Instance;
 
-
+    [SerializeField]
     public IInputTarget InputTarget
     {
         get => _inputTargets.Count > 0 ? _inputTargets[0] : null;
@@ -29,8 +31,6 @@ public class UserInput : MonoBehaviour, IInitializable
                 _inputTargets.Add(value);
         }
     }
-
-    public IEnumerable<IInputTarget> AllInputTargets => _inputTargets;
 
     private List<IInputTarget> _inputTargets = new List<IInputTarget>();
     private List<IInputTarget> _currentInputTargets = new List<IInputTarget>();
@@ -60,8 +60,6 @@ public class UserInput : MonoBehaviour, IInitializable
         {
             if (Input.GetKeyDown(keyCode))
             {
-                if (keyCode == KeyCode.Z)
-                    Debug.Log("Z Pressed in user Input");
                 _inputData.KeyCode = keyCode;
                 _inputData.KeyState = KeyState.Down;
                 break;
@@ -73,6 +71,11 @@ public class UserInput : MonoBehaviour, IInitializable
                 _inputData.KeyState = KeyState.Up;
                 break;
             }
+        }
+
+        for(int i = 0; i < _inputTargets.Count; i++)
+        {
+            //Debug.Log(_inputTargets[i].ToString());
         }
 
         _currentInputTargets.Clear();

@@ -16,10 +16,16 @@ public class TradingInventoryMenu : UnitInventoryMenu
         UserInput.Instance.InputTarget = GridCursor.Instance;
     }
 
+    public void UpdateInventory(Unit target)
+    {
+        Debug.Assert(target != null);
+        Show(target);
+        UserInput.Instance.InputTarget = GridCursor.Instance;
+    }
+
     public override void ProcessInput(InputData input)
     {
-        if (input.MovementVector != Vector2Int.zero)
-            SelectOption(MoveSelection(input.MovementVector));
+        HandleDirectionalMovement(input);
 
         if (input.KeyState != KeyState.Up)
             return;

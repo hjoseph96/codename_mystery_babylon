@@ -16,8 +16,20 @@ public class RetreatAction : BaseAction
 
     public override void Perform(IContext context)
     {
+        Debug.Log($"{AIAgent.gameObject.name} Decided to Retreat.");
+
         var canSeeAllies = AIAgent.AlliesWithinSight().Count > 0;
         if (canSeeAllies)
-            _retreatStrategies["RetreatToFarthestAlly"].Execute();
+        {
+            var behaviorToExecute = _retreatStrategies["RetreatToFarthestAlly"];
+
+            AIAgent.SetCurrentBehavior(behaviorToExecute);
+
+            behaviorToExecute.Execute();
+        }
+        else
+        {
+            AIAgent.TookAction();
+        }
     }
 }

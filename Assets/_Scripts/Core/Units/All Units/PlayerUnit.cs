@@ -1,6 +1,9 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Animancer;
 
 public class PlayerUnit : Unit
 {
@@ -10,12 +13,22 @@ public class PlayerUnit : Unit
 
     public override Vector2Int PreferredDestination { get => CampaignManager.Instance.PlayerDestination; }
 
+
+    private Unit atkTarget;
+    private AnimationEventReceiver _OnAttackLanded;
+
     public override void Init()
     {
         base.Init();
     }
 
-    public List<AIUnit> Enemies()
+    private void Update()
+    {
+        if (isDodging)
+            StartCoroutine(DodgeMovement());
+    }
+
+        public List<AIUnit> Enemies()
     {
         var enemies = new List<AIUnit>();
 
@@ -37,4 +50,45 @@ public class PlayerUnit : Unit
         base.OnDrawGizmos();
     }
 
+    public override void GainExperience(int amount = 100)
+    {
+        base.GainExperience(amount);
+    }
+
+    // Artur Specific
+    public void DisplayAttackAnimation(Unit target)
+    {
+        atkTarget = target;
+
+        var lookingDown = LookDirection.y < 0;
+        if (!lookingDown)
+            _renderer.sortingOrder = atkTarget.OrderInLayer + 1;
+
+        var animations = _attackAnimations.CurrentAnimation();
+
+        var clip = animations.GetClip(LookDirection);
+        var state = _animancer.Play(clip);
+
+        state.Events.OnEnd += delegate ()
+        {
+            SetIdle();
+        };
+
+
+        _OnAttackLanded.Set(state, HitReaction());
+    }
+
+    private void OnHitLanded(AnimationEvent animationEvent)
+    {
+        _OnAttackLanded.SetFunctionName("OnHitLanded");
+        _OnAttackLanded.HandleEvent(animationEvent);
+    }
+
+    private Action<AnimationEvent> HitReaction()
+    {
+        return delegate (AnimationEvent animationEvent)
+        {
+            atkTarget.TakeDamage(atkTarget.CurrentHealth, false, true);
+        };
+    }
 }

@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Units/AI_Behaviors/AIGroupMovementMode.cs",{1548:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype1548\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> AIGroupMovementMode</div></div></div>"});

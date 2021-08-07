@@ -19,6 +19,18 @@ public class Consumable : Item
         CurrentDurability   = source.CurrentDurability;
     }
 
+    /// <summary>
+    /// Needed to return copies of items for replacement from convoy when stacked
+    /// </summary>
+    /// <returns></returns>
+    public Consumable CopyData()
+    {
+        var consumable = new Consumable(_source);
+        consumable.CurrentDurability = CurrentDurability;
+        consumable.amount = 1;
+        return consumable;
+    }
+
     public override void UseItem()
     {
         if (CurrentDurability == 1)

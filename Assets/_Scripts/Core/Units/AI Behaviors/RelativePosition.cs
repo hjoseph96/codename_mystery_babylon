@@ -21,7 +21,7 @@ public class RelativePosition
         }
     }
 
-    public GridPath Path;
+    protected GridPath Path;
 
     public RelativePosition(Unit _unit, Vector2Int _target)
     {
@@ -33,10 +33,17 @@ public class RelativePosition
 
     public Vector2Int GetPointInPathOrDefault(float normalizedDistance)
     {
-        if (Position == Target)
+        if (Position == Target || Path == null)
             return Position;
 
         return Path.GetPointInPath(normalizedDistance);
     }
 
+    public int PathLength()
+    {
+        if (Path == null)
+            return 0;
+
+        return Path.Length;
+    }
 }

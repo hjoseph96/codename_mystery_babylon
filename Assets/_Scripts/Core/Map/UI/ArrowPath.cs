@@ -26,7 +26,15 @@ public class ArrowPath : SerializedMonoBehaviour
     private ArrowSprite Tail => _instantiatedObjects[0];
     private int Length => _instantiatedObjects.Count;
     private Vector2Int LastPosition => _positions[_positions.Count - 1];
-    private int LastTravelCost => _travelCosts[_travelCosts.Count - 1];
+    private int LastTravelCost
+    {
+        get
+        {
+            if (_travelCosts.Count > 0)
+                return _travelCosts[_travelCosts.Count - 1];
+            else return 0;
+        }
+    }
 
     private WorldGrid _worldGrid;
 
@@ -89,20 +97,20 @@ public class ArrowPath : SerializedMonoBehaviour
         }
 
         // Calculate new cost as last path point cost + new cell cost
-        var newCost = LastTravelCost + _worldGrid[LastPosition].GetTravelCost(position, _unit);
+        var newCost = LastTravelCost + _worldGrid[LastPosition].GetTravelCost(position, _unit.SortingLayerId, _unit.UnitType);
 
         // If we can replace two points with one diagonal
         if (Length > 1 && (position - _positions[Length - 2]).sqrMagnitude == 2)
         {
             var diagonalDirection = GridUtility.GetDirection(_positions[Length - 2], position, false, true);
             if (
-                (_worldGrid[position].GetStairsOrientation(_unit) == StairsOrientation.RightToLeft || 
-                  _worldGrid[_positions[Length - 2]].GetStairsOrientation(_unit) == StairsOrientation.RightToLeft) 
+                (_worldGrid[position].GetStairsOrientation(_unit.SortingLayerId) == StairsOrientation.RightToLeft || 
+                  _worldGrid[_positions[Length - 2]].GetStairsOrientation(_unit.SortingLayerId) == StairsOrientation.RightToLeft) 
                  &&
                 (diagonalDirection == Direction.LeftUp || diagonalDirection == Direction.RightDown)
                 ||
-                (_worldGrid[position].GetStairsOrientation(_unit) == StairsOrientation.LeftToRight || 
-                  _worldGrid[_positions[Length - 2]].GetStairsOrientation(_unit) == StairsOrientation.LeftToRight) 
+                (_worldGrid[position].GetStairsOrientation(_unit.SortingLayerId) == StairsOrientation.LeftToRight || 
+                  _worldGrid[_positions[Length - 2]].GetStairsOrientation(_unit.SortingLayerId) == StairsOrientation.LeftToRight) 
                  &&
                  (diagonalDirection == Direction.LeftDown || diagonalDirection == Direction.RightUp)
                 )
@@ -117,7 +125,7 @@ public class ArrowPath : SerializedMonoBehaviour
 
         // If we can't move to the desired position (exit/entrance is blocked) or direction is None
         if (performChecks && 
-            (!_worldGrid[LastPosition].CanMove(position, _unit) || 
+            (!_worldGrid[LastPosition].CanMove(position, _unit.SortingLayerId, _unit.UnitType) || 
              directionNext == Direction.None ||
              !GridUtility.GetNeighboursOffsets(_unit.SortingLayerId, LastPosition).Contains(directionNext.ToVector())))
         {
@@ -200,10 +208,10 @@ public class ArrowPath : SerializedMonoBehaviour
                 var cell1 = _worldGrid[_positions[i + 1]];
                 var cell2 = _worldGrid[_positions[i + 2]];
 
-                return cell0.CanMove(cellNew, _unit) &&
-                       cell0.GetTravelCost(cellNew, _unit) <= cell1.GetTravelCost(cell2, _unit) &&
-                       cellNew.CanMove(cell2, _unit) &&
-                       cellNew.GetTravelCost(cell2, _unit) <= cell0.GetTravelCost(cell1, _unit);
+                return cell0.CanMove(cellNew, _unit.SortingLayerId, _unit.UnitType) &&
+                       cell0.GetTravelCost(cellNew, _unit.SortingLayerId, _unit.UnitType) <= cell1.GetTravelCost(cell2, _unit.SortingLayerId, _unit.UnitType) &&
+                       cellNew.CanMove(cell2, _unit.SortingLayerId, _unit.UnitType) &&
+                       cellNew.GetTravelCost(cell2, _unit.SortingLayerId, _unit.UnitType) <= cell0.GetTravelCost(cell1, _unit.SortingLayerId, _unit.UnitType);
             }
 
             return false;
@@ -288,7 +296,7 @@ public class ArrowPath : SerializedMonoBehaviour
     {
         var positions = new List<Vector2Int>(_positions);
         positions.RemoveAt(0);
-        var travelCost = _positions.Sum(pos => _worldGrid[pos].GetTravelCost(_unit)); 
+        var travelCost = _positions.Sum(pos => _worldGrid[pos].GetTravelCost(_unit.SortingLayerId, _unit.UnitType)); 
 
         return new GridPath(positions, travelCost);
     }

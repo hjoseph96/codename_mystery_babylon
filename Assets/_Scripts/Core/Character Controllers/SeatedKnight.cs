@@ -4,11 +4,20 @@ using UnityEngine;
 
 using Animancer;
 using Sirenix.OdinInspector;
-using System;
+using Sirenix.Serialization;
 
 public class SeatedKnight : MonoBehaviour, ISpeakableEntity
 {
+    [FoldoutGroup("Basic Properties")]
     [SerializeField] private bool _wearingHelmet;
+
+    [FoldoutGroup("Basic Properties")]
+    [SerializeField, ValueDropdown("ValidDirections")] private Direction _startingDirection;
+
+    private List<Direction> ValidDirections()
+    {
+        return new List<Direction> { Direction.Up, Direction.Left, Direction.Down, Direction.Right };
+    }
 
     // With Helmet
     [FoldoutGroup("Animations")]
@@ -37,20 +46,13 @@ public class SeatedKnight : MonoBehaviour, ISpeakableEntity
     [SerializeField] private DirectionalAnimationSet _Sitting_Helmetless_Turn_Head_Up;
 
 
-    [InfoBox("Only Left, Right, Up and Down are supported"), ShowIf("InvalidDirection")]
-    [SerializeField]
-    public Direction _startingDirection;
+    
 
     /// <summary>
     /// Note: player must have SpriteCharacterControllerExt as of current iteration
     /// </summary>
     private GameObject player;
 
-    private bool InvalidDirection()
-    {
-        var supportedDirections = new List<Direction> { Direction.Up, Direction.Left, Direction.Down, Direction.Right };
-        return !supportedDirections.Contains(_startingDirection);
-    }
 
     private AnimancerComponent _Animancer;
     
@@ -68,16 +70,20 @@ public class SeatedKnight : MonoBehaviour, ISpeakableEntity
         _facingDirection = _startingDirection;
 
         _attachedDialogue = GetComponent<MapDialogue>();
-        _attachedDialogue.OnDialogueBegin += delegate (GameObject speakingTo)
-       {
-           LookAt(speakingTo.transform.position);
-           if (speakingTo.CompareTag("Player"))
+
+        if (_attachedDialogue != null)
+        {
+            _attachedDialogue.OnDialogueBegin += delegate (GameObject speakingTo)
            {
-               player = speakingTo;
-               player.GetComponent<SpriteCharacterControllerExt>().OnPositionChanged += UpdateFacing;
-           }
-       };
-        _attachedDialogue.OnDialogueEnd += ResetFacing;
+               LookAt(speakingTo.transform.position);
+               if (speakingTo.CompareTag("Player"))
+               {
+                   player = speakingTo;
+                   player.GetComponent<SpriteCharacterControllerExt>().OnPositionChanged += UpdateFacing;
+               }
+           };
+            _attachedDialogue.OnDialogueEnd += ResetFacing;
+        }
 
         if (_wearingHelmet)
             Play(_Sitting);
@@ -91,8 +97,6 @@ public class SeatedKnight : MonoBehaviour, ISpeakableEntity
             _attachedDialogue.OnDialogueEnd -= ResetFacing;
     }
 
-
-    [Button("Test Facing Animations")]
     public void LookAt(Vector3 position)
     {
        _Facing = DirectionUtility.GetFacing(transform.position, position);

@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:GuardFlank","GuardFlank");NDSummary.OnSummaryLoaded("CSharpClass:GuardFlank",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[1444,0,0,"GuardFlank"],[1445,0,2,"Functions","Functions"],[1446,0,1,"Execute","Execute"],[1447,0,1,"Update","Update"]]);

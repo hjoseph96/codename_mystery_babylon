@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Utility/LineOrientation.cs",{3436:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype3436\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> LineOrientation</div></div></div>"});

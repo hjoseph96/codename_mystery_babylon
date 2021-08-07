@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("pat",["Function","Variable"],[["Path",,[["GridPath",,,,0,"File:Core/Map/GridPath.cs:GridPath.Path","CSharpClass:GridPath:Path"],["RelativePosition",,,,1,"File:Core/Units/AI_Behaviors/RelativePosition.cs:RelativePosition.Path","CSharpClass:RelativePosition:Path"]]]]);

@@ -21,6 +21,12 @@ public class AttackAction : BaseAction
         //    return;
         //}
 
-        _attackStrategies["AttackWeakestUnit"].Execute();
+        Debug.Log($"{AIAgent.gameObject.name} Decided to Attack.");
+
+        var behaviorToExecute = _attackStrategies["AttackWeakestUnit"];
+
+        AIAgent.SetCurrentBehavior(behaviorToExecute);
+
+        behaviorToExecute.Execute();
     }
 }

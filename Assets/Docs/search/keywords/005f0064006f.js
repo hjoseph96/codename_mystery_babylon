@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_do",["Variable"],[["_dontShowCamera",,[["SceneLoader",,,,0,"File:Core/Map/SceneLoader.cs:SceneLoader._dontShowCamera","CSharpClass:SceneLoader:_dontShowCamera"]]]]);

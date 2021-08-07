@@ -34,11 +34,11 @@ public class AttackWeakestUnit : AttackBehavior
                 // Create path to nearest neighnor
                 Move(targetCell, () =>
                     {
-                        TriggerCombat(unitWhoWillTakeMostDamage);
+                        StartCoroutine(TriggerCombat(unitWhoWillTakeMostDamage));
                         executionState = AIBehaviorState.Complete;
                     });
             }
-            else if(sightedEnemies.Count > 0 )
+            else if (sightedEnemies.Count > 0 )
             {
                 var weakestEnemyPos = GetWeakestEnemy(sightedEnemies.Select(e => e.GridPosition).ToList());
                 Move(weakestEnemyPos, () =>
@@ -60,10 +60,11 @@ public class AttackWeakestUnit : AttackBehavior
 
     }
 
-    private void TriggerCombat(Vector2Int targetGridPosition)
+    private IEnumerator TriggerCombat(Vector2Int targetGridPosition)
     {
         var targetUnit = WorldGrid.Instance[targetGridPosition].Unit;
-        
+
+
         if (targetUnit is AIUnit)
         {
             OnMapCombat.OnCombatComplete += delegate ()
@@ -71,7 +72,10 @@ public class AttackWeakestUnit : AttackBehavior
                 AIAgent.TookAction();
                 _checkedAtkPoints = false;
             };
-            OnMapCombat.BeginCombat(AIAgent, targetUnit);
+
+            yield return OnMapCombat.BeginCombat(AIAgent, targetUnit);
+            
+            Debug.Log("Triggered On Map Combat!");
         }
         else
             TriggerCombatScene(targetUnit);
@@ -80,6 +84,7 @@ public class AttackWeakestUnit : AttackBehavior
     private void TriggerCombatScene(Unit targetUnit)
     {
 
+        Debug.Log("Triggered Battle Scene Combat!");
         // Attacker turns to face defender
         Vector2 defenderPosition = WorldGrid.Instance.Grid.CellToWorld((Vector3Int)targetUnit.GridPosition);
         AIAgent.LookAt(defenderPosition);
@@ -90,7 +95,6 @@ public class AttackWeakestUnit : AttackBehavior
         targetUnit.LookAt(attackerPosition);
         targetUnit.SetIdle();
 
-        CampaignManager.Instance.OnCombatReturn = null;
         CampaignManager.Instance.OnCombatReturn += delegate ()
         {
             // When we're back to the map, mark that the AI took action.
@@ -118,8 +122,8 @@ public class AttackWeakestUnit : AttackBehavior
         var attackTargets = enemies;
 
 
-        // TODO: Find out why someitmes, we get attack targets who are null...
-        var missingUnits = attackTargets.Where((atkTarget) => WorldGrid.Instance[atkTarget].Unit == null);
+        // TODO: Find out why sometimes, we get attack targets who are null...
+        var missingUnits = new List<Vector2Int>(attackTargets.Where((atkTarget) => WorldGrid.Instance[atkTarget].Unit == null));
         foreach (var unit in missingUnits)
             attackTargets.Remove(unit);
 
@@ -148,7 +152,7 @@ public class AttackWeakestUnit : AttackBehavior
         // Post Move logic: face each other and trigger combat. attach event to end this AI's turn in the current phase.
         AIAgent.OnFinishedMoving += delegate ()
         {
-            OnFinishedMoving?.Invoke();
+            OnFinishedMoving.Invoke();
         };
 
         if (!AIAgent.MovedThisTurn)

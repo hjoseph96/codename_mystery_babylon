@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("luc",["Property"],[["Luck",,[["Unit",,,,0,"File:Core/Units/All_Units/Unit.cs:Unit.Luck","CSharpClass:Unit:Luck"]]]]);

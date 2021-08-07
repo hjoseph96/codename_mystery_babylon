@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("dro",["Function","Class"],[["Drop",,[["Item",,,,0,"File:Core/Items/Item.cs:Item.Drop","CSharpClass:Item:Drop"],["Weapon",,,,0,"File:Core/Items/Weapon.cs:Weapon.Drop","CSharpClass:Weapon:Drop"]]],["DropOption",,[[,,,,1,"File:GUI/UnitInventory/ItemOptions/ItemActionsMenu.cs:DropOption","CSharpClass:DropOption"]]]]);

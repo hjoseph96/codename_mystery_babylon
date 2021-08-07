@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_va",["Variable"],[["_vanguard",,[["AITeamManager",,,,0,"File:Core/Units/AI_Behaviors/AITeamManager.cs:AITeamManager._vanguard","CSharpClass:AITeamManager:_vanguard"]]]]);

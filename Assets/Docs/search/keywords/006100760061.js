@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("ava",["Variable"],[["AvailableInputKeys",,[["UserInput",,,,0,"File:Core/Input/UserInput.cs:UserInput.AvailableInputKeys","CSharpClass:UserInput:AvailableInputKeys"]]]]);

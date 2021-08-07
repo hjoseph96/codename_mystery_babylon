@@ -31,7 +31,7 @@ public class HeightDependentZoom : BasePC2D
 
     private int GetHeight()
     {
-        if (ProCamera2D.CameraTargets.Count == 0 || WorldGrid.Instance.Grid == null)
+        if (ProCamera2D.CameraTargets.Count == 0 || WorldGrid.Instance == null || WorldGrid.Instance.Grid == null)
             return 0;
 
         var pos = (Vector2Int) WorldGrid.Instance.Grid.WorldToCell(_useTargetHeight ? ProCamera2D.CameraTargets[0].TargetPosition : transform.position);

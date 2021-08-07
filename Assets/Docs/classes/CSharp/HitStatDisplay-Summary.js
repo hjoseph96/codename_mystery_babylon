@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:HitStatDisplay","HitStatDisplay");NDSummary.OnSummaryLoaded("CSharpClass:HitStatDisplay",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[2676,0,0,"HitStatDisplay"],[2677,0,2,"Functions","Functions"],[2678,0,1,"SetText","SetText"]]);

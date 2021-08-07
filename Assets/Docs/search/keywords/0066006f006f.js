@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("foo",["Class"],[["FootstepController",,[[,,,,0,"File:Core/Character_Controllers/FootstepController.cs:FootstepController","CSharpClass:FootstepController"]]],["FootstepEventReceiver",,[[,,,,0,"File:Core/Character_Controllers/FootstepEventReceiver.cs:FootstepEventReceiver","CSharpClass:FootstepEventReceiver"]]]]);

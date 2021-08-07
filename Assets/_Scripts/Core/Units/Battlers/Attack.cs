@@ -5,8 +5,7 @@ using UnityEngine;
 public enum AttackType
 {
     Normal,
-    Critical,
-    Multiple
+    Critical
 }
 
 public class Attack

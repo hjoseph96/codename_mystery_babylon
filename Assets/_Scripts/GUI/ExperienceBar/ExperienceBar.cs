@@ -60,8 +60,6 @@ public class ExperienceBar : MonoBehaviour
         var t = (Time.time - _fillStartTime) / _fillCurrentDuration;
         var currentFIll = Mathf.Lerp(_initialExperience, _finalExperience, _fillCurve.Evaluate(t)) % 100;
 
-        // TODO: Level Up display
-
         if (t >= 1)
         {
             _isFilling = false;

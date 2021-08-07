@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:AnimatedTileGroup","AnimatedTileGroup");NDSummary.OnSummaryLoaded("CSharpClass:AnimatedTileGroup",[["C#","CSharp"]],[["Classes","Class"],["Groups","Group"],["Variables","Variable"]],[[721,0,0,"AnimatedTileGroup"],[722,0,1,"Variables","Variables"],[723,0,2,"Name","Name"],[724,0,2,"InfluenceZones","InfluenceZones"]]);

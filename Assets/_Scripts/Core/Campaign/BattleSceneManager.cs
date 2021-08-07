@@ -7,51 +7,55 @@ using Sirenix.OdinInspector;
 using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine;
 
-public class CombatManager : MonoBehaviour
+public class BattleSceneManager : MonoBehaviour
 {
+    private CombatPhase _phase = CombatPhase.NotInCombat;
+    [ShowInInspector] public CombatPhase Phase { get => _phase; }
+    
     [FoldoutGroup("Battle Scene")]
     [ReadOnly] private Battler _friendlyBattler;
     [FoldoutGroup("Battle Scene")]
     [ReadOnly] private Battler _hostileBattler;
-    
+
+
     [FoldoutGroup("Battle Scene")]
-    [SerializeField] private GameObject _playerForeground;
-    
-    [FoldoutGroup("Battle Scene")]
+    [Header("Battler Spawn Points")]
     [SerializeField] private Transform _enemyBattlerSpawnPoint;
     [FoldoutGroup("Battle Scene")]
     [SerializeField] private Transform _playerBattlerSpawnPoint;
     [FoldoutGroup("Battle Scene")]
+    [Header("Magic Circle Spawn Points")]
     [SerializeField] private Transform _playerMagicCircleSpawnPoint;
     [FoldoutGroup("Battle Scene")]
     [SerializeField] private Transform _enemyMagicCircleSpawnPoint;
-
+    [FoldoutGroup("Battle Scene")]
+    [Header("Camera OnEnter Tween Targets")]
+    [SerializeField] private Transform _cameraStartPoint;
+    [FoldoutGroup("Battle Scene")]
+    [SerializeField] private Transform _cameraEndPoint;
 
     [FoldoutGroup("Cameras")]
     [SerializeField] public Camera BattleCamera;
     [FoldoutGroup("Cameras")]
     [SerializeField] private Camera _battleUICamera;
-     [FoldoutGroup("Cameras")]
-    [SerializeField] private Camera _pixelationCamera;
+    [FoldoutGroup("Cameras")]
+    [SerializeField] private Camera _battlerCamera;
+
     [FoldoutGroup("Cameras")]
     [SerializeField] private float _transitionSpeed = 0.5f;
     private ProCamera2DTransitionsFX _battleTransitionFX;
-
-    [FoldoutGroup("Battle Status")]
-    private CombatPhase _phase = CombatPhase.NotInCombat;
-    [ShowInInspector] public CombatPhase Phase { get =>_phase; }
 
 
     private BattleHUD _enemyHUD;
     private BattleHUD _playerHUD;
     private ExperienceBar _expBarUI;
-    private PostEffectMask _pixelateEffectMask;
 
     private Vector3 _platformOriginalPosition;
 
     private Battler _attackingBattler;
     private Battler _defendingBattler;
 
+    private bool _cameraTweening = false;
     private bool _beganAttacks = false;
     private bool _gainedExp = false;
     private bool _transitionedOut = false;
@@ -60,67 +64,60 @@ public class CombatManager : MonoBehaviour
     private void Start()
     {
         var uiManager = UIManager.Instance;
+
         _enemyHUD   = uiManager.BattleSceneCanvas.EnemyHUD;
         _playerHUD  = uiManager.BattleSceneCanvas.PlayerHUD;
         _expBarUI   = uiManager.BattleSceneCanvas.ExpBar;
     }
 
-
-    public async void Load(Unit attacker, Unit defender)
+    public IEnumerator Load(Unit attacker, Unit defender)
     {
+        BattleCamera.transform.position = _cameraStartPoint.position;
+
         UIManager.Instance.BattleSceneCanvas.SetCamera(_battleUICamera);
         UIManager.Instance.BattleSceneCanvas.Enable();
-        
+
         _battleUICamera.enabled = false;
         _battleUICamera.enabled = true;
 
-        _pixelationCamera.enabled = false;
-        _pixelationCamera.enabled = true;
-        
-        // TODO: Remove once pixel battle animations are completed
-        _pixelateEffectMask = _pixelationCamera.GetComponent<PostEffectMask>();
+        _battlerCamera.enabled = false;
+        _battlerCamera.enabled = true;
 
-        await SetupBattlers(attacker, defender);
+        yield return SetupBattlers(attacker, defender);
 
         // State Boolean Flags
-        _beganAttacks   = false;
-        _gainedExp      = false;
-        _transitionedOut = false;
+        _cameraTweening      = false;
+        _beganAttacks       = false;
+        _gainedExp          = false;
+        _transitionedOut    = false;
 
-        _platformOriginalPosition = _playerForeground.transform.position;
+        UIManager.Instance.BattleSceneCanvas.Show();
+
+        _expBarUI.SetActive(false);
+
+
         _battleTransitionFX = BattleCamera.GetComponentInChildren<ProCamera2DTransitionsFX>();
         _battleTransitionFX.OnTransitionEnterStarted += delegate () {
             _phase = CombatPhase.Transition;
-            
-            SetToTransitionPosition(_friendlyBattler.transform);
-            SetToTransitionPosition(_playerForeground.transform);
-            SetToTransitionPosition(_hostileBattler.transform, 4f);
+
+            // SetToTransitionPosition(_friendlyBattler.transform);
+            // SetToTransitionPosition(_hostileBattler.transform, 4f);
         };
-        
+
+        _battleTransitionFX.OnTransitionEnterEnded += delegate ()
+        {
+            _cameraTweening = true;
+        };
+
         _battleTransitionFX.TransitionEnter();
     }
 
-    public async Task<Dictionary<string, bool>> BattleResults(Unit attacker, Unit defender)
-    {
-        Dictionary<string, bool> battleResults = new Dictionary<string, bool>();
-        
-        // If the attacking cannot defend himself, return empty
-        if (!attacker.CanDefend())
-            return battleResults;
-
-        var hitResults = await TrueRandomUtility.HitResults(attacker, defender);
-        var critResults = await TrueRandomUtility.CriticalHitResults(attacker, defender);
-
-        // Merge the dictionaries
-        return hitResults.Concat(critResults)
-            .ToLookup(x => x.Key, x => x.Value)
-            .ToDictionary(x => x.Key, g => g.First());        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        switch (_phase) {
+        switch (_phase)
+        {
             case CombatPhase.NotInCombat:
                 break;
             case CombatPhase.Transition:
@@ -137,21 +134,23 @@ public class CombatManager : MonoBehaviour
                 break;
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.M))
             StartCoroutine(BackToMap());
-        #endif
+#endif
     }
 
     private void ProcessTransitionPhase()
     {
-        bool friendlyReached = ReachedPosition(_friendlyBattler.transform, _playerBattlerSpawnPoint.position);
-        bool enemyReached = ReachedPosition(_hostileBattler.transform, _enemyBattlerSpawnPoint.position);
-        bool platformReached = ReachedPosition(_playerForeground.transform, _platformOriginalPosition);  
-        
+        // bool friendlyReached    = ReachedPosition(_friendlyBattler.transform, _playerBattlerSpawnPoint.position);
+        // bool enemyReached       = ReachedPosition(_hostileBattler.transform, _enemyBattlerSpawnPoint.position);
+        bool cameraReached      = ReachedPosition(BattleCamera.transform, _cameraEndPoint.position);
+
         bool bothFightersReady = _friendlyBattler.IsReadyToFight && _hostileBattler.IsReadyToFight;
-        if (friendlyReached && enemyReached && platformReached && bothFightersReady)
+        if (cameraReached && bothFightersReady)
         {
+            _cameraTweening = false;
+
             _friendlyBattler.Unit.UponDeath += HandleUnitDeath;
             _hostileBattler.Unit.UponDeath += HandleUnitDeath;
 
@@ -168,11 +167,13 @@ public class CombatManager : MonoBehaviour
     {
         if (!_beganAttacks)
         {
-            _attackingBattler.OnAttackComplete += delegate() {
-                _defendingBattler.OnAttackComplete += delegate() {
-                    _phase = CombatPhase.GainExperience;
-                };
-                
+            _defendingBattler.OnAttackComplete += delegate () {
+                _phase = CombatPhase.GainExperience;
+
+                _attackingBattler.Unit.TookAction();
+            };
+
+            _attackingBattler.OnAttackComplete += delegate () {
                 _defendingBattler.Attack(_attackingBattler);
             };
 
@@ -189,51 +190,45 @@ public class CombatManager : MonoBehaviour
         var friendlyUnit = _friendlyBattler.Unit;
         var hostileUnit = _hostileBattler.Unit;
 
-
-
         if (friendlyUnit.TeamId == Player.LocalPlayer.TeamId && !_gainedExp)
         {
             _gainedExp = true;
 
             _expBarUI.Show(friendlyUnit.Experience);
 
-            var damageDealt = _friendlyBattler.DamageDealt;
+            int expGained = BattleUtility.CalculateEXPGain(_friendlyBattler, _hostileBattler);
+            int totalXp = friendlyUnit.Experience + expGained;
 
-            int expGained = ((31 + hostileUnit.Level + hostileUnit.Class.PromotedBonus) - (friendlyUnit.Level - friendlyUnit.Class.PromotedBonus)) / friendlyUnit.Class.RelativePower;
-            if (damageDealt <= 0)
-                expGained = 1;
-
-
-            // [EXP from doing damage] + [Silencer factor] × [Enemy's level × Enemy Class relative power + Enemy class bonus - 
-            // ([Player's level × Player Class relative power + Player class bonus] / Mode divisor) + 20 + Thief bonus + Boss bonus + Entombed bonus
-            if (_hostileBattler.Unit.CurrentHealth == 0)
+            _expBarUI.OnBarFilled += delegate () 
             {
-                var enemyExpCalc = (hostileUnit.Level * hostileUnit.Class.RelativePower + hostileUnit.Class.PromotedBonus);
-                var playerExpCalc = (friendlyUnit.Level * friendlyUnit.Class.RelativePower + friendlyUnit.Class.PromotedBonus);
+                if(totalXp < 100)
+                    _phase = CombatPhase.Complete;
+                else if(friendlyUnit.IsAlive && totalXp >= 100)
+                    LevelUpGUI.Instance.ShowLevelUpGUI(friendlyUnit);
 
-                // TODO: replace 2 with mode divisor, add boss units
-                expGained += ((enemyExpCalc - playerExpCalc) / 2) + 20;
-            }
-            
-            _expBarUI.OnBarFilled  += delegate() {
                 friendlyUnit.GainExperience(expGained);
-
-                
-                // TODO: Logic for level up display
-                _phase = CombatPhase.Complete;
             };
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.5f);
+            _expBarUI.StartFilling(totalXp);
+            yield return new WaitForSeconds(0.1f);
 
-            _expBarUI.StartFilling(friendlyUnit.Experience + expGained);
+            //If total XP is enough for a level up, perform level up GUI effects if it was a player unit
+            if (totalXp >= 100)
+            {
+                while (!LevelUpGUI.Instance.finishedDisplay)
+                    yield return null;
+
+                _phase = CombatPhase.Complete;
+            }
         }
     }
 
     private IEnumerator BackToMap()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
-        _battleTransitionFX.OnTransitionExitEnded += delegate() {
+        _battleTransitionFX.OnTransitionExitEnded += delegate () {
             var attackingUnit = _attackingBattler.Unit;
             var defendingUnit = _defendingBattler.Unit;
             attackingUnit.UponDeath = null;
@@ -242,19 +237,20 @@ public class CombatManager : MonoBehaviour
             _attackingBattler.OnAttackComplete = null;
             _defendingBattler.OnAttackComplete = null;
             _battleTransitionFX.OnTransitionEnterStarted = null;
-            
+
             if (_friendlyBattler)
                 Destroy(_friendlyBattler.gameObject);
-            if (_hostileBattler)        
+            if (_hostileBattler)
                 Destroy(_hostileBattler.gameObject);
 
             _friendlyBattler = null;
             _hostileBattler = null;
 
-            CampaignManager.Instance.SwitchToMap(attackingUnit, defendingUnit);
-            _playerForeground.transform.position = _platformOriginalPosition;
+            LevelUpGUI.Instance.Hide();
 
-            _phase = CombatPhase.NotInCombat;            
+            CampaignManager.Instance.SwitchToMap(attackingUnit, defendingUnit);
+
+            _phase = CombatPhase.NotInCombat;
         };
 
         if (!_transitionedOut)
@@ -269,51 +265,53 @@ public class CombatManager : MonoBehaviour
 
     private void HandleUnitDeath(Unit deadUnit)
     {
-        var unitClass = deadUnit.GetType();
-        if (unitClass.IsSubclassOf(typeof(AIUnit)))
-        {
-            CampaignManager.Instance.OnCombatReturn += delegate ()
-            {
-                CampaignManager.Instance.RemoveUnit(deadUnit);
-            };
+        if (deadUnit == null)
+            return;
 
-            // TODO: Check for any special dialogue or events to happen upon specific unit's death
-        }
+        if (deadUnit.Unkillable)
+            CampaignManager.Instance.OnCombatReturn += delegate () { deadUnit.Incapacitate(); };
+        else
+            CampaignManager.Instance.OnCombatReturn += delegate () { deadUnit.Die(); };
+
     }
-    
-    async Task<bool> SetupBattlers(Unit attacker, Unit defender)
+
+    private IEnumerator SetupBattlers(Unit attacker, Unit defender)
     {
-        _attackingBattler = await AssignBattlerByTeam(attacker, defender);
-        _defendingBattler = await AssignBattlerByTeam(defender, attacker);
-
-        return true;
+        yield return AssignBattlerByTeam(attacker, defender);
+        yield return AssignBattlerByTeam(defender, attacker, false);
     }
 
 
-    async Task<Battler> AssignBattlerByTeam(Unit unit, Unit opposingUnit)
+    private IEnumerator AssignBattlerByTeam(Unit unit, Unit opposingUnit, bool isAttacker = true)
     {
         Battler newBattler;
 
         Transform parent = _playerBattlerSpawnPoint;
         bool isFriendly = false;
 
-        switch(unit.TeamId) {
-            case Team.LocalPlayerTeamId: case Team.AllyTeamId: case Team.NeutralTeamId:
+        switch (unit.TeamId)
+        {
+            case Team.LocalPlayerTeamId:
+            case Team.AllyTeamId:
+            case Team.NeutralTeamId:
                 isFriendly = true;
                 break;
-            case Team.EnemyTeamId: case Team.OtherEnemyTeamId:
+            case Team.EnemyTeamId:
+            case Team.OtherEnemyTeamId:
                 isFriendly = false;
                 parent = _enemyBattlerSpawnPoint;
                 break;
         }
 
-        var battlerObject = Instantiate( unit.BattlerPrefab, parent.position, unit.BattlerPrefab.transform.rotation, parent );
+        var battlerObject = Instantiate(unit.BattlerPrefab, parent.position, unit.BattlerPrefab.transform.rotation, parent);
         newBattler = battlerObject.GetComponent<Battler>();
 
-        var battleResults = await BattleResults(unit, opposingUnit);
+        yield return BattleUtility.CalculateBattleResults(unit, opposingUnit);
+        var battleResults = BattleUtility.BattleResults;
+
         if (isFriendly)
         {
-            newBattler.Setup(unit, _playerHUD, battleResults, _pixelateEffectMask);
+            newBattler.Setup(unit, _playerHUD, battleResults);
             _friendlyBattler = newBattler;
 
             // TODO: Refactor
@@ -323,10 +321,11 @@ public class CombatManager : MonoBehaviour
                 magician.SetMagicCircleSpawnPoint(_playerMagicCircleSpawnPoint);
             }
         }
-        else {
-            newBattler.Setup(unit, _enemyHUD, battleResults, _pixelateEffectMask);
+        else
+        {
+            newBattler.Setup(unit, _enemyHUD, battleResults);
             _hostileBattler = newBattler;
-            
+
             // TODO: refactor
             if (newBattler is Magician)
             {
@@ -335,17 +334,19 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-
-        return newBattler;
+        if (isAttacker)
+            _attackingBattler = newBattler;
+        else
+            _defendingBattler = newBattler;
     }
 
 
     private void SetToTransitionPosition(Transform objTransform, float amount = -4f)
     {
-        var transitionStartPos =  new Vector3(
+        var transitionStartPos = new Vector3(
             objTransform.position.x + amount, objTransform.position.y, objTransform.transform.position.z
         );
-        
+
         objTransform.position = transitionStartPos;
     }
 

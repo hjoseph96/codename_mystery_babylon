@@ -53,7 +53,7 @@ public static class TilemapListExtensions
             var tilemapRenderer = tilemap.GetComponent<TilemapRenderer>();
             var sortingLayerId = SortingLayer.GetLayerValueFromName(tilemapRenderer.sortingLayerName);
             if (!result.ContainsKey(sortingLayerId) || 
-                tilemapRenderer.sortingOrder > result[sortingLayerId].GetComponent<TilemapRenderer>().sortingOrder)
+                tilemapRenderer.sortingOrder < result[sortingLayerId].GetComponent<TilemapRenderer>().sortingOrder)
                 result[sortingLayerId] = tilemap;
         }
 

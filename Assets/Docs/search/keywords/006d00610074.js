@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("mat",["Class"],[["MathParabola",,[[,,,,0,"File:Utility/MathParabola.cs:MathParabola","CSharpClass:MathParabola"]]],["MathUtility",,[["Tazdraperm_Utility",,,,0,"File:Utility/Tazdraperm_Utility/MathUtility.cs:Tazdraperm_Utility.MathUtility","CSharpClass:Tazdraperm_Utility.MathUtility"]]]]);

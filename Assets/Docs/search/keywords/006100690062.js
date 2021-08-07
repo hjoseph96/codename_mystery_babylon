@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("aib",["Class","Enumeration"],[["AIBehavior",,[[,,,,0,"File:Core/Units/AI_Behaviors/Behaviors/AIBehavior.cs:AIBehavior","CSharpClass:AIBehavior"]]],["AIBehaviorState",,[[,,,,1,"File:Core/Units/AI_Behaviors/Behaviors/AIBehavior.cs:AIBehaviorState"]]]]);

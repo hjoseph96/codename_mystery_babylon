@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("typ",["Variable"],[["Type",,[["ScriptableWeapon",,,,0,"File:Core/Items/ScriptableWeapon.cs:ScriptableWeapon.Type","CSharpClass:ScriptableWeapon:Type"],["Weapon",,,,0,"File:Core/Items/Weapon.cs:Weapon.Type","CSharpClass:Weapon:Type"]]]]);

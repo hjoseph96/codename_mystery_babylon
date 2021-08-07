@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("boo",["Class"],[["BoolExtensions",,[["Tazdraperm.Utility",,,,0,"File:Utility/Tazdraperm_Utility/BoolExtensions.cs:Tazdraperm.Utility.BoolExtensions","CSharpClass:Tazdraperm.Utility.BoolExtensions"]]]]);

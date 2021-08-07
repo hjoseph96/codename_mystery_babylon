@@ -7,22 +7,30 @@ using DarkTonic.MasterAudio;
 
 public class UnitInventoryMenu : Menu
 {
+    [Header("Unit Inventory Menu Items")]
     [SerializeField] protected UICursor _cursor;
     [SerializeField] private ItemActionsMenu _itemActionMenu;
     [SerializeField] protected ItemDetailsView _itemDetailsView;
-    [SerializeField] private HeaderDetailsView _header;
-
-    private List<ItemSlot> _itemSlots;
+    [SerializeField] protected HeaderDetailsView _header;
+    [SerializeField] protected List<InventoryItemSlot> _itemSlots;
 
     protected Unit _selectedUnit;
     private int _selectedSlotIndex;
-    public ItemSlot SelectedItemSlot => _itemSlots[_selectedSlotIndex];
+    public InventoryItemSlot SelectedItemSlot => _itemSlots[_selectedSlotIndex];
 
 
     public override MenuOption MoveSelection(Vector2Int input)
     {
         if (!_cursor.IsMoving)
-            MoveSelection(-input.y);
+        {
+            var newIndex = Mathf.Clamp(_selectedSlotIndex - input.y, 0, _itemSlots.Count - 1); ;
+
+            if (_selectedSlotIndex != newIndex)
+                MasterAudio.PlaySound3DFollowTransform(SelectedSound, CampaignManager.AudioListenerTransform);
+
+            _selectedSlotIndex = newIndex;
+            MoveSelectionToOption(_selectedSlotIndex);
+        }
 
         return _itemSlots[_selectedSlotIndex];
     }
@@ -33,12 +41,12 @@ public class UnitInventoryMenu : Menu
 
         if (_itemSlots == null)
         {
-            _itemSlots = GetComponentsInChildren<ItemSlot>().ToList();
-            if (_itemSlots.Count > UnitInventory.MaxSize)
+            _itemSlots = GetComponentsInChildren<InventoryItemSlot>().ToList();
+            if (_itemSlots.Count > UnitInventory.MAX_SIZE)
                 throw new IndexOutOfRangeException("Given more item slots than allowed per user.");
         }
 
-        for (var i = 0; i < UnitInventory.MaxSize; i++)
+        for (var i = 0; i < UnitInventory.MAX_SIZE; i++)
         {
             var itemSlot = _itemSlots[i];
             itemSlot.Clear();
@@ -76,8 +84,7 @@ public class UnitInventoryMenu : Menu
 
     public override void ProcessInput(InputData input)
     {
-        if (input.MovementVector != Vector2Int.zero)
-            SelectOption(MoveSelection(input.MovementVector));
+        base.ProcessInput(input);
 
         if (input.KeyState != KeyState.Up)
             return;
@@ -86,12 +93,9 @@ public class UnitInventoryMenu : Menu
         {
             case KeyCode.Z:
                 SelectedOption.Execute();
-                MasterAudio.PlaySound3DFollowTransform(ConfirmSound, CampaignManager.AudioListenerTransform);
                 break;
 
             case KeyCode.X:
-                MasterAudio.PlaySound3DFollowTransform(BackSound, CampaignManager.AudioListenerTransform);
-                Close();
                 break;
             
             case KeyCode.Space:
@@ -109,7 +113,7 @@ public class UnitInventoryMenu : Menu
 
     public override void ResetState()
     {
-        _cursor.transform.parent = transform;
+        _cursor.transform.SetParent(transform, false);
         _selectedSlotIndex = 0;
     }
 
@@ -121,7 +125,7 @@ public class UnitInventoryMenu : Menu
         GridCursor.Instance.SetFreeMode();
     }
 
-    public void SelectItemSlot()
+    public virtual void SelectItemSlot()
     {
         var selectedSlot = _itemSlots[_selectedSlotIndex];
         _itemActionMenu.Show(_selectedUnit, _selectedUnit.Inventory[_selectedSlotIndex], selectedSlot, _itemSlots);
@@ -143,20 +147,11 @@ public class UnitInventoryMenu : Menu
         }
     }
 
-    private void MoveSelection(int input)
-    {
-        var newIndex =  Mathf.Clamp(_selectedSlotIndex + input, 0, _itemSlots.Count - 1);;
-        
-        if (_selectedSlotIndex != newIndex)
-            MasterAudio.PlaySound3DFollowTransform(SelectedSound, CampaignManager.AudioListenerTransform);
-        
-        _selectedSlotIndex = newIndex;
-        MoveSelectionToOption(_selectedSlotIndex);    
-    }
 
-    private void MoveSelectionToOption(int index, bool instant = false)
+
+    protected void MoveSelectionToOption(int index, bool instant = false)
     {
-        _cursor.transform.parent = _itemSlots[index].transform;
+        _cursor.transform.SetParent(_itemSlots[index].transform, false);
 
         var cursorPosition = new Vector3(0, 20f, 0);
         _cursor.MoveTo(cursorPosition, instant);

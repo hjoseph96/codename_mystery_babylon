@@ -11,6 +11,8 @@ public class BattleHUD : MonoBehaviour
 
     private Unit _unit;
 
+    private bool _isCalculating = false;
+    public bool IsCalculating { get => _isCalculating;  }
 
     public void Populate(Unit unit)
     {
@@ -26,7 +28,9 @@ public class BattleHUD : MonoBehaviour
     private IEnumerator DecreaseHealthCoroutine(int amount)
     {
         amount = Mathf.Min(amount, _unit.CurrentHealth);
-        var delay = 0.6f / amount;
+        var delay = 0.6f / amount / GlobalVariables.Instance.gameSpeed;
+
+        _isCalculating = true;
 
         for (var i = 0; i < amount; i++)
         {
@@ -39,6 +43,8 @@ public class BattleHUD : MonoBehaviour
 
             _hpRemaining.SetText($"{currentHealth}/{_unit.MaxHealth}");
         }
+
+        _isCalculating = false;
 
         _unit.DecreaseHealth(amount);
     }

@@ -22,6 +22,11 @@ public class Item
     // Only relevant to Weapons... I should move it there and just so `Item as Weapon`
     public bool CanWield { get; set; }
 
+    public bool SpecialItem { get; private set; }
+
+    [Tooltip("Used to stack items exclusively when in the convoy")]
+    public int amount = 1;
+
 
     public Item(ScriptableItem source)
     {
@@ -40,7 +45,16 @@ public class Item
     { }
 
     public virtual void Drop()
-    { }
+    { Unit = null; }
 
     public virtual IEnumerable<Type> GetUIOptions() => throw new NotImplementedException();
+}
+
+public enum ItemType
+{
+    Weapon,
+    Gear,
+    Consumable,
+    Valuable, // Cannot be consumed or equipped, merely sold
+    KeyItem
 }

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("exc",["Function"],[["ExchangeItems",,[["UnitInventory",,,,0,"File:Core/Items/UnitInventory.cs:UnitInventory.ExchangeItems","CSharpClass:UnitInventory:ExchangeItems"]]]]);

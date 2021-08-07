@@ -68,7 +68,7 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
 
         _worldGrid = WorldGrid.Instance;
         _userInput = UserInput.Instance;
-        _camera    = CampaignManager.Instance.GridCamera;
+        _camera    = ProCamera2D.Instance;
         _actionSelectMenu = UIManager.Instance.GridBattleCanvas.ActionSelectMenu;
         _userInput.InputTarget = this;
 
@@ -262,6 +262,10 @@ public class GridCursor : SerializedMonoBehaviour, IInitializable, IInputTarget
             currentRenderer.enabled = false;
     }
 
+    /// <summary>
+    /// Calls the Unit to reset their positioning, if they have traded and are mounted, will only revert to the point they were at when performing a trade action
+    /// </summary>
+    /// <param name="unit"></param>
     public void ResetUnit(Unit unit)
     {
         unit.ResetToInitialPosition();

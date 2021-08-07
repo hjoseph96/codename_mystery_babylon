@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Core/Units/UnitType.cs","UnitType.cs");NDSummary.OnSummaryLoaded("File:Core/Units/UnitType.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1954,0,1,"Types","Types"],[1955,0,0,"UnitType","UnitType"]]);

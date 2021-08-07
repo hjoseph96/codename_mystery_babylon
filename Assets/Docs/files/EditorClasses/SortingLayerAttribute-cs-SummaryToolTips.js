@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:EditorClasses/SortingLayerAttribute.cs",{2281:"<div class=\"NDToolTip TClass LCSharp\"><div class=\"NDClassPrototype\" id=\"NDClassPrototype2281\"><div class=\"CPEntry TClass Current\"><div class=\"CPModifiers\"><span class=\"SHKeyword\">public</span></div><div class=\"CPName\">SortingLayerAttribute</div></div></div></div>"});

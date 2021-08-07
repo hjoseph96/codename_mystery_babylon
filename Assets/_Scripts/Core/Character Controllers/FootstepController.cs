@@ -14,6 +14,7 @@ public class FootstepController : MonoBehaviour
     [SoundGroup] public string rockFootsteps;
     [SoundGroup] public string woodFootsteps;
     [SoundGroup] public string carpetFootsteps;
+    [SoundGroup] public string gravelFootsteps;
 
     private Dictionary<SurfaceType, string> _footstepSounds = new Dictionary<SurfaceType, string>();
 
@@ -24,6 +25,7 @@ public class FootstepController : MonoBehaviour
         _footstepSounds[SurfaceType.Rock]   = rockFootsteps;
         _footstepSounds[SurfaceType.Wood]   = woodFootsteps;
         _footstepSounds[SurfaceType.Carpet] = carpetFootsteps;
+        _footstepSounds[SurfaceType.Gravel] = gravelFootsteps;
     }
 
     
@@ -35,6 +37,6 @@ public class FootstepController : MonoBehaviour
         var soundToPlay = _footstepSounds[surfaceType];
 
         // TODO: replace CampaignManager.AudioListenerTransform with a new static class to manage audio listener transform
-        MasterAudio.PlaySound3DFollowTransform(soundToPlay, CampaignManager.AudioListenerTransform);
+        MasterAudio.PlaySound3DFollowTransform(soundToPlay, transform);
     }
 }

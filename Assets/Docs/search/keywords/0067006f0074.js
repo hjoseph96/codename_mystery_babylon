@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("got",["Function"],[["GoToNextAttack",,[["Magician",,,,0,"File:Core/Units/Battlers/Magic_Users/Magician.cs:Magician.GoToNextAttack","CSharpClass:Magician:GoToNextAttack"]]]]);

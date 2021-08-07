@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CSharpClass:EntityExtensions","EntityExtensions");NDSummary.OnSummaryLoaded("CSharpClass:EntityExtensions",[["C#","CSharp"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[3057,0,0,"EntityExtensions"],[3058,0,2,"Functions","Functions"],[3059,0,1,"Start","Start"],[3060,0,1,"Update","Update"]]);

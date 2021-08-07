@@ -194,7 +194,9 @@ public class CellHighlighter : SerializedMonoBehaviour, IInitializable
         {
             var relativePos = pos - topLeft;
             var index = relativePos.x + relativePos.y * _size;
-            pixels[index] = Color.white;
+
+            if (index > 0 && index < pixels.Length)
+                pixels[index] = Color.white;
         }
 
         tex.SetPixels32(pixels);

@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:Core/Items/WeaponStat.cs",{552:"<div class=\"NDToolTip TEnumeration LCSharp\"><div id=\"NDPrototype552\" class=\"NDPrototype\"><div class=\"PSection PPlainSection\"><span class=\"SHKeyword\">public enum</span> WeaponStat</div></div></div>"});

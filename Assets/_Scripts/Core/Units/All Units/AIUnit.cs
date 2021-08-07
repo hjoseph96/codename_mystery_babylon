@@ -20,6 +20,13 @@ public class AIUnit : Unit
     [FoldoutGroup("AI Properties")]
     [SerializeField] private bool _showMovementRange;
 
+    [FoldoutGroup("AI Properties")]
+    [SerializeField] private AIBehavior _currentBehavior;
+
+    [FoldoutGroup("AI Properties")]
+    public bool IsRecruitable;
+
+
     [FoldoutGroup("State")]
     private bool _isTakingAction = false;
     [ShowInInspector] public bool IsTakingAction { get => _isTakingAction; }
@@ -63,9 +70,6 @@ public class AIUnit : Unit
         if (isDodging)
             StartCoroutine(DodgeMovement());
 
-        if (isDying)
-            StartCoroutine(DeathFade());
-
         if (IsTakingAction && !_hasDecidedAction)
         {
             _hasDecidedAction = true;
@@ -73,6 +77,8 @@ public class AIUnit : Unit
             _decideAction.PerformAction();
         }
     }
+
+    public void SetCurrentBehavior(AIBehavior currentBehavior) => _currentBehavior = currentBehavior;
 
     public Vector2Int MyCellInFormation()
     {
@@ -143,9 +149,10 @@ public class AIUnit : Unit
     public override void TookAction()
     {
         base.TookAction();
-        _isTakingAction = false;
-        _hasDecidedAction = false;
+        _isTakingAction     = false;
+        _hasDecidedAction   = false;
 
+        _currentBehavior    = null;
     }
 
 
@@ -172,7 +179,7 @@ public class AIUnit : Unit
         var allies = new List<Unit>();
 
         foreach (Unit ally in Allies())
-            if (HasVision(ally.GridPosition))
+            if (HasVision(ally.GridPosition) && ally.IsAlive && !ally.Incapacitated)
                 allies.Add(ally);
 
         return allies;
@@ -233,7 +240,7 @@ public class AIUnit : Unit
     }
 
 
-    public Vector2Int FindClosestCellTo(Vector2Int goal)
+    public override Vector2Int FindClosestCellTo(Vector2Int goal)
     {
         var moveRange = GridUtility.GetReachableCells(this);
 
@@ -244,7 +251,10 @@ public class AIUnit : Unit
 
         // Get cells next to the target that are passable and unoccupied
         var targetNeighbors = GridUtility.GetNeighbours(SortingLayerId, goal);
-        targetNeighbors.Select((position) => WorldGrid.Instance[position].IsPassable(this));
+        targetNeighbors.Select((position) => WorldGrid.Instance[position].IsPassable(SortingLayerId, UnitType));
+
+        if (targetNeighbors.Count == 0)
+            Debug.Log("Catch me!");
 
         // Find the nearest neighbor
         var shortestDistance = targetNeighbors.Min((position) => GridUtility.GetBoxDistance(GridPosition, position));
@@ -304,13 +314,13 @@ public class AIUnit : Unit
         var closestEnemy = EnemiesWithinSight()
             .OrderBy((enemy) => GridUtility.GetBoxDistance(GridPosition, enemy.GridPosition)).FirstOrDefault();
 
+
         if (closestEnemy != null)
         {
             float distanceToGroup = GridUtility.GetBoxDistance(GridPosition, group.PreferredGroupPosition.Position);
             float distanceToClosestEnemy = GridUtility.GetBoxDistance(GridPosition, closestEnemy.GridPosition);
             
             var shouldAttack = Mathf.Clamp01((distanceToClosestEnemy / distanceToGroup) / 2);
-            //return (NeedToHeal() + (1 - shouldAttack)) / 2;
             return (ThreatLevelAtPosition(group.PreferredGroupPosition.Position) - NeedToHeal() / 2);
         }
         else

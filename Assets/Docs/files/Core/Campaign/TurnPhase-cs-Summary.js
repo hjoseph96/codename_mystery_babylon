@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Core/Campaign/TurnPhase.cs","TurnPhase.cs");NDSummary.OnSummaryLoaded("File:Core/Campaign/TurnPhase.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[65,0,1,"Types","Types"],[66,0,0,"TurnPhase","TurnPhase"]]);

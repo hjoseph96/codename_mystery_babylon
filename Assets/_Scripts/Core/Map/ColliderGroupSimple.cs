@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEditor;
+
 using UnityEngine;
 
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class ColliderGroupBase : SerializedMonoBehaviour
 {
     protected WorldGridEditor Editor
@@ -73,8 +75,12 @@ public class ColliderGroupSimple : ColliderGroupBase
             }
         }
 
-        EditorUtility.SetDirty(gameObject);
+        #if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+        #endif
     }
+
+    #if UNITY_EDITOR
 
     private void OnEnable()
     {
@@ -144,14 +150,14 @@ public class ColliderGroupSimple : ColliderGroupBase
         EditorApplication.QueuePlayerLoopUpdate();
     }
 
+    #endif
+
     public bool Contains(Vector2Int position) => _collisions.Contains(position);
 
     public override void Apply()
     {
         // Lazy init
         _overrideTile ??= new WorldCellTile(Config, Vector3.one);
-
-        Debug.Assert(_collisions.Count > 0);
 
         foreach (var pos in _collisions)
         {

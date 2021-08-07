@@ -37,16 +37,42 @@ public class ArticyDataContainer : SerializedMonoBehaviour
 
     private void Awake()
     {
+        SetReferences();   
+    }
+
+    public void Empty()
+    {
+        _dialogueDisplayNames = new List<string>();
+        _references = new List<ArticyObject>();
+
+        var mapDialogue = GetComponent<MapDialogue>();
+        if (mapDialogue != null)
+            mapDialogue.Clear();
+    }
+
+    public void AddDialogue(string name)
+    {
+        if (_dialogueDisplayNames.Contains(name))
+            return;
+
+        if (!ArticyObjectNames().Contains(name))
+            throw new Exception($"[ArticyDataContainer] There is no Dialogue in Articy titled: {name}");
+
+        _dialogueDisplayNames.Add(name);
+    }
+
+    public void SetReferences()
+    {
         var dialogues = ArticyDatabase.GetAllOfType<Dialogue>();
 
         foreach (var displayName in _dialogueDisplayNames)
         {
             var matchingDialogue = dialogues.Where((d) => d.DisplayName == displayName);
-            
+
             if (matchingDialogue.Count() > 0)
                 _references.Add(matchingDialogue.First());
             else
-                Debug.LogWarning("Matching Dialogue Count is 0, determine error");
+                throw new Exception($"[ArticyDataContainer] There is no Dialogue in Articy titled: {displayName}");
         }
     }
 

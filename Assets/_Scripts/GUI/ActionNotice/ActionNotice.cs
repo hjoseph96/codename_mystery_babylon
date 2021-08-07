@@ -29,7 +29,7 @@ public class ActionNotice : SerializedMonoBehaviour
         this.SetActive(false);
     }
 
-    private ActionButton GetActionButton(ActionButtonType buttonType) => ActionButtons.First((button) => button.ButtonType == buttonType);
+    private ActionButton GetActionButton(KeyCode buttonType) => ActionButtons.FirstOrDefault((button) => button.ButtonType == buttonType);
 
     public void SetNoticeText(string noticeText)
     {
@@ -37,19 +37,26 @@ public class ActionNotice : SerializedMonoBehaviour
         _notice.text = noticeText;
     }
 
-    public void SetActionButton(ActionButtonType button)
+    public void SetActionButton(KeyCode button)
     {
-        var spawnPosition = _actionButton.transform.position;
+        try
+        {
+            var spawnPosition = _actionButton.transform.position;
 
-        _actionButton.transform.SetParent(null);
-        Destroy(_actionButton);
-        _actionButton = null;
+            _actionButton.transform.SetParent(null);
+            Destroy(_actionButton.gameObject);
+            _actionButton = null;
 
-        var buttonPrefab = GetActionButton(button);
-        _actionButton = Instantiate<ActionButton>(buttonPrefab, spawnPosition, Quaternion.identity, this.transform);
+            var buttonPrefab = GetActionButton(button);
+            _actionButton = Instantiate(buttonPrefab, spawnPosition, Quaternion.identity, this.transform);
+        }
+        catch (System.Exception)
+        {
+            Debug.LogWarning("You action button prefab with key code " + button + " is not set!");
+        }
     }
 
-    public void Show(ActionButtonType actionButton = ActionButtonType.Z, string noticeText = "")
+    public void Show(KeyCode actionButton = KeyCode.Z, string noticeText = "")
     {
         SetNoticeText(noticeText);
         SetActionButton(actionButton);

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("_mi",["Variable"],[["_minHeap",,[["Tazdraperm.Utility.PriorityQueue",,,,0,"File:Utility/Tazdraperm_Utility/PriorityQueue.cs:Tazdraperm.Utility.PriorityQueue._minHeap","CSharpClass:Tazdraperm.Utility.PriorityQueue:_minHeap"]]]]);

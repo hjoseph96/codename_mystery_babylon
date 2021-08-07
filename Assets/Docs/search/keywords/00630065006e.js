@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("cen",["Function"],[["CenterOfGravity",,[["AIGroup",,,,0,"File:Core/Units/AI_Behaviors/AIGroup.cs:AIGroup.CenterOfGravity","CSharpClass:AIGroup:CenterOfGravity"],["Vector2IntExtensions",,,,0,"File:Core/Extensions/Vector2IntExtensions.cs:Vector2IntExtensions.CenterOfGravity","CSharpClass:Vector2IntExtensions:CenterOfGravity"]]]]);

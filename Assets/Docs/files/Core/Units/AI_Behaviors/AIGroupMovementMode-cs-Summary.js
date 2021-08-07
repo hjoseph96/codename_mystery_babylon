@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:Core/Units/AI_Behaviors/AIGroupMovementMode.cs","AIGroupMovementMode.cs");NDSummary.OnSummaryLoaded("File:Core/Units/AI_Behaviors/AIGroupMovementMode.cs",[["C#","CSharp"]],[["Enums","Enumeration"],["Groups","Group"]],[[1547,0,1,"Types","Types"],[1548,0,0,"AIGroupMovementMode","AIGroupMovementMode"]]);
